@@ -21,7 +21,7 @@ import com.microfocus.silktest.jtf.*;
  * @author Softtek-QA
  *
  */
-public class AUTBaseComponent {
+public abstract class AUTBaseComponent {
 	Desktop agent = new Desktop();
 	BrowserBaseState bsConfigBrowser = null;
 	
@@ -50,17 +50,6 @@ public class AUTBaseComponent {
 	public void autCloseApplication() {
 		System.out.println("AUT INFO: FINALIZANDO APLICAÇÃO");			
 	}
-	
-	/**
-	 * 
-	 * Executa procedimentos de login na aplicação - VA
-	 * 
-	 */
-	@Test
-	public void autLoginVA() {
-		
-	}
-	
 	
 	/**
 	 * 
