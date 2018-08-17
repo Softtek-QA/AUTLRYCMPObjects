@@ -12,6 +12,10 @@ import com.borland.silktest.jtf.BrowserBaseState;
 import com.borland.silktest.jtf.Desktop;
 import com.microfocus.silktest.jtf.*;
 
+import br.lry.dataflow.AUTDataFlow;
+import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem;
+import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
+
 /**
  * 
  * Componente - Realiza login no sistema:
@@ -22,8 +26,63 @@ import com.microfocus.silktest.jtf.*;
  *
  */
 public abstract class AUTBaseComponent {
-	protected Desktop AUT_AGENT_SILK4J = new Desktop();
-	protected BrowserBaseState AUT_BASE_STATE_CONFIGURATION_BROWSER = null;
+	protected Desktop AUT_AGENT_SILK4J = new Desktop();  //Objeto de conexão com aplicação da automação
+	protected BrowserBaseState AUT_BASE_STATE_CONFIGURATION_BROWSER = null; //Objeto base de configuraçao do browser
+	private AUTDataFlow AUT_CURRENT_DATA_FLOW = null; //Objeto de gerenciamento do fluxo de dados
+	private AUTLogMensagem AUT_CURRENT_LOG_MANAGER = null; //Objeto de gerenciamento do log
+		
+	/**
+	 * 
+	 * Retorna a instancia de gerenciamento de logs sistema
+	 * 
+	 * @return AUTLogMensagem - Classe de gerenciamento de Log
+	 * 
+	 */
+	public AUTLogMensagem autGetLogManager()
+	{
+		try {
+					
+			System.out.println("AUT INFO: INICIALIZANDO SERVIÇO PARA GERENCIAMENTO DE LOGS DO SISTEMA");
+						
+			AUT_CURRENT_LOG_MANAGER = ( !AUT_CURRENT_LOG_MANAGER.equals(null) ? AUT_CURRENT_LOG_MANAGER : new AUTLogMensagem());
+			
+			return AUT_CURRENT_LOG_MANAGER;
+		}
+		catch(java.lang.Exception e) {
+		
+			System.out.println("AUT ERROR : ERROR INICIALIZAR SERVIÇO DE LOG");
+			
+			return null;
+		}
+		
+	}	
+	
+	
+	/**
+	 * 
+	 * Configura ou retorna a instância ativa da classe de gerenciamento do fluxo de dados da automação
+	 * 
+	 * @return boolean - True caso o processo seja finalizado com sucesso false caso contrário
+	 * 
+	 */
+	public AUTDataFlow autGetDataFlow() {
+		try {
+			
+			autGetLogManager().logMensagem("AUT INFO: INICIALIZANDO CONFIGURAÇAO DO FLUXO DE DADOS");
+			
+			AUT_CURRENT_DATA_FLOW = (!AUT_CURRENT_DATA_FLOW.equals(null) ? AUT_CURRENT_DATA_FLOW :  new AUTDataFlow());
+			
+			autGetLogManager().logMensagem("AUT INFO: CONFIGURAÇAO DO FLUXO DE DADOS : FINALIZADA");
+			
+			return AUT_CURRENT_DATA_FLOW;
+		}
+		catch(java.lang.Exception e) {
+			
+			autGetLogManager().logMensagem("AUT ERROR: INICIALIZAÇÃO DA CLASSE DE GERENCIAMENTO FLUXO DE DADOS");
+			
+			return null;
+		}
+	}
 	
 	/**
 	 * 
