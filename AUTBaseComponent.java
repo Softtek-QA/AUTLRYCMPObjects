@@ -44,7 +44,7 @@ public abstract class AUTBaseComponent {
 					
 			System.out.println("AUT INFO: INICIALIZANDO SERVIÇO PARA GERENCIAMENTO DE LOGS DO SISTEMA");
 						
-			AUT_CURRENT_LOG_MANAGER = ( !AUT_CURRENT_LOG_MANAGER.equals(null) ? AUT_CURRENT_LOG_MANAGER : new AUTLogMensagem());
+			AUT_CURRENT_LOG_MANAGER = ( AUT_CURRENT_LOG_MANAGER!=null ? AUT_CURRENT_LOG_MANAGER : new AUTLogMensagem());
 			
 			return AUT_CURRENT_LOG_MANAGER;
 		}
@@ -70,7 +70,7 @@ public abstract class AUTBaseComponent {
 			
 			autGetLogManager().logMensagem("AUT INFO: INICIALIZANDO CONFIGURAÇAO DO FLUXO DE DADOS");
 			
-			AUT_CURRENT_DATA_FLOW = (!AUT_CURRENT_DATA_FLOW.equals(null) ? AUT_CURRENT_DATA_FLOW :  new AUTDataFlow());
+			AUT_CURRENT_DATA_FLOW = (AUT_CURRENT_DATA_FLOW != null ? AUT_CURRENT_DATA_FLOW :  new AUTDataFlow());
 			
 			autGetLogManager().logMensagem("AUT INFO: CONFIGURAÇAO DO FLUXO DE DADOS : FINALIZADA");
 			
