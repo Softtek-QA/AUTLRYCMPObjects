@@ -12,7 +12,7 @@ import com.borland.silktest.jtf.xbrowser.DomButton;
  * @author Softtek-QA
  *
  */
-public class AUTCMP11110 extends AUTBaseComponent {
+public class AUTVABaseComponent extends AUTBaseComponent {
 
 	@Test
 	public void autLogin() {
