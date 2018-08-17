@@ -1,11 +1,12 @@
 /**
  * 
  */
-package br.lry.components;
+package br.lry.components.va;
 
 import org.junit.Test;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
+import br.lry.components.AUTBaseComponent;
 import br.lry.functions.AUTVAProjectFunctions;
 
 import com.borland.silktest.jtf.xbrowser.DomButton;
