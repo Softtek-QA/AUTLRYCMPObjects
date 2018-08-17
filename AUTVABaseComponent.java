@@ -5,6 +5,9 @@ package br.lry.components;
 
 import org.junit.Test;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
+
+import br.lry.functions.AUTVAProjectFunctions;
+
 import com.borland.silktest.jtf.xbrowser.DomButton;
 
 /**
@@ -15,10 +18,8 @@ import com.borland.silktest.jtf.xbrowser.DomButton;
 public class AUTVABaseComponent extends AUTBaseComponent {
 
 	@Test
-	public void autLogin() {
-		agent.<DomTextField>find("VA.Login.Usuario").setText("51028487");
-		agent.<DomTextField>find("VA.Login.Senha").setText("1234");
-		agent.<DomButton>find("VA.Login.Avancar").click();
+	public void autLogin(String user,String password) {
+		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, user, password);
 	}
 	
 }

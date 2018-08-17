@@ -22,8 +22,8 @@ import com.microfocus.silktest.jtf.*;
  *
  */
 public abstract class AUTBaseComponent {
-	Desktop agent = new Desktop();
-	BrowserBaseState bsConfigBrowser = null;
+	protected Desktop AUT_AGENT_SILK4J = new Desktop();
+	protected BrowserBaseState AUT_BASE_STATE_CONFIGURATION_BROWSER = null;
 	
 	/**
 	 * 
@@ -33,8 +33,8 @@ public abstract class AUTBaseComponent {
 	@Before
 	public void autInitWebApplication() {
 		
-		bsConfigBrowser = new BrowserBaseState();
-		agent.executeBaseState(bsConfigBrowser);
+		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();
+		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
 		
 		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
 		
