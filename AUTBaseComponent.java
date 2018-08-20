@@ -116,6 +116,6 @@ public abstract class AUTBaseComponent {
 	 * 
 	 */
 	public AUTBaseComponent() {
-		
+		super();
 	}
 }

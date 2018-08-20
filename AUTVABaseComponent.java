@@ -17,8 +17,13 @@ import com.borland.silktest.jtf.xbrowser.DomButton;
  */
 public class AUTVABaseComponent extends AUTBaseComponent {
 	java.util.HashMap<String,String> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();
-		
-	@Test
+	
+	
+	/**
+	 * 
+	 * Realiza login na aplicação - VA
+	 *
+	 */
 	public void autLogin() {
 		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER"), AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD"));
 		this.autGetDataFlow();
