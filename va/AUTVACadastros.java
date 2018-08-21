@@ -369,14 +369,14 @@ public class AUTVACadastros extends AUTVALogin {
 
 		AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.AceitarPropagandasSim").click();
 
-		btCadastroPFAvanc.click();
-
 		DomButton btCadastroPFAvanc2 = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.AvancarPaginaCadastro2");
 
 		//btCadastroPFAvanc.click();
 
 		//start recording 
 		AUT_AGENT_SILK4J.<AccessibleControl>find("WebBrowser.Maximizar").click();
+		
+		AUT_AGENT_SILK4J.captureBitmap("CHECKPOINT-CADASTRO.png");
 		//end recording
 	}
 
