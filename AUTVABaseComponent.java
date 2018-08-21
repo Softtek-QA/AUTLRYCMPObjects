@@ -18,8 +18,7 @@ import com.borland.silktest.jtf.xbrowser.DomButton;
  *
  */
 public class AUTVABaseComponent extends AUTBaseComponent {
-	java.util.HashMap<String,String> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();
-	
+	java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
 	
 	public AUTVABaseComponent() {
 		super();
@@ -32,8 +31,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 *
 	 */
 	public void autLogin() {
-		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER"), AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD"));
-		this.autGetDataFlow();
+		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString(), AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString());
 	}
 	
 }
