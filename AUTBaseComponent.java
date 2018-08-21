@@ -11,6 +11,7 @@ import org.junit.Test;
 import com.borland.silktest.jtf.BrowserBaseState;
 import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.common.BrowserType;
+import com.borland.silktest.jtf.win32.AccessibleControl;
 import com.microfocus.silktest.jtf.*;
 
 import br.lry.dataflow.AUTDataFlow;
@@ -132,7 +133,7 @@ public abstract class AUTBaseComponent{
 		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();		
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
-		
+		AUT_AGENT_SILK4J.<AccessibleControl>find("WebBrowser.Maximizar").click();
 		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
 		
 	}
