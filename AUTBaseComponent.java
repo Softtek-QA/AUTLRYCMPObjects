@@ -130,7 +130,7 @@ public abstract class AUTBaseComponent{
 	@Before
 	public void autInitWebApplication() {
 		
-		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();
+		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();		
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
 		
 		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");

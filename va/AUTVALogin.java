@@ -9,6 +9,7 @@ import junit.framework.AssertionFailedError;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.TestResult;
 
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -19,6 +20,7 @@ import org.junit.Test;
  */
 public class AUTVALogin extends AUTVABaseComponent {
 
+	@Before
 	public void autStartLoginDefault() {
 		try {
 		
