@@ -19,8 +19,6 @@ import org.junit.Test;
  */
 public class AUTVALogin extends AUTVABaseComponent {
 
-
-	@Test
 	public void autStartLoginDefault() {
 		try {
 		
@@ -35,7 +33,7 @@ public class AUTVALogin extends AUTVABaseComponent {
 		}
 	}
 	
-	public static void main(String args[]) {
+	public void autStartProxyConfiguration(String usuario,String senha) {
 		
 	}
 }

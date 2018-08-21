@@ -12,6 +12,8 @@ import com.borland.silktest.jtf.xbrowser.DomButton;
 
 /**
  * 
+ * 
+ * 
  * @author Softtek-QA
  *
  */
@@ -23,9 +25,6 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-
-
 
 	/**
 	 * 
