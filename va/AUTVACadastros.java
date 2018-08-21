@@ -255,7 +255,7 @@ public class AUTVACadastros extends AUTVALogin {
 		txtNumeroContato.click();
 		txtNumeroContato.domClick();
 		txtNumeroContato.setText(numeroTelefone);
-		com.borland.silktest.jtf.Utils.sleep(3000);
+
 		txtNumeroContato.click();
 		txtNumeroContato.setFocus();
 		txtNumeroContato.domClick();
