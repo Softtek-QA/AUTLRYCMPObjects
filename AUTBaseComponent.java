@@ -133,7 +133,7 @@ public abstract class AUTBaseComponent{
 		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();		
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
-		AUT_AGENT_SILK4J.<AccessibleControl>find("WebBrowser.Maximizar").click();
+		AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
 		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
 		
 	}
