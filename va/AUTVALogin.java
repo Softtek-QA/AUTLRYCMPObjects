@@ -4,11 +4,13 @@
 package br.lry.components.va;
 
 import br.lry.components.AUTVABaseComponent;
+import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem;
+import junit.framework.AssertionFailedError;
+import junit.framework.JUnit4TestAdapter;
+import junit.framework.TestResult;
 
 import org.junit.Test;
 
-import com.borland.silktest.jtf.*;
-import com.borland.silktest.jtf.keyworddriven.KeywordTests;
 /**
  * Componente para login - VA
  * 
@@ -16,24 +18,24 @@ import com.borland.silktest.jtf.keyworddriven.KeywordTests;
  *
  */
 public class AUTVALogin extends AUTVABaseComponent {
+
+
 	@Test
 	public void autStartLoginDefault() {
 		try {
-			
+		
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
 			
+			autLogin();
 			
-			
-			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: AUT");
-		
+			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: END");
 		}
 		catch(java.lang.Exception e) {
-			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");
-	
+			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
 		}
 	}
 	
-	public AUTVALogin() {
-		super();
+	public static void main(String args[]) {
+		
 	}
 }

@@ -10,11 +10,14 @@ import org.junit.Test;
 
 import com.borland.silktest.jtf.BrowserBaseState;
 import com.borland.silktest.jtf.Desktop;
+import com.borland.silktest.jtf.common.BrowserType;
 import com.microfocus.silktest.jtf.*;
 
 import br.lry.dataflow.AUTDataFlow;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
+import junit.framework.TestCase;
+import junit.framework.TestResult;
 
 /**
  * 
@@ -25,12 +28,29 @@ import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
  * @author Softtek-QA
  *
  */
-public abstract class AUTBaseComponent {
+public abstract class AUTBaseComponent{
 	protected Desktop AUT_AGENT_SILK4J = new Desktop();  //Objeto de conexão com aplicação da automação
 	protected BrowserBaseState AUT_BASE_STATE_CONFIGURATION_BROWSER = null; //Objeto base de configuraçao do browser
 	private AUTDataFlow AUT_CURRENT_DATA_FLOW = null; //Objeto de gerenciamento do fluxo de dados
 	private AUTLogMensagem AUT_CURRENT_LOG_MANAGER = null; //Objeto de gerenciamento do log
-		
+
+	
+	public void autSetMicrosoftEdgeBrowser() {
+		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.Edge);		
+	}	
+	
+	public void autSetInternetExplorerBrowser() {
+		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.InternetExplorer);
+	}
+	
+	public void autSetFirefoxBrowser() {
+		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.Firefox);
+	}
+	
+	public void autSetChromeBrowser() {
+		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.GoogleChrome);
+	}
+	
 	/**
 	 * 
 	 * Retorna a instancia de gerenciamento de logs sistema
@@ -82,6 +102,24 @@ public abstract class AUTBaseComponent {
 			
 			return null;
 		}
+	}
+	
+	
+	public junit.framework.TestCase autStartNewTestObject(Class<?> testObject,String testName){
+		try {
+			
+			junit.framework.TestCase testItem = (TestCase) org.junit.runners.AllTests.testFromSuiteMethod(testObject);
+			testItem.setName(testName);
+			junit.textui.TestRunner.run(testItem);
+			return testItem;
+		
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			autGetLogManager().logMensagem("AUT ERROR: TEST OBJECT DEFINITION : ".concat(e.getMessage()));
+			
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	/**

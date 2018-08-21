@@ -19,6 +19,14 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	java.util.HashMap<String,String> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();
 	
 	
+	public AUTVABaseComponent() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+
 	/**
 	 * 
 	 * Realiza login na aplicação - VA
