@@ -208,17 +208,63 @@ public class AUTVACadastros extends AUTVALogin {
 
 	public void autCadastrarCliente(AUT_VA_CADASTROS tipoCadastro) {
 		
+		
 		DomElement menuClient = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.MenuPrincipal");
 		menuClient.click();
 		DomElement subMenuCliente = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.SubMenuClientes");
 		subMenuCliente.click();
 		DomElement btAddNovoClient = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesInicial.BotaoAdicionarNovo");
 		btAddNovoClient.click();
-		String numCPF = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CPF").toString();
-
+		String numCPF = "";
+		String numCNPJ = "";
+		String numPassPorte = "";
+		
+		AUT_VA_CADASTROS tpCadastroConfig =  (AUT_VA_CADASTROS)autGetCurrentParameter("AUT_TIPO_CADASTRO");
+		
+		switch(tpCadastroConfig) {
+		case ESTRANGEIRO:{
+			numPassPorte = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_PASSAPORTE").toString();
+			System.out.println("AUT INFO: CADASTRO DE CLIENTE : ESTRANGEIRO - PASSA PORTE");
+			break;
+		}
+		case FISICA:{
+			numCPF = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CPF").toString();
+			System.out.println("AUT INFO: CADASTRO DE CLIENTE : PF - CPF");			
+			break;
+		}
+		case JURIDICA:{
+			numCNPJ = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CNPJ").toString();
+			System.out.println("AUT INFO: CADASTRO DE CLIENTE : PJ - CNPJ");
+			break;
+		}
+		default:{
+			
+		}
+		}
+		
 		DomTextField numeroDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDocs.NumeroDocumento");
 		numeroDoc.click();
-		numeroDoc.typeKeys(numCPF);
+		switch(tpCadastroConfig) {
+		case ESTRANGEIRO:{
+			numPassPorte = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_PASSAPORTE").toString();
+			numeroDoc.typeKeys(numPassPorte);
+			break;
+		}
+		case FISICA:{
+			numCPF = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CPF").toString();
+			numeroDoc.typeKeys(numCPF);
+			break;
+		}
+		case JURIDICA:{
+			numCNPJ = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CNPJ").toString();
+			numeroDoc.typeKeys(numCNPJ);
+			break;
+		}
+		default:{
+			
+		}
+		}
+		
 		
 		String clienteNome = autGetCurrentParameter("AUT_NOME").toString();
 		String clienteEmail = autGetCurrentParameter("AUT_EMAIL").toString();
