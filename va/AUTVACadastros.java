@@ -377,6 +377,8 @@ public class AUTVACadastros extends AUTVALogin {
 
 		btCadastroPFAvanc2.click();
 		
+		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");
+		
 		//end recording
 	}
 
