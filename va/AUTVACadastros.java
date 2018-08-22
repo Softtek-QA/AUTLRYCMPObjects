@@ -354,29 +354,29 @@ public class AUTVACadastros extends AUTVALogin {
 		btCheckAceitaNovidProp.select();
 		btCheckAceitaNovidProp.click();
 		btCheckAceitaNovidProp.select();
+		try {
+			btCadastroPFAvanc.click();
+			
+			btCheckAceitaNovidProp = AUT_AGENT_SILK4J.<DomRadioButton>find("VA.CadastroClientesDados.AceitarOfertaTelefoneSim");
 
-		btCadastroPFAvanc.click();
+			btCheckAceitaNovidProp.select();
+			btCheckAceitaNovidProp.click();
+			btCheckAceitaNovidProp.select();
 
-		btCheckAceitaNovidProp = AUT_AGENT_SILK4J.<DomRadioButton>find("VA.CadastroClientesDados.AceitarOfertaTelefoneSim");
+			DomElement btCheckMalaDirectAceit = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.AceitaMalaDiretSim");
 
-		btCheckAceitaNovidProp.select();
-		btCheckAceitaNovidProp.click();
-		btCheckAceitaNovidProp.select();
+			btCheckMalaDirectAceit.click();
 
-		DomElement btCheckMalaDirectAceit = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.AceitaMalaDiretSim");
+			AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.AceitarPropagandasSim").click();
+		}
+		catch(java.lang.Exception e ) {
 
-		btCheckMalaDirectAceit.click();
-
-		AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.AceitarPropagandasSim").click();
-
+		}
+		
 		DomButton btCadastroPFAvanc2 = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.AvancarPaginaCadastro2");
 
-		//btCadastroPFAvanc.click();
-
-		//start recording 
-		AUT_AGENT_SILK4J.<AccessibleControl>find("WebBrowser.Maximizar").click();
+		btCadastroPFAvanc2.click();
 		
-		AUT_AGENT_SILK4J.captureBitmap("CHECKPOINT-CADASTRO.png");
 		//end recording
 	}
 
