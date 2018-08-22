@@ -206,19 +206,16 @@ public class AUTVACadastros extends AUTVALogin {
 		}
 	}
 
-	@Test
-	public void autInitClientMenu() {
+	public void autCadastrarCliente() {
 		DomElement menuClient = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.MenuPrincipal");
 		menuClient.click();
 		DomElement subMenuCliente = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.SubMenuClientes");
 		subMenuCliente.click();
 		DomElement btAddNovoClient = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesInicial.BotaoAdicionarNovo");
 		btAddNovoClient.click();
-		String numCPF = autGetDataFlow().AUT_GLOBAL_PARAMETERS
-				.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF.toString()).get(1).get("AUT_CPF").toString();
+		String numCPF = autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF.toString()).get(1).get("AUT_CPF").toString();
 
 		DomTextField numeroDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDocs.NumeroDocumento");
-
 		numeroDoc.click();
 		numeroDoc.typeKeys(numCPF);
 
@@ -377,11 +374,19 @@ public class AUTVACadastros extends AUTVALogin {
 
 		btCadastroPFAvanc2.click();
 		
-		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");
+		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");		
+	}
+	
+		
+	@Test
+	public void autInitClientMenu() {
+		
+		autCadastrarCliente();
 		
 		//end recording
 	}
 
+	
 	/**
 	 * 
 	 * Cadastra pessoa física
