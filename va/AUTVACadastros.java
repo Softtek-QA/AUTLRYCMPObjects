@@ -220,10 +220,9 @@ public class AUTVACadastros extends AUTVALogin {
 		numeroDoc.click();
 		numeroDoc.typeKeys(numCPF);
 		
-		String clienteNome = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_NOME").toString();
-		String clienteEmail = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF,"AUT_EMAIL").toString();
-		String ClienteInscricao = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_INCRICAO_ESTADUAL")
-				.toString();
+		String clienteNome = autGetCurrentParameter("AUT_NOME").toString();
+		String clienteEmail = autGetCurrentParameter("AUT_EMAIL").toString();
+		String ClienteInscricao = autGetCurrentParameter( "AUT_INCRICAO_ESTADUAL").toString();
 
 		DomTextField nome = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Nome");
 		DomTextField email = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Email");
@@ -241,9 +240,9 @@ public class AUTVACadastros extends AUTVALogin {
 		numeroInscEstatual.domClick();
 		numeroInscEstatual.setText(ClienteInscricao);
 
-		String tipoTelefone = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_TIPO_TELEFONE")
+		String tipoTelefone = autGetCurrentParameter( "AUT_TIPO_TELEFONE")
 				.toString();
-		String numeroTelefone = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_NUMERO_TELEFONE").toString();
+		String numeroTelefone = autGetCurrentParameter( "AUT_NUMERO_TELEFONE").toString();
 
 		DomListBox listaTipoElement = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoTelefone");
 		listaTipoElement.click();
@@ -261,10 +260,10 @@ public class AUTVACadastros extends AUTVALogin {
 		DomButton btPesquisarCEP = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.NaoSeiCEPPesquisa");
 		btPesquisarCEP.click();
 
-		String UFEnderecoPesquisa = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_UF_PESQUISA").toString();
-		String cidade = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CIDADE_PESQUISA").toString();
-		String endereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_ENDERECO_PESQUISA").toString();
-		String bairro = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_BAIRRO_PESQUISA").toString();
+		String UFEnderecoPesquisa = autGetCurrentParameter( "AUT_UF_PESQUISA").toString();
+		String cidade = autGetCurrentParameter( "AUT_CIDADE_PESQUISA").toString();
+		String endereco = autGetCurrentParameter( "AUT_ENDERECO_PESQUISA").toString();
+		String bairro = autGetCurrentParameter( "AUT_BAIRRO_PESQUISA").toString();
 
 		DomListBox listUF = AUT_AGENT_SILK4J.<DomListBox>find("VA.PesquisaCEP.UF");
 
@@ -293,16 +292,16 @@ public class AUTVACadastros extends AUTVALogin {
 
 		itemSelectResultPesquisa.click();
 
-		String tipoEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_TIPO_ENDERECO").toString();
-		String cep = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CEP").toString();
-		String nomeRuaEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_RUA_ENDERECO").toString();
-		String numeroEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_NUMERO_ENDERECO").toString();
-		String bairroResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_BAIRRO_ENDERECO").toString();
-		String complementoResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_COMPLEMENTO_ENDERECO").toString();
-		String cidadeResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CIDADE_ENDERECO").toString();
-		String estadoResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_ESTADO_ENDERECO").toString();
-		String referenciaResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_REFERENCIA_ENDERECO").toString();
-		String tipoImovelResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_TIPO_IMOVEL_RESIDENCIA").toString();
+		String tipoEndereco = autGetCurrentParameter( "AUT_TIPO_ENDERECO").toString();
+		String cep = autGetCurrentParameter( "AUT_CEP").toString();
+		String nomeRuaEndereco = autGetCurrentParameter( "AUT_RUA_ENDERECO").toString();
+		String numeroEndereco = autGetCurrentParameter( "AUT_NUMERO_ENDERECO").toString();
+		String bairroResidencia = autGetCurrentParameter( "AUT_BAIRRO_ENDERECO").toString();
+		String complementoResidencia = autGetCurrentParameter( "AUT_COMPLEMENTO_ENDERECO").toString();
+		String cidadeResidencia = autGetCurrentParameter( "AUT_CIDADE_ENDERECO").toString();
+		String estadoResidencia = autGetCurrentParameter( "AUT_ESTADO_ENDERECO").toString();
+		String referenciaResidencia = autGetCurrentParameter( "AUT_REFERENCIA_ENDERECO").toString();
+		String tipoImovelResidencia = autGetCurrentParameter( "AUT_TIPO_IMOVEL_RESIDENCIA").toString();
 
 		DomListBox listTipoEnd = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoEndereco");
 		DomTextField txtCEPEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.CEP");
