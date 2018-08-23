@@ -7,6 +7,8 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
+import com.borland.silktest.jtf.xbrowser.BrowserApplication;
+import com.borland.silktest.jtf.xbrowser.BrowserWindow;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomCheckBox;
 import com.borland.silktest.jtf.xbrowser.DomElement;
@@ -216,11 +218,11 @@ public class AUTVACadastros extends AUTVALogin {
 	public void autCadastrarEstrangeiro() {
 		System.out.println("****** AUT INFO: INICIANDO CADASTRO DE CLIENTE ESTRANGEIRO : PASSAPORTE *****");
 		
-		String nomeCliente = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_NOME").toString();
+		String nomeCliente = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_NOME_ESTRANGEIRO").toString();
 		String passaPorteCliente = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_PASSAPORTE").toString();
 		String emailCliente = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_EMAIL").toString();
 		AUT_VA_TIPO_CONTATO tipoContatoCliente = (AUT_VA_TIPO_CONTATO) autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_TIPO_TELEFONE");
-		String numeroTelefoneCliente = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_PASSAPORTE").toString();
+		String numeroTelefoneCliente = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_NUMERO_TELEFONE").toString();
 		AUT_VA_TIPO_ENDERECO tipoEnderecoCliente = (AUT_VA_TIPO_ENDERECO) autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_TIPO_ENDERECO");
 		
 		
@@ -242,9 +244,9 @@ public class AUTVACadastros extends AUTVALogin {
 		tipoTel.click();
 		tipoTel.select(tipoContatoCliente.toString());
 		
+		numeroTel.setFocus();
 		numeroTel.click();
 		numeroTel.setText(numeroTelefoneCliente);
-		numeroTel.click();
 		numeroTel.setFocus();
 		numeroTel.click();
 		
@@ -297,22 +299,24 @@ public class AUTVACadastros extends AUTVALogin {
 		String referenciaResidencia = autGetCurrentParameter( "AUT_REFERENCIA_ENDERECO").toString();
 		String tipoImovelResidencia = autGetCurrentParameter( "AUT_TIPO_IMOVEL_RESIDENCIA").toString();
 
-		DomListBox listTipoEnd = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoEndereco");
-		DomTextField txtCEPEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.CEP");
-		DomTextField txtNumeroCasaEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroCasa");
-		DomTextField txtBairroEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Bairro");
-		DomTextField txtComplementoResidEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Complemento");
-		DomTextField txtCidadeEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Cidade");
-		DomListBox txtEstadoEnd = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.Estado");
-		DomTextField txtReferenciaEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Referencia");
-		DomListBox txtTipoImovelResidEnd = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoImovelResidencial");
+		DomTextField txtCEPEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.CEP");
+		DomTextField txtRuaCasaEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.NumeroCasa");
+		DomTextField txtNumeroCasaEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.NumeroCasa");
+		DomTextField txtBairroEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Bairro");
+		DomTextField txtComplementoResidEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Complemento");
+		DomTextField txtCidadeEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Cidade");
+		DomListBox txtEstadoEnd = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.Estado");
+		DomTextField txtReferenciaEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Referencia");
+		DomListBox txtTipoImovelResidEnd = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoImovelResidencial");
 
-		listTipoEnd.click();
-		listTipoEnd.select(tipoEnderecoCliente.toString());
+		tipoEndereco.click();
+		tipoEndereco.select(tipoEnderecoCliente.toString());
 
 		txtCEPEnd.click();
 		txtCEPEnd.setText(cep);
 
+		txtRuaCasaEnd.click();
+		txtRuaCasaEnd.setText(nomeRuaEndereco);
 		txtNumeroCasaEnd.click();
 		txtNumeroCasaEnd.setText(numeroEndereco);
 
@@ -340,10 +344,14 @@ public class AUTVACadastros extends AUTVALogin {
 		btCheckAceitaNovidProp.select();
 
 		DomButton btCadastroPFAvanc = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.AvancarPaginaCadastro");
+		
+		AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesEstrangeiro.BotaoPropagSMS").click();
 
 		btCheckAceitaNovidProp.select();
 		btCheckAceitaNovidProp.click();
 		btCheckAceitaNovidProp.select();
+		
+		
 		try {
 			btCadastroPFAvanc.click();
 			
@@ -362,12 +370,16 @@ public class AUTVACadastros extends AUTVALogin {
 		catch(java.lang.Exception e ) {
 
 		}
+				
+	
+		AUT_AGENT_SILK4J.<DomRadioButton>find("VA.CadastroClientesEstrangeiro.CheckItemPromocoes").click();
 		
-		DomButton btCadastroPFAvanc2 = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.AvancarPaginaCadastro2");
+		DomButton btCadastroPFAvanc2 = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.BotaoAvancarCadastro");
 
 		btCadastroPFAvanc2.click();
+			
 		
-		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");			
+		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO-ESTRANGEIRO");			
 		
 		
 	}
@@ -510,6 +522,8 @@ public class AUTVACadastros extends AUTVALogin {
 		btCheckAceitaNovidProp.select();
 
 		DomButton btCadastroPFAvanc = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.AvancarPaginaCadastro");
+
+		AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesEstrangeiro.BotaoPropagSMS").click();
 
 		btCheckAceitaNovidProp.select();
 		btCheckAceitaNovidProp.click();
