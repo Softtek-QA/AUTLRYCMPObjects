@@ -8,6 +8,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 import com.borland.silktest.jtf.xbrowser.DomButton;
+import com.borland.silktest.jtf.xbrowser.DomCheckBox;
 import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomLink;
 import com.borland.silktest.jtf.xbrowser.DomListBox;
@@ -206,66 +207,7 @@ public class AUTVACadastros extends AUTVALogin {
 		}
 	}
 
-	public void autCadastrarCliente(AUT_VA_CADASTROS tipoCadastro) {
-		
-		
-		DomElement menuClient = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.MenuPrincipal");
-		menuClient.click();
-		DomElement subMenuCliente = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.SubMenuClientes");
-		subMenuCliente.click();
-		DomElement btAddNovoClient = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesInicial.BotaoAdicionarNovo");
-		btAddNovoClient.click();
-		String numCPF = "";
-		String numCNPJ = "";
-		String numPassPorte = "";
-		
-		AUT_VA_CADASTROS tpCadastroConfig =  (AUT_VA_CADASTROS)autGetCurrentParameter("AUT_TIPO_CADASTRO");
-		
-		switch(tpCadastroConfig) {
-		case ESTRANGEIRO:{
-			numPassPorte = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_PASSAPORTE").toString();
-			System.out.println("AUT INFO: CADASTRO DE CLIENTE : ESTRANGEIRO - PASSA PORTE");
-			break;
-		}
-		case FISICA:{
-			numCPF = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CPF").toString();
-			System.out.println("AUT INFO: CADASTRO DE CLIENTE : PF - CPF");			
-			break;
-		}
-		case JURIDICA:{
-			numCNPJ = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CNPJ").toString();
-			System.out.println("AUT INFO: CADASTRO DE CLIENTE : PJ - CNPJ");
-			break;
-		}
-		default:{
-			
-		}
-		}
-		
-		DomTextField numeroDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDocs.NumeroDocumento");
-		numeroDoc.click();
-		switch(tpCadastroConfig) {
-		case ESTRANGEIRO:{
-			numPassPorte = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_PASSAPORTE").toString();
-			numeroDoc.typeKeys(numPassPorte);
-			break;
-		}
-		case FISICA:{
-			numCPF = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CPF").toString();
-			numeroDoc.typeKeys(numCPF);
-			break;
-		}
-		case JURIDICA:{
-			numCNPJ = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CNPJ").toString();
-			numeroDoc.typeKeys(numCNPJ);
-			break;
-		}
-		default:{
-			
-		}
-		}
-		
-		
+	public void autCadastrarPF() {
 		String clienteNome = autGetCurrentParameter("AUT_NOME").toString();
 		String clienteEmail = autGetCurrentParameter("AUT_EMAIL").toString();
 		String ClienteInscricao = autGetCurrentParameter( "AUT_INCRICAO_ESTADUAL").toString();
@@ -420,6 +362,84 @@ public class AUTVACadastros extends AUTVALogin {
 		btCadastroPFAvanc2.click();
 		
 		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");		
+	}
+	
+	
+	public void autCadastrarCliente(AUT_VA_CADASTROS tipoCadastro) {
+		
+		
+		DomElement menuClient = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.MenuPrincipal");
+		menuClient.click();
+		DomElement subMenuCliente = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.SubMenuClientes");
+		subMenuCliente.click();
+		DomElement btAddNovoClient = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesInicial.BotaoAdicionarNovo");
+		btAddNovoClient.click();
+		String numCPF = "";
+		String numCNPJ = "";
+		String numPassPorte = "";
+		
+		AUT_VA_CADASTROS tpCadastroConfig =  (AUT_VA_CADASTROS)autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF,"AUT_TIPO_CADASTRO");
+		
+		switch(tpCadastroConfig) {
+		case ESTRANGEIRO:{
+			DomTextField numeroDoc = null;
+			numPassPorte = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_PASSAPORTE").toString();
+			System.out.println("AUT INFO: CADASTRO DE CLIENTE : ESTRANGEIRO - PASSA PORTE");
+			AUT_AGENT_SILK4J.<DomCheckBox>find("VA.CadastroClientesDados.ClienteEstrangeiro").check();			
+			numPassPorte = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_PASSAPORTE").toString();
+			numeroDoc.typeKeys(numPassPorte);
+			
+			break;
+		}
+		case FISICA:{
+			DomTextField numeroDoc = null;
+			numCPF = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CPF").toString();
+			System.out.println("AUT INFO: CADASTRO DE CLIENTE : PF - CPF");			
+			numeroDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDocs.NumeroDocumento");
+			numeroDoc.click();
+			numCPF = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CPF").toString();
+			numeroDoc.typeKeys(numCPF);
+			autCadastrarPF();
+			
+			break;
+		}
+		case JURIDICA:{
+			DomTextField numeroDoc = null;
+			numCNPJ = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CNPJ").toString();
+			System.out.println("AUT INFO: CADASTRO DE CLIENTE : PJ - CNPJ");
+			numeroDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDocs.NumeroDocumento");
+			numeroDoc.click();
+			numCNPJ = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CNPJ").toString();
+			numeroDoc.typeKeys(numCNPJ);
+			
+			break;
+		}
+		default:{
+			
+		}
+		}
+		
+		DomTextField numeroDoc = null;
+	
+		switch(tpCadastroConfig) {
+		case ESTRANGEIRO:{
+
+			break;
+		}
+		case FISICA:{
+
+			break;
+		}
+		case JURIDICA:{
+			break;
+		}
+		default:{
+			
+		}
+		}
+		
+		
+		
 	}
 	
 		
