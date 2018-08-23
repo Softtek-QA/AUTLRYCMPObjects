@@ -207,6 +207,37 @@ public class AUTVACadastros extends AUTVALogin {
 		}
 	}
 
+
+	/**
+	 * 
+	 * Inclusão de parametros para cadastro de cliente estrangeiro
+	 * 
+	 */
+	public void autCadastrarEstrangeiro() {
+		System.out.println("****** AUT INFO: INICIANDO CADASTRO DE CLIENTE ESTRANGEIRO : PASSAPORTE *****");
+		
+		String nomeCliente = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_NOME").toString();
+		String passaPorteCliente = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_PASSAPORTE").toString();
+		String emailCliente = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_EMAIL").toString();
+		
+		
+		DomTextField nome = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Nome");
+		DomTextField numeroPassaPorte = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.PassaPorte");
+		DomTextField email = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Email");
+			
+		nome.click();
+		nome.setText(nomeCliente);
+		numeroPassaPorte.click();
+		numeroPassaPorte.setText(passaPorteCliente);
+		email.click();
+		email.setText(emailCliente);
+		
+	}
+	/**
+	 * 
+	 * Inclusão os parametros de cadastro para pessoa física
+	 * 
+	 */
 	public void autCadastrarPF() {
 		String clienteNome = autGetCurrentParameter("AUT_NOME").toString();
 		String clienteEmail = autGetCurrentParameter("AUT_EMAIL").toString();
@@ -382,12 +413,12 @@ public class AUTVACadastros extends AUTVALogin {
 		
 		switch(tpCadastroConfig) {
 		case ESTRANGEIRO:{
-			DomTextField numeroDoc = null;
+			
 			numPassPorte = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_PASSAPORTE").toString();
 			System.out.println("AUT INFO: CADASTRO DE CLIENTE : ESTRANGEIRO - PASSA PORTE");
 			AUT_AGENT_SILK4J.<DomCheckBox>find("VA.CadastroClientesDados.ClienteEstrangeiro").check();			
 			numPassPorte = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_PASSAPORTE").toString();
-			numeroDoc.typeKeys(numPassPorte);
+			autCadastrarEstrangeiro();
 			
 			break;
 		}
