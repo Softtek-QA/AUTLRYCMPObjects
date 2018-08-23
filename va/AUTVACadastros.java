@@ -212,6 +212,153 @@ public class AUTVACadastros extends AUTVALogin {
 
 	/**
 	 * 
+	 * Inclusão de parametros de cadastro pessoa jurídica
+	 * 
+	 */
+	public void autCadastrarPJ(){
+		String razaoSocial = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF,"AUT_NOME_PJ").toString();
+		String razaoFantasia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF,"AUT_NOME_PJ_FANTASIA").toString();
+		String inscricaoEstadual = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF,"AUT_INCRICAO_ESTADUAL").toString();
+		String inscricaoMunicipal = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF,"AUT_INCRICAO_MUNICIPAL").toString();
+		String nomeContato = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF,"AUT_NOME_PJ_CONTATO").toString();
+		String emailContato = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF,"AUT_PJ_EMAIL_CONTATO").toString();
+		String departamentoContato = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF,"AUT_PJ_DEPARTAMENTO_CONTATO").toString();
+		AUT_VA_TIPO_CONTATO numeroTipoTelefoneContato = (AUT_VA_TIPO_CONTATO)autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF,"AUT_TIPO_TELEFONE");
+		String numeroTelefoneContato = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF,"AUT_NUMERO_TELEFONE").toString();
+	
+	
+		DomTextField txtNomeSocial = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesPJ.RazaoSocial");
+		DomTextField txtRazaoFantasia = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesPJ.NomeFantasia");
+		DomTextField txtInscricaoEstadual = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesPJ.InscricaoEstadual");
+		DomTextField txtInscricaoMunicipal = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesPJ.InscricaoMunicipal");
+		DomTextField txtNomeContato = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesPJ.NomeContato");
+		DomTextField txtEmailContato = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesPJ.EmailContato");
+		DomTextField txtDepartamentoContato = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesPJ.Departamento");
+		DomListBox listNumeroTipoTelefoneContato = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesPJ.TipoTelefone");
+		DomTextField txtNumeroTelefoneContato = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesPJ.NumeroTelefone");
+		
+		txtNomeSocial.click();
+		txtNomeSocial.setText(razaoFantasia);
+		
+		txtRazaoFantasia.click();
+		txtRazaoFantasia.setText(razaoFantasia);
+		
+		txtInscricaoEstadual.click();
+		txtInscricaoEstadual.setText(inscricaoEstadual);
+		
+		txtInscricaoMunicipal.click();
+		txtInscricaoMunicipal.setText(inscricaoMunicipal);
+		
+		txtNomeContato.click();
+		txtNomeContato.setText(nomeContato);
+		
+		txtEmailContato.click();
+		txtEmailContato.setText(emailContato);
+		
+		txtDepartamentoContato.click();
+		txtDepartamentoContato.setText(departamentoContato);
+		
+		listNumeroTipoTelefoneContato.click();
+		listNumeroTipoTelefoneContato.select(numeroTipoTelefoneContato.toString());
+		
+		txtNumeroTelefoneContato.click();
+		txtNumeroTelefoneContato.setText(numeroTelefoneContato);
+		
+		AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesPJ.AceitoSMS").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesPJ.AceitoPropagLeroy").click();
+		
+		DomButton btPesquisarCEP = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.NaoSeiCEPPesquisa");
+		btPesquisarCEP.click();
+
+		String UFEnderecoPesquisa = autGetCurrentParameter( "AUT_UF_PESQUISA").toString();
+		String cidade = autGetCurrentParameter( "AUT_CIDADE_PESQUISA").toString();
+		String endereco = autGetCurrentParameter( "AUT_ENDERECO_PESQUISA").toString();
+		String bairro = autGetCurrentParameter( "AUT_BAIRRO_PESQUISA").toString();
+
+		DomListBox listUF = AUT_AGENT_SILK4J.<DomListBox>find("VA.PesquisaCEP.UF");
+
+		listUF.click();
+		listUF.domClick();
+		listUF.select(UFEnderecoPesquisa);
+
+		DomTextField txtCidadePesquisa = AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaCEP.Cidade");
+		DomTextField txtEnderecoPesquisa = AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaCEP.Endereco");
+		DomTextField txtBairroPesquisa = AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaCEP.Bairro");
+
+		txtCidadePesquisa.click();
+		txtCidadePesquisa.setText(cidade);
+
+		txtEnderecoPesquisa.click();
+		txtEnderecoPesquisa.setText(endereco);
+
+		txtBairroPesquisa.click();
+		txtBairroPesquisa.setText(bairro);
+
+		DomButton btBuscarEndereco = AUT_AGENT_SILK4J.<DomButton>find("VA.PesquisaCEP.Buscar");
+
+		btBuscarEndereco.click();
+
+		DomElement itemSelectResultPesquisa = AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.ItemResultadoPesqSelecionado");
+
+		itemSelectResultPesquisa.click();
+	
+		
+		
+		String cep = autGetCurrentParameter( "AUT_CEP").toString();
+		String nomeRuaEndereco = autGetCurrentParameter( "AUT_RUA_ENDERECO").toString();
+		String numeroEndereco = autGetCurrentParameter( "AUT_NUMERO_ENDERECO").toString();
+		String bairroResidencia = autGetCurrentParameter( "AUT_BAIRRO_ENDERECO").toString();
+		String complementoResidencia = autGetCurrentParameter( "AUT_COMPLEMENTO_ENDERECO").toString();
+		String cidadeResidencia = autGetCurrentParameter( "AUT_CIDADE_ENDERECO").toString();
+		String estadoResidencia = autGetCurrentParameter( "AUT_ESTADO_ENDERECO").toString();
+		String referenciaResidencia = autGetCurrentParameter( "AUT_REFERENCIA_ENDERECO").toString();
+		String tipoImovelResidencia = autGetCurrentParameter( "AUT_TIPO_IMOVEL_RESIDENCIA").toString();
+		/**
+		DomTextField txtCEPEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.CEP");
+		DomTextField txtRuaCasaEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.NumeroCasa");
+		DomTextField txtNumeroCasaEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.NumeroCasa");
+		DomTextField txtBairroEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Bairro");
+		DomTextField txtComplementoResidEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Complemento");
+		DomTextField txtCidadeEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Cidade");
+		DomListBox txtEstadoEnd = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.Estado");
+		DomTextField txtReferenciaEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Referencia");
+		DomListBox txtTipoImovelResidEnd = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoImovelResidencial");
+
+		tipoEndereco.click();
+		tipoEndereco.select(tipoEnderecoCliente.toString());
+
+		txtCEPEnd.click();
+		txtCEPEnd.setText(cep);
+
+		txtRuaCasaEnd.click();
+		txtRuaCasaEnd.setText(nomeRuaEndereco);
+		txtNumeroCasaEnd.click();
+		txtNumeroCasaEnd.setText(numeroEndereco);
+
+		txtBairroEnd.click();
+		txtBairroEnd.setText(bairroResidencia);
+
+		txtComplementoResidEnd.click();
+		txtComplementoResidEnd.setText(complementoResidencia);
+
+		txtCidadeEnd.click();
+		txtCidadeEnd.setText(cidadeResidencia);
+
+		txtEstadoEnd.click();
+		txtEstadoEnd.select(estadoResidencia);
+
+		txtReferenciaEnd.click();
+		txtReferenciaEnd.setText(referenciaResidencia);
+
+		txtTipoImovelResidEnd.click();
+		txtTipoImovelResidEnd.select(tipoImovelResidencia);
+*/		
+	}
+	
+	
+	
+	/**
+	 * 
 	 * Inclusão de parametros para cadastro de cliente estrangeiro
 	 * 
 	 */
@@ -224,8 +371,7 @@ public class AUTVACadastros extends AUTVALogin {
 		AUT_VA_TIPO_CONTATO tipoContatoCliente = (AUT_VA_TIPO_CONTATO) autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_TIPO_TELEFONE");
 		String numeroTelefoneCliente = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_NUMERO_TELEFONE").toString();
 		AUT_VA_TIPO_ENDERECO tipoEnderecoCliente = (AUT_VA_TIPO_ENDERECO) autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_TIPO_ENDERECO");
-		
-		
+				
 		DomTextField nome = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Nome");
 		DomTextField numeroPassaPorte = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.PassaPorte");
 		DomTextField email = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Email");
@@ -563,7 +709,7 @@ public class AUTVACadastros extends AUTVALogin {
 		DomElement subMenuCliente = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.SubMenuClientes");
 		subMenuCliente.click();
 		DomElement btAddNovoClient = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesInicial.BotaoAdicionarNovo");
-		btAddNovoClient.click();
+		
 		String numCPF = "";
 		String numCNPJ = "";
 		String numPassPorte = "";
@@ -572,7 +718,7 @@ public class AUTVACadastros extends AUTVALogin {
 		
 		switch(tpCadastroConfig) {
 		case ESTRANGEIRO:{
-			
+			btAddNovoClient.click();
 			numPassPorte = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_PASSAPORTE").toString();
 			System.out.println("AUT INFO: CADASTRO DE CLIENTE : ESTRANGEIRO - PASSA PORTE");
 			AUT_AGENT_SILK4J.<DomCheckBox>find("VA.CadastroClientesDados.ClienteEstrangeiro").check();			
@@ -582,6 +728,7 @@ public class AUTVACadastros extends AUTVALogin {
 			break;
 		}
 		case FISICA:{
+			btAddNovoClient.click();
 			DomTextField numeroDoc = null;
 			numCPF = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CPF").toString();
 			System.out.println("AUT INFO: CADASTRO DE CLIENTE : PF - CPF");			
@@ -594,42 +741,25 @@ public class AUTVACadastros extends AUTVALogin {
 			break;
 		}
 		case JURIDICA:{
-			DomTextField numeroDoc = null;
+			DomTextField txtNumDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesInicial.NumeroDocumento");
+			
 			numCNPJ = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CNPJ").toString();
-			System.out.println("AUT INFO: CADASTRO DE CLIENTE : PJ - CNPJ");
-			numeroDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDocs.NumeroDocumento");
+			
+			txtNumDoc.typeKeys(numCNPJ,500);
+			
+			btAddNovoClient.click();
+			
+			
+			DomTextField numeroDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroDocumento");
+			
 			numeroDoc.click();
-			numCNPJ = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF, "AUT_CNPJ").toString();
-			numeroDoc.typeKeys(numCNPJ);
+			numeroDoc.setText(numCNPJ);
+			numeroDoc.typeKeys("\n");			
+			autCadastrarPJ();
+			break;
+		}		
+		}
 			
-			break;
-		}
-		default:{
-			
-		}
-		}
-		
-		DomTextField numeroDoc = null;
-	
-		switch(tpCadastroConfig) {
-		case ESTRANGEIRO:{
-
-			break;
-		}
-		case FISICA:{
-
-			break;
-		}
-		case JURIDICA:{
-			break;
-		}
-		default:{
-			
-		}
-		}
-		
-		
-		
 	}
 	
 		
