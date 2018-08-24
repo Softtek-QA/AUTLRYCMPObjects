@@ -20,7 +20,7 @@ import org.junit.Test;
  */
 public class AUTVALogin extends AUTVABaseComponent {
 
-	@Before
+	
 	public void autStartLoginDefault() {
 		try {
 		
@@ -35,7 +35,30 @@ public class AUTVALogin extends AUTVABaseComponent {
 		}
 	}
 	
+	public void autStartLoginDefault(String usuario, String senha) {
+		try {
+		
+			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
+			
+			autLogin(usuario, senha);
+			
+			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: END");
+		}
+		catch(java.lang.Exception e) {
+			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
+		}
+	}
+	
 	public void autStartProxyConfiguration(String usuario,String senha) {
 		
+	}
+	
+	
+	public AUTVALogin(String usuario, String senha) {
+		autStartLoginDefault(usuario, senha);
+	}
+	
+	public AUTVALogin() {
+		autStartLoginDefault();
 	}
 }
