@@ -34,4 +34,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString(), AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString());
 	}
 	
+	public void autLogin(String usuario, String senha) {
+		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, usuario.toString(), senha.toString());
+	}
 }
