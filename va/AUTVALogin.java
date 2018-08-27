@@ -24,12 +24,7 @@ public class AUTVALogin extends AUTVABaseComponent {
 	public void autStartLoginDefault() {
 		try {		
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
-			AUT_BASE_STATE_CONFIGURATION_BROWSER.setLocator("VA");
-			AUT_BASE_STATE_CONFIGURATION_BROWSER.setExecutable("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
-			AUT_BASE_STATE_CONFIGURATION_BROWSER.setUrl("https://vahomolog.leroymerlin.com.br/va/lmbr/pt/BRL/login");
-			AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
-			autLogin();
-			
+			autLogin();			
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: END");
 		}
 		catch(java.lang.Exception e) {
