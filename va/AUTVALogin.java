@@ -3,13 +3,13 @@
  */
 package br.lry.components.va;
 
-import br.lry.components.AUTSAPLogin;
 import br.lry.components.AUTVABaseComponent;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem;
+import br.lry.process.AUTSAP01AbastecimentoEstoque;
 import junit.framework.AssertionFailedError;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.TestResult;
-
+import br.lry.components.sap.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,13 +24,12 @@ public class AUTVALogin extends AUTVABaseComponent {
 	@Test
 	public void autStartLoginDefault() {
 		try {	
-			AUTSAPLogin sapLog = new AUTSAPLogin();
+			AUTZMM0075 zmm = new AUTZMM0075();			
+			zmm.autInitProcess();			
+			
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
 			autInitWebApplication();			
 			autLogin();
-			sapLog.baseState();
-			sapLog.autInitSAPApp();
-			sapLog.autStartLoginDefault();
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: END");
 		}
 		catch(java.lang.Exception e) {
@@ -44,7 +43,6 @@ public class AUTVALogin extends AUTVABaseComponent {
 	public void autStartLoginDefault(String usuario, String senha) {
 		try {
 		
-			
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
 			
 			autLogin(usuario, senha);

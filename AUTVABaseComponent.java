@@ -21,6 +21,7 @@ import com.borland.silktest.jtf.xbrowser.DomButton;
 public class AUTVABaseComponent extends AUTBaseComponent {
 	java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
 	
+	
 	public AUTVABaseComponent() {
 		super();
 		// TODO Auto-generated constructor stub
