@@ -24,9 +24,6 @@ public class AUTVALogin extends AUTVABaseComponent {
 	@Test
 	public void autStartLoginDefault() {
 		try {	
-			AUTZMM0075 zmm = new AUTZMM0075();			
-			zmm.autInitProcess();			
-			
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
 			autInitWebApplication();			
 			autLogin();
@@ -37,8 +34,7 @@ public class AUTVALogin extends AUTVABaseComponent {
 			e.printStackTrace();
 			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
 		}
-	}
-	
+	}	
 	
 	public void autStartLoginDefault(String usuario, String senha) {
 		try {
