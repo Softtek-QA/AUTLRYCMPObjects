@@ -42,6 +42,7 @@ public class AUTVALogin extends AUTVABaseComponent {
 			autLogin(usuario, senha);
 			
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: END");
+			//TESTE DE CONFIGURACAO
 		}
 		catch(java.lang.Exception e) {
 			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
