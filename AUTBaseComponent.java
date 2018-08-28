@@ -30,7 +30,7 @@ import junit.framework.TestResult;
  * @author Softtek-QA
  *
  */
-public abstract class AUTBaseComponent{
+public abstract class AUTBaseComponent extends junit.framework.TestSuite implements junit.framework.Test{
 	protected Desktop AUT_AGENT_SILK4J = new Desktop();  //Objeto de conexão com aplicação da automação
 	protected BrowserBaseState AUT_BASE_STATE_CONFIGURATION_BROWSER = null; //Objeto base de configuraçao do browser
 	private AUTDataFlow AUT_CURRENT_DATA_FLOW = null; //Objeto de gerenciamento do fluxo de dados
@@ -63,7 +63,7 @@ public abstract class AUTBaseComponent{
 	public AUTLogMensagem autGetLogManager()
 	{
 		try {
-
+		
 			System.out.println("AUT INFO: INICIALIZANDO SERVIÇO PARA GERENCIAMENTO DE LOGS DO SISTEMA");
 
 			AUT_CURRENT_LOG_MANAGER = ( AUT_CURRENT_LOG_MANAGER!=null ? AUT_CURRENT_LOG_MANAGER : new AUTLogMensagem());
@@ -178,7 +178,6 @@ public abstract class AUTBaseComponent{
 	 * Inicializa aplicação da aplicaçao VA
 	 * 
 	 */
-	@Before
 	public void autInitWebApplication() {
 
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();		
@@ -187,7 +186,8 @@ public abstract class AUTBaseComponent{
 			AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
 		}
 		catch(java.lang.Exception e) {
-			
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
@@ -200,17 +200,7 @@ public abstract class AUTBaseComponent{
 	 * Finaliza a aplicação utilizada na automação
 	 * 
 	 */
-	@After
 	public void autCloseApplication() {
 		System.out.println("AUT INFO: FINALIZANDO APLICAÇÃO");			
-	}
-
-	/**
-	 * 
-	 * Construtor padrão da classe
-	 * 
-	 */
-	public AUTBaseComponent() {
-		super();
 	}
 }

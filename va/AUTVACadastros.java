@@ -5,6 +5,7 @@ package br.lry.components.va;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.After;
 import org.junit.Test;
 
 import com.borland.silktest.jtf.xbrowser.BrowserApplication;
@@ -769,28 +770,6 @@ public class AUTVACadastros extends AUTVALogin {
 		autCadastrarCliente(AUT_VA_CADASTROS.FISICA);
 		
 		//end recording
-	}
-
-	
-	/**
-	 * 
-	 * Cadastra pessoa física
-	 * 
-	 */
-	public void autCadastrarPF(String nomeTabelaParametros) {
-
-	}
-
-
-
-	/**
-	 * 
-	 * Construtor padrão da classe
-	 * 
-	 */
-	public AUTVACadastros() {
-		super();
-	}
-
+	}	
 }
 

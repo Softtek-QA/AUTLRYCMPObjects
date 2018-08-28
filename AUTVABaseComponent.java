@@ -3,6 +3,7 @@
  */
 package br.lry.components;
 
+import org.junit.Before;
 import org.junit.Test;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
@@ -30,6 +31,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * Realiza login na aplicação - VA
 	 *
 	 */
+	
 	public void autLogin() {
 		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString(), AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString());
 	}

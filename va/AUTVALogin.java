@@ -3,6 +3,7 @@
  */
 package br.lry.components.va;
 
+import br.lry.components.AUTSAPLogin;
 import br.lry.components.AUTVABaseComponent;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem;
 import junit.framework.AssertionFailedError;
@@ -22,12 +23,19 @@ public class AUTVALogin extends AUTVABaseComponent {
 
 	@Test
 	public void autStartLoginDefault() {
-		try {		
+		try {	
+			AUTSAPLogin sapLog = new AUTSAPLogin();
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
-			autLogin();			
+			autInitWebApplication();			
+			autLogin();
+			sapLog.baseState();
+			sapLog.autInitSAPApp();
+			sapLog.autStartLoginDefault();
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: END");
 		}
 		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
 		}
 	}
@@ -36,6 +44,7 @@ public class AUTVALogin extends AUTVABaseComponent {
 	public void autStartLoginDefault(String usuario, String senha) {
 		try {
 		
+			
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
 			
 			autLogin(usuario, senha);
@@ -47,21 +56,4 @@ public class AUTVALogin extends AUTVABaseComponent {
 		}
 	}
 	
-	public void autStartProxyConfiguration(String usuario,String senha) {
-		
-	}
-	
-	public static void main(String[] args) {
-		AUTVALogin lg = new AUTVALogin();
-		lg.AUT_AGENT_SILK4J.resetAllOptions();
-		lg.autStartLoginDefault();
-	}
-	
-	public AUTVALogin(String usuario, String senha) {
-		autStartLoginDefault(usuario, senha);
-	}
-	
-	public AUTVALogin() {
-		autStartLoginDefault();
-	}
 }
