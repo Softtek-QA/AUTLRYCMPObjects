@@ -30,7 +30,7 @@ import junit.framework.TestResult;
  * @author Softtek-QA
  *
  */
-public abstract class AUTBaseComponent extends junit.framework.TestSuite implements junit.framework.Test{
+public abstract class AUTBaseComponent {
 	protected Desktop AUT_AGENT_SILK4J = new Desktop();  //Objeto de conexão com aplicação da automação
 	protected BrowserBaseState AUT_BASE_STATE_CONFIGURATION_BROWSER = null; //Objeto base de configuraçao do browser
 	private AUTDataFlow AUT_CURRENT_DATA_FLOW = null; //Objeto de gerenciamento do fluxo de dados
@@ -203,4 +203,10 @@ public abstract class AUTBaseComponent extends junit.framework.TestSuite impleme
 	public void autCloseApplication() {
 		System.out.println("AUT INFO: FINALIZANDO APLICAÇÃO");			
 	}
+
+	public AUTBaseComponent() {
+		super();
+	}
+	
+	
 }
