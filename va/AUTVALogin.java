@@ -19,7 +19,7 @@ import org.junit.Test;
  */
 public class AUTVALogin extends AUTVABaseComponent {
 
-	@Before
+	@Test
 	public void autStartLoginDefault() {
 		try {	
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
@@ -42,7 +42,7 @@ public class AUTVALogin extends AUTVABaseComponent {
 			autLogin(usuario, senha);
 			
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: END");
-			//TESTE DE CONFIGURACAO
+			//TESTE CONFIGURAÇÃO CUSTOMIZADA TESTE 111111111111111
 		}
 		catch(java.lang.Exception e) {
 			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
