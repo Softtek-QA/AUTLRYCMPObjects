@@ -769,6 +769,7 @@ public class AUTVACadastros extends AUTVALogin {
 		
 		autCadastrarCliente(AUT_VA_CADASTROS.FISICA);
 		
+		//TESTE ALTERAÇÃO DE CADASTRO
 		//end recording
 	}	
 }
