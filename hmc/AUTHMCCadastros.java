@@ -1,4 +1,4 @@
-package br.lry.components.va;
+package br.lry.components.hmc;
 
 import org.junit.Test;
 
@@ -11,8 +11,6 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 	
 	private Desktop AUT_AGENT_SILK4J = new Desktop();
 	
-	String usuario = "admin";
-	String senha = "nimda";
 	
 	
 	@Test
@@ -21,7 +19,11 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		autStartLoginDefault();
 		
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.User").click();
-		//AUT_AGENT_SILK4J.<DomLink>find("HMC.TelaInicial.Customers").pressKeys(keys);
+		AUT_AGENT_SILK4J.<DomLink>find("HMC.TelaInicial.Customers").click();
+	
+	
+	
+	
 	}
 
 	

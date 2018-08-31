@@ -1,4 +1,4 @@
-package br.lry.components.va;
+package br.lry.components.hmc;
 
 import com.borland.silktest.jtf.BrowserBaseState;
 import com.borland.silktest.jtf.Desktop;
