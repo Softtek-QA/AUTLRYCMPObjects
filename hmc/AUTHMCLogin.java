@@ -50,5 +50,9 @@ public class AUTHMCLogin extends AUTBaseComponent{
 		}
 	}
 	
+	
+	public void autCloseApplication() {
+		
+	}
 
 }
