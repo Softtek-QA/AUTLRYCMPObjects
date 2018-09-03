@@ -24,11 +24,8 @@ public class AUTHMCLogin extends AUTBaseComponent{
 	 *
 	 */
 	
-	String usuario = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN, "AUT_USER").toString();
-	String senha = autGetCurrentParameter("AUT_PASSWORD").toString();
 	
-	
-	public void autLogin() {
+	public void autLogin(String usuario, String senha) {
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaLogin.Usuario").clearText();
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaLogin.Usuario").setText(usuario);
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaLogin.Senha").setText(senha);
@@ -37,11 +34,11 @@ public class AUTHMCLogin extends AUTBaseComponent{
 	
 	
 	
-	public void autStartLoginDefault() {
+	public void autStartLoginDefault(String usuario, String senha) {
 		try {	
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN HMC APPLICATION: INIT");
 			autInitHmcApplication();
-			autLogin();
+			autLogin(usuario, senha);
 			
 		}
 		catch(java.lang.Exception e) {
