@@ -7,6 +7,9 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.After;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
 import com.borland.silktest.jtf.xbrowser.BrowserApplication;
 import com.borland.silktest.jtf.xbrowser.BrowserWindow;
@@ -17,12 +20,15 @@ import com.borland.silktest.jtf.xbrowser.DomLink;
 import com.borland.silktest.jtf.xbrowser.DomListBox;
 import com.borland.silktest.jtf.xbrowser.DomRadioButton;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
+import com.sun.javafx.geom.AreaOp.AddOp;
 
 import sun.management.resources.agent;
 import br.lry.components.va.AUTVACadastros.AUT_VA_CADASTROS;
 import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_ENDERECO;
 import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_RESIDENCIA;
 import br.lry.dataflow.AUTDataFlow.*;
+import junit.framework.TestCase;
+
 import com.borland.silktest.jtf.win32.AccessibleControl;
 /**
  * 
@@ -33,7 +39,28 @@ import com.borland.silktest.jtf.win32.AccessibleControl;
  *
  */
 public class AUTVACadastros extends AUTVALogin {
-
+	public enum AUT_VA_TESTS_OPTIONS{
+		VA_CADASTRO_PF,
+		VA_CADASTRO_PJ,
+		VA_CADASTRO_ESTRANGEIRO;
+		@Override
+		public String toString() {
+			// TODO Auto-generated method stub
+			switch(this) {
+			case VA_CADASTRO_ESTRANGEIRO:{
+				return "autInitClientMenuCadastroExtrangeiro";
+			}
+			case VA_CADASTRO_PF:{
+				return "autInitClientMenuCadastroPF";
+			}
+			case VA_CADASTRO_PJ:{
+				return "autInitClientMenuCadastroPJ";
+			}
+			}
+			return super.toString();
+		}
+	}
+	
 	/**
 	 * 
 	 * Cadastro de Estados
@@ -774,8 +801,6 @@ public class AUTVACadastros extends AUTVALogin {
 	 * CADASTRO DE CLIENTES - VA-VENDAS ASSISTIDAS
 	 * 
 	 */
-		
-	@Test
 	public void autInitClientMenuCadastroPF() {
 		//TIPO PESSOA
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF.toString()).get(1).remove("AUT_TIPO_CADASTRO");
@@ -825,7 +850,7 @@ public class AUTVACadastros extends AUTVALogin {
 	}	
 	
 	
-	@Test
+
 	public void autInitClientMenuCadastroExtrangeiro() {
 		//TIPO PESSOA
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTRO_PF.toString()).get(1).remove("AUT_TIPO_CADASTRO");
@@ -849,6 +874,23 @@ public class AUTVACadastros extends AUTVALogin {
 		
 	}	
 
+	public java.util.List<junit.framework.TestCase> autGetTests(){
+		java.util.List<junit.framework.TestCase> ltTests = new java.util.ArrayList<junit.framework.TestCase>();
+		
+		for(java.lang.Enum<AUT_VA_TESTS_OPTIONS> item: AUT_VA_TESTS_OPTIONS.class.getEnumConstants()) {
+			ltTests.add(new AUTVACadastros(item));
+		}
+				
+		return ltTests;
+	}
+	
+	public AUTVACadastros() {
+		setName(AUT_VA_TESTS_OPTIONS.VA_CADASTRO_PF.toString());
+	}
+	
+	public <TTest extends java.lang.Enum<AUT_VA_TESTS_OPTIONS>>AUTVACadastros(TTest testItem) {
+		setName(testItem.toString());
+	}
 }
 
 
