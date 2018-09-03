@@ -7,6 +7,7 @@ package br.lry.components;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.internal.runners.TestClass;
 
 import com.borland.silktest.jtf.BrowserBaseState;
 import com.borland.silktest.jtf.Desktop;
@@ -30,7 +31,7 @@ import junit.framework.TestResult;
  * @author Softtek-QA
  *
  */
-public abstract class AUTBaseComponent {
+public abstract class AUTBaseComponent{
 	protected Desktop AUT_AGENT_SILK4J = new Desktop();  //Objeto de conexão com aplicação da automação
 	protected BrowserBaseState AUT_BASE_STATE_CONFIGURATION_BROWSER = null; //Objeto base de configuraçao do browser
 	private AUTDataFlow AUT_CURRENT_DATA_FLOW = null; //Objeto de gerenciamento do fluxo de dados
