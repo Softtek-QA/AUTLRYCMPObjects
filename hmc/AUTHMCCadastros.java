@@ -28,8 +28,8 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 			return super.toString();
 		}
 	}
-	
-	
+
+
 	String usuario = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN, "AUT_USER").toString();
 	String senha = autGetCurrentParameter("AUT_PASSWORD").toString();
 	String userID = autGetCurrentParameter("AUT_USER_ID").toString();
@@ -39,6 +39,7 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 	String identifierType = autGetCurrentParameter("AUT_IDENTIFIER_TYPE").toString();
 	
 	/**
+	 * 
 	 * CADASTRO DE USUARIO B2B CUSTOMER
 	 * 
 	 */
@@ -50,9 +51,9 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.User").click();
 		AUT_AGENT_SILK4J.<DomLink>find("HMC.TelaInicial.Customers").click();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.New").click();
-		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.B2BCustomer").click();		
-
-
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.B2BCustomer").click();
+		
+		
 		//Aba General
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.Menus.General").click();
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.GeneralConfigurations.ID").setText(userID);
@@ -74,7 +75,6 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		//AUT_AGENT_SILK4J.<DomElement>find("HMC.AdministratorConfiguration.Type").setText();
 		
 		
-
 	
 	}
 
