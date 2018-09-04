@@ -47,19 +47,29 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 	public void autCadastrarUsuarioHMC() {
 		
 		autStartLoginDefault(usuario, senha);
+
 		
-		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.User").click();
-		AUT_AGENT_SILK4J.<DomLink>find("HMC.TelaInicial.Customers").click();
-		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.New").click();
-		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.B2BCustomer").click();
+
+		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaLogin.Usuario").click();
+		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaLogin.Usuario").setText(usuario);
+		
+		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaLogin.Senha").click();
+		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaLogin.Senha").setText(senha);		
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaLogin.BotaoLogin").click();
+		
+		AUT_AGENT_SILK4J.<DomListBox>find("HMC.TelaInicial.ListaIdiomas").click();
+		AUT_AGENT_SILK4J.<DomListBox>find("HMC.TelaInicial.ListaIdiomas").select("Português do Brasil");
+
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.MenuGestaoUsuarios").click();
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.NovoItem").click();
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.SubMenuClienteDropDown").click();
 		
 		
-		//Aba General
-		AUT_AGENT_SILK4J.<DomElement>find("HMC.Menus.General").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.GeneralConfigurations.ID").setText(userID);
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.GeneralConfigurations.Name").setText(userName);
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.GeneralConfigurations.CustomerID").setText(userID);
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.GeneralConfigurations.Description").setText(userName);
+		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaCadastroClientes.IdUsuario").setText(userID);		
+		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaCadastroClientes.NomeUsuario").setText(userName);		
+		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaCadastroClientes.DescricaoUsuario").setText(userName);		
+		
+		//AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.B2BCustomer").click();
 		
 		//Aba Addresses
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.Menus.Addresses").click();

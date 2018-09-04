@@ -24,7 +24,7 @@ import junit.framework.TestResult;
 
 /**
  * 
- * Componente - Realiza login no sistema:
+ * Componente - Realiza login no  sistema:
  * 
  * VA : Vendas assistidas
  * 
@@ -32,7 +32,7 @@ import junit.framework.TestResult;
  *
  */
 public abstract class AUTBaseComponent{
-	protected Desktop AUT_AGENT_SILK4J = new Desktop();  //Objeto de conexão com aplicação da automação
+	protected Desktop AUT_AGENT_SILK4J = new Desktop("192.168.0.123");  //Objeto de conexão com aplicação da automação
 	protected BrowserBaseState AUT_BASE_STATE_CONFIGURATION_BROWSER = null; //Objeto base de configuraçao do browser
 	private AUTDataFlow AUT_CURRENT_DATA_FLOW = null; //Objeto de gerenciamento do fluxo de dados
 	private AUTLogMensagem AUT_CURRENT_LOG_MANAGER = null; //Objeto de gerenciamento do log
@@ -180,7 +180,7 @@ public abstract class AUTBaseComponent{
 	 * 
 	 */
 	public void autInitWebApplication() {
-
+		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();		
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
 		try {
@@ -197,6 +197,8 @@ public abstract class AUTBaseComponent{
 
 	
 	public void autInitHmcApplication() {
+		AUT_AGENT_SILK4J = new Desktop("192.168.0.115");
+		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();
 		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setUrl(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN, "AUT_URL").toString());
