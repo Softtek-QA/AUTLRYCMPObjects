@@ -24,6 +24,7 @@ import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_ENDERECO;
 import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_RESIDENCIA;
 import br.lry.dataflow.AUTDataFlow.*;
 import com.borland.silktest.jtf.win32.AccessibleControl;
+import org.junit.Assert;
 /**
  * 
  * Cadastro de pessoa Física

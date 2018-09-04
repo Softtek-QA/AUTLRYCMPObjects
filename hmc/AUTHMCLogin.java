@@ -29,7 +29,7 @@ public class AUTHMCLogin extends AUTBaseComponent{
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaLogin.Usuario").clearText();
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaLogin.Usuario").setText(usuario);
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaLogin.Senha").setText(senha);
-		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaLogin.Login").click();
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaLogin.BotaoLogin").click();
 	}
 	
 	
