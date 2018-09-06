@@ -142,13 +142,9 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 			AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.MenuCriarUsuario").click();
 		}
 		
-		//start recording 
 		DomElement botaolSalvar = AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.CheckPointBotaoSalvar");
 		Assert.assertEquals(true, botaolSalvar.isVisible());
 		Assert.assertEquals("Salvar", botaolSalvar.getText());
-		//end recording
 	}
-
-
 }
 
