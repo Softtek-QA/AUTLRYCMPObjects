@@ -13,8 +13,8 @@ import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 import org.junit.Assert;
 
 public class AUTHMCCadastros extends AUTHMCLogin {
-
-
+	public String AUT_USUARIO_CADASTRO_OUTPUT=null;
+	public String AUT_USUARIO_CADASTRO_PWD_OUTPUT=null;	
 	private Desktop AUT_AGENT_SILK4J = new Desktop();
 
 
@@ -98,53 +98,49 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaSenha.Senha").setText(novaSenha);
 
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.AbaAdministracao").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.Canal").setFocus();
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.Canal").setText(canal);
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.Tipo").setText(canal);
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.UnidadeB2BPadrao").setText(unidadeB2B);
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.Departamento").setText(departamento);
-
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.CodigoCategoria").setFocus();
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.CodigoCategoria").setText(codigoCategoria);
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.NumeroDepartamento").setText(departamento);
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.CodigoDepartamento").setText(codigoDepartamento);
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.CodigoCategoriaEmpPrivada").setFocus();
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.CodigoCategoriaEmpPrivada").setText(codigoCategoria);
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.Loja").setFocus();
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.Loja").setText(loja);
-		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.GerenteAssociado").setText(gestorArea);
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Canal").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Canal").typeKeys(canal);
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Canal").typeKeys("\n");
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Tipo").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Tipo").typeKeys(tipo);
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.UnidadeB2BPadrao").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.UnidadeB2BPadrao").typeKeys(unidadeB2B);
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.UnidadeB2BPadrao").typeKeys("\n");
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Departamento").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Departamento").typeKeys(departamento);
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Departamento").typeKeys("\n");
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.CodigoCategoria").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.CodigoCategoria").typeKeys("\r");
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.CodigoCategoria").typeKeys(codigoCategoria);
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.CodigoCategoria").typeKeys("\n");
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.NumeroDepartamento").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.NumeroDepartamento").typeKeys(departamento);
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.NumeroDepartamento").typeKeys("\n");
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.CodigoDepartamento").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.CodigoDepartamento").typeKeys(codigoDepartamento);
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.CodigoDepartamento").typeKeys("\n");
+		//AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.CodigoCategoriaEmpPrivada").setFocus();
+		//AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.CodigoCategoriaEmpPrivada").typeKeys(codigoCategoria);
+		//AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.CodigoCategoriaEmpPrivada").typeKeys("\n");
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Loja").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Loja").typeKeys(loja);
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Loja").typeKeys("\n");
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.GerenteAssociado").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.GerenteAssociado").typeKeys(gestorArea);
 
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaCadastroClientes.Geral").click();
 
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.MenuCriarUsuario").click();
-
-		DomElement msgErroCad = AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.ErroCadastroUsuario.MsgErroCadastrosB2BFilial");
-
-		
-		if(msgErroCad.isVisible()) {			
-			AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.ErroCadastroUsuario.BotaoOk").click();
-			AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.Canal").setFocus();
-			AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.Canal").setText(canal);
-			AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.Tipo").setText(canal);
-			AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.UnidadeB2BPadrao").setText(unidadeB2B);
-			AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.Departamento").setText(departamento);
-
-			AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.CodigoCategoria").setFocus();
-			AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.CodigoCategoria").setText(codigoCategoria);
-			AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.NumeroDepartamento").setText(departamento);
-			AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.CodigoDepartamento").setText(codigoDepartamento);
-			AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.CodigoCategoriaEmpPrivada").setFocus();
-			AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.CodigoCategoriaEmpPrivada").setText(codigoCategoria);
-			AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.Loja").setFocus();
-			AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.Loja").setText(loja);
-			AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaAdministracao.GerenteAssociado").setText(gestorArea);
-			//AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaCadastroClientes.Geral").click();
-			AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.MenuCriarUsuario").click();
-		}
 		
 		DomElement botaolSalvar = AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.CheckPointBotaoSalvar");
 		Assert.assertEquals(true, botaolSalvar.isVisible());
 		Assert.assertEquals("Salvar", botaolSalvar.getText());
+		
+		AUT_USUARIO_CADASTRO_OUTPUT = userID;
+		AUT_USUARIO_CADASTRO_PWD_OUTPUT = novaSenha;
+		
 	}
+
+
 }
 
