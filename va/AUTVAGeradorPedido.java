@@ -117,7 +117,8 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 	}
 	
 	
-	public enum AUT_VA_TIPO_RETIRADA{
+	public enum AUT_VA_FLUXO_SAIDA{
+		CAIXA,
 		REITRADA_EXTERNA_AGENDADA,
 		REITRADA_EXTERNA_IMEDIATA,
 		REITRADA_INTERNA_AGENDADA,
@@ -127,6 +128,9 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		public String toString() {
 			// TODO Auto-generated method stub
 			switch (this) {
+			case CAIXA: {
+				return "Caixa";
+			}
 			case REITRADA_EXTERNA_AGENDADA: {
 				return "Retira externa agendada";
 			}
@@ -144,23 +148,29 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		}
 	}
 	
-	String usuario = "";
-	String senha = "";
-	String quantidadeItem = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS,"AUT_QUANTIDADE_ITEM").toString();
-	String codigoItem = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS,"AUT_CODIGO_ITEM").toString();	
-	String docCliente = (String)(AUT_CLIENT_TYPE==null || AUT_CLIENT_TYPE==AUT_VA_CADASTROS.FISICA ? AUT_CLIENT_DOC_CPF : 
-		(AUT_CLIENT_TYPE==AUT_VA_CADASTROS.ESTRANGEIRO ? AUT_CLIENT_DOC_PASSAPORT : 
-			(AUT_CLIENT_TYPE==AUT_VA_CADASTROS.JURIDICA ? AUT_CLIENT_DOC_CNPJ : "000000000")));
+	
+	
+	public void aut_test() {
 		
+	}
+	
+	
 	@Test
-	/*
-	 *  GERACAO PEDIDO FLUXO DE SAIDA CAIXA E MEIO DE PAGAMENTO DINHEIRO
+	/**
+	 *  SCRIPT DE GERACAO DE PEDIDOS
 	 */
-	public void autCaixaPagDinheiro() {
+	public void autVAGeracaoPedidos(String usuario, String senha, String fluxoSaida, String meioPagamento, String planoPagamento) {
+		
+		String quantidadeItem = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS,"AUT_QUANTIDADE_ITEM").toString();
+		String codigoItem = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS,"AUT_CODIGO_ITEM").toString();	
+		
+		String docCliente = (String)(AUT_CLIENT_TYPE==null || AUT_CLIENT_TYPE==AUT_VA_CADASTROS.FISICA ? AUT_CLIENT_DOC_CPF : 
+			(AUT_CLIENT_TYPE==AUT_VA_CADASTROS.ESTRANGEIRO ? AUT_CLIENT_DOC_PASSAPORT : 
+				(AUT_CLIENT_TYPE==AUT_VA_CADASTROS.JURIDICA ? AUT_CLIENT_DOC_CNPJ : "000000000")));
 
+		
 		autStartLoginDefault(usuario, senha);
 
-		//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.FecharPopUpAprovacaoComercial").click();
 		AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
 		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.QuantidadeItem").setText(quantidadeItem);
 		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.CodigoItem").setText(codigoItem);
@@ -172,364 +182,38 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.ConfirmacaoLogin.Avancar").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.IconeModoDePesquisa").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ItemCPF_CNPJ").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisaCliente").setText(docCliente);
+		AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisa").setText(docCliente);
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.BotaoPesquisarCliente").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ClientePesquisado").click();
 		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaCliente.AvancarTelaCliente").click();
 		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.Avancar").click();
-		AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoCaixa").select();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.FluxoSaida.Avancar").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento")
-				.select(AUT_VA_MEIOS_PAGAMENTO.DINHEIRO.toString());
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento")
-				.select(AUT_VA_PLANO_PAGAMENTO.A_VISTA.toString());
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaMeioPagamento.Avancar").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaResumo.Finalizar").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaResumo.FecharPopUp").click();
-		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA02GERADORPEDIDOS001");
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
-		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
-	}
-	
-
-	@Test
-	/*
-	 *  GERACAO PEDIDO FLUXO DE SAIDA CAIXA E MEIO DE PAGAMENTO CARTAO CELEBRE
-	 */
-	public void autCaixaPagCartaoCelebre() {
-
-		autStartLoginDefault(usuario, senha);
-
-		//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.FecharPopUpAprovacaoComercial").click();
-		AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.QuantidadeItem").setText(quantidadeItem);
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.CodigoItem").setText(codigoItem);
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaInicialLoja.PesquisarProduto").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.ConverterPedido").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").clearText();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").setText(usuario);
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Senha").setText(senha);
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.ConfirmacaoLogin.Avancar").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.IconeModoDePesquisa").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ItemCPF_CNPJ").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisaCliente").setText(docCliente);
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.BotaoPesquisarCliente").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ClientePesquisado").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaCliente.AvancarTelaCliente").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.Avancar").click();
-		AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoCaixa").select();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.FluxoSaida.Avancar").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento")
-				.select(AUT_VA_MEIOS_PAGAMENTO.CARTAO_CELEBRE.toString());
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento")
-				.select(AUT_VA_PLANO_PAGAMENTO.SEM_JUROS_CELEBRE_2X.toString());
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaMeioPagamento.Avancar").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaResumo.Finalizar").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaResumo.FecharPopUp").click();
-		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA02GERADORPEDIDOS001");
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
-		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
-	}
-	
-	
-	
-	
-	@Test
-	/*
-	 *  GERACAO PEDIDO FLUXO DE SAIDA CAIXA E MEIO DE PAGAMENTO CARTAO CREDITO
-	 */
-	public void autCaixaPagCartaoCredito() {
 		
-		autStartLoginDefault(usuario, senha);
-		
-		//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.FecharPopUpAprovacaoComercial").click();
-		AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.QuantidadeItem").setText(quantidadeItem);
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.CodigoItem").setText(codigoItem);
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaInicialLoja.PesquisarProduto").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.ConverterPedido").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").clearText();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").setText(usuario);
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Senha").setText(senha);
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.ConfirmacaoLogin.Avancar").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.IconeModoDePesquisa").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ItemCPF_CNPJ").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisaCliente").setText(docCliente);
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.BotaoPesquisarCliente").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ClientePesquisado").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaCliente.AvancarTelaCliente").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.Avancar").click();
-		AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoCaixa").select();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.FluxoSaida.Avancar").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").select(AUT_VA_MEIOS_PAGAMENTO.CARTAO_CREDITO.toString());
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").select(AUT_VA_PLANO_PAGAMENTO.SEM_JUROS_1X.toString());
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaMeioPagamento.Avancar").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaResumo.Finalizar").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaResumo.FecharPopUp").click();
-		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA02GERADORPEDIDOS001");	
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
-		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();	
-	}
-	
-
-	@Test
-	/*
-	 *  GERACAO PEDIDO FLUXO DE SAIDA RETIRADA INTERNA IMEDIATA E MEIO DE PAGAMENTO DINHEIRO
-	 */
-	public void autRetiraInternaImediataPagDinheiro() {
-		
-		autStartLoginDefault(usuario, senha);
-		
-		//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.FecharPopUpAprovacaoComercial").click();
-		AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.QuantidadeItem").setText(quantidadeItem);
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.CodigoItem").setText(codigoItem);
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaInicialLoja.PesquisarProduto").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.ConverterPedido").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").clearText();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").setText(usuario);
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Senha").setText(senha);
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.ConfirmacaoLogin.Avancar").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.IconeModoDePesquisa").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ItemCPF_CNPJ").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisaCliente").setText(docCliente);
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.BotaoPesquisarCliente").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ClientePesquisado").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaCliente.AvancarTelaCliente").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.Avancar").click();
-		AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoRetirada").select();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.FluxoSaida.TipoRetirada").select(AUT_VA_TIPO_RETIRADA.REITRADA_INTERNA_IMEDIATA.toString());
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.FluxoSaida.Avancar").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").select(AUT_VA_MEIOS_PAGAMENTO.DINHEIRO.toString());
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").select(AUT_VA_PLANO_PAGAMENTO.A_VISTA.toString());
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaMeioPagamento.Avancar").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaResumo.Finalizar").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaResumo.FecharPopUp").click();
-		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA02GERADORPEDIDOS001");	
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
-		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();	
-	}
-	
-
-	
-
-	@Test
-	/*
-	 *  GERACAO PEDIDO FLUXO DE SAIDA RETIRADA INTERNA IMEDIATA E MEIO DE PAGAMENTO CARTAO CELEBRE
-	 */
-	public void autRetiraInternaImediataPagCartaoCelebre() {
-
-		autStartLoginDefault(usuario, senha);
-		
-		//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.FecharPopUpAprovacaoComercial").click();
-		AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.QuantidadeItem").setText(quantidadeItem);
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.CodigoItem").setText(codigoItem);
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaInicialLoja.PesquisarProduto").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.ConverterPedido").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").clearText();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").setText(usuario);
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Senha").setText(senha);
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.ConfirmacaoLogin.Avancar").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.IconeModoDePesquisa").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ItemCPF_CNPJ").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisaCliente").setText(docCliente);
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.BotaoPesquisarCliente").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ClientePesquisado").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaCliente.AvancarTelaCliente").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.Avancar").click();
-		AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoRetirada").select();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.FluxoSaida.TipoRetirada").select(AUT_VA_TIPO_RETIRADA.REITRADA_INTERNA_IMEDIATA.toString());
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.FluxoSaida.Avancar").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").select(AUT_VA_MEIOS_PAGAMENTO.CARTAO_CELEBRE.toString());
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").select(AUT_VA_PLANO_PAGAMENTO.SEM_JUROS_CELEBRE_2X.toString());
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaMeioPagamento.Avancar").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaResumo.Finalizar").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaResumo.FecharPopUp").click();
-		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA02GERADORPEDIDOS001");	
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
-		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
-	}
-	
-	
-	
-	@Test
-	/*
-	 *  GERACAO PEDIDO FLUXO DE SAIDA RETIRADA INTERNA IMEDIATA E MEIO DE PAGAMENTO CARTAO CREDITO
-	 */
-	public void autRetiraInternaImediataPagCartaoCredito() {
-		
-		autStartLoginDefault(usuario, senha);
-		
-		//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.FecharPopUpAprovacaoComercial").click();
-		AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.QuantidadeItem").setText(quantidadeItem);
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.CodigoItem").setText(codigoItem);
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaInicialLoja.PesquisarProduto").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.ConverterPedido").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").clearText();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").setText(usuario);
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Senha").setText(senha);
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.ConfirmacaoLogin.Avancar").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.IconeModoDePesquisa").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ItemCPF_CNPJ").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisaCliente").setText(docCliente);
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.BotaoPesquisarCliente").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ClientePesquisado").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaCliente.AvancarTelaCliente").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.Avancar").click();
-		AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoRetirada").select();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.FluxoSaida.TipoRetirada").select(AUT_VA_TIPO_RETIRADA.REITRADA_INTERNA_IMEDIATA.toString());
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.FluxoSaida.Avancar").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").select(AUT_VA_MEIOS_PAGAMENTO.CARTAO_CREDITO.toString());
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").select(AUT_VA_PLANO_PAGAMENTO.SEM_JUROS_1X.toString());
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaMeioPagamento.Avancar").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaResumo.Finalizar").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaResumo.FecharPopUp").click();
-		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA02GERADORPEDIDOS001");	
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
-		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
-	}
-	
-	
-
-	@Test
-	/*
-	 *  GERACAO PEDIDO FLUXO DE SAIDA RETIRADA EXTERNA IMEDIATA E MEIO DE PAGAMENTO DINHEIRO
-	 */
-	public void autRetiraExternaImediataPagDinheiro() {
-		
-		autStartLoginDefault(usuario, senha);
-		
-		//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.FecharPopUpAprovacaoComercial").click();
-		AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.QuantidadeItem").setText(quantidadeItem);
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.CodigoItem").setText(codigoItem);
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaInicialLoja.PesquisarProduto").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.ConverterPedido").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").clearText();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").setText(usuario);
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Senha").setText(senha);
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.ConfirmacaoLogin.Avancar").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.IconeModoDePesquisa").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ItemCPF_CNPJ").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisaCliente").setText(docCliente);
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.BotaoPesquisarCliente").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ClientePesquisado").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaCliente.AvancarTelaCliente").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.Avancar").click();
-		AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoRetirada").select();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.FluxoSaida.TipoRetirada").select(AUT_VA_TIPO_RETIRADA.REITRADA_EXTERNA_IMEDIATA.toString());
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.FluxoSaida.Avancar").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").select(AUT_VA_MEIOS_PAGAMENTO.DINHEIRO.toString());
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").select(AUT_VA_PLANO_PAGAMENTO.A_VISTA.toString());
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaMeioPagamento.Avancar").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaResumo.Finalizar").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaResumo.FecharPopUp").click();
-		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA02GERADORPEDIDOS001");	
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
-		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
-	}
-	
-	
-	@Test
-		/*
-		 *  GERACAO PEDIDO FLUXO DE SAIDA RETIRADA EXTERNA IMEDIATA E MEIO DE PAGAMENTO CARTAO CREDITO
-		 */
-		public void autRetiraExternaImediataPagCartaoCelebre() {
-			
-			autStartLoginDefault(usuario, senha);
-			
-			//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.FecharPopUpAprovacaoComercial").click();
-			AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.QuantidadeItem").setText(quantidadeItem);
-			AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.CodigoItem").setText(codigoItem);
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaInicialLoja.PesquisarProduto").click();
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.ConverterPedido").click();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").clearText();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").setText(usuario);
-			AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Senha").setText(senha);
-			AUT_AGENT_SILK4J.<DomElement>find("VA02.ConfirmacaoLogin.Avancar").click();
-			AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.IconeModoDePesquisa").click();
-			AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ItemCPF_CNPJ").click();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisaCliente").setText(docCliente);
-			AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.BotaoPesquisarCliente").click();
-			AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ClientePesquisado").click();
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaCliente.AvancarTelaCliente").click();
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.Avancar").click();
+		if(fluxoSaida == AUT_VA_FLUXO_SAIDA.CAIXA.toString()) {
+			AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoCaixa").select();
+		}else { 
 			AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoRetirada").select();
-			AUT_AGENT_SILK4J.<DomListBox>find("VA02.FluxoSaida.TipoRetirada").select(AUT_VA_TIPO_RETIRADA.REITRADA_EXTERNA_IMEDIATA.toString());
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.FluxoSaida.Avancar").click();
-			AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").click();
-			AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").select(AUT_VA_MEIOS_PAGAMENTO.CARTAO_CELEBRE.toString());
-			AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").click();
-			AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").select(AUT_VA_PLANO_PAGAMENTO.SEM_JUROS_CELEBRE_2X.toString());
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaMeioPagamento.Avancar").click();
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaResumo.Finalizar").click();
-			AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaResumo.FecharPopUp").click();
-			AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA02GERADORPEDIDOS001");	
-			AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
-			AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
-		}	
-	
-
-	@Test
-	/*
-	 *  GERACAO PEDIDO FLUXO DE SAIDA RETIRADA EXTERNA IMEDIATA E MEIO DE PAGAMENTO CARTAO CREDITO
-	 */
-	public void autRetiraExternaImediataPagCartaoCredito() {
+			AUT_AGENT_SILK4J.<DomListBox>find("VA02.FluxoSaida.TipoRetirada").select(fluxoSaida);//AUT_VA_TIPO_RETIRADA.REITRADA_INTERNA_IMEDIATA.toString());
+		}
 		
-		autStartLoginDefault(usuario, senha);
-		
-		//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.FecharPopUpAprovacaoComercial").click();
-		AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.QuantidadeItem").setText(quantidadeItem);
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.CodigoItem").setText(codigoItem);
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaInicialLoja.PesquisarProduto").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.ConverterPedido").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").clearText();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").setText(usuario);
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Senha").setText(senha);
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.ConfirmacaoLogin.Avancar").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.IconeModoDePesquisa").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ItemCPF_CNPJ").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisaCliente").setText(docCliente);
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.BotaoPesquisarCliente").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ClientePesquisado").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaCliente.AvancarTelaCliente").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.Avancar").click();
-		AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoRetirada").select();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.FluxoSaida.TipoRetirada").select(AUT_VA_TIPO_RETIRADA.REITRADA_EXTERNA_IMEDIATA.toString());
 		AUT_AGENT_SILK4J.<DomButton>find("VA02.FluxoSaida.Avancar").click();
 		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").select(AUT_VA_MEIOS_PAGAMENTO.CARTAO_CREDITO.toString());
+		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").select(meioPagamento);
 		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").click();
-		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").select(AUT_VA_PLANO_PAGAMENTO.SEM_JUROS_1X.toString());
+		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").select(planoPagamento);
 		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaMeioPagamento.Avancar").click();
 		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaResumo.Finalizar").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaResumo.FecharPopUp").click();
-		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA02GERADORPEDIDOS001");	
+		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA02GERADORPEDIDOS001");
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
 		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
-	}	
+	}
 	
-	public AUTVAGeradorPedido(String usr,String pwd) {
+	
+
+	
+	
+	
+	public AUTVAGeradorPedido() {
 		super();
-		usuario = usr;
-		senha = pwd;
 	}
 }
