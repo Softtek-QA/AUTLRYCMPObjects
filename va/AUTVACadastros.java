@@ -359,6 +359,13 @@ public class AUTVACadastros extends AUTVALogin {
 		DomButton btCadastroPFAvanc2 = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.BotaoAvancarCadastro");
 
 		btCadastroPFAvanc2.click();
+		
+		try {
+			AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");		
+		}
+		catch(java.lang.Exception e) {
+			
+		}
 	}
 	
 	
@@ -703,7 +710,12 @@ public class AUTVACadastros extends AUTVALogin {
 
 		btCadastroPFAvanc2.click();
 		
-		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");		
+		try {
+			AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");		
+		}
+		catch(java.lang.Exception e) {
+			
+		}
 	}
 	
 	
