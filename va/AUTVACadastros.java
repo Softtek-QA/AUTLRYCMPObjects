@@ -34,7 +34,8 @@ import org.junit.Assert;
  *
  */
 public class AUTVACadastros extends AUTVALogin {
-
+	public String AUT_NUMERO_DOC_CPF_OUTPUT=null,AUT_NUMERO_DOC_CNPJ_OUTPUT=null,AUT_NUMERO_DOC_PASSAPORTE_OUTPUT=null;
+	
 	/**
 	 * 
 	 * Cadastro de Estados
