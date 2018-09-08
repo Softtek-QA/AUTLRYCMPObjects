@@ -130,6 +130,24 @@ public abstract class AUTBaseComponent{
 		}
 	}
 
+	
+	public boolean autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES tableName,String parameterName,Object value) {
+		try {
+
+			AUT_CURRENT_PARAMETERS_TABLE_NAME = tableName;
+
+			autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_CURRENT_PARAMETERS_TABLE_NAME.toString()).get(1).remove(parameterName);
+			autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_CURRENT_PARAMETERS_TABLE_NAME.toString()).get(1).put(parameterName, value);
+			
+			return true;
+		}
+		catch(java.lang.Exception e) {
+			autGetLogManager().logMensagem("AUT ERROR: SET PARAMETER VALUE FROM CURRENT DATATABLE");
+
+			return false;
+		}
+	}
+
 	/**
 	 * 
 	 * Retorna o valor do parametro especificado na tabela de parametros atualmente selecionada
@@ -158,6 +176,27 @@ public abstract class AUTBaseComponent{
 		}
 	}
 
+	public boolean autSetCurrentParameter(String parameterName,Object value) {
+		try {
+			if(AUT_CURRENT_PARAMETERS_TABLE_NAME!=null) {
+				autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_CURRENT_PARAMETERS_TABLE_NAME.toString()).get(1).remove(parameterName);
+				autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_CURRENT_PARAMETERS_TABLE_NAME.toString()).get(1).put(parameterName, value);
+				
+				return true;
+			}
+			else {				
+				autGetLogManager().logMensagem("AUT ERROR: SET PARAMETER VALUE: TABLE FROM DATA ORIGIN NOT DEFINE");
+				
+				return false;
+			}
+		}
+		catch(java.lang.Exception e) {
+			autGetLogManager().logMensagem("AUT ERROR: SET PARAMETER VALUE FROM CURRENT DATATABLE");
+			return false;
+		}
+	}
+	
+	
 	public junit.framework.TestCase autStartNewTestObject(Class<?> testObject,String testName){
 		try {
 
