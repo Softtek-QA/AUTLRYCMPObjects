@@ -35,7 +35,7 @@ import com.borland.silktest.jtf.win32.AccessibleControl;
 
 
 public class AUTVAGeradorPedido extends AUTVALogin {
-	public String AUT_CLIENT_DOC_CPF = null, AUT_CLIENT_DOC_CNPJ=null, AUT_CLIENT_DOC_PASSAPORT=null, AUT_VA_USER = null, AUT_VA_PASSWORD=null;
+	public String AUT_CURRENT_DOC=null,AUT_CLIENT_DOC_CPF = null, AUT_CLIENT_DOC_CNPJ=null, AUT_CLIENT_DOC_PASSAPORT=null, AUT_VA_USER = null, AUT_VA_PASSWORD=null;
 	public AUT_VA_CADASTROS AUT_CLIENT_TYPE = null;	
 	private Desktop AUT_AGENT_SILK4J = new Desktop();
 
