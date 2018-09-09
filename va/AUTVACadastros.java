@@ -34,7 +34,7 @@ import org.junit.Assert;
  *
  */
 public class AUTVACadastros extends AUTVALogin {
-	public String AUT_NUMERO_DOC_CPF_OUTPUT=null,AUT_NUMERO_DOC_CNPJ_OUTPUT=null,AUT_NUMERO_DOC_PASSAPORTE_OUTPUT=null;
+	public static String AUT_NUMERO_DOC_CPF_OUTPUT=null,AUT_NUMERO_DOC_CNPJ_OUTPUT=null,AUT_NUMERO_DOC_PASSAPORTE_OUTPUT=null;
 	
 	/**
 	 * 
@@ -539,7 +539,7 @@ public class AUTVACadastros extends AUTVALogin {
 		btCadastroPFAvanc2.click();
 			
 		
-		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO-ESTRANGEIRO");			
+		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");			
 		
 		
 	}
@@ -743,6 +743,7 @@ public class AUTVACadastros extends AUTVALogin {
 			System.out.println("AUT INFO: CADASTRO DE CLIENTE : ESTRANGEIRO - PASSA PORTE");
 			AUT_AGENT_SILK4J.<DomCheckBox>find("VA.CadastroClientesDados.ClienteEstrangeiro").check();			
 			numPassPorte = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_PASSAPORTE").toString();
+			AUT_NUMERO_DOC_PASSAPORTE_OUTPUT = numPassPorte;			
 			autCadastrarEstrangeiro();
 			
 			break;
@@ -755,22 +756,23 @@ public class AUTVACadastros extends AUTVALogin {
 			numeroDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDocs.NumeroDocumento");
 			numeroDoc.click();
 			numCPF = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_CPF").toString();
+			AUT_NUMERO_DOC_CPF_OUTPUT = numCPF;
 			numeroDoc.typeKeys(numCPF);
 			autCadastrarPF();
 			
 			break;
 		}
 		case JURIDICA:{
-			DomTextField txtNumDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesInicial.NumeroDocumento");
+			DomTextField txtNumDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.NumeroDocumento");
 			
 			numCNPJ = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_CNPJ").toString();
-			
+			AUT_NUMERO_DOC_CNPJ_OUTPUT = numCNPJ;			
 			txtNumDoc.typeKeys(numCNPJ,500);
 			
 			btAddNovoClient.click();
 			
 			
-			DomTextField numeroDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroDocumento");
+			DomTextField numeroDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDocs.NumeroDocumento");
 			
 			numeroDoc.click();
 			numeroDoc.setText(numCNPJ);

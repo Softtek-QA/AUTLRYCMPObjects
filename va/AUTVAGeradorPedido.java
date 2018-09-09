@@ -35,8 +35,9 @@ import com.borland.silktest.jtf.win32.AccessibleControl;
 
 
 public class AUTVAGeradorPedido extends AUTVALogin {
-	public String AUT_CURRENT_DOC=null,AUT_CLIENT_DOC_CPF = null, AUT_CLIENT_DOC_CNPJ=null, AUT_CLIENT_DOC_PASSAPORT=null, AUT_VA_USER = null, AUT_VA_PASSWORD=null;
+	public static String AUT_CURRENT_DOC=null,AUT_CLIENT_DOC_CPF = null, AUT_CLIENT_DOC_CNPJ=null, AUT_CLIENT_DOC_PASSAPORT=null, AUT_VA_USER = null, AUT_VA_PASSWORD=null;
 	public AUT_VA_CADASTROS AUT_CLIENT_TYPE = null;	
+	public String currentDocument="";
 	private Desktop AUT_AGENT_SILK4J = new Desktop();
 
 
@@ -105,6 +106,7 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 			case A_VISTA: {
 				return "A VISTA";
 			}
+			
 			case SEM_JUROS_1X: {
 				return "1X SEM JUROS";
 			}
@@ -155,11 +157,12 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 	}
 	
 	
+	
 	@Test
 	/**
 	 *  SCRIPT DE GERACAO DE PEDIDOS
 	 */
-	public void autVAGeracaoPedidos(String usuario, String senha, String fluxoSaida, String meioPagamento, String planoPagamento) {
+	public void autVAGeracaoPedidos(String usuario, String senha, String fluxoSaida, String meioPagamento, String planoPagamento,String... documentos) {
 		
 		String quantidadeItem = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS,"AUT_QUANTIDADE_ITEM").toString();
 		String codigoItem = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS,"AUT_CODIGO_ITEM").toString();	
@@ -169,13 +172,16 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		String codigo = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_CODIGO_CARTAO").toString();
 		
 		
-		String docCliente = (String)(AUT_CLIENT_TYPE==null || AUT_CLIENT_TYPE==AUT_VA_CADASTROS.FISICA ? AUT_CLIENT_DOC_CPF : 
-			(AUT_CLIENT_TYPE==AUT_VA_CADASTROS.ESTRANGEIRO ? AUT_CLIENT_DOC_PASSAPORT : 
-				(AUT_CLIENT_TYPE==AUT_VA_CADASTROS.JURIDICA ? AUT_CLIENT_DOC_CNPJ : "000000000")));
+		String docCliente = documentos[0];
 
+	
+		
 		
 		autStartLoginDefault(usuario, senha);
 
+		//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.BotaoCarrinhoCompra").click();
+		//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.IniciarNovoAtendimento").click();
+		
 		AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
 		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.QuantidadeItem").setText(quantidadeItem);
 		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.CodigoItem").setText(codigoItem);
@@ -186,8 +192,20 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Senha").setText(senha);
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.ConfirmacaoLogin.Avancar").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.IconeModoDePesquisa").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ItemCPF_CNPJ").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisa").setText(docCliente);
+			
+		if(documentos.length >= 2) {
+			AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.Passaporte").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.NumeroPassaporte").setFocus();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.NumeroPassaporte").setText(docCliente);		
+			
+		}
+		else {
+			AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ItemCPF_CNPJ").click();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisa").setFocus();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisa").setText(docCliente);
+		}
+		
+	
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.BotaoPesquisarCliente").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ClientePesquisado").click();
 		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaCliente.AvancarTelaCliente").click();
