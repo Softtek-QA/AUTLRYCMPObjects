@@ -23,6 +23,8 @@ import br.lry.components.va.AUTVACadastros.AUT_VA_CADASTROS;
 import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_ENDERECO;
 import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_RESIDENCIA;
 import br.lry.dataflow.AUTDataFlow.*;
+
+import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.win32.AccessibleControl;
 import org.junit.Assert;
 /**
@@ -215,7 +217,10 @@ public class AUTVACadastros extends AUTVALogin {
 		}
 	}
 
-
+	public void autSetHostExecutionService(String host) {
+		AUT_AGENT_SILK4J = new Desktop(host);
+	}
+	
 	/**
 	 * 
 	 * Inclusão de parametros de cadastro pessoa jurídica

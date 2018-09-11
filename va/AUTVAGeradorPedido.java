@@ -150,7 +150,9 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		}
 	}
 	
-	
+	public void autSetHostExecutionService(String host) {
+		AUT_AGENT_SILK4J = new Desktop(host);
+	}
 	
 	public void aut_test() {
 		
@@ -235,6 +237,8 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaResumo.Finalizar").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaResumo.FecharPopUp").click();
 		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA02GERADORPEDIDOS001");
+		
+		
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
 		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
 	}

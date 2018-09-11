@@ -14,8 +14,9 @@ import org.junit.Assert;
 
 public class AUTHMCCadastros extends AUTHMCLogin {
 	public String AUT_USUARIO_CADASTRO_OUTPUT=null;
-	public String AUT_USUARIO_CADASTRO_PWD_OUTPUT=null;	
-	private Desktop AUT_AGENT_SILK4J = new Desktop();
+	public String AUT_USUARIO_CADASTRO_PWD_OUTPUT=null;
+	public String host = "127.0.0.1";
+	private Desktop AUT_AGENT_SILK4J = new Desktop(host);
 
 
 	String usuario = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN, "AUT_USER").toString();
@@ -34,6 +35,10 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 	String gestorArea = autGetCurrentParameter("AUT_GESTOR").toString();
 
 
+	public void autSetHostExecutionService(String host) {
+		AUT_AGENT_SILK4J = new Desktop(host);
+	}
+	
 	/**
 	 * 
 	 * Executa procedimentos para configuração de perfis de usuário
