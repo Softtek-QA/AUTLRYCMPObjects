@@ -3,6 +3,8 @@
  */
 package br.lry.components.va;
 
+import java.util.regex.Matcher;
+
 import org.junit.After;
 import org.junit.Test;
 
@@ -39,7 +41,7 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 	public AUT_VA_CADASTROS AUT_CLIENT_TYPE = null;	
 	public String currentDocument="";
 	private Desktop AUT_AGENT_SILK4J = new Desktop();
-
+	public String AUT_NUMERO_PEDIDO;
 
 	public enum AUT_VA_MEIOS_PAGAMENTO{
 		CARTAO_CREDITO,
@@ -97,7 +99,7 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 	public enum AUT_VA_PLANO_PAGAMENTO{
 		A_VISTA,
 		SEM_JUROS_1X,
-		SEM_JUROS_CELEBRE_2X;
+		SEM_JUROS_CELEBRE_1X;
 		
 		@Override
 		public String toString() {
@@ -110,8 +112,8 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 			case SEM_JUROS_1X: {
 				return "1X SEM JUROS";
 			}
-			case SEM_JUROS_CELEBRE_2X: {
-				return "2X SEM JUROS CELEBRE";
+			case SEM_JUROS_CELEBRE_1X: {
+				return "1X SEM JUROS CELEBRE";
 			}
 			}
 			return super.toString();
@@ -224,6 +226,7 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").click();
 		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").select(meioPagamento);
 		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").click();
+		
 		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").select(planoPagamento);
 		
 		if(meioPagamento != AUT_VA_MEIOS_PAGAMENTO.DINHEIRO.toString()) {
@@ -237,8 +240,7 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaResumo.Finalizar").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaResumo.FecharPopUp").click();
 		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA02GERADORPEDIDOS001");
-		
-		
+		AUT_NUMERO_PEDIDO = AUT_AGENT_SILK4J.<DomElement>find("VA.Validacao.FinalizacaoPedido").getText();						
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
 		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
 	}

@@ -33,7 +33,7 @@ import junit.framework.TestResult;
  */
 public abstract class AUTBaseComponent{
 
-	protected Desktop AUT_AGENT_SILK4J = new Desktop(); //"192.168.0.117");  //Objeto de conexão com aplicação da automação
+	protected Desktop AUT_AGENT_SILK4J = new Desktop();  //Objeto de conexão com aplicação da automação
 	protected BrowserBaseState AUT_BASE_STATE_CONFIGURATION_BROWSER = null; //Objeto base de configuraçao do browser
 	private AUTDataFlow AUT_CURRENT_DATA_FLOW = null; //Objeto de gerenciamento do fluxo de dados
 	private AUTLogMensagem AUT_CURRENT_LOG_MANAGER = null; //Objeto de gerenciamento do log
