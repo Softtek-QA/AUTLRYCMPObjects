@@ -11,6 +11,9 @@ import junit.framework.TestResult;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.borland.silktest.jtf.win32.AccessibleControl;
+import com.borland.silktest.jtf.xbrowser.DomElement;
+
 /**
  * Componente para login - VA
  * 
@@ -34,7 +37,6 @@ public class AUTVALogin extends AUTVABaseComponent {
 		}
 	}	
 	
-
 	public void autStartLoginDefault(String usuario, String senha) {
 		try {
 		
@@ -51,6 +53,9 @@ public class AUTVALogin extends AUTVABaseComponent {
 			e.printStackTrace();
 		}
 	}
+	
+
+	
 	
 	public AUTVALogin() {
 		super();

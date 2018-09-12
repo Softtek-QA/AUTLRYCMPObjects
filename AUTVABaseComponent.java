@@ -10,6 +10,7 @@ import com.borland.silktest.jtf.xbrowser.DomTextField;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 import br.lry.functions.AUTVAProjectFunctions;
 
+import com.borland.silktest.jtf.win32.AccessibleControl;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
 
@@ -43,6 +44,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, usuario.toString(), senha.toString());
 	}
 	
+	public void autLogoutApplication() {
+		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
+		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
+	}
 
 	
 }

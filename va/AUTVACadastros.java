@@ -367,7 +367,7 @@ public class AUTVACadastros extends AUTVALogin {
 		btCadastroPFAvanc2.click();
 		
 		try {
-			AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");		
+			//AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");		
 		}
 		catch(java.lang.Exception e) {
 			
@@ -544,7 +544,7 @@ public class AUTVACadastros extends AUTVALogin {
 		btCadastroPFAvanc2.click();
 			
 		
-		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");			
+		//AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");			
 		
 		
 	}
@@ -717,7 +717,7 @@ public class AUTVACadastros extends AUTVALogin {
 		btCadastroPFAvanc2.click();
 		
 		try {
-			AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");		
+			//AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");		
 		}
 		catch(java.lang.Exception e) {
 			

@@ -239,8 +239,21 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaMeioPagamento.Avancar").click();
 		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaResumo.Finalizar").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaResumo.FecharPopUp").click();
-		AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA02GERADORPEDIDOS001");
-		AUT_NUMERO_PEDIDO = AUT_AGENT_SILK4J.<DomElement>find("VA.Validacao.FinalizacaoPedido").getText();						
+		//AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA02GERADORPEDIDOS001");
+
+		
+		String conteudoElemento = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaFinalPedidos.NumeroPedido").getText();
+
+		java.util.regex.Pattern padrao = java.util.regex.Pattern.compile("\\d+");
+		java.util.regex.Matcher analise = padrao.matcher(conteudoElemento);
+		if(analise.find()) {
+			AUT_NUMERO_PEDIDO = analise.group();
+		}
+		else {
+			AUT_NUMERO_PEDIDO= "00000000000";
+		}
+		
+		
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
 		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
 	}
