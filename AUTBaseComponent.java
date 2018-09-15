@@ -38,7 +38,7 @@ public abstract class AUTBaseComponent{
 	private AUTDataFlow AUT_CURRENT_DATA_FLOW = null; //Objeto de gerenciamento do fluxo de dados
 	private AUTLogMensagem AUT_CURRENT_LOG_MANAGER = null; //Objeto de gerenciamento do log
 	protected AUT_TABLE_PARAMETERS_NAMES AUT_CURRENT_PARAMETERS_TABLE_NAME = null;
-
+	
 	public void autSetMicrosoftEdgeBrowser() {
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.Edge);		
 	}	
@@ -81,6 +81,9 @@ public abstract class AUTBaseComponent{
 
 	}	
 
+	public void autSetHostExecution(String host) {
+		AUT_AGENT_SILK4J = new Desktop(host);
+	}
 
 	/**
 	 * 
@@ -234,7 +237,24 @@ public abstract class AUTBaseComponent{
 		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
 
 	}
+	
+	
+	public void autInitWebApplicationVA() {
+		
+		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();		
+		AUT_BASE_STATE_CONFIGURATION_BROWSER.setUrl(autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN, "AUT_URL_VA").toString());
+		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
+		try {
+			AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		
+		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
 
+	}
 	
 	public void autInitHmcApplication() {
 		

@@ -18,6 +18,9 @@ import com.borland.silktest.jtf.xbrowser.DomTextField;
 
 import br.lry.components.va.AUTVACadastros.AUT_VA_CADASTROS;
 import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_CONTATO;
+import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_FLUXO_SAIDA;
+import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_MEIOS_PAGAMENTO;
+import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_PLANO_PAGAMENTO;
 import br.lry.components.va.AUTVALogin;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 import br.lry.functions.AUTProjectsFunctions;
@@ -180,9 +183,15 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 
 	
 		
-		
+
 		autStartLoginDefault(usuario, senha);
 
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").setFocus();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").typeKeys(codigoItem);
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").typeKeys("\n");
+		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPesquisaBoitata.BtAdicionarCarrinho").click();
+		
+		
 		//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.BotaoCarrinhoCompra").click();
 		//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.IniciarNovoAtendimento").click();
 		
@@ -260,6 +269,99 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 	
 	
 
+	public void autVAGeracaoPedidosV2(String usuario, String senha, String fluxoSaida, String meioPagamento, String planoPagamento,String... documentos) {
+		
+		String quantidadeItem = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS,"AUT_QUANTIDADE_ITEM").toString();
+		String codigoItem = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS,"AUT_CODIGO_ITEM").toString();	
+		String numeroCartao = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_NUMERO_CARTAO").toString();
+		String nomeTitular = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_NOME_TITULAR").toString();
+		String validade = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_VALIDADE").toString();
+		String codigo = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_CODIGO_CARTAO").toString();
+		
+		
+		String docCliente = documentos[0];
+
+	
+		
+		
+		//autStartLoginDefault(usuario, senha);
+
+		//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.BotaoCarrinhoCompra").click();
+		//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.IniciarNovoAtendimento").click();
+		
+
+		
+		AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.QuantidadeItem").setText(quantidadeItem);
+		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.CodigoItem").setText(codigoItem);
+		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaInicialLoja.PesquisarProduto").click();
+		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.ConverterPedido").click();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").clearText();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").setText(usuario);
+		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Senha").setText(senha);
+		AUT_AGENT_SILK4J.<DomElement>find("VA02.ConfirmacaoLogin.Avancar").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.IconeModoDePesquisa").click();
+			
+		if(documentos.length >= 2) {
+			AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.Passaporte").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.NumeroPassaporte").setFocus();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.NumeroPassaporte").setText(docCliente);		
+			
+		}
+		else {
+			AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ItemCPF_CNPJ").click();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisa").setFocus();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisa").setText(docCliente);
+		}
+		
+	
+		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.BotaoPesquisarCliente").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ClientePesquisado").click();
+		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaCliente.AvancarTelaCliente").click();
+		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.Avancar").click();
+		
+		if(fluxoSaida == AUT_VA_FLUXO_SAIDA.CAIXA.toString()) {
+			AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoCaixa").select();
+		}else { 
+			AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoRetirada").select();
+			AUT_AGENT_SILK4J.<DomListBox>find("VA02.FluxoSaida.TipoRetirada").select(fluxoSaida);//AUT_VA_TIPO_RETIRADA.REITRADA_INTERNA_IMEDIATA.toString());
+		}
+		
+		AUT_AGENT_SILK4J.<DomButton>find("VA02.FluxoSaida.Avancar").click();
+		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").click();
+		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").select(meioPagamento);
+		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").click();
+		
+		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").select(planoPagamento);
+		
+		if(meioPagamento != AUT_VA_MEIOS_PAGAMENTO.DINHEIRO.toString()) {
+			AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.NumeroCartao").setText(numeroCartao);
+			AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.NomeTitular").setText(nomeTitular);
+			AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.Validade").setText(validade);
+			AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.Codigo").setText(codigo);
+		}
+	
+		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaMeioPagamento.Avancar").click();
+		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaResumo.Finalizar").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaResumo.FecharPopUp").click();
+		//AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA02GERADORPEDIDOS001");
+
+		
+		String conteudoElemento = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaFinalPedidos.NumeroPedido").getText();
+
+		java.util.regex.Pattern padrao = java.util.regex.Pattern.compile("\\d+");
+		java.util.regex.Matcher analise = padrao.matcher(conteudoElemento);
+		if(analise.find()) {
+			AUT_NUMERO_PEDIDO = analise.group();
+		}
+		else {
+			AUT_NUMERO_PEDIDO= "00000000000";
+		}
+		
+		
+		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
+		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
+	}
 	
 	
 	

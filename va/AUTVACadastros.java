@@ -22,6 +22,9 @@ import sun.management.resources.agent;
 import br.lry.components.va.AUTVACadastros.AUT_VA_CADASTROS;
 import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_ENDERECO;
 import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_RESIDENCIA;
+import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_FLUXO_SAIDA;
+import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_MEIOS_PAGAMENTO;
+import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_PLANO_PAGAMENTO;
 import br.lry.dataflow.AUTDataFlow.*;
 
 import com.borland.silktest.jtf.Desktop;
@@ -724,11 +727,20 @@ public class AUTVACadastros extends AUTVALogin {
 		}
 	}
 	
+	public void autIncluirItemCarrinho(String material) {
+		AUTVAGeradorPedido pedidos = new AUTVAGeradorPedido();
+		
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").setFocus();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").typeKeys(material);
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").typeKeys("\n");
+		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPesquisaBoitata.BtAdicionarCarrinho").click();
+		pedidos.autVAGeracaoPedidosV2(AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT, AUT_VA_FLUXO_SAIDA.CAIXA.toString(), AUT_VA_MEIOS_PAGAMENTO.DINHEIRO.toString(), AUT_VA_PLANO_PAGAMENTO.A_VISTA.toString(),"78651738811");
+	
+	}
+	
 	
 	public void autCadastrarCliente(AUT_VA_CADASTROS tipoCadastro) {
 		
-		autInitWebApplication();
-		autStartLoginDefault();
 		DomElement menuClient = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.MenuPrincipal");
 		menuClient.click();
 		DomElement subMenuCliente = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.SubMenuClientes");
@@ -798,6 +810,8 @@ public class AUTVACadastros extends AUTVALogin {
 		
 	@Test
 	public void autInitClientMenuCadastroPF() {
+		autInitWebApplicationVA();
+		autStartLoginDefaultVA();
 		//TIPO PESSOA
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_CADASTRO");
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_CADASTRO", AUT_VA_CADASTROS.FISICA);
@@ -813,16 +827,16 @@ public class AUTVACadastros extends AUTVALogin {
 		//TIPO RESIDENCIA
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_IMOVEL_RESIDENCIA");
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_IMOVEL_RESIDENCIA", AUT_VA_TIPO_RESIDENCIA.LOJA_OU_SOBRELOJA);
-		AUT_VA_TIPO_RESIDENCIA opTipoResidencia = (AUT_VA_TIPO_RESIDENCIA) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_IMOVEL_RESIDENCIA");
-		
+		AUT_VA_TIPO_RESIDENCIA opTipoResidencia = (AUT_VA_TIPO_RESIDENCIA) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_IMOVEL_RESIDENCIA");		
 		
 		autCadastrarCliente(opCadastro);
-		
 	}	
 	
 	
-	@Test
+
 	public void autInitClientMenuCadastroPJ() {
+		autInitWebApplicationVA();
+		autStartLoginDefaultVA();
 		//TIPO PESSOA
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_CADASTRO");
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_CADASTRO", AUT_VA_CADASTROS.JURIDICA);
@@ -846,8 +860,10 @@ public class AUTVACadastros extends AUTVALogin {
 	}	
 	
 	
-	@Test
+
 	public void autInitClientMenuCadastroExtrangeiro() {
+		autInitWebApplicationVA();
+		autStartLoginDefaultVA();
 		//TIPO PESSOA
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_CADASTRO");
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_CADASTRO", AUT_VA_CADASTROS.ESTRANGEIRO);

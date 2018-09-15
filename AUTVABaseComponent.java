@@ -22,6 +22,9 @@ import com.borland.silktest.jtf.xbrowser.DomElement;
  *
  */
 public class AUTVABaseComponent extends AUTBaseComponent {
+	public String AUT_USUARIO_LOGIN_DEFAULT = "";
+	public String AUT_SENHA_LOGIN_DEFAULT = "";
+	
 	java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
 	
 	
@@ -37,7 +40,19 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */
 	
 	public void autLogin() {
-		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString(), AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString());
+		
+		AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
+		AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
+		
+		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
+	}
+	
+	public void autLoginVA() {
+		
+		AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
+		AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
+		
+		AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
 	}
 	
 	public void autLogin(String usuario, String senha) {
