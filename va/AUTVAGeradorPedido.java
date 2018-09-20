@@ -178,10 +178,7 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		String validade = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_VALIDADE").toString();
 		String codigo = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_CODIGO_CARTAO").toString();
 		
-		
 		String docCliente = documentos[0];
-
-	
 		
 
 		autStartLoginDefault(usuario, senha);

@@ -88,7 +88,7 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.SubMenuClienteDropDown").click();
 
 		autAdicionarPerfisUsuario(new String[] { unidadeB2B, "LB01", "channel_store", "32_ATV", "GERENTE COMERCIAL",
-				"35_ATV", "50000425-PROJETO 3D VENDA ASSISTIDA" });
+				"35_ATV", "50000425-PROJETO 3D VENDA ASSISTIDA", "14_ATV", "98_ATV" });
 
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaCadastroClientes.IdUsuario").setText(userID);
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaCadastroClientes.NomeUsuario").setText(userName.concat(userID));
