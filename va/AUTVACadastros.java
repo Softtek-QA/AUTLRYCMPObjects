@@ -422,6 +422,7 @@ public class AUTVACadastros extends AUTVALogin {
 		if(multiplos == 2) {
 			DomButton adcNovoTel = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.AdicionarNovoTefone");
 			adcNovoTel.click();
+<<<<<<< HEAD
 	
 			DomListBox tipoTel2 = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoTelefone2");
 			tipoTel2.click();
@@ -431,6 +432,12 @@ public class AUTVACadastros extends AUTVALogin {
 			numeroTel2.setText(numeroTelefoneCliente2.toString());
 		}
 		
+=======
+			DomListBox tipoTel2 = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoTelefone2");
+			DomTextField numeroTel2 = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.TipoTelefone2");
+			numeroTel2.setText(numeroTelefoneCliente2);
+		}
+>>>>>>> branch 'master' of https://github.com/Softtek-QA/AUTLRYCMPObjects.git
 		
 		
 		DomListBox tipoEndereco = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoImovel");
@@ -649,6 +656,18 @@ public class AUTVACadastros extends AUTVALogin {
 		txtNumeroContato.click();
 		txtNumeroContato.setFocus();
 		txtNumeroContato.domClick();
+<<<<<<< HEAD
+=======
+
+
+		if(multiplos == 2) {
+			DomButton adcNovoTel = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.AdicionarNovoTefone");
+			adcNovoTel.click();
+			DomListBox tipoTel2 = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoTelefone2");
+			DomTextField numeroTel2 = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.TipoTelefone2");
+			numeroTel2.setText(numeroTelefone2);
+		}
+>>>>>>> branch 'master' of https://github.com/Softtek-QA/AUTLRYCMPObjects.git
 		
 		
 		DomButton btPesquisarCEP = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.NaoSeiCEPPesquisa");
