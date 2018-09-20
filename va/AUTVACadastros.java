@@ -41,6 +41,9 @@ import org.junit.Assert;
  */
 public class AUTVACadastros extends AUTVALogin {
 	public static String AUT_NUMERO_DOC_CPF_OUTPUT=null,AUT_NUMERO_DOC_CNPJ_OUTPUT=null,AUT_NUMERO_DOC_PASSAPORTE_OUTPUT=null;
+	public int multiplos;
+	public String numeroDocumento;
+	
 	
 	/**
 	 * 
@@ -240,6 +243,7 @@ public class AUTVACadastros extends AUTVALogin {
 		String departamentoContato = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_PJ_DEPARTAMENTO_CONTATO").toString();
 		AUT_VA_TIPO_CONTATO numeroTipoTelefoneContato = (AUT_VA_TIPO_CONTATO)autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_TELEFONE");
 		String numeroTelefoneContato = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_NUMERO_TELEFONE").toString();
+		String numeroTelefoneContato2 = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_NUMERO_TELEFONE_2").toString();
 		String inscricaoEstadualEstra = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_INCRICAO_ESTADUAL").toString();
 	
 		DomTextField txtNomeSocial = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesPJ.RazaoSocial");
@@ -278,6 +282,17 @@ public class AUTVACadastros extends AUTVALogin {
 		
 		txtNumeroTelefoneContato.click();
 		txtNumeroTelefoneContato.setText(numeroTelefoneContato);
+		
+		
+		if(multiplos == 2) {
+			DomButton adcNovoTel = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.AdicionarNovoTefone");
+			adcNovoTel.click();
+			DomListBox tipoTelefone2= AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoTelefone2");
+			tipoTelefone2.select(numeroTipoTelefoneContato.toString());
+			DomTextField numeroTelefone2 = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Telefone2");
+			numeroTelefone2.setText(numeroTelefoneContato2.toString());
+		}
+		
 		
 		AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesPJ.AceitoSMS").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesPJ.AceitoPropagLeroy").click();
@@ -369,7 +384,7 @@ public class AUTVACadastros extends AUTVALogin {
 		DomButton btCadastroPFAvanc2 = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.BotaoAvancarCadastro");
 
 		btCadastroPFAvanc2.click();
-		
+		autPegarIdentificadorCliente();
 		try {
 			//AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");		
 		}
@@ -393,6 +408,8 @@ public class AUTVACadastros extends AUTVALogin {
 		String emailCliente = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_EMAIL").toString();
 		AUT_VA_TIPO_CONTATO tipoContatoCliente = (AUT_VA_TIPO_CONTATO) autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_TIPO_TELEFONE");
 		String numeroTelefoneCliente = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_NUMERO_TELEFONE").toString();
+		String numeroTelefoneCliente2 = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_NUMERO_TELEFONE_2").toString();
+		
 		AUT_VA_TIPO_ENDERECO tipoEnderecoCliente = (AUT_VA_TIPO_ENDERECO) autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_TIPO_ENDERECO");
 				
 		DomTextField nome = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Nome");
@@ -400,6 +417,22 @@ public class AUTVACadastros extends AUTVALogin {
 		DomTextField email = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Email");
 		DomListBox tipoTel = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoTelefone");
 		DomTextField numeroTel = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.NumeroTelefone");
+		
+		
+		if(multiplos == 2) {
+			DomButton adcNovoTel = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.AdicionarNovoTefone");
+			adcNovoTel.click();
+	
+			DomListBox tipoTel2 = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoTelefone2");
+			tipoTel2.click();
+			tipoTel2.select(tipoContatoCliente.toString());
+						
+			DomTextField numeroTel2 = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Telefone2");
+			numeroTel2.setText(numeroTelefoneCliente2.toString());
+		}
+		
+		
+		
 		DomListBox tipoEndereco = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoImovel");
 			
 		nome.click();
@@ -546,7 +579,7 @@ public class AUTVACadastros extends AUTVALogin {
 		DomButton btCadastroPFAvanc2 = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.BotaoAvancarCadastro");
 
 		btCadastroPFAvanc2.click();
-			
+		autPegarIdentificadorCliente();
 		
 		//AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");			
 		
@@ -585,9 +618,9 @@ public class AUTVACadastros extends AUTVALogin {
 		numeroInscEstatual.domClick();
 		numeroInscEstatual.setText(ClienteInscricao);
 
-		String tipoTelefone = autGetCurrentParameter( "AUT_TIPO_TELEFONE")
-				.toString();
-		String numeroTelefone = autGetCurrentParameter( "AUT_NUMERO_TELEFONE").toString();
+		String tipoTelefone = autGetCurrentParameter("AUT_TIPO_TELEFONE").toString();
+		String numeroTelefone = autGetCurrentParameter("AUT_NUMERO_TELEFONE").toString();
+		String numeroTelefone2 = autGetCurrentParameter("AUT_NUMERO_TELEFONE_2").toString();
 
 		DomListBox listaTipoElement = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoTelefone");
 		listaTipoElement.click();
@@ -598,10 +631,26 @@ public class AUTVACadastros extends AUTVALogin {
 		txtNumeroContato.domClick();
 		txtNumeroContato.setText(numeroTelefone);
 
+	
+
+
+		if(multiplos == 2) {
+			DomButton adcNovoTel = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.AdicionarNovoTefone");
+			adcNovoTel.click();
+			
+			DomListBox tipoTel2 = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoTelefone2");
+			tipoTel2.click();
+			tipoTel2.select(tipoTelefone.toString());
+			
+			DomTextField numeroTel2 = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Telefone2");
+			numeroTel2.setText(numeroTelefone2.toString());
+		}
+		
 		txtNumeroContato.click();
 		txtNumeroContato.setFocus();
 		txtNumeroContato.domClick();
-
+		
+		
 		DomButton btPesquisarCEP = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.NaoSeiCEPPesquisa");
 		btPesquisarCEP.click();
 
@@ -719,7 +768,7 @@ public class AUTVACadastros extends AUTVALogin {
 		DomButton btCadastroPFAvanc2 = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.AvancarPaginaCadastro2");
 
 		btCadastroPFAvanc2.click();
-		
+		autPegarIdentificadorCliente();
 		try {
 			//AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");		
 		}
@@ -798,95 +847,27 @@ public class AUTVACadastros extends AUTVALogin {
 			autCadastrarPJ();
 			break;
 		}		
-		}
-			
+		}		
 	}
 	
 	
+	public void autPegarIdentificadorCliente() {
+		AUT_AGENT_SILK4J.<DomElement>find("VA.ClienteCadastrado.DadosBasicos").click();
+		numeroDocumento = AUT_AGENT_SILK4J.<DomTextField>find("VA.ClienteCadastrado.NumeroDocumento").getText();
+	}
 	
-	/*
-	 * CADASTRO DE CLIENTES - VA-VENDAS ASSISTIDAS
-	 * 
-	 */
-		
-	@Test
-	public void autInitClientMenuCadastroPF() {
+	
+	public void autCadastroClientePJExcecao() {
 		autInitWebApplicationVA();
 		autStartLoginDefaultVA();
-		//TIPO PESSOA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_CADASTRO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_CADASTRO", AUT_VA_CADASTROS.FISICA);
-		AUT_VA_CADASTROS opCadastro = (AUT_VA_CADASTROS) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_CADASTRO");
-
-				
-		//TIPO ENDERECO
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_ENDERECO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_ENDERECO", AUT_VA_TIPO_ENDERECO.COMERCIAL);
-		AUT_VA_TIPO_ENDERECO opTipoEndereco = (AUT_VA_TIPO_ENDERECO) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_ENDERECO");
 		
-		
-		//TIPO RESIDENCIA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_IMOVEL_RESIDENCIA");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_IMOVEL_RESIDENCIA", AUT_VA_TIPO_RESIDENCIA.LOJA_OU_SOBRELOJA);
-		AUT_VA_TIPO_RESIDENCIA opTipoResidencia = (AUT_VA_TIPO_RESIDENCIA) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_IMOVEL_RESIDENCIA");		
-		
-		autCadastrarCliente(opCadastro);
-	}	
-	
+		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.MenuPrincipal").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PJExcecao.SubMenuPJExcecao").click();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.PJExcecao.CNPJ").setText(numeroDocumento);
+		AUT_AGENT_SILK4J.<DomButton>find("VA.PJExcecao.Cadastrar").click();
+	}
 	
 
-	public void autInitClientMenuCadastroPJ() {
-		autInitWebApplicationVA();
-		autStartLoginDefaultVA();
-		//TIPO PESSOA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_CADASTRO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_CADASTRO", AUT_VA_CADASTROS.JURIDICA);
-		AUT_VA_CADASTROS opCadastro = (AUT_VA_CADASTROS) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_CADASTRO");
-
-				
-		//TIPO ENDERECO
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_ENDERECO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_ENDERECO", AUT_VA_TIPO_ENDERECO.COMERCIAL);
-		AUT_VA_TIPO_ENDERECO opTipoEndereco = (AUT_VA_TIPO_ENDERECO) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_ENDERECO");
-		
-		
-		//TIPO RESIDENCIA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_IMOVEL_RESIDENCIA");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_IMOVEL_RESIDENCIA", AUT_VA_TIPO_RESIDENCIA.LOJA_OU_SOBRELOJA);
-		AUT_VA_TIPO_RESIDENCIA opTipoResidencia = (AUT_VA_TIPO_RESIDENCIA) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_IMOVEL_RESIDENCIA");
-		
-		
-		autCadastrarCliente(opCadastro);
-		
-	}	
-	
-	
-
-	public void autInitClientMenuCadastroExtrangeiro() {
-		autInitWebApplicationVA();
-		autStartLoginDefaultVA();
-		//TIPO PESSOA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_CADASTRO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_CADASTRO", AUT_VA_CADASTROS.ESTRANGEIRO);
-		AUT_VA_CADASTROS opCadastro = (AUT_VA_CADASTROS) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_CADASTRO");
-
-				
-		//TIPO ENDERECO
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_ENDERECO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_ENDERECO", AUT_VA_TIPO_ENDERECO.COMERCIAL);
-		AUT_VA_TIPO_ENDERECO opTipoEndereco = (AUT_VA_TIPO_ENDERECO) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_ENDERECO");
-		
-		
-		//TIPO RESIDENCIA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_IMOVEL_RESIDENCIA");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_IMOVEL_RESIDENCIA", AUT_VA_TIPO_RESIDENCIA.LOJA_OU_SOBRELOJA);
-		AUT_VA_TIPO_RESIDENCIA opTipoResidencia = (AUT_VA_TIPO_RESIDENCIA) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_IMOVEL_RESIDENCIA");
-		
-		
-		autCadastrarCliente(opCadastro);
-		
-	}	
-	
 	
 	@Test
 	public void autCadastroClienteVA(AUT_VA_CADASTROS tipoPessoa, AUT_VA_TIPO_CONTATO tipoTelefone, AUT_VA_TIPO_ENDERECO tipoEndereco, AUT_VA_TIPO_RESIDENCIA tipoResidencia) {
@@ -918,9 +899,11 @@ public class AUTVACadastros extends AUTVALogin {
 	
 
 	@Test
-	public void autCadastroClienteAdcTelefoneVA(AUT_VA_CADASTROS tipoPessoa, AUT_VA_TIPO_CONTATO tipoTelefone, AUT_VA_TIPO_CONTATO tipoTelefone2, AUT_VA_TIPO_ENDERECO tipoEndereco, AUT_VA_TIPO_RESIDENCIA tipoResidencia) {
+	public void autCadastroClienteMultiplosTelefonesVA(AUT_VA_CADASTROS tipoPessoa, AUT_VA_TIPO_CONTATO tipoTelefone, AUT_VA_TIPO_CONTATO tipoTelefone2, AUT_VA_TIPO_ENDERECO tipoEndereco, AUT_VA_TIPO_RESIDENCIA tipoResidencia) {
 		autInitWebApplicationVA();
 		autStartLoginDefaultVA();
+		
+		multiplos = 2;
 		
 		//TIPO PESSOA
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_CADASTRO");
@@ -933,8 +916,6 @@ public class AUTVACadastros extends AUTVALogin {
 		AUT_VA_TIPO_CONTATO opTipoTelefone = (AUT_VA_TIPO_CONTATO) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_TELEFONE");
 			
 		//TIPO TELEFONE2
-		DomTextField adcNovoTel = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.AdicionarNovoTefone");
-		adcNovoTel.click();
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_TELEFONE");
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_TELEFONE", tipoTelefone2);
 		AUT_VA_TIPO_CONTATO opTipoTelefone2 = (AUT_VA_TIPO_CONTATO) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_TELEFONE");
@@ -953,7 +934,7 @@ public class AUTVACadastros extends AUTVALogin {
 	}	
 	
 	@Test
-	public void autCadastroClienteAdcTelefoneVA(AUT_VA_CADASTROS tipoPessoa, AUT_VA_TIPO_CONTATO tipoTelefone, AUT_VA_TIPO_ENDERECO tipoEndereco, AUT_VA_TIPO_RESIDENCIA tipoResidencia, AUT_VA_TIPO_ENDERECO tipoEndereco2, AUT_VA_TIPO_RESIDENCIA tipoResidencia2) {
+	public void autCadastroClienteMultiplosEnderecosVA(AUT_VA_CADASTROS tipoPessoa, AUT_VA_TIPO_CONTATO tipoTelefone, AUT_VA_TIPO_ENDERECO tipoEndereco, AUT_VA_TIPO_RESIDENCIA tipoResidencia, AUT_VA_TIPO_ENDERECO tipoEndereco2, AUT_VA_TIPO_RESIDENCIA tipoResidencia2) {
 		autInitWebApplicationVA();
 		autStartLoginDefaultVA();
 		
@@ -993,7 +974,6 @@ public class AUTVACadastros extends AUTVALogin {
 		autCadastrarCliente(opCadastro);
 	}	
 	
-
 }
 
 
