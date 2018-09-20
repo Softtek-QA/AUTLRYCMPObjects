@@ -42,6 +42,9 @@ import org.junit.Assert;
 public class AUTVACadastros extends AUTVALogin {
 	public static String AUT_NUMERO_DOC_CPF_OUTPUT=null,AUT_NUMERO_DOC_CNPJ_OUTPUT=null,AUT_NUMERO_DOC_PASSAPORTE_OUTPUT=null;
 	public int multiplos;
+	public String numeroDocumento;
+	
+	
 	/**
 	 * 
 	 * Cadastro de Estados
@@ -833,95 +836,27 @@ public class AUTVACadastros extends AUTVALogin {
 			autCadastrarPJ();
 			break;
 		}		
-		}
-			
+		}		
 	}
 	
 	
+	public void autPegarIdentificadorCliente() {
+		AUT_AGENT_SILK4J.<DomElement>find("VA.ClienteCadastrado.DadosBasicos").click();
+		numeroDocumento = AUT_AGENT_SILK4J.<DomTextField>find("VA.ClienteCadastrado.NumeroDocumento").getText();
+	}
 	
-	/*
-	 * CADASTRO DE CLIENTES - VA-VENDAS ASSISTIDAS
-	 * 
-	 */
-		
-	@Test
-	public void autInitClientMenuCadastroPF() {
+	
+	public void autCadastroClientePJExcecao() {
 		autInitWebApplicationVA();
 		autStartLoginDefaultVA();
-		//TIPO PESSOA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_CADASTRO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_CADASTRO", AUT_VA_CADASTROS.FISICA);
-		AUT_VA_CADASTROS opCadastro = (AUT_VA_CADASTROS) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_CADASTRO");
-
-				
-		//TIPO ENDERECO
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_ENDERECO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_ENDERECO", AUT_VA_TIPO_ENDERECO.COMERCIAL);
-		AUT_VA_TIPO_ENDERECO opTipoEndereco = (AUT_VA_TIPO_ENDERECO) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_ENDERECO");
 		
-		
-		//TIPO RESIDENCIA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_IMOVEL_RESIDENCIA");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_IMOVEL_RESIDENCIA", AUT_VA_TIPO_RESIDENCIA.LOJA_OU_SOBRELOJA);
-		AUT_VA_TIPO_RESIDENCIA opTipoResidencia = (AUT_VA_TIPO_RESIDENCIA) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_IMOVEL_RESIDENCIA");		
-		
-		autCadastrarCliente(opCadastro);
-	}	
-	
+		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.MenuPrincipal").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PJExcecao.SubMenuPJExcecao").click();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.PJExcecao.CNPJ").setText(numeroDocumento);
+		AUT_AGENT_SILK4J.<DomButton>find("VA.PJExcecao.Cadastrar").click();
+	}
 	
 
-	public void autInitClientMenuCadastroPJ() {
-		autInitWebApplicationVA();
-		autStartLoginDefaultVA();
-		//TIPO PESSOA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_CADASTRO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_CADASTRO", AUT_VA_CADASTROS.JURIDICA);
-		AUT_VA_CADASTROS opCadastro = (AUT_VA_CADASTROS) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_CADASTRO");
-
-				
-		//TIPO ENDERECO
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_ENDERECO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_ENDERECO", AUT_VA_TIPO_ENDERECO.COMERCIAL);
-		AUT_VA_TIPO_ENDERECO opTipoEndereco = (AUT_VA_TIPO_ENDERECO) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_ENDERECO");
-		
-		
-		//TIPO RESIDENCIA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_IMOVEL_RESIDENCIA");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_IMOVEL_RESIDENCIA", AUT_VA_TIPO_RESIDENCIA.LOJA_OU_SOBRELOJA);
-		AUT_VA_TIPO_RESIDENCIA opTipoResidencia = (AUT_VA_TIPO_RESIDENCIA) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_IMOVEL_RESIDENCIA");
-		
-		
-		autCadastrarCliente(opCadastro);
-		
-	}	
-	
-	
-
-	public void autInitClientMenuCadastroExtrangeiro() {
-		autInitWebApplicationVA();
-		autStartLoginDefaultVA();
-		//TIPO PESSOA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_CADASTRO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_CADASTRO", AUT_VA_CADASTROS.ESTRANGEIRO);
-		AUT_VA_CADASTROS opCadastro = (AUT_VA_CADASTROS) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_CADASTRO");
-
-				
-		//TIPO ENDERECO
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_ENDERECO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_ENDERECO", AUT_VA_TIPO_ENDERECO.COMERCIAL);
-		AUT_VA_TIPO_ENDERECO opTipoEndereco = (AUT_VA_TIPO_ENDERECO) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_ENDERECO");
-		
-		
-		//TIPO RESIDENCIA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_IMOVEL_RESIDENCIA");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_IMOVEL_RESIDENCIA", AUT_VA_TIPO_RESIDENCIA.LOJA_OU_SOBRELOJA);
-		AUT_VA_TIPO_RESIDENCIA opTipoResidencia = (AUT_VA_TIPO_RESIDENCIA) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_IMOVEL_RESIDENCIA");
-		
-		
-		autCadastrarCliente(opCadastro);
-		
-	}	
-	
 	
 	@Test
 	public void autCadastroClienteVA(AUT_VA_CADASTROS tipoPessoa, AUT_VA_TIPO_CONTATO tipoTelefone, AUT_VA_TIPO_ENDERECO tipoEndereco, AUT_VA_TIPO_RESIDENCIA tipoResidencia) {
@@ -1028,7 +963,6 @@ public class AUTVACadastros extends AUTVALogin {
 		autCadastrarCliente(opCadastro);
 	}	
 	
-
 }
 
 
