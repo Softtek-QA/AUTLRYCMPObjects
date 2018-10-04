@@ -9,7 +9,9 @@ import com.borland.silktest.jtf.xbrowser.DomTextField;
 
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 import br.lry.functions.AUTVAProjectFunctions;
+import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
 
+import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.win32.AccessibleControl;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
@@ -33,6 +35,30 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		// TODO Auto-generated constructor stub
 	}
 
+	public boolean autLoginVA(Desktop agent, String user, String password) {
+		try {
+			
+			autGetLogManager().logMensagem("AUT INFO: INICIANDO LOGIN : APLICACAO VA");
+			
+			agent.<DomTextField>find("VA.Login.Usuario").click();
+			agent.<DomTextField>find("VA.Login.Usuario").setText(user);
+			agent.<DomTextField>find("VA.Login.Senha").click();
+			agent.<DomTextField>find("VA.Login.Senha").setText(password);
+			agent.<DomButton>find("VA.Login.Avancar").click();
+			
+			autGetLogManager().logMensagem("AUT INFO: LOGIN REALIZADO COM SUCESSO");
+			return true;
+		} catch (java.lang.Exception e) {
+			
+			autGetLogManager().logMensagem(AUT_TIPO_MSG_LOG.MENSAGEM_INFORMATIVA,
+					"AUT ERROR: LOGIN : APLICACAO VA");
+
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			
+			return false;
+		}
+	}
 	/**
 	 * 
 	 * Realiza login na aplicação - VA

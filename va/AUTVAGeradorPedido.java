@@ -170,7 +170,6 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 	 *  SCRIPT DE GERACAO DE PEDIDOS
 	 */
 	public void autVAGeracaoPedidos(String usuario, String senha, String fluxoSaida, String meioPagamento, String planoPagamento,String... documentos) {
-		
 		String quantidadeItem = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS,"AUT_QUANTIDADE_ITEM").toString();
 		String codigoItem = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS,"AUT_CODIGO_ITEM").toString();	
 		String numeroCartao = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_NUMERO_CARTAO").toString();
@@ -180,9 +179,6 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		
 		
 		String docCliente = documentos[0];
-
-	
-		
 
 		autStartLoginDefault(usuario, senha);
 
@@ -268,9 +264,22 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 	}
 	
 	
-
-	public void autVAGeracaoPedidosV2(String usuario, String senha, String fluxoSaida, String meioPagamento, String planoPagamento,String... documentos) {
+	public void autIncluirItemCarrinho(String material) {
 		
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").setFocus();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").typeKeys(material);
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").typeKeys("\n");
+		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPesquisaBoitata.BtAdicionarCarrinho").click();
+	
+	}
+	
+	public void autVAGeracaoPedidosV2(String usuario, String senha, String fluxoSaida, String meioPagamento, String planoPagamento,String... documentos) {
+		try {
+			autLogoutApplication();
+		}
+		catch(java.lang.Exception e) {
+			
+		}
 		String quantidadeItem = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS,"AUT_QUANTIDADE_ITEM").toString();
 		String codigoItem = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS,"AUT_CODIGO_ITEM").toString();	
 		String numeroCartao = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_NUMERO_CARTAO").toString();
@@ -282,19 +291,15 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		String docCliente = documentos[0];
 
 	
-		
-		
-		//autStartLoginDefault(usuario, senha);
+		//autInitWebApplicationVA(); // Login VA
+		//autLoginVA(AUT_AGENT_SILK4J, usuario, senha); //Login VA
+		autStartLoginDefault(usuario, senha); //Boitata
+		autIncluirItemCarrinho(codigoItem); //Boitata
 
-		//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.BotaoCarrinhoCompra").click();
-		//AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaInicialLoja.IniciarNovoAtendimento").click();
-		
-
-		
 		AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.QuantidadeItem").setText(quantidadeItem);
-		AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.CodigoItem").setText(codigoItem);
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaInicialLoja.PesquisarProduto").click();
+		//AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.QuantidadeItem").setText(quantidadeItem);
+		//AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.CodigoItem").setText(codigoItem);
+		//AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaInicialLoja.PesquisarProduto").click();
 		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.ConverterPedido").click();
 		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").clearText();
 		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").setText(usuario);

@@ -46,16 +46,17 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 	 */
 	public boolean autAdicionarPerfisUsuario(String[] perfis) {
 		try {
-			DomElement pefilInput = AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaCadastroClientes.PerfilUsuario");
+			DomTextField pefilInput = AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaCadastroClientes.PerfilUsuario");
 			pefilInput.click();
 			pefilInput.setFocus();
 			for (String perfil : perfis) {			
-				pefilInput = AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaCadastroClientes.PerfilUsuario");
+				pefilInput = AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaCadastroClientes.PerfilUsuario");
 				pefilInput.click();
 				pefilInput.setFocus();
 				pefilInput.waitForProperty("visible", true);
-				pefilInput.typeKeys(perfil,0);
-				pefilInput.typeKeys("\n");
+				pefilInput.setFocus();
+				pefilInput.typeKeys(perfil,800);
+				pefilInput.typeKeys(" \n");			
 			}
 			System.out.println("HMC: AUT INFO: CONFIGURAR PERFIL DE ACESSO USUARIO VA");
 			return true;
@@ -145,6 +146,7 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		AUT_USUARIO_CADASTRO_PWD_OUTPUT = novaSenha;
 		
 	}
+
 
 	public void autCadastrarUsuarioHMC(String lojaCadastro) {
 

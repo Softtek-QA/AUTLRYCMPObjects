@@ -312,10 +312,15 @@ public class AUTVACadastros extends AUTVALogin {
 		DomButton btBuscarEndereco = AUT_AGENT_SILK4J.<DomButton>find("VA.PesquisaCEP.Buscar");
 
 		btBuscarEndereco.click();
+		if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.PesquisaCEP").exists("MsgStatusCEP",10000)) {
+			AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Fechar").click();
+		}
+		else {
+			DomElement itemSelectResultPesquisa = AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.ItemResultadoPesqSelecionado");
 
-		DomElement itemSelectResultPesquisa = AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.ItemResultadoPesqSelecionado");
+			itemSelectResultPesquisa.click();			
+		}
 
-		itemSelectResultPesquisa.click();
 			
 		String tipoEndereco = autGetCurrentParameter("AUT_TIPO_ENDERECO").toString();
 		String cep = autGetCurrentParameter( "AUT_CEP").toString();
@@ -454,9 +459,14 @@ public class AUTVACadastros extends AUTVALogin {
 
 		btBuscarEndereco.click();
 
-		DomElement itemSelectResultPesquisa = AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.ItemResultadoPesqSelecionado");
+		if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.PesquisaCEP").exists("MsgStatusCEP",10000)) {
+			AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Fechar").click();
+		}
+		else {
+			DomElement itemSelectResultPesquisa = AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.ItemResultadoPesqSelecionado");
 
-		itemSelectResultPesquisa.click();
+			itemSelectResultPesquisa.click();			
+		}
 
 		String cep = autGetCurrentParameter( "AUT_CEP").toString();
 		String nomeRuaEndereco = autGetCurrentParameter( "AUT_RUA_ENDERECO").toString();
@@ -486,6 +496,9 @@ public class AUTVACadastros extends AUTVALogin {
 
 		txtRuaCasaEnd.click();
 		txtRuaCasaEnd.setText(nomeRuaEndereco);
+		
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Rua").setText(endereco);
+		
 		txtNumeroCasaEnd.click();
 		txtNumeroCasaEnd.setText(numeroEndereco);
 
@@ -632,10 +645,17 @@ public class AUTVACadastros extends AUTVALogin {
 		DomButton btBuscarEndereco = AUT_AGENT_SILK4J.<DomButton>find("VA.PesquisaCEP.Buscar");
 
 		btBuscarEndereco.click();
+		
+		if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.PesquisaCEP").exists("MsgStatusCEP",10000)) {
+			AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Fechar").click();
+		}
+		else {
+			DomElement itemSelectResultPesquisa = AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.ItemResultadoPesqSelecionado");
 
-		DomElement itemSelectResultPesquisa = AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.ItemResultadoPesqSelecionado");
+			itemSelectResultPesquisa.click();		
 
-		itemSelectResultPesquisa.click();
+		}
+		
 
 		String tipoEndereco = autGetCurrentParameter( "AUT_TIPO_ENDERECO").toString();
 		String cep = autGetCurrentParameter( "AUT_CEP").toString();
@@ -664,6 +684,8 @@ public class AUTVACadastros extends AUTVALogin {
 		txtCEPEnd.click();
 		txtCEPEnd.setText(cep);
 
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NomeRua").setText(endereco);
+		
 		txtNumeroCasaEnd.click();
 		txtNumeroCasaEnd.setText(numeroEndereco);
 
@@ -726,22 +748,13 @@ public class AUTVACadastros extends AUTVALogin {
 		catch(java.lang.Exception e) {
 			
 		}
-	}
-	
-	public void autIncluirItemCarrinho(String material) {
-		AUTVAGeradorPedido pedidos = new AUTVAGeradorPedido();
 		
-		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").setFocus();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").typeKeys(material);
-		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").typeKeys("\n");
-		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPesquisaBoitata.BtAdicionarCarrinho").click();
-		pedidos.autVAGeracaoPedidosV2(AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT, AUT_VA_FLUXO_SAIDA.CAIXA.toString(), AUT_VA_MEIOS_PAGAMENTO.DINHEIRO.toString(), AUT_VA_PLANO_PAGAMENTO.A_VISTA.toString(),"78651738811");
-	
 	}
+	
 	
 	
 	public void autCadastrarCliente(AUT_VA_CADASTROS tipoCadastro) {
-		
+		com.borland.silktest.jtf.Desktop dsk;
 		DomElement menuClient = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.MenuPrincipal");
 		menuClient.click();
 		DomElement subMenuCliente = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.SubMenuClientes");

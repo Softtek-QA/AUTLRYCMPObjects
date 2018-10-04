@@ -13,6 +13,7 @@ import com.borland.silktest.jtf.BrowserBaseState;
 import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.common.BrowserType;
 import com.borland.silktest.jtf.win32.AccessibleControl;
+import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.microfocus.silktest.jtf.*;
 
 import br.lry.dataflow.AUTDataFlow;
@@ -39,6 +40,69 @@ public abstract class AUTBaseComponent{
 	private AUTLogMensagem AUT_CURRENT_LOG_MANAGER = null; //Objeto de gerenciamento do log
 	protected AUT_TABLE_PARAMETERS_NAMES AUT_CURRENT_PARAMETERS_TABLE_NAME = null;
 	
+	public static enum AUT_TEST_STATUS_EXECUCAO{
+		WAIT,
+		PASSED,
+		FAILED,
+		ERROR,
+		EXECUTION;
+		@Override
+		public String toString() {
+			// TODO Auto-generated method stub
+			switch(this) {
+			case ERROR:{
+				return "ERRO";
+			}
+			case EXECUTION:{
+				return "EXECUTANDO";
+			}
+			case FAILED:{
+				return "FALHOU";
+			}
+			case PASSED:{
+				return "PASSOU";
+			}
+			case WAIT:{
+				return "AGUARDANDO";
+			}
+			}
+			return super.toString();
+		}
+	}
+	
+	public static enum AUT_TEST_OPERATIONS{
+		UPDATE_TABLE_PROJECT_DETAIL_WAIT,
+		UPDATE_TABLE_PROJECT_DETAIL_PASSED,
+		UPDATE_TABLE_PROJECT_DETAIL_EXECUTANDO,
+		UPDATE_TABLE_PROJECT_DETAIL_ERRO,
+		UPDATE_TABLE_PROJECT_DETAIL_FAILED;
+		
+		@Override
+		public String toString() {
+			// TODO Auto-generated method stub
+			
+			switch(this) {
+			case UPDATE_TABLE_PROJECT_DETAIL_PASSED:{
+				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='PASSOU' WHERE STD_ITEM_CONFIGURATION=? AND PJT_ID IN(%s);";
+			}
+			case UPDATE_TABLE_PROJECT_DETAIL_FAILED:{
+				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='FALHOU' WHERE STD_ITEM_CONFIGURATION=? AND PJT_ID IN(%s);";
+			}
+			case UPDATE_TABLE_PROJECT_DETAIL_ERRO:{
+				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='ERRO' WHERE STD_ITEM_CONFIGURATION=? AND PJT_ID IN(%s);";
+			}
+			case UPDATE_TABLE_PROJECT_DETAIL_EXECUTANDO:{
+				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='EXECUTANDO' WHERE STD_ITEM_CONFIGURATION=? AND PJT_ID(%s);";
+			}
+			case UPDATE_TABLE_PROJECT_DETAIL_WAIT:{
+				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='AGUARDANDO EXECUÇÃO' WHERE STD_ITEM_CONFIGURATION=?  AND PJT_ID (%s);";
+			}
+			}
+			return super.toString();
+		}
+	}
+	
+	
 	public void autSetMicrosoftEdgeBrowser() {
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.Edge);		
 	}	
@@ -55,6 +119,7 @@ public abstract class AUTBaseComponent{
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.GoogleChrome);
 	}
 
+	
 	/**
 	 * 
 	 * Retorna a instancia de gerenciamento de logs sistema
