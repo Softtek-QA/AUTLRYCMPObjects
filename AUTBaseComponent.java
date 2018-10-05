@@ -92,10 +92,10 @@ public abstract class AUTBaseComponent{
 				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='ERRO' WHERE STD_ITEM_CONFIGURATION=? AND PJT_ID IN(%s);";
 			}
 			case UPDATE_TABLE_PROJECT_DETAIL_EXECUTANDO:{
-				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='EXECUTANDO' WHERE STD_ITEM_CONFIGURATION=? AND PJT_ID(%s);";
+				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='EXECUTANDO' WHERE STD_ITEM_CONFIGURATION=? AND PJT_ID IN(%s);";
 			}
 			case UPDATE_TABLE_PROJECT_DETAIL_WAIT:{
-				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='AGUARDANDO EXECUÇÃO' WHERE STD_ITEM_CONFIGURATION=?  AND PJT_ID (%s);";
+				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='AGUARDANDO EXECUÇÃO' WHERE STD_ITEM_CONFIGURATION=?  AND PJT_ID IN(%s);";
 			}
 			}
 			return super.toString();

@@ -22,7 +22,6 @@ import com.borland.silktest.jtf.xbrowser.DomElement;
  */
 public class AUTVALogin extends AUTVABaseComponent {
 
-	
 	public void autStartLoginDefault() {
 		try {	
 			
