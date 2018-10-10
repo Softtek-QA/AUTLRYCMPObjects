@@ -170,19 +170,21 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 	 *  SCRIPT DE GERACAO DE PEDIDOS
 	 */
 	public void autVAGeracaoPedidos(String usuario, String senha, String fluxoSaida, String meioPagamento, String planoPagamento,String... documentos) {
-			
-		AUT_CLIENT_TYPE = AUT_VA_CADASTROS.JURIDICA;
-
-		
-		String quantidadeItem = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS,"AUT_CODIGO_ITEM").toString();
-		String codigoItem = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS,"AUT_QUANTIDADE_ITEM").toString();
+		String quantidadeItem = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS,"AUT_QUANTIDADE_ITEM").toString();
+		String codigoItem = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS,"AUT_CODIGO_ITEM").toString();	
 		String numeroCartao = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_NUMERO_CARTAO").toString();
 		String nomeTitular = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_NOME_TITULAR").toString();
 		String validade = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_VALIDADE").toString();
 		String codigo = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_CODIGO_CARTAO").toString();
 		
+		
 		String docCliente = documentos[0];
 		
+
+
+
+
+
 
 		autStartLoginDefault(usuario, senha);
 

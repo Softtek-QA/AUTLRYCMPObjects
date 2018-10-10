@@ -22,7 +22,6 @@ import com.borland.silktest.jtf.xbrowser.DomElement;
  */
 public class AUTVALogin extends AUTVABaseComponent {
 
-	
 	public void autStartLoginDefault() {
 		try {	
 			
@@ -41,6 +40,7 @@ public class AUTVALogin extends AUTVABaseComponent {
 	public void autStartLoginDefaultVA() {
 		try {			
 			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: INIT");
+			autInitWebApplicationVA();
 			autLoginVA();
 			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: END");
 		}
