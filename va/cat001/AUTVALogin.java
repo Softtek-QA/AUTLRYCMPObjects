@@ -1,7 +1,7 @@
 /**
  * 
  */
-package br.lry.components.va;
+package br.lry.components.va.cat001;
 
 import br.lry.components.AUTVABaseComponent;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem;

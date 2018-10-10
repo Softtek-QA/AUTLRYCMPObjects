@@ -41,7 +41,8 @@ import org.junit.Assert;
  */
 public class AUTVACadastros extends AUTVALogin {
 	public static String AUT_NUMERO_DOC_CPF_OUTPUT=null,AUT_NUMERO_DOC_CNPJ_OUTPUT=null,AUT_NUMERO_DOC_PASSAPORTE_OUTPUT=null;
-	public int multiplos;
+	public int telefone;
+	public int enderecoMais;
 	public String numeroDocumento;
 	
 	
@@ -284,7 +285,7 @@ public class AUTVACadastros extends AUTVALogin {
 		txtNumeroTelefoneContato.setText(numeroTelefoneContato);
 		
 		
-		if(multiplos == 2) {
+		if(telefone == 2) {
 			DomButton adcNovoTel = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.AdicionarNovoTefone");
 			adcNovoTel.click();
 			DomListBox tipoTelefone2= AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoTelefone2");
@@ -419,11 +420,9 @@ public class AUTVACadastros extends AUTVALogin {
 		DomTextField numeroTel = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.NumeroTelefone");
 		
 		
-		if(multiplos == 2) {
+		if(telefone == 2) {
 			DomButton adcNovoTel = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.AdicionarNovoTefone");
 			adcNovoTel.click();
-<<<<<<< HEAD
-	
 			DomListBox tipoTel2 = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoTelefone2");
 			tipoTel2.click();
 			tipoTel2.select(tipoContatoCliente.toString());
@@ -431,14 +430,7 @@ public class AUTVACadastros extends AUTVALogin {
 			DomTextField numeroTel2 = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Telefone2");
 			numeroTel2.setText(numeroTelefoneCliente2.toString());
 		}
-		
-=======
-			DomListBox tipoTel2 = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoTelefone2");
-			DomTextField numeroTel2 = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.TipoTelefone2");
-			numeroTel2.setText(numeroTelefoneCliente2);
-		}
->>>>>>> branch 'master' of https://github.com/Softtek-QA/AUTLRYCMPObjects.git
-		
+	
 		
 		DomListBox tipoEndereco = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoImovel");
 			
@@ -637,11 +629,12 @@ public class AUTVACadastros extends AUTVALogin {
 		txtNumeroContato.click();
 		txtNumeroContato.domClick();
 		txtNumeroContato.setText(numeroTelefone);
+		
+		txtNumeroContato.click();
+		txtNumeroContato.setFocus();
+		txtNumeroContato.domClick();
 
-	
-
-
-		if(multiplos == 2) {
+		if(telefone == 2) {
 			DomButton adcNovoTel = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.AdicionarNovoTefone");
 			adcNovoTel.click();
 			
@@ -653,21 +646,7 @@ public class AUTVACadastros extends AUTVALogin {
 			numeroTel2.setText(numeroTelefone2.toString());
 		}
 		
-		txtNumeroContato.click();
-		txtNumeroContato.setFocus();
-		txtNumeroContato.domClick();
-<<<<<<< HEAD
-=======
-
-
-		if(multiplos == 2) {
-			DomButton adcNovoTel = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.AdicionarNovoTefone");
-			adcNovoTel.click();
-			DomListBox tipoTel2 = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoTelefone2");
-			DomTextField numeroTel2 = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.TipoTelefone2");
-			numeroTel2.setText(numeroTelefone2);
-		}
->>>>>>> branch 'master' of https://github.com/Softtek-QA/AUTLRYCMPObjects.git
+		//AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesPJ.AceitoSMS").click();
 		
 		
 		DomButton btPesquisarCEP = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.NaoSeiCEPPesquisa");
@@ -706,7 +685,7 @@ public class AUTVACadastros extends AUTVALogin {
 		itemSelectResultPesquisa.click();
 
 		String tipoEndereco = autGetCurrentParameter( "AUT_TIPO_ENDERECO").toString();
-		String cep = autGetCurrentParameter( "AUT_CEP").toString();
+		String cep = autGetCurrentParameter("AUT_CEP").toString();
 		String nomeRuaEndereco = autGetCurrentParameter( "AUT_RUA_ENDERECO").toString();
 		String numeroEndereco = autGetCurrentParameter( "AUT_NUMERO_ENDERECO").toString();
 		String bairroResidencia = autGetCurrentParameter( "AUT_BAIRRO_ENDERECO").toString();
@@ -753,6 +732,67 @@ public class AUTVACadastros extends AUTVALogin {
 		txtTipoImovelResidEnd.click();
 		txtTipoImovelResidEnd.select(tipoImovelResidencia);
 
+		if(enderecoMais == 2) {
+			AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.AdicionarNovoEndereco").click();
+			
+			
+			//String tipoEndereco2 = autGetCurrentParameter( "AUT_TIPO_ENDERECO_2").toString();
+			String cep2 = autGetCurrentParameter( "AUT_CEP_2").toString();
+			String nomeRuaEndereco2 = autGetCurrentParameter( "AUT_RUA_ENDERECO_2").toString();
+			String numeroEndereco2 = autGetCurrentParameter( "AUT_NUMERO_ENDERECO_2").toString();
+			String bairroResidencia2 = autGetCurrentParameter( "AUT_BAIRRO_ENDERECO_2").toString();
+			String complementoResidencia2 = autGetCurrentParameter( "AUT_COMPLEMENTO_ENDERECO_2").toString();
+			String cidadeResidencia2 = autGetCurrentParameter( "AUT_CIDADE_ENDERECO_2").toString();
+			String estadoResidencia2 = autGetCurrentParameter( "AUT_ESTADO_ENDERECO_2").toString();
+			String referenciaResidencia2 = autGetCurrentParameter( "AUT_REFERENCIA_ENDERECO_2").toString();
+			String tipoImovelResidencia2 = autGetCurrentParameter( "AUT_TIPO_IMOVEL_RESIDENCIA_2").toString();
+
+			DomListBox listTipoEnd2 = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoEndereco2");
+			DomTextField txtCEPEnd2 = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.CEP2");
+			DomTextField txtNomeRua = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NomeRua2");
+			DomTextField txtNumeroCasaEnd2 = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroCasa2");
+			DomTextField txtBairroEnd2 = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Bairro2");
+			DomTextField txtComplementoResidEnd2 = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Complemento2");
+			DomTextField txtCidadeEnd2 = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Cidade2");
+			DomListBox txtEstadoEnd2 = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.Estado2");
+			DomTextField txtReferenciaEnd2 = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Referencia2");
+			DomListBox txtTipoImovelResidEnd2 = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoImovelResidencial2");
+		
+			listTipoEnd2.click();
+			listTipoEnd2.select(tipoEndereco);
+
+			txtCEPEnd2.click();
+			txtCEPEnd2.setText(cep2);
+			
+			txtNomeRua.click();
+			txtNomeRua.setText(nomeRuaEndereco2);
+
+			txtNumeroCasaEnd2.click();
+			txtNumeroCasaEnd2.setText(numeroEndereco2);
+
+			txtBairroEnd2.click();
+			txtBairroEnd2.setText(bairroResidencia2);
+
+			txtComplementoResidEnd2.click();
+			txtComplementoResidEnd2.setText(complementoResidencia2);
+
+			txtCidadeEnd2.click();
+			txtCidadeEnd2.setText(cidadeResidencia2);
+
+			txtEstadoEnd2.click();
+			txtEstadoEnd2.select(estadoResidencia2);
+
+			txtReferenciaEnd2.click();
+			txtReferenciaEnd2.setText(referenciaResidencia2);
+
+			txtTipoImovelResidEnd2.click();
+			txtTipoImovelResidEnd2.select(tipoImovelResidencia2);
+		
+		
+		
+		
+		}
+		
 		DomRadioButton btCheckAceitaNovidProp = AUT_AGENT_SILK4J.<DomRadioButton>find("VA.CadastroClientesDados.AceitarOfertaTelefoneSim");
 		btCheckAceitaNovidProp.select();
 		btCheckAceitaNovidProp.click();
@@ -922,7 +962,7 @@ public class AUTVACadastros extends AUTVALogin {
 		autInitWebApplicationVA();
 		autStartLoginDefaultVA();
 		
-		multiplos = 2;
+		telefone = 2;
 		
 		//TIPO PESSOA
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_CADASTRO");
@@ -956,12 +996,13 @@ public class AUTVACadastros extends AUTVALogin {
 	public void autCadastroClienteMultiplosEnderecosVA(AUT_VA_CADASTROS tipoPessoa, AUT_VA_TIPO_CONTATO tipoTelefone, AUT_VA_TIPO_ENDERECO tipoEndereco, AUT_VA_TIPO_RESIDENCIA tipoResidencia, AUT_VA_TIPO_ENDERECO tipoEndereco2, AUT_VA_TIPO_RESIDENCIA tipoResidencia2) {
 		autInitWebApplicationVA();
 		autStartLoginDefaultVA();
+		enderecoMais = 2;
 		
 		//TIPO PESSOA
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_CADASTRO");
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_CADASTRO", tipoPessoa);
 		AUT_VA_CADASTROS opCadastro = (AUT_VA_CADASTROS) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_CADASTRO");
-		
+				
 		//TIPO TELEFONE
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_TELEFONE");
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_TELEFONE", tipoTelefone);
@@ -978,8 +1019,6 @@ public class AUTVACadastros extends AUTVALogin {
 		AUT_VA_TIPO_RESIDENCIA opTipoResidencia = (AUT_VA_TIPO_RESIDENCIA) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_IMOVEL_RESIDENCIA");
 		
 		//TIPO ENDERECO2
-		DomTextField adcNovoEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.AdicionarNovoEndereco");
-		adcNovoEnd.click();
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_ENDERECO");
 		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_ENDERECO", tipoEndereco2);
 		AUT_VA_TIPO_ENDERECO opTipoEndereco2 = (AUT_VA_TIPO_ENDERECO) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_ENDERECO");
@@ -991,6 +1030,33 @@ public class AUTVACadastros extends AUTVALogin {
 				
 		
 		autCadastrarCliente(opCadastro);
+	}
+
+	
+	public void autCadastroClienteInvalidoVA() {
+		autInitWebApplicationVA();
+		autStartLoginDefaultVA();
+		
+		//String numCPF = "";
+		//String numCNPJ = "";
+		
+		String numCPF = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_CPF_INVALIDO").toString();
+		
+		DomElement menuClient = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.MenuPrincipal");
+		DomElement subMenuCliente = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.SubMenuClientes");
+		
+		DomTextField txtCPF = AUT_AGENT_SILK4J.<DomTextField>find("VA.ClienteCadastrado.NumeroDocumento");
+		
+		menuClient.click();
+		subMenuCliente.click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.MenuPrincipal").click();
+			
+		txtCPF.click();
+		txtCPF.setText(numCPF);
+
+		
+		
+		
 	}	
 	
 }
