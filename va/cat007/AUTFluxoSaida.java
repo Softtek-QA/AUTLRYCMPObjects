@@ -48,7 +48,12 @@ public class AUTFluxoSaida extends AUTVABaseComponent{
 	}
 	
 	
-	
+	public <TParameters extends java.util.HashMap> boolean autVaFluxoSaida(TParameters parametros) {
+		
+		String fluxo = parametros.get("AUT_TIPO_FLUXO_SAIDA").toString();
+		
+		return true;
+	}
 	/**
 	 * Seleção de Fluxo de Saída
 	 * @param fluxoSaida - Fluxo de saída a ser selecionado

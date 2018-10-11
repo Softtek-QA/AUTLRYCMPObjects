@@ -199,7 +199,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		
 		AUT_VA_FLUXO_SAIDA fluxoSaida = AUT_VA_FLUXO_SAIDA.CAIXA;
 		cat007.autVaFluxoSaida(fluxoSaida);
-
+	}
+	
+	public void CMP00028(java.util.HashMap<String,Object> parametros) {				
+		cat007.autVaFluxoSaida(parametros);
 	}
 	
 	
@@ -321,9 +324,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00074() {
-		
 		cat018.autVAFlagIgnorarAntifraude();
-
 	}
 	
 
