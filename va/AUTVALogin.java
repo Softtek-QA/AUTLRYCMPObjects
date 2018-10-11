@@ -4,15 +4,7 @@
 package br.lry.components.va;
 
 import br.lry.components.AUTVABaseComponent;
-import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem;
-import junit.framework.AssertionFailedError;
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.TestResult;
-import org.junit.Before;
-import org.junit.Test;
 
-import com.borland.silktest.jtf.win32.AccessibleControl;
-import com.borland.silktest.jtf.xbrowser.DomElement;
 
 /**
  * Componente para login - VA

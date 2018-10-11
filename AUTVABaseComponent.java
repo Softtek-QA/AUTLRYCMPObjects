@@ -3,11 +3,9 @@
  */
 package br.lry.components;
 
-import org.junit.Before;
-import org.junit.Test;
+
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
-import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 import br.lry.functions.AUTVAProjectFunctions;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
 

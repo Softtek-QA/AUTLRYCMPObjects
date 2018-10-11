@@ -3,9 +3,7 @@ package br.lry.components.hmc;
 import org.junit.Test;
 
 import com.borland.silktest.jtf.Desktop;
-import com.borland.silktest.jtf.common.types.MouseButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
-import com.borland.silktest.jtf.xbrowser.DomLink;
 import com.borland.silktest.jtf.xbrowser.DomListBox;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 

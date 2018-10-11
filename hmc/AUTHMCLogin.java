@@ -1,16 +1,11 @@
 package br.lry.components.hmc;
 
-import com.borland.silktest.jtf.BrowserBaseState;
-import com.borland.silktest.jtf.Desktop;
-import com.borland.silktest.jtf.win32.AccessibleControl;
+
 import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
 import br.lry.components.AUTBaseComponent;
-import br.lry.components.AUTVABaseComponent;
-import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
-import br.lry.dataflow.AUTDataFlow.AUT_URL_APLICACOES;
-import br.lry.functions.AUTVAProjectFunctions;
+
 
 
 public class AUTHMCLogin extends AUTBaseComponent{

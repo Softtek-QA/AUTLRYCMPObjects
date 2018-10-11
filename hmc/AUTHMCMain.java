@@ -5,7 +5,6 @@ import org.junit.Test;
 import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomLink;
-import com.borland.silktest.jtf.xbrowser.DomTextField;
 
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 
