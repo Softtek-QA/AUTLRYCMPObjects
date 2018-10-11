@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
+import br.lry.components.va.cat007.AUTFluxoSaida;
+import br.lry.components.va.cat007.AUTFluxoSaida.AUT_VA_FLUXO_SAIDA;
 import br.lry.components.va.cat018.AUTAntifraude;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 import br.lry.functions.AUTVAProjectFunctions;
@@ -27,7 +29,11 @@ import com.borland.silktest.jtf.xbrowser.DomElement;
 public class AUTVABaseComponent extends AUTBaseComponent {
 	public String AUT_USUARIO_LOGIN_DEFAULT = "";
 	public String AUT_SENHA_LOGIN_DEFAULT = "";
+	
+	
 	AUTAntifraude cat018 = new AUTAntifraude();
+	AUTFluxoSaida cat007 = new AUTFluxoSaida();
+	
 	
 	java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
 	
@@ -100,20 +106,17 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
 	}
 	
-	
-	
-	
-	
-
-
-
 
 	
-	public boolean COMPONENTE00001() {
-		return cat018.autVAFlagIgnorarAntifraude();
+	public void CMP00001() {
+		cat018.autVAFlagIgnorarAntifraude();
 	}
 	
 	
+	public void CMP00002() {
+		AUT_VA_FLUXO_SAIDA fluxoSaida = AUT_VA_FLUXO_SAIDA.CAIXA;
+		cat007.autVaFluxoSaida(fluxoSaida);
+	}
 	
 	
 
