@@ -3,6 +3,8 @@
  */
 package br.lry.components;
 
+import java.util.HashMap;
+
 import org.junit.Before;
 import org.junit.Test;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
@@ -111,11 +113,11 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	/**
 	 * 
 	 * 
-	 * CMP00001 - CMP00004 - Realizar login com perfil Televenda
+	 * CMP00001 - Realizar login no VA
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */
-	public void CMP00004() {
+	public void CMP00001(HashMap<String, Object> parametros) {
 		
 
 
@@ -129,7 +131,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00009() {
+	public void CMP00007(HashMap<String, Object> parametros) {
 		
 
 	}
@@ -142,7 +144,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00010() {
+	public void CMP00009(HashMap<String, Object> parametros) {
 
 
 	}
@@ -150,12 +152,12 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * CMP00001 - Criar carrinho
+	 * CMP00004 - Criar carrinho
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00013() {
+	public void CMP00008(HashMap<String, Object> parametros) {
 		
 
 	}
@@ -169,7 +171,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00014() {
+	public void CMP00012(HashMap<String, Object> parametros) {
 		
 
 	}
@@ -177,12 +179,12 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * CMP00001 - Busca de Cliente Pessoa Física
+	 * CMP00001 - Busca
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00016() {
+	public void CMP00014(HashMap<String, Object> parametros) {
 
 
 	}
@@ -190,15 +192,14 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * CMP00005 - Selecionar caixa
+	 * CMP00001 - Fluxo de Saida
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00028() {
+	public void CMP00016(HashMap<String, Object> parametros) {
 		
-		AUT_VA_FLUXO_SAIDA fluxoSaida = AUT_VA_FLUXO_SAIDA.CAIXA;
-		cat007.autVaFluxoSaida(fluxoSaida);
+
 
 	}
 	
@@ -210,48 +211,22 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00039() {
+	public void CMP00039(HashMap<String, Object> parametros) {
 		
 
 
 	}
 		
-	
-	
-	/**
-	 * 
-	 * CMP000012 - Cartão de Credito e Voucher
-	 * 
-	 * @param parametro - Parametros de entrada do sistema
-	 * @return
-	 */	
-	public void CMP00049() {
-
-
-	}
-	
-	
-	/**
-	 * 
-	 * CMP000013 - Cartão de Credito e Vale Troca
-	 * 
-	 * @param parametro - Parametros de entrada do sistema
-	 * @return
-	 */	
-	public void CMP00050() {
 		
-
-	}
-	
 	
 	/**
 	 * 
-	 * CMP00001 - Pedido em edição
+	 * CMP00001 - Pagamento - VA
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00051() {
+	public void CMP00020(HashMap<String, Object> parametros) {
 		
 
 
@@ -265,7 +240,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00052() {
+	public void CMP00022(HashMap<String, Object> parametros) {
 		
 
 
@@ -279,7 +254,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00065() {
+	public void CMP00027(HashMap<String, Object> parametros) {
 		
 
 
@@ -292,7 +267,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00072() {
+	public void CMP00036(HashMap<String, Object> parametros) {
 		
 
 
@@ -301,12 +276,12 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * CMP00002 - Confirmação de Login
+	 * CMP00004 - Confirmação de Login
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00073() {
+	public void CMP00004(HashMap<String, Object> parametros) {
 		
 
 
@@ -315,14 +290,13 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * CMP00003 - Ignorar Antifraude
+	 * CMP00003 - Flag Ignorar Antifraude
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00074() {
+	public void CMP00030(HashMap<String, Object> parametros) {
 		
-		cat018.autVAFlagIgnorarAntifraude();
 
 	}
 	
