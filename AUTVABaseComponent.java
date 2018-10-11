@@ -108,18 +108,223 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 
 	
-	public void CMP00001() {
-		cat018.autVAFlagIgnorarAntifraude();
+	/**
+	 * 
+	 * 
+	 * CMP00001 - CMP00004 - Realizar login com perfil Televenda
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */
+	public void CMP00004() {
+		
+
+
 	}
 	
 	
-	public void CMP00002() {
+	/**
+	 * 
+	 * CMP00003 - Recuperar Carrinho de Compra
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00009() {
+		
+
+	}
+	
+	
+	/**
+	 * 
+	 * CMP00001 - Inserir item no carrinho de compra pelo VA
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00010() {
+
+
+	}
+	
+	
+	/**
+	 * 
+	 * CMP00001 - Criar carrinho
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00013() {
+		
+
+	}
+	
+	
+	
+	/**
+	 * 
+	 * CMP00001 - Converter em Pedido
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00014() {
+		
+
+	}
+	
+	
+	/**
+	 * 
+	 * CMP00001 - Busca de Cliente Pessoa Física
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00016() {
+
+
+	}
+	
+	
+	/**
+	 * 
+	 * CMP00005 - Selecionar caixa
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00028() {
+		
 		AUT_VA_FLUXO_SAIDA fluxoSaida = AUT_VA_FLUXO_SAIDA.CAIXA;
 		cat007.autVaFluxoSaida(fluxoSaida);
+
 	}
 	
 	
+	/**
+	 * 
+	 * CMP00002 - Cartão de Credito
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00039() {
+		
 
+
+	}
+		
+	
+	
+	/**
+	 * 
+	 * CMP000012 - Cartão de Credito e Voucher
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00049() {
+
+
+	}
+	
+	
+	/**
+	 * 
+	 * CMP000013 - Cartão de Credito e Vale Troca
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00050() {
+		
+
+	}
+	
+	
+	/**
+	 * 
+	 * CMP00001 - Pedido em edição
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00051() {
+		
+
+
+	}
+	
+	
+	/**
+	 * 
+	 * CMP00001 - Realizar logOff
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00052() {
+		
+
+
+	}
+	
+	
+	/**
+	 * 
+	 * CMP00003 - Busca de pedido para Aprovação Antifraude ou Desconto
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00065() {
+		
+
+
+	}
+	
+	/**
+	 * 
+	 * CMP00001 - Seleção de loja Televendas
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00072() {
+		
+
+
+	}
+	
+	
+	/**
+	 * 
+	 * CMP00002 - Confirmação de Login
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00073() {
+		
+
+
+	}
+	
+	
+	/**
+	 * 
+	 * CMP00003 - Ignorar Antifraude
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00074() {
+		
+		cat018.autVAFlagIgnorarAntifraude();
+
+	}
 	
 
 }
