@@ -11,7 +11,7 @@ import com.borland.silktest.jtf.xbrowser.DomTextField;
 
 import br.lry.components.va.cat007.AUTFluxoSaida;
 import br.lry.components.va.cat007.AUTFluxoSaida.AUT_VA_FLUXO_SAIDA;
-import br.lry.components.va.cat018.AUTAntifraude;
+import br.lry.components.va.cat014.AUTAntifraude;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 import br.lry.functions.AUTVAProjectFunctions;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
