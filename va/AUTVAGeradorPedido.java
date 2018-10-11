@@ -126,10 +126,11 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 	
 	public enum AUT_VA_FLUXO_SAIDA{
 		CAIXA,
-		REITRADA_EXTERNA_AGENDADA,
-		REITRADA_EXTERNA_IMEDIATA,
-		REITRADA_INTERNA_AGENDADA,
-		REITRADA_INTERNA_IMEDIATA;
+		RETIRADA_EXTERNA_AGENDADA,
+		RETIRADA_EXTERNA_IMEDIATA,
+		RETIRADA_INTERNA_AGENDADA,
+		RETIRADA_INTERNA_IMEDIATA,
+		ENTREGA;
 		
 		@Override
 		public String toString() {
@@ -138,17 +139,20 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 			case CAIXA: {
 				return "Caixa";
 			}
-			case REITRADA_EXTERNA_AGENDADA: {
+			case RETIRADA_EXTERNA_AGENDADA: {
 				return "Retira externa agendada";
 			}
-			case REITRADA_EXTERNA_IMEDIATA: {
+			case RETIRADA_EXTERNA_IMEDIATA: {
 				return "Retira externa imediata";
 			}
-			case REITRADA_INTERNA_AGENDADA: {
+			case RETIRADA_INTERNA_AGENDADA: {
 				return "Retira interna agendada";
 			}
-			case REITRADA_INTERNA_IMEDIATA: {
+			case RETIRADA_INTERNA_IMEDIATA: {
 				return "Retira interna imediata";
+			}
+			case ENTREGA: {
+				return "ENTREGA";
 			}
 			}
 			return super.toString();

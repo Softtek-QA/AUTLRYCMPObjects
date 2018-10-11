@@ -85,6 +85,7 @@ public class AUTVALogin extends AUTVABaseComponent {
 		}
 	}
 	
+	
 
 	public void autStartLoginHomolog1() {
 		

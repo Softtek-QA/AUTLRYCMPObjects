@@ -59,6 +59,27 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			return false;
 		}
 	}
+
+	/**
+	 * Realiza login na aplicação - Perfil Televendas
+	 * @param usuario - Usuário Televendas
+	 * @param senha - Senha para login
+	 */
+	public boolean autLoginVATelevendas(String usuario, String senha) {
+		try {
+			AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER_TELEVENDAS").toString();
+			AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
+			
+			AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, usuario, senha);
+			return true;
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	/**
 	 * 
 	 * Realiza login na aplicação - VA
@@ -108,6 +129,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public boolean CMP00004(java.util.HashMap<String, Object> parametro) {
 		
 		try {
+			
 
 			return true;
 		}
