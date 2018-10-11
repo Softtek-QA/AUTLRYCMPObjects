@@ -3,9 +3,8 @@
  */
 package br.lry.components.va;
 
-import java.util.regex.Matcher;
 
-import org.junit.After;
+
 import org.junit.Test;
 
 import com.borland.silktest.jtf.Desktop;
@@ -15,16 +14,9 @@ import com.borland.silktest.jtf.xbrowser.DomLink;
 import com.borland.silktest.jtf.xbrowser.DomListBox;
 import com.borland.silktest.jtf.xbrowser.DomRadioButton;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
-
 import br.lry.components.va.AUTVACadastros.AUT_VA_CADASTROS;
-import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_CONTATO;
-import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_FLUXO_SAIDA;
-import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_MEIOS_PAGAMENTO;
-import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_PLANO_PAGAMENTO;
 import br.lry.components.va.AUTVALogin;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
-import br.lry.functions.AUTProjectsFunctions;
-
 import com.borland.silktest.jtf.win32.AccessibleControl;
 
 /**

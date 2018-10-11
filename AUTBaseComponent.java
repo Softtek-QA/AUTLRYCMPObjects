@@ -4,24 +4,18 @@
 package br.lry.components;
 
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.internal.runners.TestClass;
+
 
 import com.borland.silktest.jtf.BrowserBaseState;
 import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.common.BrowserType;
 import com.borland.silktest.jtf.win32.AccessibleControl;
-import com.borland.silktest.jtf.xbrowser.DomElement;
-import com.microfocus.silktest.jtf.*;
+
 
 import br.lry.dataflow.AUTDataFlow;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem;
-import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
 import junit.framework.TestCase;
-import junit.framework.TestResult;
 
 /**
  * 
@@ -340,7 +334,6 @@ public abstract class AUTBaseComponent{
 	
 	
 	
-
 	/**
 	 * 
 	 * Finaliza a aplicação utilizada na automação
@@ -354,5 +347,25 @@ public abstract class AUTBaseComponent{
 		super();
 	}
 	
+	
+	
+	/**
+	 * 
+	 * Faz o controle da versão do VA
+	 * 
+	 */
+	public void versionVA() {
+		
+		 try
+	        {            
+	            Runtime rt = Runtime.getRuntime();
+	  		  	rt.exec("chrome");//assim
+
+	        } catch (java.lang.Exception e)
+	          {
+				System.out.println(e.getMessage());
+	          }
+	    }
+		  Runtime rt = Runtime.getRuntime();
 	
 }

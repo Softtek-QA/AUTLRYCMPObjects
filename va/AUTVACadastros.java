@@ -3,34 +3,19 @@
  */
 package br.lry.components.va;
 
-import static org.junit.Assert.assertNotNull;
 
-import org.junit.After;
 import org.junit.Test;
 
-import com.borland.silktest.jtf.xbrowser.BrowserApplication;
 import com.borland.silktest.jtf.xbrowser.BrowserWindow;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomCheckBox;
 import com.borland.silktest.jtf.xbrowser.DomElement;
-import com.borland.silktest.jtf.xbrowser.DomLink;
 import com.borland.silktest.jtf.xbrowser.DomListBox;
 import com.borland.silktest.jtf.xbrowser.DomRadioButton;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
-
-import sun.management.resources.agent;
-import br.lry.components.va.AUTVACadastros.AUT_VA_CADASTROS;
-import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_CONTATO;
-import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_ENDERECO;
-import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_RESIDENCIA;
-import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_FLUXO_SAIDA;
-import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_MEIOS_PAGAMENTO;
-import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_PLANO_PAGAMENTO;
 import br.lry.dataflow.AUTDataFlow.*;
-
 import com.borland.silktest.jtf.Desktop;
-import com.borland.silktest.jtf.win32.AccessibleControl;
-import org.junit.Assert;
+
 /**
  * 
  * Cadastro de pessoa Física
