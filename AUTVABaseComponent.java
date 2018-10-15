@@ -12,6 +12,9 @@ import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
 import br.lry.components.va.cat001.AUTConfirmacaoLogin;
+import br.lry.components.va.cat002.AUTRecuperacao;
+import br.lry.components.va.cat003.AUTItem;
+import br.lry.components.va.cat005.AUTConversao;
 import br.lry.components.va.cat007.AUTFluxoSaida;
 import br.lry.components.va.cat009.AUTMeiosPagamento;
 import br.lry.components.va.cat018.AUTSelecaoLoja;
@@ -27,10 +30,17 @@ import br.lry.functions.AUTVAProjectFunctions;
  */
 public class AUTVABaseComponent extends AUTBaseComponent {
 	
-	AUTFluxoSaida cat007 = new AUTFluxoSaida();
+	
 	AUTConfirmacaoLogin cat001_cmp00002 = new AUTConfirmacaoLogin();
-	AUTSelecaoLoja cat018_cmp00001 = new AUTSelecaoLoja();
+	AUTRecuperacao cat002 = new AUTRecuperacao();
+	AUTFluxoSaida cat007_cmp00001 = new AUTFluxoSaida();
 	AUTMeiosPagamento cat009_cmp00001 = new AUTMeiosPagamento();
+	AUTSelecaoLoja cat018_cmp00001 = new AUTSelecaoLoja();
+	
+	
+	AUTItem cat003 = new AUTItem();
+	AUTConversao cat005 = new AUTConversao();
+	
 	
 	
 	
@@ -141,7 +151,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00007(HashMap<String, Object> parametros) {
-		
+		cat002.autRecuperarCarrinho();
 
 	}
 	
@@ -154,7 +164,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00009(HashMap<String, Object> parametros) {
-
+		cat003.autVAIncluirItemNoCarrinho(parametros);
 
 	}
 	
@@ -167,7 +177,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00008(HashMap<String, Object> parametros) {
-		
+		cat002.autCriarCarrinho();
 
 	}
 	
@@ -181,7 +191,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00012(HashMap<String, Object> parametros) {
-		
+		cat005.autVAConvercaoParaPedido();
 
 	}
 	
@@ -207,7 +217,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00016(HashMap<String, Object> parametros) {
-		cat007.autSelecaoFluxoSaida(parametros);
+		cat007_cmp00001.autSelecaoFluxoSaida(parametros);
 	}
 	
 
