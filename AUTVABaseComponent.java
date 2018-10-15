@@ -5,21 +5,17 @@ package br.lry.components;
 
 import java.util.HashMap;
 
-import org.junit.Before;
-import org.junit.Test;
-import com.borland.silktest.jtf.xbrowser.DomTextField;
-
-import br.lry.components.va.cat007.AUTFluxoSaida;
-import br.lry.components.va.cat007.AUTFluxoSaida.AUT_VA_FLUXO_SAIDA;
-import br.lry.components.va.cat014.AUTAntifraude;
-import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
-import br.lry.functions.AUTVAProjectFunctions;
-import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
-
 import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.win32.AccessibleControl;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
+import com.borland.silktest.jtf.xbrowser.DomTextField;
+
+import br.lry.components.va.cat007.AUTFluxoSaida;
+import br.lry.components.va.cat007.AUTFluxoSaida.AUT_VA_FLUXO_SAIDA;
+import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
+import br.lry.functions.AUTVAProjectFunctions;
+import br.lry.qa.rsp.pjttrc.frt001.va.cmp.cat001.cmp00002.CMP00002;
 
 /**
  * 
@@ -33,8 +29,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public String AUT_SENHA_LOGIN_DEFAULT = "";
 	
 	
-	AUTAntifraude cat018 = new AUTAntifraude();
 	AUTFluxoSaida cat007 = new AUTFluxoSaida();
+	CMP00002 cat001_cmp00002 = new CMP00002();
 	
 	
 	java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
@@ -305,9 +301,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00004(HashMap<String, Object> parametros) {
-		
-
-
+		cat001_cmp00002.autConfirmacaoLogin(parametros);
 	}
 	
 	
@@ -319,7 +313,6 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00030(HashMap<String, Object> parametros) {
-		cat018.autVAFlagIgnorarAntifraude();
 	}
 	
 
