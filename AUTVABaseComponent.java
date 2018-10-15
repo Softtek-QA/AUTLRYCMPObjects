@@ -11,11 +11,11 @@ import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
+import br.lry.components.va.cat001.AUTVAConfirmacaoLogin;
 import br.lry.components.va.cat007.AUTFluxoSaida;
 import br.lry.components.va.cat007.AUTFluxoSaida.AUT_VA_FLUXO_SAIDA;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
 import br.lry.functions.AUTVAProjectFunctions;
-import br.lry.qa.rsp.pjttrc.frt001.va.cmp.cat001.cmp00002.CMP00002;
 
 /**
  * 
@@ -30,7 +30,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	
 	AUTFluxoSaida cat007 = new AUTFluxoSaida();
-	CMP00002 cat001_cmp00002 = new CMP00002();
+	AUTVAConfirmacaoLogin cat001_cmp00002 = new AUTVAConfirmacaoLogin();
 	
 	
 	java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
