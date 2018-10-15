@@ -11,9 +11,10 @@ import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
-import br.lry.components.va.cat001.AUTVAConfirmacaoLogin;
+import br.lry.components.va.cat001.AUTConfirmacaoLogin;
 import br.lry.components.va.cat007.AUTFluxoSaida;
-import br.lry.components.va.cat007.AUTFluxoSaida.AUT_VA_FLUXO_SAIDA;
+import br.lry.components.va.cat009.AUTMeiosPagamento;
+import br.lry.components.va.cat018.AUTSelecaoLoja;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
 import br.lry.functions.AUTVAProjectFunctions;
 
@@ -25,21 +26,22 @@ import br.lry.functions.AUTVAProjectFunctions;
  *
  */
 public class AUTVABaseComponent extends AUTBaseComponent {
-	public String AUT_USUARIO_LOGIN_DEFAULT = "";
-	public String AUT_SENHA_LOGIN_DEFAULT = "";
-	
 	
 	AUTFluxoSaida cat007 = new AUTFluxoSaida();
-	AUTVAConfirmacaoLogin cat001_cmp00002 = new AUTVAConfirmacaoLogin();
+	AUTConfirmacaoLogin cat001_cmp00002 = new AUTConfirmacaoLogin();
+	AUTSelecaoLoja cat018_cmp00001 = new AUTSelecaoLoja();
+	AUTMeiosPagamento cat009_cmp00001 = new AUTMeiosPagamento();
 	
 	
-	java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
 	
 	
 	public AUTVABaseComponent() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
 
 	public boolean autLoginVA(Desktop agent, String user, String password) {
 		try {
@@ -86,19 +88,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		}
 	}
 
-	/**
-	 * 
-	 * Realiza login na aplicação - VA
-	 *
-	 */
 	
-	public void autLogin() {
-		
-		AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
-		AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
-		
-		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
-	}
+
 	
 	public void autLoginVA() {
 		
@@ -216,8 +207,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00016(HashMap<String, Object> parametros) {
-		AUT_VA_FLUXO_SAIDA fluxoSaida = AUT_VA_FLUXO_SAIDA.CAIXA;
-		cat007.autVaFluxoSaida(fluxoSaida);
+		cat007.autSelecaoFluxoSaida(parametros);
 	}
 	
 
@@ -246,9 +236,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00020(HashMap<String, Object> parametros) {
-		
-
-
+		cat009_cmp00001.autSelecaoMeioPagamento(parametros);
 	}
 	
 	
@@ -287,9 +275,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00036(HashMap<String, Object> parametros) {
-		
-
-
+		cat018_cmp00001.autSelecaoDeLoja(parametros);
 	}
 	
 	

@@ -27,7 +27,11 @@ import junit.framework.TestCase;
  *
  */
 public abstract class AUTBaseComponent{
-
+	public String AUT_USUARIO_LOGIN_DEFAULT = "";
+	public String AUT_SENHA_LOGIN_DEFAULT = "";
+	protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
+	
+	
 	protected Desktop AUT_AGENT_SILK4J = new Desktop();  //Objeto de conexão com aplicação da automação
 	protected BrowserBaseState AUT_BASE_STATE_CONFIGURATION_BROWSER = null; //Objeto base de configuraçao do browser
 	private AUTDataFlow AUT_CURRENT_DATA_FLOW = null; //Objeto de gerenciamento do fluxo de dados

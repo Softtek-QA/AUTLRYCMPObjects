@@ -7,7 +7,7 @@ import com.borland.silktest.jtf.xbrowser.DomTextField;
 
 import br.lry.components.AUTBaseComponent;
 
-public class AUTVAConfirmacaoLogin extends AUTBaseComponent{
+public class AUTConfirmacaoLogin extends AUTBaseComponent{
 
 	
 	@Test
@@ -18,6 +18,11 @@ public class AUTVAConfirmacaoLogin extends AUTBaseComponent{
 	}
 	
 	
+	/**
+	 * Método de confirmação de Login na aplicação VA
+	 * @param parametros - Parametros de usuário e senha do sistema
+	 * @return - Verdadeiro caso a confirmação de login seja efetuada
+	 */
 	public boolean autConfirmacaoLogin(java.util.HashMap<String, Object> parametros) {
 		try {
 			AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Usuario").clearText();
@@ -27,8 +32,8 @@ public class AUTVAConfirmacaoLogin extends AUTBaseComponent{
 			return true;
 		}
 		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
 			e.printStackTrace();
-			e.getMessage();
 			return false;
 		}
 	}

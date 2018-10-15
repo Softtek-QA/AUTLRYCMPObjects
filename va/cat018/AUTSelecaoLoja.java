@@ -1,18 +1,29 @@
 package br.lry.components.va.cat018;
 
-import java.util.HashMap;
+import org.junit.Test;
 
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
 import br.lry.components.AUTVABaseComponent;
+import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 
-public class AUTTrocarLoja extends AUTVABaseComponent {
+public class AUTSelecaoLoja extends AUTVABaseComponent {
+	
+	
+	@Test
+	public void autStartTest() {
+		java.util.HashMap<String, Object> parametros = new java.util.HashMap<String, Object>();
+		
+		parametros.put("AUT_USER_TELEVENDAS", autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN, "AUT_USER_TELEVENDAS"));
+		parametros.put("AUT_PASSWORD", autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_LOGIN, "AUT_PASSWORD"));
+		parametros.put("LOJA_SELECIONADA", AUT_VA_LISTA_LOJAS.values());
+	}
 	
 	
 
-	public enum AUT_VA_SELECAO_LOJA{
+	public enum AUT_VA_LISTA_LOJAS{
 		LM_0001_INTERLAGOS,
 		LM_0002_RIBEIRAO_PRETO,
 		LM_0003_CAMPINAS_DOM_PEDRO,
@@ -204,21 +215,19 @@ public class AUTTrocarLoja extends AUTVABaseComponent {
 		
 	}
 	
+	
 	/**
-	 * Realizar troca de loja para usuários Televendas
-	 * @param <AUT_VA_SELECAO_LOJA>
-	 * 
-	 * @param usuario - Usuário Televendas
-	 * @param senha - Senha para acesso ao sistema VA
-	 * @param lojaSelecionada - Loja selecionada
+	 * Realizar seleção de loja para usuários Televendas
+	 * @param parametro - Parametros de usuário, senha e loja selecionada
+	 * @return
 	 */
-	public  boolean autTrocaDeLoja(String usuario, String senha, AUT_VA_SELECAO_LOJA lojaSelecionada) {
+	public  boolean autSelecaoDeLoja(java.util.HashMap parametros) {
 		try {
-			autLoginVATelevendas(usuario, senha);
+			autLoginVATelevendas(parametros.get("AUT_USER_TELEVENDAS").toString(), parametros.get("AUT_PASSWORD").toString());
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.BotaoLoja").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.Televendas.SelecionarLoja").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.Televendas.CampoSelecaoLoja").click();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA.Televendas.CampoSelecaoLoja").typeKeys(lojaSelecionada.toString());
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.Televendas.CampoSelecaoLoja").typeKeys(parametros.get("LOJA_SELECIONADA").toString());
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.Televendas.CampoSelecaoLoja").typeKeys("\n");
 			AUT_AGENT_SILK4J.<DomButton>find("VA.Televendas.BotaoEscolher").click();
 			return true;

@@ -4,6 +4,7 @@
 package br.lry.components.va;
 
 import br.lry.components.AUTVABaseComponent;
+import br.lry.functions.AUTVAProjectFunctions;
 
 
 /**
@@ -14,6 +15,8 @@ import br.lry.components.AUTVABaseComponent;
  */
 public class AUTVALogin extends AUTVABaseComponent {
 
+
+	
 	public void autStartLoginDefault() {
 		try {	
 			
@@ -28,6 +31,22 @@ public class AUTVALogin extends AUTVABaseComponent {
 			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
 		}
 	}	
+	
+	
+	
+	public void autLogin() {
+		try {
+			AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
+			AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
+			
+			AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public void autStartLoginDefaultVA() {
 		try {			

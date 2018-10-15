@@ -1,15 +1,31 @@
 package br.lry.components.va.cat009;
 
+import org.junit.Test;
+
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomListBox;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
-import br.lry.components.AUTVABaseComponent;
+import br.lry.components.AUTBaseComponent;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 
-public class AUTPagamento extends AUTVABaseComponent {
+public class AUTMeiosPagamento extends AUTBaseComponent {
 
 
+	
+	@Test
+	public void autStartTest() {
+		java.util.HashMap<String, Object> parametros = new java.util.HashMap<String, Object>();
+		
+		parametros.put("MEIO_PAGAMENTO", AUT_VA_MEIOS_PAGAMENTO.values());
+		parametros.put("PLANO_PAGAMENTO", AUT_VA_PLANO_PAGAMENTO.values());
+		parametros.put("AUT_NUMERO_CARTAO", autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_GERACAO_PEDIDOS, "AUT_NUMERO_CARTAO"));
+		parametros.put("AUT_NOME_TITULAR", autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_GERACAO_PEDIDOS, "AUT_NOME_TITULAR"));
+		parametros.put("AUT_VALIDADE", autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_GERACAO_PEDIDOS, "AUT_VALIDADE"));
+		parametros.put("AUT_CODIGO_CARTAO", autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_GERACAO_PEDIDOS, "AUT_CODIGO_CARTAO"));
+	}
+	
+	
 	public enum AUT_VA_MEIOS_PAGAMENTO{
 		CARTAO_CREDITO,
 		CARTAO_CELEBRE,
@@ -88,34 +104,28 @@ public class AUTPagamento extends AUTVABaseComponent {
 	}
 	
 	
+	
 	/**
 	 * Seleção do meio de pagamento a ser utilizado no pedido/orçamento
-	 * @param meioPagamento - Meio de Pagamento a ser selecionado
-	 * @param planoPagamento - Plano de Pagamento a ser selecionado
-	 * @return - Verdadeiro caso o meio de pagamento seja devidamente selecioando
+	 * @param parametros - Meio de pagamento e plano de pagamento a serem utilizados
+	 * @return - Verdadeiro para meio de pagamento selecioando
 	 */
-	public boolean autVAMeioDePagamento(AUT_VA_MEIOS_PAGAMENTO meioPagamento, AUT_VA_PLANO_PAGAMENTO planoPagamento) {
-		String numeroCartao = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_NUMERO_CARTAO").toString();
-		String nomeTitular = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_NOME_TITULAR").toString();
-		String validade = autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_GERACAO_PEDIDOS, "AUT_VALIDADE").toString();
-		String codigo = autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_GERACAO_PEDIDOS, "AUT_CODIGO_CARTAO").toString();
-				
-		
+	public boolean autSelecaoMeioPagamento(java.util.HashMap parametros) {			
 		try {
 			AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").click();
-			AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").select(meioPagamento.toString());
+			AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").select(parametros.get("MEIO_PAGAMENTO").toString());
 			AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").click();
-			AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").select(planoPagamento.toString());
+			AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").select(parametros.get("PLANO_PAGAMENTO").toString());
 			
-			if (meioPagamento != AUT_VA_MEIOS_PAGAMENTO.DINHEIRO) {
+			if (parametros.get("MEIO_PAGAMENTO") != AUT_VA_MEIOS_PAGAMENTO.DINHEIRO) {
 				AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.NumeroCartao").click();
-				AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.NumeroCartao").setText(numeroCartao);
+				AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.NumeroCartao").setText(parametros.get("AUT_NUMERO_CARTAO").toString());
 				AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.NomeTitular").click();
-				AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.NomeTitular").setText(nomeTitular);
+				AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.NomeTitular").setText(parametros.get("AUT_NOME_TITULAR").toString());
 				AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.Validade").click();
-				AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.Validade").setText(validade);
+				AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.Validade").setText(parametros.get("AUT_VALIDADE").toString());
 				AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.Codigo").click();
-				AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.Codigo").setText(codigo);
+				AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.Codigo").setText(parametros.get("AUT_CODIGO_CARTAO").toString());
 			}
 			AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaMeioPagamento.Avancar").click();
 			return true;
