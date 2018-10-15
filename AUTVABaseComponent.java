@@ -5,6 +5,8 @@ package br.lry.components;
 
 import java.util.HashMap;
 
+import org.apache.derby.impl.tools.ij.util;
+
 import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.win32.AccessibleControl;
 import com.borland.silktest.jtf.xbrowser.DomButton;
@@ -12,6 +14,9 @@ import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
 import br.lry.components.va.cat001.AUTVAConfirmacaoLogin;
+import br.lry.components.va.cat002.AUTRecuperacao;
+import br.lry.components.va.cat003.AUTItem;
+import br.lry.components.va.cat005.AUTConversao;
 import br.lry.components.va.cat007.AUTFluxoSaida;
 import br.lry.components.va.cat007.AUTFluxoSaida.AUT_VA_FLUXO_SAIDA;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
@@ -31,6 +36,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	AUTFluxoSaida cat007 = new AUTFluxoSaida();
 	AUTVAConfirmacaoLogin cat001_cmp00002 = new AUTVAConfirmacaoLogin();
+	AUTRecuperacao cat002 = new AUTRecuperacao();
+	AUTItem cat003 = new AUTItem();
+	AUTConversao cat005 = new AUTConversao();
+	
 	
 	
 	java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
@@ -150,7 +159,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00007(HashMap<String, Object> parametros) {
-		
+		cat002.autRecuperarCarrinho();
 
 	}
 	
@@ -163,7 +172,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00009(HashMap<String, Object> parametros) {
-
+		cat003.autVAIncluirItemNoCarrinho(parametros);
 
 	}
 	
@@ -176,7 +185,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00008(HashMap<String, Object> parametros) {
-		
+		cat002.autCriarCarrinho();
 
 	}
 	
@@ -190,7 +199,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00012(HashMap<String, Object> parametros) {
-		
+		cat005.autVAConvercaoParaPedido();
 
 	}
 	
