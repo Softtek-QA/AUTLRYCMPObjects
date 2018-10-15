@@ -34,6 +34,10 @@ public abstract class AUTBaseComponent{
 	private AUTLogMensagem AUT_CURRENT_LOG_MANAGER = null; //Objeto de gerenciamento do log
 	protected AUT_TABLE_PARAMETERS_NAMES AUT_CURRENT_PARAMETERS_TABLE_NAME = null;
 	
+	public static enum AUT_VA_SELECAO_LOJA {
+
+	}
+	
 	public static enum AUT_TEST_STATUS_EXECUCAO{
 		WAIT,
 		PASSED,

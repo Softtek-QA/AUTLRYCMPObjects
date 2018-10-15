@@ -206,12 +206,13 @@ public class AUTTrocarLoja extends AUTVABaseComponent {
 	
 	/**
 	 * Realizar troca de loja para usuários Televendas
+	 * @param <AUT_VA_SELECAO_LOJA>
 	 * 
 	 * @param usuario - Usuário Televendas
 	 * @param senha - Senha para acesso ao sistema VA
 	 * @param lojaSelecionada - Loja selecionada
 	 */
-	public boolean autTrocaDeLoja(String usuario, String senha, AUT_VA_SELECAO_LOJA lojaSelecionada) {
+	public  boolean autTrocaDeLoja(String usuario, String senha, AUT_VA_SELECAO_LOJA lojaSelecionada) {
 		try {
 			autLoginVATelevendas(usuario, senha);
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.BotaoLoja").click();
@@ -228,4 +229,7 @@ public class AUTTrocarLoja extends AUTVABaseComponent {
 			return false;
 		}
 	}
+	
+	
+	
 }
