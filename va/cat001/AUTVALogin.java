@@ -48,12 +48,10 @@ public class AUTVALogin extends AUTBaseComponent {
 	
 	
 	
-	
-	/*
-	public void autStartLoginDefaultVA() {
+	public void autStartLogintVA(String usuario, String senha) {
 		try {			
 			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: INIT");
-			autLoginVA();
+			autLogin(usuario, senha);
 			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: END");
 		}
 		catch(java.lang.Exception e) {
@@ -63,6 +61,22 @@ public class AUTVALogin extends AUTBaseComponent {
 		}
 	}	
 	
+	
+	public void autLogin(String usuario, String senha) {
+		try {
+			AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
+			AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
+			
+			AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, usuario, senha);
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/*
 	public void autStartLoginDefault(String usuario, String senha) {
 		try {
 		

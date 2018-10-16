@@ -12,6 +12,7 @@ import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
 import br.lry.components.va.cat001.AUTConfirmacaoLogin;
+import br.lry.components.va.cat001.AUTVALogin;
 import br.lry.components.va.cat002.AUTRecuperacao;
 import br.lry.components.va.cat003.AUTItem;
 import br.lry.components.va.cat005.AUTConversao;
@@ -31,6 +32,7 @@ import br.lry.functions.AUTVAProjectFunctions;
 public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	
+	AUTVALogin cat001_cmp00001 = new AUTVALogin();
 	AUTConfirmacaoLogin cat001_cmp00002 = new AUTConfirmacaoLogin();
 	AUTRecuperacao cat002 = new AUTRecuperacao();
 	AUTFluxoSaida cat007_cmp00001 = new AUTFluxoSaida();
@@ -135,11 +137,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */
-	public void CMP00001(HashMap<String, Object> parametros) {
-		
-
-
-
+	public void CMP00001(String usuario, String senha) {
+		cat001_cmp00001.autStartLogintVA(usuario, senha);
 	}
 	
 	
