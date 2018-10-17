@@ -5,6 +5,7 @@ import com.borland.silktest.jtf.xbrowser.DomCheckBox;
 import com.borland.silktest.jtf.xbrowser.DomLink;
 
 import br.lry.components.AUTVABaseComponent;
+import com.borland.silktest.jtf.xbrowser.DomTextField;
 
 public class AUTAntifraude extends AUTVABaseComponent {
 	
@@ -30,7 +31,7 @@ public class AUTAntifraude extends AUTVABaseComponent {
 
 	/**
 	 * Acessar o monitor liberação Antifraude - Aprovação
-	 * @return  true liberção
+	 * @return  Verdadeiro para a aprovação antifraude
 	 */
 	public boolean autMonitorAntiFraudeAprovacao() {
 		try { 
@@ -42,6 +43,7 @@ public class AUTAntifraude extends AUTVABaseComponent {
 		return true;
 		}catch (Exception e) {
 			e.printStackTrace();
+			System.out.println(e.getMessage());
 			return false;
 		}
 	}
@@ -49,20 +51,25 @@ public class AUTAntifraude extends AUTVABaseComponent {
 	
 	/**
 	 * Acessar o monitor liberação Antifraude - Reprovação
-	 * @return true Reprovação
+	 * @return Verdadeiro para Reprovação antifraude
 	 */
 	public boolean autMonitorAntiFraudeReprovacao() {
-		try { 
-			AUT_AGENT_SILK4J.<DomLink>find("VA02.LiberacaoPendentes.MenuAprovacaoAntifraude").click();
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.Reprovar").click();
+
+		try {
+			AUT_AGENT_SILK4J.<DomLink>find("VA02.LiberacaoPendentes.MenuLiberacaoPendentes").click();
+			AUT_AGENT_SILK4J.<DomLink>find("VA02.LiberacaoPendentes.OpcaoAntiFraude").click();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA02.LiberacaoPendentes.CampoPesquisaAnti").setText("");
+			AUT_AGENT_SILK4J.<DomTextField>find("VA02.LiberacaoPendentes.CampoPesquisaAnti").setText("/n");
+			AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.AprovacaoAntifraude").click();
 			AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.Sim").click();
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.Confirmar").click();	
-		
-		return true;
-		}catch (Exception e) {
+			AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.Confirmar").click();
+			return true;
+		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println(e.getMessage());
 			return false;
 		}
+
 	}
 }
 
