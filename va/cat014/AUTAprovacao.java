@@ -24,6 +24,15 @@ public class AUTAprovacao extends AUTVABaseComponent{
 			AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.Sim").click();
 			AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.Confirmar").click();
 
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
