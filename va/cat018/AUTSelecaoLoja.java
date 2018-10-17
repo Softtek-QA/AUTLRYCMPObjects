@@ -218,11 +218,10 @@ public class AUTSelecaoLoja extends AUTVABaseComponent {
 	 */
 	public  boolean autSelecaoDeLoja(java.util.HashMap parametros) {
 		try {
-			autLoginVATelevendas(parametros.get("AUT_USER_TELEVENDAS").toString(), parametros.get("AUT_PASSWORD").toString());
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.BotaoLoja").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.Televendas.SelecionarLoja").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.Televendas.CampoSelecaoLoja").click();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA.Televendas.CampoSelecaoLoja").typeKeys(parametros.get("LOJA_SELECIONADA").toString());
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.Televendas.CampoSelecaoLoja").typeKeys(parametros.get("AUT_LOJA_SELECIONADA").toString());
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.Televendas.CampoSelecaoLoja").typeKeys("\n");
 			AUT_AGENT_SILK4J.<DomButton>find("VA.Televendas.BotaoEscolher").click();
 			return true;

@@ -62,6 +62,26 @@ public class AUTVALogin extends AUTBaseComponent {
 	}	
 	
 	
+	
+	
+	public void autStartLogintVA(java.util.HashMap<String, Object> parametros) {
+		try {			
+			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: INIT");
+			autInitWebApplicationVA();
+			autLogin(parametros);
+			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: END");
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
+		}
+	}	
+	
+
+	
+	
+	
 	public void autLogin(String usuario, String senha) {
 		try {
 			AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
@@ -75,6 +95,19 @@ public class AUTVALogin extends AUTBaseComponent {
 		}
 	}
 	
+	
+	public void autLogin(java.util.HashMap<String, Object> parametros) {
+		try {
+			AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
+			AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
+			
+			AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, parametros.get("AUT_USUARIO").toString(), parametros.get("AUT_SENHA").toString());
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
 	
 	/*
 	public void autStartLoginDefault(String usuario, String senha) {

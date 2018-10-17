@@ -19,6 +19,7 @@ import br.lry.components.va.cat005.AUTConversao;
 import br.lry.components.va.cat007.AUTFluxoSaida;
 import br.lry.components.va.cat009.AUTMeiosPagamento;
 import br.lry.components.va.cat018.AUTSelecaoLoja;
+import br.lry.dataflow.AUTDataFlow;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
 import br.lry.functions.AUTVAProjectFunctions;
 
@@ -30,7 +31,6 @@ import br.lry.functions.AUTVAProjectFunctions;
  *
  */
 public class AUTVABaseComponent extends AUTBaseComponent {
-	
 	
 	AUTVALogin cat001_cmp00001 = new AUTVALogin();
 	AUTConfirmacaoLogin cat001_cmp00002 = new AUTConfirmacaoLogin();
@@ -134,8 +134,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */
-	public void CMP00001(String usuario, String senha) {
-		cat001_cmp00001.autStartLogintVA(usuario, senha);
+	public void CMP00001(java.util.HashMap<String, Object> parametros) {
+		cat001_cmp00001.autStartLogintVA(parametros);
 	}
 	
 	
