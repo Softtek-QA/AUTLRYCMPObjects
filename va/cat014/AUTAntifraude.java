@@ -29,11 +29,10 @@ public class AUTAntifraude extends AUTVABaseComponent {
 	
 
 	/**
-	 * Acessa o monitor liberação Antifraude - Aprovação
+	 * Acessar o monitor liberação Antifraude - Aprovação
 	 * @return  true liberção
 	 */
-	public boolean monitorAntiFraudeAprovacao() {
-
+	public boolean autMonitorAntiFraudeAprovacao() {
 		try { 
 		AUT_AGENT_SILK4J.<DomLink>find("VA02.LiberacaoPendentes.MenuAprovacaoAntifraude").click();
 		AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.AprovacaoAntifraude").click();
@@ -49,11 +48,10 @@ public class AUTAntifraude extends AUTVABaseComponent {
 	
 	
 	/**
-	 * Acessa o monitor liberação Antifraude - Reprovação
+	 * Acessar o monitor liberação Antifraude - Reprovação
 	 * @return true Reprovação
 	 */
-	public boolean monitorAntiFraudeReprovacao() {
-
+	public boolean autMonitorAntiFraudeReprovacao() {
 		try { 
 			AUT_AGENT_SILK4J.<DomLink>find("VA02.LiberacaoPendentes.MenuAprovacaoAntifraude").click();
 			AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.Reprovar").click();

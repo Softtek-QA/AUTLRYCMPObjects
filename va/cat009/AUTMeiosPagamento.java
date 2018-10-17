@@ -11,21 +11,12 @@ import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 
 public class AUTMeiosPagamento extends AUTBaseComponent {
 
-
 	
-	@Test
-	public void autStartTest() {
-		java.util.HashMap<String, Object> parametros = new java.util.HashMap<String, Object>();
-		
-		parametros.put("MEIO_PAGAMENTO", AUT_VA_MEIOS_PAGAMENTO.values());
-		parametros.put("PLANO_PAGAMENTO", AUT_VA_PLANO_PAGAMENTO.values());
-		parametros.put("AUT_NUMERO_CARTAO", autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_GERACAO_PEDIDOS, "AUT_NUMERO_CARTAO"));
-		parametros.put("AUT_NOME_TITULAR", autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_GERACAO_PEDIDOS, "AUT_NOME_TITULAR"));
-		parametros.put("AUT_VALIDADE", autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_GERACAO_PEDIDOS, "AUT_VALIDADE"));
-		parametros.put("AUT_CODIGO_CARTAO", autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_GERACAO_PEDIDOS, "AUT_CODIGO_CARTAO"));
-	}
-	
-	
+	/**
+	 * Listagem dos meios de pagamento disponíveis a serem selecionados
+	 * @author Softtek - QA
+	 *
+	 */
 	public enum AUT_VA_MEIOS_PAGAMENTO{
 		CARTAO_CREDITO,
 		CARTAO_CELEBRE,
@@ -73,12 +64,17 @@ public class AUTMeiosPagamento extends AUTBaseComponent {
 				return "VALE TROCA";
 			}
 			}
-			
 			return super.toString();
 		}
 	}
 
 	
+	
+	/**
+	 * Opções de plano de pagamento disponíveis a serem selecionadas no sistema VA
+	 * @author Softtek - QA
+	 *
+	 */
 	public enum AUT_VA_PLANO_PAGAMENTO{
 		A_VISTA,
 		SEM_JUROS_1X,
@@ -104,20 +100,19 @@ public class AUTMeiosPagamento extends AUTBaseComponent {
 	}
 	
 	
-	
 	/**
-	 * Seleção do meio de pagamento a ser utilizado no pedido/orçamento
-	 * @param parametros - Meio de pagamento e plano de pagamento a serem utilizados
-	 * @return - Verdadeiro para meio de pagamento selecioando
+	 * Seleção do meio de pagamento a ser utilizado do sistema VA
+	 * @param parametros - Meio de pagamento a ser selecionado
+	 * @return - Verdadeiro para meio de pagamento devidamente selecioando
 	 */
 	public boolean autSelecaoMeioPagamento(java.util.HashMap parametros) {			
 		try {
 			AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").click();
-			AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").select(parametros.get("MEIO_PAGAMENTO").toString());
+			AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").select(parametros.get("AUT_MEIO_PAGAMENTO").toString());
 			AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").click();
-			AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").select(parametros.get("PLANO_PAGAMENTO").toString());
+			AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").select(parametros.get("AUT_PLANO_PAGAMENTO").toString());
 			
-			if (parametros.get("MEIO_PAGAMENTO") != AUT_VA_MEIOS_PAGAMENTO.DINHEIRO) {
+			if (parametros.get("AUT_MEIO_PAGAMENTO") != AUT_VA_MEIOS_PAGAMENTO.DINHEIRO) {
 				AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.NumeroCartao").click();
 				AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.NumeroCartao").setText(parametros.get("AUT_NUMERO_CARTAO").toString());
 				AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaMeioPagamento.NomeTitular").click();

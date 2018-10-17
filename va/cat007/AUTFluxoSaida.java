@@ -14,14 +14,12 @@ import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 public class AUTFluxoSaida extends AUTVABaseComponent{
 
 	
-	
-	@Test
-	public void autStartTest() {
-		java.util.HashMap<String, Object> parametros = new java.util.HashMap<String, Object>();
-		
-		parametros.put("FLUXO_SAIDA", AUT_VA_FLUXO_SAIDA.values());
-	}
-	
+
+	/**
+	 * Lista com as opções de fluxo de saída disponíveis a serem selecionados pelo sistema VA
+	 * @author Softtek - QA
+	 *
+	 */
 	public enum AUT_VA_FLUXO_SAIDA{
 		ENTREGA,
 		CAIXA,
@@ -64,39 +62,35 @@ public class AUTFluxoSaida extends AUTVABaseComponent{
 	 * @return - Verdadeiro para fluxo de saída selecionado
 	 */
 	public boolean autSelecaoFluxoSaida(java.util.HashMap parametros) {
-		String turno = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_TURNO_PERIODO").toString();
-		String horario = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_TURNO_HORARIO").toString();
-		
-		
 		try {
-			if(parametros.get("FLUXO_SAIDA") == AUT_VA_FLUXO_SAIDA.CAIXA) {
+			if(parametros.get("AUT_FLUXO_SAIDA") == AUT_VA_FLUXO_SAIDA.CAIXA) {
 				AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoCaixa").select();
 			}
-			else if(parametros.get("FLUXO_SAIDA") == AUT_VA_FLUXO_SAIDA.ENTREGA) {
+			else if(parametros.get("AUT_FLUXO_SAIDA") == AUT_VA_FLUXO_SAIDA.ENTREGA) {
 				AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.Entrega").select();
 				AUT_AGENT_SILK4J.<DomElement>find("VA02.FluxoSaida.ListaEndereco").click();
 				AUT_AGENT_SILK4J.<DomElement>find("VA02.FluxoSaida.PopUpFreteAdicional").click();
-				AUT_AGENT_SILK4J.<DomListBox>find("VA02.ConfirmacaoLogin.Turno").select(turno.toString());
+				AUT_AGENT_SILK4J.<DomListBox>find("VA02.ConfirmacaoLogin.Turno").select(parametros.get("AUT_TURNO").toString());
 			} 
-			else if(parametros.get("FLUXO_SAIDA") == AUT_VA_FLUXO_SAIDA.RETIRA_EXTERNA_AGENDADA) {
+			else if(parametros.get("AUT_FLUXO_SAIDA") == AUT_VA_FLUXO_SAIDA.RETIRA_EXTERNA_AGENDADA) {
 				AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoRetirada").select();
 				AUT_AGENT_SILK4J.<DomListBox>find("VA02.FluxoSaida.TipoRetirada").select(AUT_VA_FLUXO_SAIDA.RETIRA_EXTERNA_AGENDADA.toString());
 				AUT_AGENT_SILK4J.<DomCheckBox>find("VA02.FluxoSaida.UsarDataMaisProxima").click();
-				AUT_AGENT_SILK4J.<DomListBox>find("VA02.ConfirmacaoLogin.turno").select(horario.toString());
+				AUT_AGENT_SILK4J.<DomListBox>find("VA02.ConfirmacaoLogin.turno").select(parametros.get("AUT_HORARIO").toString());
 			}
-			else if(parametros.get("FLUXO_SAIDA") == AUT_VA_FLUXO_SAIDA.RETIRA_EXTERNA_IMEDIATA) {
+			else if(parametros.get("AUT_FLUXO_SAIDA") == AUT_VA_FLUXO_SAIDA.RETIRA_EXTERNA_IMEDIATA) {
 				AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoRetirada").select();
 				AUT_AGENT_SILK4J.<DomListBox>find("VA02.FluxoSaida.TipoRetirada").select(AUT_VA_FLUXO_SAIDA.RETIRA_EXTERNA_IMEDIATA.toString());
 			}
-			else if(parametros.get("FLUXO_SAIDA") == AUT_VA_FLUXO_SAIDA.RETIRA_INTERNA_IMEDIATA) {
+			else if(parametros.get("AUT_FLUXO_SAIDA") == AUT_VA_FLUXO_SAIDA.RETIRA_INTERNA_IMEDIATA) {
 				AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoRetirada").select();
 				AUT_AGENT_SILK4J.<DomListBox>find("VA02.FluxoSaida.TipoRetirada").select(AUT_VA_FLUXO_SAIDA.RETIRA_INTERNA_IMEDIATA.toString());
 			}
-			else if(parametros.get("FLUXO_SAIDA") == AUT_VA_FLUXO_SAIDA.RETIRA_INTERNA_AGENDADA) {
+			else if(parametros.get("AUT_FLUXO_SAIDA") == AUT_VA_FLUXO_SAIDA.RETIRA_INTERNA_AGENDADA) {
 				AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoRetirada").select();
 				AUT_AGENT_SILK4J.<DomListBox>find("VA02.FluxoSaida.TipoRetirada").select(AUT_VA_FLUXO_SAIDA.RETIRA_INTERNA_AGENDADA.toString());
 				AUT_AGENT_SILK4J.<DomCheckBox>find("VA02.FluxoSaida.UsarDataMaisProxima").click();
-				AUT_AGENT_SILK4J.<DomListBox>find("VA02.ConfirmacaoLogin.turno").select(horario.toString());
+				AUT_AGENT_SILK4J.<DomListBox>find("VA02.ConfirmacaoLogin.turno").select(parametros.get("AUT_HORARIO").toString());
 			}
 			AUT_AGENT_SILK4J.<DomButton>find("VA02.FluxoSaida.Avancar").click();
 			return true;
@@ -107,10 +101,6 @@ public class AUTFluxoSaida extends AUTVABaseComponent{
 			return false;
 		}
 	}
-	
-	
-	
-	
 	
 	
 }

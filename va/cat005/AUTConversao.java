@@ -6,6 +6,10 @@ import br.lry.components.AUTVABaseComponent;
 public class AUTConversao extends AUTVABaseComponent{
 
 	
+	/**
+	 * Realizar conversão de carrinho para pedido
+	 * @return - Verdadeiro para o carrinho convertido em pedido
+	 */
 	public boolean autVAConvercaoParaPedido() {
 		try {
 			AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.ConverterPedido").click();	

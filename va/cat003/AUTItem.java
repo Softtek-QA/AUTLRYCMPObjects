@@ -9,22 +9,12 @@ import br.lry.components.AUTVABaseComponent;
 
 public class AUTItem extends AUTVABaseComponent{
 	
+	
 	/**
-	 * Inclui item no carrinho de compras do sistema VA
-	 * @param quantidadeItem - Quantidade do item que será incluso
-	 * @param codigoItem - Código do item a ser incluído
-	 * @return - Verdadeiro caso consiga incluir o item no carrinho de compras
+	 * Incluir item no carrinho de compras do sistema VA
+	 * @param parametros - Quantidade e código do item a ser inserido no carrinho
+	 * @return - Verdadeiro para item inserido no carrinho de compra
 	 */
-	
-	@Test
-	public void autStartTest() {
-		java.util.HashMap<String, Object> parametros = new java.util.HashMap<String, Object>();
-		parametros.put("AUT_QUANTIDADE_ITEM", autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_GERACAO_PEDIDOS, "AUT_QUANTIDADE_ITEM")).toString();
-		parametros.put("AUT_CODIGO_ITEM", autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_GERACAO_PEDIDOS, "AUT_CODIGO_ITEM")).toString();
-		
-	}
-	
-	
 	public boolean autVAIncluirItemNoCarrinho(java.util.HashMap<String, Object> parametros) {
 		try {
 			AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.QuantidadeItem").setText(parametros.get("AUT_QUANTIDADE_ITEM").toString());

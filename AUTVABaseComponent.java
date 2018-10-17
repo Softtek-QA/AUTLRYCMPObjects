@@ -34,15 +34,12 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	AUTVALogin cat001_cmp00001 = new AUTVALogin();
 	AUTConfirmacaoLogin cat001_cmp00002 = new AUTConfirmacaoLogin();
-	AUTRecuperacao cat002 = new AUTRecuperacao();
+	AUTRecuperacao cat002_cmp00001 = new AUTRecuperacao();
+	AUTItem cat003_cmp00001 = new AUTItem();
+	AUTConversao cat005_cmp00001 = new AUTConversao();
 	AUTFluxoSaida cat007_cmp00001 = new AUTFluxoSaida();
 	AUTMeiosPagamento cat009_cmp00001 = new AUTMeiosPagamento();
 	AUTSelecaoLoja cat018_cmp00001 = new AUTSelecaoLoja();
-	
-	
-	AUTItem cat003 = new AUTItem();
-	AUTConversao cat005 = new AUTConversao();
-	
 	
 	
 	
@@ -132,7 +129,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * 
+	 * CAT001
 	 * CMP00001 - Realizar login no VA
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
@@ -150,7 +147,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00007(HashMap<String, Object> parametros) {
-		cat002.autRecuperarCarrinho();
+		cat002_cmp00001.autRecuperarCarrinho();
 
 	}
 	
@@ -163,7 +160,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00009(HashMap<String, Object> parametros) {
-		cat003.autVAIncluirItemNoCarrinho(parametros);
+		cat003_cmp00001.autVAIncluirItemNoCarrinho(parametros);
 
 	}
 	
@@ -176,8 +173,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00008(HashMap<String, Object> parametros) {
-		cat002.autCriarCarrinho();
-
+		cat002_cmp00001.autCriarCarrinho();
 	}
 	
 	
@@ -190,14 +186,13 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00012(HashMap<String, Object> parametros) {
-		cat005.autVAConvercaoParaPedido();
-
+		cat005_cmp00001.autVAConvercaoParaPedido();
 	}
 	
 	
 	/**
 	 * 
-	 * CMP00001 - Busca
+	 * CMP00001 - Busca de Cliente
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return

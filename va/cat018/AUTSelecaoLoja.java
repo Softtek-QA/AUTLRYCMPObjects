@@ -12,17 +12,12 @@ import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 public class AUTSelecaoLoja extends AUTVABaseComponent {
 	
 	
-	@Test
-	public void autStartTest() {
-		java.util.HashMap<String, Object> parametros = new java.util.HashMap<String, Object>();
-		
-		parametros.put("AUT_USER_TELEVENDAS", autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN, "AUT_USER_TELEVENDAS"));
-		parametros.put("AUT_PASSWORD", autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_LOGIN, "AUT_PASSWORD"));
-		parametros.put("LOJA_SELECIONADA", AUT_VA_LISTA_LOJAS.values());
-	}
-	
-	
 
+	/**
+	 * Lista de lojas disponíveis a serem selecioandas
+	 * @author Softtek - QA
+	 *
+	 */
 	public enum AUT_VA_LISTA_LOJAS{
 		LM_0001_INTERLAGOS,
 		LM_0002_RIBEIRAO_PRETO,
@@ -219,7 +214,7 @@ public class AUTSelecaoLoja extends AUTVABaseComponent {
 	/**
 	 * Realizar seleção de loja para usuários Televendas
 	 * @param parametro - Parametros de usuário, senha e loja selecionada
-	 * @return
+	 * @return - Verdadeiro para loja selecioanda
 	 */
 	public  boolean autSelecaoDeLoja(java.util.HashMap parametros) {
 		try {

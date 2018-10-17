@@ -9,15 +9,10 @@ import br.lry.components.AUTVABaseComponent;
 public class AUTRecuperacao extends AUTVABaseComponent {
 
 	
-	@Test
-	public void autStartTest() {
-		java.util.HashMap<String, Object> parametros = new java.util.HashMap<String, Object>();
-		
-		parametros.put("OPCAO_INICIAR_ATENDIMENTO", AUT_VA_INICIAR_ATENDIMENTO.values());
-	}
-	
-	
-	
+	/**
+	 * Recuperação de carrinho de compra
+	 * @return - Verdadeiro para carrinho de compra recuperado
+	 */
 	public boolean autRecuperarCarrinho() {
 		try {
 			AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.RecuperarCarrinho").click();
@@ -29,6 +24,11 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 		}
 	}
 
+	
+	/**
+	 * Recuperação de pedido de compra
+	 * @return - Verdadeiro para pedido de compra recuperado
+	 */
 	public boolean autRecuperarPedido() {
 		try {
 			AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.RecuperarPedido").click();
@@ -40,6 +40,11 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 		}
 	}
 
+	
+	/**
+	 * Recuperação de orçamento
+	 * @return - Verdadeiro para orçamento recuperado
+	 */
 	public boolean autRecuperarOrcamento() {
 		try {
 			AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.RecuperarOrcamento").click();
@@ -51,6 +56,11 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 		}
 	}
 
+	
+	/**
+	 * Criação de carrinho de compra
+	 * @return - Verdadeiro para opção carrinho de compra selecionado
+	 */
 	public boolean autCriarCarrinho() {
 		try {
 			AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
@@ -63,6 +73,11 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 	}
 	
 	
+	/**
+	 * Listagem das opções de inicialização de atendimento
+	 * @author Softtek - QA
+	 *
+	 */
 	public enum AUT_VA_INICIAR_ATENDIMENTO{
 		CRIAR_CARRINHO,
 		RECUPERAR_PEDIDO,
