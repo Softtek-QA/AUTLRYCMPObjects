@@ -5,12 +5,15 @@ package br.lry.components;
 
 import java.util.HashMap;
 
+import org.junit.Before;
+
 import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.win32.AccessibleControl;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
+import br.lry.components.va.AUTVAConfiguration;
 import br.lry.components.va.cat001.AUTConfirmacaoLogin;
 import br.lry.components.va.cat001.AUTVALogin;
 import br.lry.components.va.cat002.AUTRecuperacao;
@@ -19,7 +22,6 @@ import br.lry.components.va.cat005.AUTConversao;
 import br.lry.components.va.cat007.AUTFluxoSaida;
 import br.lry.components.va.cat009.AUTMeiosPagamento;
 import br.lry.components.va.cat018.AUTSelecaoLoja;
-import br.lry.dataflow.AUTDataFlow;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
 import br.lry.functions.AUTVAProjectFunctions;
 
@@ -32,15 +34,27 @@ import br.lry.functions.AUTVAProjectFunctions;
  */
 public class AUTVABaseComponent extends AUTBaseComponent {
 	
-	AUTVALogin cat001_cmp00001 = new AUTVALogin();
-	AUTConfirmacaoLogin cat001_cmp00002 = new AUTConfirmacaoLogin();
-	AUTRecuperacao cat002_cmp00001 = new AUTRecuperacao();
-	AUTItem cat003_cmp00001 = new AUTItem();
-	AUTConversao cat005_cmp00001 = new AUTConversao();
-	AUTFluxoSaida cat007_cmp00001 = new AUTFluxoSaida();
-	AUTMeiosPagamento cat009_cmp00001 = new AUTMeiosPagamento();
-	AUTSelecaoLoja cat018_cmp00001 = new AUTSelecaoLoja();
+	public static AUTVALogin autVaLogin;
+	public static AUTConfirmacaoLogin autVAConfirmacaoLogin;
+	public static AUTRecuperacao autRecuperacao;
+	public static AUTItem autItem;
+	public static AUTConversao autConversao;
+	public static AUTFluxoSaida autFluxoSaida;
+	public static AUTMeiosPagamento autMeiosPagamento;
+	public static AUTSelecaoLoja autSelecaoLoja;
 	
+	
+	@Before
+	public void AUT_CONFIGURACAO() {
+		autVaLogin = new AUTVALogin();
+		autVAConfirmacaoLogin = new AUTConfirmacaoLogin();
+		autRecuperacao = new AUTRecuperacao();
+		autItem = new AUTItem();
+		autConversao = new AUTConversao();
+		autFluxoSaida = new AUTFluxoSaida();
+		autMeiosPagamento = new AUTMeiosPagamento();
+		autSelecaoLoja = new AUTSelecaoLoja();
+	}
 	
 	
 	
@@ -135,7 +149,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */
 	public void CMP00001(java.util.HashMap<String, Object> parametros) {
-		cat001_cmp00001.autStartLogintVA(parametros);
+		autVaLogin.autStartLogintVA(parametros);
 	}
 	
 	
@@ -147,7 +161,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00007(HashMap<String, Object> parametros) {
-		cat002_cmp00001.autRecuperarCarrinho();
+		autRecuperacao.autRecuperarCarrinho();
 
 	}
 	
@@ -160,7 +174,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00009(HashMap<String, Object> parametros) {
-		cat003_cmp00001.autVAIncluirItemNoCarrinho(parametros);
+		autItem.autVAIncluirItemNoCarrinho(parametros);
 
 	}
 	
@@ -173,7 +187,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00008(HashMap<String, Object> parametros) {
-		cat002_cmp00001.autCriarCarrinho();
+		autRecuperacao.autCriarCarrinho();
 	}
 	
 	
@@ -186,7 +200,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00012(HashMap<String, Object> parametros) {
-		cat005_cmp00001.autVAConvercaoParaPedido();
+		autConversao.autVAConvercaoParaPedido();
 	}
 	
 	
@@ -211,7 +225,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00016(HashMap<String, Object> parametros) {
-		cat007_cmp00001.autSelecaoFluxoSaida(parametros);
+		autFluxoSaida.autSelecaoFluxoSaida(parametros);
 	}
 	
 
@@ -240,7 +254,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00020(HashMap<String, Object> parametros) {
-		cat009_cmp00001.autSelecaoMeioPagamento(parametros);
+		autMeiosPagamento.autSelecaoMeioPagamento(parametros);
 	}
 	
 	
@@ -279,7 +293,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00036(HashMap<String, Object> parametros) {
-		cat018_cmp00001.autSelecaoDeLoja(parametros);
+		autSelecaoLoja.autSelecaoDeLoja(parametros);
 	}
 	
 	
@@ -291,7 +305,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00004(HashMap<String, Object> parametros) {
-		cat001_cmp00002.autConfirmacaoLogin(parametros);
+		autVAConfirmacaoLogin.autConfirmacaoLogin(parametros);
 	}
 	
 	
