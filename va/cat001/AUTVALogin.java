@@ -101,7 +101,7 @@ public class AUTVALogin extends AUTBaseComponent {
 			AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
 			AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
 			
-			AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, parametros.get("AUT_USUARIO").toString(), parametros.get("AUT_SENHA").toString());
+			AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, parametros.get("AUT_USUARIO").toString(), parametros.get("AUT_SENHA").toString());
 		}
 		catch(java.lang.Exception e) {
 			System.out.println(e.getMessage());

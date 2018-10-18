@@ -21,6 +21,7 @@ import br.lry.components.va.cat003.AUTItem;
 import br.lry.components.va.cat005.AUTConversao;
 import br.lry.components.va.cat007.AUTFluxoSaida;
 import br.lry.components.va.cat009.AUTMeiosPagamento;
+import br.lry.components.va.cat011.AUTLogOff;
 import br.lry.components.va.cat018.AUTSelecaoLoja;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
 import br.lry.functions.AUTVAProjectFunctions;
@@ -42,6 +43,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public static AUTFluxoSaida autFluxoSaida;
 	public static AUTMeiosPagamento autMeiosPagamento;
 	public static AUTSelecaoLoja autSelecaoLoja;
+	public static AUTLogOff autLogOff;
 	
 	
 	@Before
@@ -54,6 +56,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autFluxoSaida = new AUTFluxoSaida();
 		autMeiosPagamento = new AUTMeiosPagamento();
 		autSelecaoLoja = new AUTSelecaoLoja();
+		autLogOff = new AUTLogOff();
 	}
 	
 	
@@ -261,12 +264,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	/**
 	 * 
 	 * CMP00001 - Realizar logOff
-	 * 
-	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00022(HashMap<String, Object> parametros) {
-		
+	public void CMP00022() {
+		autLogOff.autRealizarLogOff();
 
 
 	}
