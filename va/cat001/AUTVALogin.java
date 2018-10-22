@@ -98,7 +98,6 @@ public class AUTVALogin extends AUTBaseComponent {
 		try {
 			AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
 			AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
-
 			AUTVAProjectFunctions.autLoginBoitata(this.AUT_AGENT_SILK4J, parametros.get("AUT_USER").toString(), parametros.get("AUT_PASSWORD").toString());
 		}
 		catch(java.lang.Exception e) {
@@ -113,6 +112,7 @@ public class AUTVALogin extends AUTBaseComponent {
 			AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
 
 			AUTVAProjectFunctions.autLoginBoitata(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
+			AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, parametros.get("AUT_USUARIO").toString(), parametros.get("AUT_SENHA").toString());
 		}
 		catch(java.lang.Exception e) {
 			System.out.println(e.getMessage());

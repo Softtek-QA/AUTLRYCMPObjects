@@ -57,7 +57,6 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autMeiosPagamento = new AUTMeiosPagamento();
 		autSelecaoLoja = new AUTSelecaoLoja();
 		autLogOff = new AUTLogOff();
-		
 	}
 	
 	
@@ -268,7 +267,6 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	/**
 	 * 
 	 * CMP00001 - Realizar logOff
-	 * 
 	 * @return
 	 */	
 	public void CMP00022() {
