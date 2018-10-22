@@ -5,16 +5,14 @@ package br.lry.components;
 
 import java.util.HashMap;
 
-import org.junit.Before;
-
 import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.win32.AccessibleControl;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
-import br.lry.components.va.AUTVAConfiguration;
 import br.lry.components.va.cat001.AUTConfirmacaoLogin;
+import br.lry.components.va.cat001.AUTLoginBoitata;
 import br.lry.components.va.cat001.AUTVALogin;
 import br.lry.components.va.cat002.AUTRecuperacao;
 import br.lry.components.va.cat003.AUTItem;
@@ -35,7 +33,8 @@ import br.lry.functions.AUTVAProjectFunctions;
  */
 public class AUTVABaseComponent extends AUTBaseComponent {
 	
-	public static AUTVALogin autVaLogin;
+	public static AUTVALogin autVALogin;
+	public static AUTLoginBoitata autLoginBoitata;
 	public static AUTConfirmacaoLogin autVAConfirmacaoLogin;
 	public static AUTRecuperacao autRecuperacao;
 	public static AUTItem autItem;
@@ -48,7 +47,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	public void autInitConfigurationTelevendas() {
 		
-		autVaLogin = new AUTVALogin();
+		autVALogin = new AUTVALogin();
+		autLoginBoitata = new AUTLoginBoitata();
 		autVAConfirmacaoLogin = new AUTConfirmacaoLogin();
 		autRecuperacao = new AUTRecuperacao();
 		autItem = new AUTItem();
@@ -152,12 +152,25 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */
 	public void CMP00001(java.util.HashMap<String, Object> parametros) {
-		
 		autInitConfigurationTelevendas();	
-		autVaLogin.autStartLoginBoitata(parametros);
+		autVALogin.autStartLoginVA(parametros);
 	}
 	
 
+
+	
+	/**
+	 * 
+	 * CAT001
+	 * CMP00002 - Realizar login no Boitata
+	 * @param parametro - Parametros de entreat do sistema
+	 * @return
+	 */
+	public void CMP00002(java.util.HashMap<String, Object> parametros) {
+		
+		autInitConfigurationTelevendas();	
+		autLoginBoitata.autStartLoginBoitata(parametros);
+	}
 	
 	
 	/**
