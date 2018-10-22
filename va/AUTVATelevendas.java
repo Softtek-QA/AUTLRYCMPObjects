@@ -92,7 +92,7 @@ public class AUTVATelevendas extends AUTVALogin {
 		
 		AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
 		
-	
+
 		AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.LM").typeKeys("89296193");
 		AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.+").click();
 		AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.BotaoGerar").click();
