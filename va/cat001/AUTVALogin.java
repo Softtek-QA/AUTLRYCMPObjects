@@ -38,7 +38,7 @@ public class AUTVALogin extends AUTBaseComponent {
 			AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
 			AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
 			
-			AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
+			AUTVAProjectFunctions.autLoginBoitata(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
 		}
 		catch(java.lang.Exception e) {
 			System.out.println(e.getMessage());
@@ -64,10 +64,10 @@ public class AUTVALogin extends AUTBaseComponent {
 	
 	
 	
-	public void autStartLogintVA(java.util.HashMap<String, Object> parametros) {
+	public void autStartLoginBoitata(java.util.HashMap<String, Object> parametros) {
 		try {			
 			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: INIT");
-			autInitWebApplicationVA();
+			autInitWebApplication();
 			autLogin(parametros);
 			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: END");
 		}
@@ -78,8 +78,6 @@ public class AUTVALogin extends AUTBaseComponent {
 		}
 	}	
 	
-
-	
 	
 	
 	public void autLogin(String usuario, String senha) {
@@ -87,7 +85,7 @@ public class AUTVALogin extends AUTBaseComponent {
 			AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
 			AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
 			
-			AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, usuario, senha);
+			AUTVAProjectFunctions.autLoginBoitata(this.AUT_AGENT_SILK4J, usuario, senha);
 		}
 		catch(java.lang.Exception e) {
 			System.out.println(e.getMessage());
@@ -100,8 +98,21 @@ public class AUTVALogin extends AUTBaseComponent {
 		try {
 			AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
 			AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
-			
-			AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, parametros.get("AUT_USUARIO").toString(), parametros.get("AUT_SENHA").toString());
+
+			AUTVAProjectFunctions.autLoginBoitata(this.AUT_AGENT_SILK4J, parametros.get("AUT_USER").toString(), parametros.get("AUT_PASSWORD").toString());
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	public void autLoginTelevendas(java.util.HashMap<String, Object> parametros) {
+		try {
+			AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER_TELEVENDAS").toString();
+			AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
+
+			AUTVAProjectFunctions.autLoginBoitata(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
 		}
 		catch(java.lang.Exception e) {
 			System.out.println(e.getMessage());

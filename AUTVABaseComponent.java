@@ -21,6 +21,7 @@ import br.lry.components.va.cat003.AUTItem;
 import br.lry.components.va.cat005.AUTConversao;
 import br.lry.components.va.cat007.AUTFluxoSaida;
 import br.lry.components.va.cat009.AUTMeiosPagamento;
+import br.lry.components.va.cat011.AUTLogOff;
 import br.lry.components.va.cat018.AUTSelecaoLoja;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
 import br.lry.functions.AUTVAProjectFunctions;
@@ -42,10 +43,11 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public static AUTFluxoSaida autFluxoSaida;
 	public static AUTMeiosPagamento autMeiosPagamento;
 	public static AUTSelecaoLoja autSelecaoLoja;
+	public static AUTLogOff autLogOff;
 	
 	
-	@Before
-	public void AUT_CONFIGURACAO() {
+	public void autInitConfigurationTelevendas() {
+		
 		autVaLogin = new AUTVALogin();
 		autVAConfirmacaoLogin = new AUTConfirmacaoLogin();
 		autRecuperacao = new AUTRecuperacao();
@@ -54,6 +56,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autFluxoSaida = new AUTFluxoSaida();
 		autMeiosPagamento = new AUTMeiosPagamento();
 		autSelecaoLoja = new AUTSelecaoLoja();
+		autLogOff = new AUTLogOff();
+		
 	}
 	
 	
@@ -131,7 +135,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	}
 	
 	public void autLogin(String usuario, String senha) {
-		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, usuario.toString(), senha.toString());
+		AUTVAProjectFunctions.autLoginBoitata(this.AUT_AGENT_SILK4J, usuario.toString(), senha.toString());
 	}
 	
 	public void autLogoutApplication() {
@@ -145,12 +149,16 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * 
 	 * CAT001
 	 * CMP00001 - Realizar login no VA
-	 * @param parametro - Parametros de entrada do sistema
+	 * @param parametro - Parametros de entreat do sistema
 	 * @return
 	 */
 	public void CMP00001(java.util.HashMap<String, Object> parametros) {
-		autVaLogin.autStartLogintVA(parametros);
+		
+		autInitConfigurationTelevendas();	
+		autVaLogin.autStartLoginBoitata(parametros);
 	}
+	
+
 	
 	
 	/**
@@ -174,8 +182,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00009(HashMap<String, Object> parametros) {
-		autItem.autVAIncluirItemNoCarrinho(parametros);
-
+		autItem.autBoitataIncluirItemCarrinho(parametros);
 	}
 	
 	
@@ -262,13 +269,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * 
 	 * CMP00001 - Realizar logOff
 	 * 
-	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00022(HashMap<String, Object> parametros) {
-		
-
-
+	public void CMP00022() {
+		autLogOff.autRealizarLogOff();
 	}
 	
 	

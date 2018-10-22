@@ -31,7 +31,6 @@ public abstract class AUTBaseComponent{
 	public String AUT_SENHA_LOGIN_DEFAULT = "";
 	protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
 	
-	
 	protected Desktop AUT_AGENT_SILK4J = new Desktop();  //Objeto de conexão com aplicação da automação
 	protected BrowserBaseState AUT_BASE_STATE_CONFIGURATION_BROWSER = null; //Objeto base de configuraçao do browser
 	private AUTDataFlow AUT_CURRENT_DATA_FLOW = null; //Objeto de gerenciamento do fluxo de dados
@@ -294,7 +293,7 @@ public abstract class AUTBaseComponent{
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();		
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
 		try {
-//			AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
+			AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
 		}
 		catch(java.lang.Exception e) {
 			System.out.println(e.getMessage());
@@ -306,8 +305,8 @@ public abstract class AUTBaseComponent{
 	}
 	
 	
-	public void autInitWebApplicationVA() {
-		
+	public void autInitWebApplicationVA() {		
+		autGetDataFlow().autInitDataFlow();
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setUrl(autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN, "AUT_URL_VA").toString());
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
@@ -317,10 +316,8 @@ public abstract class AUTBaseComponent{
 		catch(java.lang.Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-		}
-		
+		}		
 		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
-
 	}
 	
 	public void autInitHmcApplication() {

@@ -3,6 +3,7 @@ package br.lry.components.va.cat003;
 import org.junit.Test;
 
 import com.borland.silktest.jtf.xbrowser.DomButton;
+import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
 import br.lry.components.AUTVABaseComponent;
@@ -27,6 +28,15 @@ public class AUTItem extends AUTVABaseComponent{
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public void autBoitataIncluirItemCarrinho(java.util.HashMap<String, Object> parametros) {
+		
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").setFocus();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").setText(parametros.get("AUT_CODIGO_ITEM").toString());
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").typeKeys("\n");
+		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPesquisaBoitata.BtAdicionarCarrinho").click();
+	
 	}
 
 }
