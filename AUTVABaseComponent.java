@@ -5,20 +5,19 @@ package br.lry.components;
 
 import java.util.HashMap;
 
-import org.junit.Before;
-
 import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.win32.AccessibleControl;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
-import br.lry.components.va.AUTVAConfiguration;
 import br.lry.components.va.cat001.AUTConfirmacaoLogin;
+import br.lry.components.va.cat001.AUTLoginBoitata;
 import br.lry.components.va.cat001.AUTVALogin;
 import br.lry.components.va.cat002.AUTRecuperacao;
 import br.lry.components.va.cat003.AUTItem;
 import br.lry.components.va.cat005.AUTConversao;
+import br.lry.components.va.cat006.AUTBuscarCliente;
 import br.lry.components.va.cat007.AUTFluxoSaida;
 import br.lry.components.va.cat009.AUTMeiosPagamento;
 import br.lry.components.va.cat011.AUTLogOff;
@@ -35,7 +34,8 @@ import br.lry.functions.AUTVAProjectFunctions;
  */
 public class AUTVABaseComponent extends AUTBaseComponent {
 	
-	public static AUTVALogin autVaLogin;
+	public static AUTVALogin autVALogin;
+	public static AUTLoginBoitata autLoginBoitata;
 	public static AUTConfirmacaoLogin autVAConfirmacaoLogin;
 	public static AUTRecuperacao autRecuperacao;
 	public static AUTItem autItem;
@@ -44,11 +44,12 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public static AUTMeiosPagamento autMeiosPagamento;
 	public static AUTSelecaoLoja autSelecaoLoja;
 	public static AUTLogOff autLogOff;
-	
+	public static AUTBuscarCliente autBuscarCliente;
 	
 	public void autInitConfigurationTelevendas() {
 		
-		autVaLogin = new AUTVALogin();
+		autVALogin = new AUTVALogin();
+		autLoginBoitata = new AUTLoginBoitata();
 		autVAConfirmacaoLogin = new AUTConfirmacaoLogin();
 		autRecuperacao = new AUTRecuperacao();
 		autItem = new AUTItem();
@@ -57,6 +58,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autMeiosPagamento = new AUTMeiosPagamento();
 		autSelecaoLoja = new AUTSelecaoLoja();
 		autLogOff = new AUTLogOff();
+		autBuscarCliente = new AUTBuscarCliente();
 	}
 	
 	
@@ -148,16 +150,29 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * 
 	 * CAT001
 	 * CMP00001 - Realizar login no VA
-	 * @param parametro - Parametros de entreat do sistema
+	 * @param parametro - Parametros de entrar do sistema
 	 * @return
 	 */
 	public void CMP00001(java.util.HashMap<String, Object> parametros) {
-		
 		autInitConfigurationTelevendas();	
-		autVaLogin.autStartLoginBoitata(parametros);
+		autVALogin.autStartLoginVA(parametros);
 	}
 	
 
+
+	
+	/**
+	 * 
+	 * CAT001
+	 * CMP00002 - Realizar login no Boitata
+	 * @param parametro - Parametros de entreat do sistema
+	 * @return
+	 */
+	public void CMP00002(java.util.HashMap<String, Object> parametros) {
+		
+		autInitConfigurationTelevendas();	
+		autLoginBoitata.autStartLoginBoitata(parametros);
+	}
 	
 	
 	/**
@@ -189,10 +204,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * 
 	 * CMP00004 - Criar carrinho
 	 * 
-	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00008(HashMap<String, Object> parametros) {
+	public void CMP00008() {
 		autRecuperacao.autCriarCarrinho();
 	}
 	
@@ -202,10 +216,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * 
 	 * CMP00001 - Converter em Pedido
 	 * 
-	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */	
-	public void CMP00012(HashMap<String, Object> parametros) {
+	public void CMP00012() {
 		autConversao.autVAConvercaoParaPedido();
 	}
 	
@@ -218,7 +231,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00014(HashMap<String, Object> parametros) {
-
+		autBuscarCliente.autBuscarCliente(parametros);
 
 	}
 	
