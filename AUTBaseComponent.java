@@ -338,10 +338,7 @@ public abstract class AUTBaseComponent{
 	}
 	
 	public void autInitSafeApplication() {
-		
-		System.out.println(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_SAFE_LOGIN, "AUT_URL").toString());
-
-		
+				
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();
 		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setUrl(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_SAFE_LOGIN, "AUT_URL").toString());
