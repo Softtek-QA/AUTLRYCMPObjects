@@ -213,11 +213,12 @@ public class AUTSelecaoLoja extends AUTVABaseComponent {
 	
 	/**
 	 * Realizar seleção de loja para usuários Televendas
-	 * @param parametro - Parametros de usuário, senha e loja selecionada
+	 * @param parametro - Parametros de usuário, senha e loja selecionadaS
 	 * @return - Verdadeiro para loja selecioanda
 	 */
 	public  boolean autSelecaoDeLoja(java.util.HashMap parametros) {
 		try {
+			System.out.println(parametros);
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.BotaoLoja").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.Televendas.SelecionarLoja").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.Televendas.CampoSelecaoLoja").click();
