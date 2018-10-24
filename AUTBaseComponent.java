@@ -10,11 +10,14 @@ import com.borland.silktest.jtf.BrowserBaseState;
 import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.common.BrowserType;
 import com.borland.silktest.jtf.win32.AccessibleControl;
-
+import com.borland.silktest.jtf.xbrowser.DomButton;
+import com.borland.silktest.jtf.xbrowser.DomTextField;
 
 import br.lry.dataflow.AUTDataFlow;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
+import br.lry.functions.AUTVAProjectFunctions;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem;
+import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
 import junit.framework.TestCase;
 
 /**
@@ -26,7 +29,7 @@ import junit.framework.TestCase;
  * @author Softtek-QA
  *
  */
-public abstract class AUTBaseComponent{
+public abstract class AUTBaseComponent {
 	public String AUT_USUARIO_LOGIN_DEFAULT = "";
 	public String AUT_SENHA_LOGIN_DEFAULT = "";
 	protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
@@ -337,21 +340,21 @@ public abstract class AUTBaseComponent{
 		}
 	}
 	
-	public void autInitSafeApplication() {
-				
-		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();
-		
-		AUT_BASE_STATE_CONFIGURATION_BROWSER.setUrl(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_SAFE_LOGIN, "AUT_URL").toString());
-		
+
+	public void autInitWebApplicationSafe() {		
+		autGetDataFlow().autInitDataFlow();
+		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();		
+		//AUT_BASE_STATE_CONFIGURATION_BROWSER.setUrl(autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_SAFE_LOGIN, "AUT_URL_SAFE").toString());
+		AUT_BASE_STATE_CONFIGURATION_BROWSER.setUrl(autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN, "AUT_URL_SAFE").toString());
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
-		
-		try{
-//			AUT_AGENT_SILK4J.<AccessibleControl>find("HMC.Maximizar").click();
+		try {
+			AUT_AGENT_SILK4J.<AccessibleControl>find("SAFE.Maximizar").click();
 		}
 		catch(java.lang.Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-		}
+		}		
+		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
 	}
 	
 	
@@ -369,6 +372,35 @@ public abstract class AUTBaseComponent{
 		super();
 	}
 	
+	
+	
+	/**
+	 *  Login no sistema SAFE
+	 */
+	public boolean autLoginSafe(Desktop agent, String user, String password) {
+		try {
+			
+			autGetLogManager().logMensagem("AUT INFO: INICIANDO LOGIN : APLICACAO SAFE");
+			
+			agent.<DomTextField>find("SAFE.TelaInicial.Usuario").click();
+			agent.<DomTextField>find("SAFE.TelaInicial.Usuario").setText(user);
+			agent.<DomTextField>find("SAFE.TelaInicial.Senha").click();
+			agent.<DomTextField>find("SAFE.TelaInicial.Senha").setText(password);
+			agent.<DomButton>find("SAFE.TelaInicial.Entrar").click();
+			
+			autGetLogManager().logMensagem("AUT INFO: LOGIN REALIZADO COM SUCESSO");
+			return true;
+		} catch (java.lang.Exception e) {
+			
+			autGetLogManager().logMensagem(AUT_TIPO_MSG_LOG.MENSAGEM_INFORMATIVA,
+					"AUT ERROR: LOGIN : APLICACAO SAFE");
+
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			
+			return false;
+		}
+	}
 	
 	
 	/**
