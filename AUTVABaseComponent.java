@@ -232,10 +232,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */	
 	public void CMP00014(HashMap<String, Object> parametros) {
 		autBuscarCliente.autBuscarCliente(parametros);
-
 	}
 	
-	
+		
 	/**
 	 * 
 	 * CMP00001 - Fluxo de Saida

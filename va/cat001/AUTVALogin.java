@@ -43,7 +43,7 @@ public class AUTVALogin extends AUTBaseComponent {
 			AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
 			AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
 			
-			AUTVAProjectFunctions.autLoginBoitata(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
+			AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
 		}
 		catch(java.lang.Exception e) {
 			System.out.println(e.getMessage());
@@ -59,6 +59,7 @@ public class AUTVALogin extends AUTBaseComponent {
 	 */
 	public void autStartLoginVA(java.util.HashMap<String, Object> parametros) {
 		try {	
+<<<<<<< HEAD
 			
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
 			autInitWebApplicationVA();			
@@ -80,6 +81,35 @@ public class AUTVALogin extends AUTBaseComponent {
 		try {
 			AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
 			AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
+=======
+>>>>>>> branch 'va_develop' of https://github.com/Softtek-QA/AUTLRYCMPObjects.git
+			
+<<<<<<< HEAD
+			AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, parametros.get("AUT_USER").toString(), parametros.get("AUT_PASSWORD").toString());
+=======
+			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
+			autInitWebApplicationVA();			
+			autLogin(parametros);
+			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: END");
+>>>>>>> branch 'va_develop' of https://github.com/Softtek-QA/AUTLRYCMPObjects.git
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
+		}
+	}	
+
+	
+<<<<<<< HEAD
+=======
+	/**
+	 * Relaizar Login VA, com parametros configuráveis
+	 */
+	public void autLogin(java.util.HashMap<String, Object> parametros) {
+		try {
+			AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
+			AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
 			
 			AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, parametros.get("AUT_USER").toString(), parametros.get("AUT_PASSWORD").toString());
 		}
@@ -89,6 +119,7 @@ public class AUTVALogin extends AUTBaseComponent {
 		}
 	}
 	
+>>>>>>> branch 'va_develop' of https://github.com/Softtek-QA/AUTLRYCMPObjects.git
 	
 	public AUTVALogin() {
 		super();
