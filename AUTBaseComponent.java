@@ -20,6 +20,7 @@ import br.lry.dataflow.AUTDataFlow;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
+import br.stk.framework.tests.AUTFWKTestObjectBase;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
 
@@ -32,10 +33,7 @@ import junit.framework.TestResult;
  * @author Softtek-QA
  *
  */
-public abstract class AUTBaseComponent{
-
-	protected Desktop AUT_AGENT_SILK4J = new Desktop();  //Objeto de conexão com aplicação da automação
-	protected BrowserBaseState AUT_BASE_STATE_CONFIGURATION_BROWSER = null; //Objeto base de configuraçao do browser
+public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	private AUTDataFlow AUT_CURRENT_DATA_FLOW = null; //Objeto de gerenciamento do fluxo de dados
 	private AUTLogMensagem AUT_CURRENT_LOG_MANAGER = null; //Objeto de gerenciamento do log
 	protected AUT_TABLE_PARAMETERS_NAMES AUT_CURRENT_PARAMETERS_TABLE_NAME = null;
@@ -70,12 +68,17 @@ public abstract class AUTBaseComponent{
 		}
 	}
 	
-	public static enum AUT_TEST_OPERATIONS{
+	public static enum AUT_SYNC_EXECUTION_STATE{
 		UPDATE_TABLE_PROJECT_DETAIL_WAIT,
 		UPDATE_TABLE_PROJECT_DETAIL_PASSED,
 		UPDATE_TABLE_PROJECT_DETAIL_EXECUTANDO,
 		UPDATE_TABLE_PROJECT_DETAIL_ERRO,
-		UPDATE_TABLE_PROJECT_DETAIL_FAILED;
+		UPDATE_TABLE_PROJECT_DETAIL_FAILED,
+		WAIT,
+		PASSED,
+		EXECUTION,
+		ERROR,
+		FAILED;
 		
 		@Override
 		public String toString() {
@@ -96,6 +99,21 @@ public abstract class AUTBaseComponent{
 			}
 			case UPDATE_TABLE_PROJECT_DETAIL_WAIT:{
 				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='AGUARDANDO EXECUÇÃO' WHERE STD_ITEM_CONFIGURATION=?  AND PJT_ID IN(%s);";
+			}
+			case PASSED:{
+				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='PASSOU' WHERE STD_ITEM_CONFIGURATION=? AND PJT_ID=?;";
+			}
+			case FAILED:{
+				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='FALHOU' WHERE STD_ITEM_CONFIGURATION=? AND PJT_ID=?;";
+			}
+			case ERROR:{
+				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='ERRO' WHERE STD_ITEM_CONFIGURATION=? AND PJT_ID=?;";
+			}
+			case EXECUTION:{
+				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='EXECUTANDO' WHERE STD_ITEM_CONFIGURATION=? AND PJT_ID=?;";
+			}
+			case WAIT:{
+				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='AGUARDANDO EXECUÇÃO' WHERE STD_ITEM_CONFIGURATION=?  AND PJT_ID=?;";
 			}
 			}
 			return super.toString();
@@ -352,6 +370,7 @@ public abstract class AUTBaseComponent{
 
 	public AUTBaseComponent() {
 		super();
+		autGetDataFlow().autInitDataFlow();
 	}
 	
 	

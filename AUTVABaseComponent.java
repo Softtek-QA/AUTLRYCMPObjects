@@ -39,13 +39,13 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		try {
 			
 			autGetLogManager().logMensagem("AUT INFO: INICIANDO LOGIN : APLICACAO VA");
-			
+			autInsertScreenByScenario();
 			agent.<DomTextField>find("VA.Login.Usuario").click();
 			agent.<DomTextField>find("VA.Login.Usuario").setText(user);
 			agent.<DomTextField>find("VA.Login.Senha").click();
 			agent.<DomTextField>find("VA.Login.Senha").setText(password);
 			agent.<DomButton>find("VA.Login.Avancar").click();
-			
+			autInsertScreenByScenario();
 			autGetLogManager().logMensagem("AUT INFO: LOGIN REALIZADO COM SUCESSO");
 			return true;
 		} catch (java.lang.Exception e) {
@@ -77,18 +77,40 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		
 		AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
 		AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
-		
+		autInsertScreenByScenario();
 		AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
+		autInsertScreenByScenario();
 	}
 	
 	public void autLogin(String usuario, String senha) {
+		autInsertScreenByScenario();
 		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, usuario.toString(), senha.toString());
+		autInsertScreenByScenario();
 	}
 	
 	public void autLogoutApplication() {
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
 		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
+		
 	}
 
+	public void autLoginVA(String usuario,String senha) {
+
+		autSetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN, "AUT_USER", usuario);
+		autSetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN, "AUT_PASSWORD", senha);
+		
+		
+		AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
+		AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
+		autInsertScreenByScenario();
+		AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
+		autInsertScreenByScenario();
+	}
 	
+
+	public void autVALogOff() {
+		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
+		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
+	}
+
 }

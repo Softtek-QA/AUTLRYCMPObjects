@@ -43,7 +43,6 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 	public static String AUT_CURRENT_DOC=null,AUT_CLIENT_DOC_CPF = null, AUT_CLIENT_DOC_CNPJ=null, AUT_CLIENT_DOC_PASSAPORT=null, AUT_VA_USER = null, AUT_VA_PASSWORD=null;
 	public AUT_VA_CADASTROS AUT_CLIENT_TYPE = null;	
 	public String currentDocument="";
-	private Desktop AUT_AGENT_SILK4J = new Desktop();
 	public String AUT_NUMERO_PEDIDO;
 
 	public enum AUT_VA_MEIOS_PAGAMENTO{
@@ -274,6 +273,7 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 	}
 	
 	public void autVAGeracaoPedidosV2(String usuario, String senha, String fluxoSaida, String meioPagamento, String planoPagamento,String... documentos) {
+		autInsertScreenByScenario();
 		try {
 			autLogoutApplication();
 		}
@@ -294,8 +294,9 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		//autInitWebApplicationVA(); // Login VA
 		//autLoginVA(AUT_AGENT_SILK4J, usuario, senha); //Login VA
 		autStartLoginDefault(usuario, senha); //Boitata
+		autInsertScreenByScenario();
 		autIncluirItemCarrinho(codigoItem); //Boitata
-
+		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
 		//AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.QuantidadeItem").setText(quantidadeItem);
 		//AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.CodigoItem").setText(codigoItem);
@@ -306,17 +307,20 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		AUT_AGENT_SILK4J.<DomTextField>find("VA02.ConfirmacaoLogin.Senha").setText(senha);
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.ConfirmacaoLogin.Avancar").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.IconeModoDePesquisa").click();
-			
+		autInsertScreenByScenario();
+		
 		if(documentos.length >= 2) {
 			AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.Passaporte").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.NumeroPassaporte").setFocus();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.NumeroPassaporte").setText(docCliente);		
 			
+			autInsertScreenByScenario();
 		}
 		else {
 			AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ItemCPF_CNPJ").click();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisa").setFocus();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.CampoPesquisa").setText(docCliente);
+			autInsertScreenByScenario();
 		}
 		
 	
@@ -324,6 +328,7 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.PesquisaClienteCadastrado.ClientePesquisado").click();
 		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaCliente.AvancarTelaCliente").click();
 		AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.Avancar").click();
+		autInsertScreenByScenario();
 		
 		if(fluxoSaida == AUT_VA_FLUXO_SAIDA.CAIXA.toString()) {
 			AUT_AGENT_SILK4J.<DomRadioButton>find("VA02.FluxoSaida.OpcaoCaixa").select();
@@ -336,6 +341,7 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").click();
 		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.MeioPagamento").select(meioPagamento);
 		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").click();
+		autInsertScreenByScenario();
 		
 		AUT_AGENT_SILK4J.<DomListBox>find("VA02.TelaMeioPagamento.PlanoPagamento").select(planoPagamento);
 		
@@ -350,7 +356,7 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 		AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaResumo.Finalizar").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.TelaResumo.FecharPopUp").click();
 		//AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA02GERADORPEDIDOS001");
-
+		autInsertScreenByScenario();
 		
 		String conteudoElemento = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaFinalPedidos.NumeroPedido").getText();
 
@@ -363,7 +369,7 @@ public class AUTVAGeradorPedido extends AUTVALogin {
 			AUT_NUMERO_PEDIDO= "00000000000";
 		}
 		
-		
+		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
 		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
 	}

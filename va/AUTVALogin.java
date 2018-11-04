@@ -40,6 +40,7 @@ public class AUTVALogin extends AUTVABaseComponent {
 	public void autStartLoginDefaultVA() {
 		try {			
 			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: INIT");
+			autInsertScreenByScenario();
 			autInitWebApplicationVA();
 			autLoginVA();
 			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: END");
