@@ -1,7 +1,7 @@
 /**
  * 
  */
-package br.lry.components.va;
+package br.lry.components.va.cat001;
 
 import br.lry.components.AUTVABaseComponent;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem;
@@ -22,6 +22,7 @@ import com.borland.silktest.jtf.xbrowser.DomElement;
  */
 public class AUTVALogin extends AUTVABaseComponent {
 
+	
 	public void autStartLoginDefault() {
 		try {	
 			
@@ -40,8 +41,6 @@ public class AUTVALogin extends AUTVABaseComponent {
 	public void autStartLoginDefaultVA() {
 		try {			
 			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: INIT");
-			autInsertScreenByScenario();
-			autInitWebApplicationVA();
 			autLoginVA();
 			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: END");
 		}

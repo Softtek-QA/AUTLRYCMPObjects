@@ -310,7 +310,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();		
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
 		try {
-			AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
+//			AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
 		}
 		catch(java.lang.Exception e) {
 			System.out.println(e.getMessage());
