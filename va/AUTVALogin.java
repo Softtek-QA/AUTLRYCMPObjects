@@ -74,7 +74,7 @@ public class AUTVALogin extends AUTVABaseComponent {
 			
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
 			autInitWebApplication();
-			autLoginVATelevendas();
+			//autLoginVATelevendas();
 			
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: END");
 			//TESTE CONFIGURAÇÃO CUSTOMIZADA TESTE 111111111111111

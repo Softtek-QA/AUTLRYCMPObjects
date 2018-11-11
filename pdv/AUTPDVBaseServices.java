@@ -363,7 +363,7 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 		autPDVPagamentos().autStartProcess(parametrosConfig);			
 	}
 	
-	public void autStartPagamentoPedido(String numeroPedido,AUT_VA_FLUXO_SAIDA FluxoSaida) {
+	public void autStartPagamentoPedido(String numeroPedido,AUT_VA_FLUXO_SAIDA fluxoSaida) {
 		AUTBaseComponent dt = new AUTBaseComponent() {};
 		autInsertScreenByScenario();
 		java.util.HashMap<String,Object> parametrosConfig = new java.util.HashMap<String,Object>();
@@ -372,7 +372,7 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 		parametrosConfig.put("AUT_OPERADOR", dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_OPERADOR"));
 		parametrosConfig.put("AUT_PWD_OPERADOR", dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_PWD_OPERADOR"));
 		parametrosConfig.put("AUT_COORDENADOR", dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_COORDENADOR"));
-		parametrosConfig.put("AUT_FLUXO_SAIDA", FluxoSaida);
+		parametrosConfig.put("AUT_FLUXO_SAIDA", fluxoSaida.name());
 		autPDVPagamentos().autStartProcess(parametrosConfig);	
 		autInsertScreenByScenario();
 	}
@@ -393,7 +393,7 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 		parametrosConfig.put("AUT_PWD_OPERADOR", dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_PWD_OPERADOR"));
 		parametrosConfig.put("AUT_COORDENADOR", dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_COORDENADOR"));
 		parametrosConfig.put("AUT_PWD_COORDENADOR", dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_PWD_COORDENADOR"));
-		parametrosConfig.put("AUT_FLUXO_SAIDA", AUT_VA_FLUXO_SAIDA.CAIXA);
+		parametrosConfig.put("AUT_FLUXO_SAIDA", AUT_VA_FLUXO_SAIDA.CAIXA.name());
 		autPDVDevolucoes().AUT_SYNC_PROCESS_EXECUTION = new AUTPDVSyncProcess() {			
 			@Override
 			public void autStartProcess() {
@@ -422,6 +422,50 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 		autPDVDevolucoes().autStartProcess(parametrosConfig);			
 	}
 	
+	public void autStartDevolucaoItem(String numeroPedido,AUT_VA_FLUXO_SAIDA fluxoSaida) {
+		AUTBaseComponent dt = new AUTBaseComponent() {};
+		autInsertScreenByScenario();
+		java.util.HashMap<String,Object> parametrosConfig = new java.util.HashMap<String,Object>();
+		parametrosConfig.put("AUT_MATERIAL", dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_CODIGO_ITEM"));
+		parametrosConfig.put("AUT_PEDIDO", Integer.parseInt(numeroPedido));	
+		parametrosConfig.put("AUT_LOJA_DEVOLUCAO","0035");
+		Integer qtd = Integer.parseInt(dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_QUANTIDADE_ITEM").toString());			
+		parametrosConfig.put("AUT_ITEM_QUANTIDADE",dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_GERACAO_PEDIDOS, "AUT_QUANTIDADE_ITEM").toString());
+		parametrosConfig.put("AU"
+				+ "T_DD","11");
+		parametrosConfig.put("AUT_TELEFONE","912123434");
+		parametrosConfig.put("AUT_OPERADOR", dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_OPERADOR"));
+		parametrosConfig.put("AUT_PWD_OPERADOR", dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_PWD_OPERADOR"));
+		parametrosConfig.put("AUT_COORDENADOR", dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_COORDENADOR"));
+		parametrosConfig.put("AUT_PWD_COORDENADOR", dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_PWD_COORDENADOR"));
+		parametrosConfig.put("AUT_FLUXO_SAIDA", fluxoSaida.name());
+		autPDVDevolucoes().AUT_SYNC_PROCESS_EXECUTION = new AUTPDVSyncProcess() {			
+			@Override
+			public void autStartProcess() {
+				// TODO Auto-generated method stub
+				autInsertScreenByScenario();
+			}
+			
+			@Override
+			public void autStartParallelProcess() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void autInitProcess() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void autEndProcess() {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		autPDVDevolucoes().autStartProcess(parametrosConfig);			
+	}
 	
 	/**
 	 * 

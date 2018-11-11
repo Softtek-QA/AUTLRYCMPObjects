@@ -105,48 +105,6 @@ public class AUTSafeCadastroConveniado extends AUTSafeBaseComponent {
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.CheckPointCadastro").waitForProperty("Text", AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.CheckPointCadastro").getText());	
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.BotaoOKConfirmCad").click();		
 		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.001TelaCadastroConveniado").close();
-		
-		/**
-		AUT_SAFE_TYPE_PERSONS typePerson = (AUT_SAFE_TYPE_PERSONS)autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME, "AUT_TYPE_PERSON");
-		String numeroDocumento = autGetCurrentParameter("AUT_DOCUMENT").toString();
-		String tipoDocEstrangeiro = autGetCurrentParameter("AUT_TYPE_DOC_FOREIGN").toString();
-		switch(typePerson) {
-		case ESTRANGEIRO:{	
-			AUT_AGENT_SILK4J.<DomListBox>find("SAFE.000TelaValeTroca.ListaTiposPessoa").select(typePerson.toString());
-			AUT_AGENT_SILK4J.<DomListBox>find("SAFE.000TelaValeTroca.ListaTiposDocsEstrangeiro").select(tipoDocEstrangeiro);
-			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.000TelaValeTroca.NumeroDocumento").setText(numeroDocumento);
-			AUT_AGENT_SILK4J.<DomElement>find("SAFE.000TelaValeTroca.BotaoPesquisar").click();
-					
-			break;
-		}
-		case FISICA:{
-			
-			AUT_AGENT_SILK4J.<DomListBox>find("SAFE.000TelaValeTroca.ListaTiposPessoa").select(typePerson.toString());
-			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.000TelaValeTroca.NumeroDocumento").setText(numeroDocumento);
-			AUT_AGENT_SILK4J.<DomElement>find("SAFE.000TelaValeTroca.BotaoPesquisar").click();
-			
-			break;
-		}
-		case JURIDICA:{
-			AUT_AGENT_SILK4J.<DomListBox>find("SAFE.000TelaValeTroca.ListaTiposPessoa").select(typePerson.toString());
-			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.000TelaValeTroca.NumeroDocumento").setText(numeroDocumento);
-			AUT_AGENT_SILK4J.<DomElement>find("SAFE.000TelaValeTroca.BotaoPesquisar").click();
-
-			break;
-		}
-		}
-
-		AUT_AGENT_SILK4J.<DomElement>find("SAFE.000TelaValeTroca.ValeTrocaEmitido").click();
-		
-		String valeTroca = AUT_AGENT_SILK4J.<DomElement>find("SAFE.DetalhesValeTroca001.NumeroVale").getText();
-		Integer vlTroca = Integer.parseInt(valeTroca);
-		System.out.println(vlTroca);
-		AUT_VALE_TROCA_OUTPUT = vlTroca.toString();
-		
-		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.DetalhesValeTroca001").close();
-		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.000TelaValeTroca").close();
-		
-		**/
 	}
 	
 	

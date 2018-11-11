@@ -13,6 +13,7 @@ import com.borland.silktest.jtf.BrowserBaseState;
 import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.common.BrowserType;
 import com.borland.silktest.jtf.win32.AccessibleControl;
+import com.borland.silktest.jtf.xbrowser.BrowserApplication;
 import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.microfocus.silktest.jtf.*;
 
@@ -307,8 +308,10 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	 */
 	public void autInitWebApplication() {
 		
-		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();		
+		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();
+		
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
+		
 		try {
 //			AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
 		}
