@@ -17,7 +17,7 @@ import com.borland.silktest.jtf.xbrowser.DomElement;
  *
  */
 public class AUTSafeBaseComponent extends AUTBaseComponent {
-	
+	public boolean AUT_ENABLE_LOGIN_INIT = true;
 	public static enum AUT_SAFE_LOJAS_ENUM{
 		LJ0001,
 		LJ0002,
@@ -308,15 +308,45 @@ public class AUTSafeBaseComponent extends AUTBaseComponent {
 	 * 
 	 */
 	public AUTSafeBaseComponent() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
+	public AUTSafeBaseComponent(boolean syncronizeDataFlow) {
+		super(syncronizeDataFlow);
+	}
+	/**
+	 * 
+	 * Login padrão no SAFE que não executa rotinas de inicialização da aplicação
+	 * 
+	 * 
+	 * @param usuario - Usuário SAFE
+	 * @param senha - Senha SAFE
+	 * 
+	 */
 	public void autLogin(String usuario, String senha) {
-		autInitWebApplication();
+		AUT_ENABLE_LOGIN_INIT = true;
+		autLoginWithInit(usuario,senha);
+	}
+	
+	
+	/**
+	 * 
+	 * Executa procedimentos de login  no SAFE
+	 * 
+	 * @param usuario - Usuario SAFE
+	 * @param senha - Senha SAFE
+	 * 
+	 */
+	public void autLoginWithInit(String usuario, String senha) {
+		
+		if(AUT_ENABLE_LOGIN_INIT) {
+			autInitWebApplication();
+		}
+		
 		AUT_AGENT_SILK4J.<BrowserApplication>find("SAFE").maximize();
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.Login.Usuario").setText(usuario);
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.Login.Senha").setText(senha);
 		AUT_AGENT_SILK4J.<DomButton>find("SAFE.Login.BotaoEntrar").click();
-		//end recording
 	}
 }

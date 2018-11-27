@@ -185,6 +185,7 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaSenha.AbaSenha").click();
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaSenha.NovaSenha").setText(novaSenha);
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaSenha.Senha").setText(novaSenha);
+		
 		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.AbaAdministracao").click();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Canal").setFocus();
@@ -245,32 +246,40 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.NovoItem").click();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.SubMenuClienteDropDown").click();
 		autInsertScreenByScenario();
-		AUT_HMC_PERFIL_ACESSO hmcPerf = (AUT_HMC_PERFIL_ACESSO)autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_HMC_LOGIN,"AUT_PERFIL_ACESSO");
-		
+		AUT_HMC_PERFIL_ACESSO hmcPerf = (AUT_HMC_PERFIL_ACESSO)autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_HMC_LOGIN,"AUT_PERFIL_ACESSO");		
 		switch(hmcPerf) {
 		case APROVADOR_COMERCIAL:{
-			autAdicionarPerfisUsuario(new String[] { lojaCadastro, "LB01", "channel_store", "32_ATV", "GERENTE COMERCIAL",
-					"35_ATV", "50000425-PROJETO 3D VENDA ASSISTIDA" , "14_ATV", "50_Cadastro_PJ_excecao", "98_ATV"});
-
+			autAdicionarPerfisUsuario(new String[] { lojaCadastro,"employee_type_employee", "LB01", "channel_store", "32_ATV", "GERENTE COMERCIAL",
+					"35_ATV","41_ATV","42_ATV","50000425-PROJETO 3D VENDA ASSISTIDA"});
+			autSetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_HMC_LOGIN,"AUT_CANAL", lojaCadastro);
 			break;
 		}
 		case PJ_CADASTRO_EXCECAO:{
-			autAdicionarPerfisUsuario(new String[] { lojaCadastro, "LB01", "channel_store", "32_ATV", "GERENTE COMERCIAL",
+			autAdicionarPerfisUsuario(new String[] { lojaCadastro, "LB01", "channel_store", "32_ATV","67_ATV", "GERENTE COMERCIAL",
 					"35_ATV", "50000425-PROJETO 3D VENDA ASSISTIDA" , "14_ATV", "50_Cadastro_PJ_excecao", "98_ATV"});
-
 			break;
 		}
 		case USUARIO_LOJA:{
-			autAdicionarPerfisUsuario(new String[] { lojaCadastro, "LB01", "channel_store", "32_ATV", "GERENTE COMERCIAL",
-					"35_ATV", "50000425-PROJETO 3D VENDA ASSISTIDA" , "14_ATV", "50_Cadastro_PJ_excecao", "98_ATV"});
+			canal = "channel_store";
+			autAdicionarPerfisUsuario(new String[] { lojaCadastro, "LB01", "channel_store","ASSESSOR DE TELEVENDAS", "32_ATV","35_ATV",
+					"b2bgroup", "employee_type_employee","50000425-PROJETO 3D VENDA ASSISTIDA"});
 			break;
 		}
+		case USUARIO_TELEVENDAS:{
+			canal = "channel_telesales";
+			lojaCadastro = formatLoja;
+			autSetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_HMC_LOGIN,"AUT_CANAL", canal);		
+			autAdicionarPerfisUsuario(new String[] {"b2bgroup","employee_type_employee","ASSESSOR DE TELEVENDAS","50000425-PROJETO 3D VENDA ASSISTIDA","LB01","32_ATV","35_ATV", "67_ATV"});
+			
+			break;
+		}		
 		default:{
-			autAdicionarPerfisUsuario(new String[] { lojaCadastro, "LB01", "channel_store", "32_ATV", "GERENTE COMERCIAL",
+			autAdicionarPerfisUsuario(new String[] { lojaCadastro, "LB01","b2bgroup","employee_type_employee", "channel_store", "32_ATV","67_ATV",
 					"35_ATV", "50000425-PROJETO 3D VENDA ASSISTIDA" });			
 			break;
 		}
 		}
+		
 		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaCadastroClientes.IdUsuario").setText(userID);
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaCadastroClientes.NomeUsuario").setText(userName.concat(userID));
@@ -279,11 +288,13 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaRemetentes.AbaRemetentes").click();
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaRemetentes.Email").setText(email);
-
+		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaSenha.AbaSenha").click();
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaSenha.NovaSenha").setText(novaSenha);
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaSenha.Senha").setText(novaSenha);
 		autInsertScreenByScenario();
+		
+		
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.AbaAdministracao").click();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Canal").setFocus();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Canal").typeKeys(canal);
@@ -292,7 +303,7 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Tipo").typeKeys(tipo);
 		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.UnidadeB2BPadrao").setFocus();
-		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.UnidadeB2BPadrao").typeKeys(lojaCadastro);
+		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.UnidadeB2BPadrao").typeKeys(( hmcPerf == AUT_HMC_PERFIL_ACESSO.USUARIO_TELEVENDAS ? "TELEVENDAS" : lojaCadastro));
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.UnidadeB2BPadrao").typeKeys("\n");
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Departamento").setFocus();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Departamento").typeKeys(departamento);
@@ -308,13 +319,16 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.CodigoDepartamento").typeKeys(codigoDepartamento);
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.CodigoDepartamento").typeKeys("\n");
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Loja").setFocus();
+		
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Loja").typeKeys(formatLoja);
+		
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Loja").typeKeys("\n");
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.GerenteAssociado").setFocus();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.GerenteAssociado").typeKeys(gestorArea);
 		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaCadastroClientes.Geral").click();
 
+		
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.MenuCriarUsuario").click();
 		autInsertScreenByScenario();
 		DomElement botaolSalvar = AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.CheckPointBotaoSalvar");

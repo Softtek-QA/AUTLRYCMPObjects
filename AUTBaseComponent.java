@@ -138,7 +138,21 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.GoogleChrome);
 	}
 
-	
+	public boolean autSetCurrentDataFlowObject(AUTDataFlow newDataflow) {
+		try {
+			
+			AUT_CURRENT_DATA_FLOW = autGetDataFlow().autCopyDataFlow(autGetDataFlow(), newDataflow);
+			System.out.println("AUT : DATAFLOW : SET CURRENT OBJECT : OK");
+						
+			return true;
+		}
+		catch(java.lang.Exception e) {
+			System.out.println("AUT : ERROR: DATAFLOW : SET CURRENT OBJECT");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return false;
+		}
+	}
 	/**
 	 * 
 	 * Retorna a instancia de gerenciamento de logs sistema
@@ -207,7 +221,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		try {
 
 			AUT_CURRENT_PARAMETERS_TABLE_NAME = tableName;
-
+			
 			return autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_CURRENT_PARAMETERS_TABLE_NAME.toString()).get(1).get(parameterName);
 		}
 		catch(java.lang.Exception e) {
@@ -262,7 +276,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 			return null;
 		}
 	}
-
+	
 	public boolean autSetCurrentParameter(String parameterName,Object value) {
 		try {
 			if(AUT_CURRENT_PARAMETERS_TABLE_NAME!=null) {
@@ -308,12 +322,11 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	 */
 	public void autInitWebApplication() {
 		
-		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();
-		
+		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState("safe.settings");
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
 		
 		try {
-//			AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
+			//AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
 		}
 		catch(java.lang.Exception e) {
 			System.out.println(e.getMessage());
@@ -375,6 +388,9 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		super();
 		autGetDataFlow().autInitDataFlow();
 	}
-	
+
+	public AUTBaseComponent(boolean syncronizeDataFlow) {
+		super();
+	}
 	
 }

@@ -34,29 +34,30 @@ public class AUTSafeConsultaValeTroca extends AUTSafeBaseComponent {
 	 */
 	public void autIniConsultaValeTrocaParaCliente(java.util.HashMap<String,Object> parametrosConfig) {
 	
-		autLogin(parametrosConfig.get("AUT_USER").toString(), parametrosConfig.get("AUT_PWD").toString());
-		
+		autLoginWithInit(parametrosConfig.get("AUT_USER").toString(), parametrosConfig.get("AUT_PWD").toString());
+		autInsertScreenByScenario();
 	}
 	
 	@Test
 	public void autIniConsultaValeTrocaParaCliente() {
-		autLogin(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_SAFE_VALE_TROCA_LINX, "AUT_USER").toString(),autGetCurrentParameter("AUT_PWD").toString());
+		autLoginWithInit(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_SAFE_VALE_TROCA_LINX, "AUT_USER").toString(),autGetCurrentParameter("AUT_PWD").toString());
 		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.TelaInicial").exists("001MenuValeTroca", 30000);
-		
+		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.001MenuValeTroca").click();
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.000MenuManutencao").click();
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.001SubMenu000ValeTroca").click();
-		
+		autInsertScreenByScenario();
 		AUT_SAFE_TYPE_PERSONS typePerson = (AUT_SAFE_TYPE_PERSONS)autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME, "AUT_TYPE_PERSON");
 		String numeroDocumento = autGetCurrentParameter("AUT_DOCUMENT").toString();
 		String tipoDocEstrangeiro = autGetCurrentParameter("AUT_TYPE_DOC_FOREIGN").toString();
+		
 		switch(typePerson) {
 		case ESTRANGEIRO:{	
 			AUT_AGENT_SILK4J.<DomListBox>find("SAFE.000TelaValeTroca.ListaTiposPessoa").select(typePerson.toString());
 			AUT_AGENT_SILK4J.<DomListBox>find("SAFE.000TelaValeTroca.ListaTiposDocsEstrangeiro").select(tipoDocEstrangeiro);
 			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.000TelaValeTroca.NumeroDocumento").setText(numeroDocumento);
 			AUT_AGENT_SILK4J.<DomElement>find("SAFE.000TelaValeTroca.BotaoPesquisar").click();
-					
+			autInsertScreenByScenario();	
 			break;
 		}
 		case FISICA:{
@@ -64,25 +65,26 @@ public class AUTSafeConsultaValeTroca extends AUTSafeBaseComponent {
 			AUT_AGENT_SILK4J.<DomListBox>find("SAFE.000TelaValeTroca.ListaTiposPessoa").select(typePerson.toString());
 			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.000TelaValeTroca.NumeroDocumento").setText(numeroDocumento);
 			AUT_AGENT_SILK4J.<DomElement>find("SAFE.000TelaValeTroca.BotaoPesquisar").click();
-			
+			autInsertScreenByScenario();
 			break;
 		}
 		case JURIDICA:{
 			AUT_AGENT_SILK4J.<DomListBox>find("SAFE.000TelaValeTroca.ListaTiposPessoa").select(typePerson.toString());
 			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.000TelaValeTroca.NumeroDocumento").setText(numeroDocumento);
 			AUT_AGENT_SILK4J.<DomElement>find("SAFE.000TelaValeTroca.BotaoPesquisar").click();
-
+			autInsertScreenByScenario();
 			break;
 		}
 		}
-
+		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.000TelaValeTroca.ValeTrocaEmitido").click();
-		
+		autInsertScreenByScenario();
 		String valeTroca = AUT_AGENT_SILK4J.<DomElement>find("SAFE.DetalhesValeTroca001.NumeroVale").getText();
 		Integer vlTroca = Integer.parseInt(valeTroca);
+		System.out.println(String.format("AUT INFO : SAFE : VALE TROCA GERADO COM SUCESSO : %s",vlTroca));
 		System.out.println(vlTroca);
 		AUT_VALE_TROCA_OUTPUT = vlTroca.toString();
-		
+		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.DetalhesValeTroca001").close();
 		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.000TelaValeTroca").close();
 		

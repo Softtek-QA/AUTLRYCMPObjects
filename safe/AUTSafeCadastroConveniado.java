@@ -28,7 +28,7 @@ import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 public class AUTSafeCadastroConveniado extends AUTSafeBaseComponent {
 
 	public String AUT_VALE_TROCA_OUTPUT = null; //Vale troca
-	
+
 	/**
 	 * 
 	 * Consulta numeros de vale troca gerados para cliente
@@ -38,36 +38,93 @@ public class AUTSafeCadastroConveniado extends AUTSafeBaseComponent {
 	 * 
 	 */
 	public void autIniConsultaValeTrocaParaCliente(java.util.HashMap<String,Object> parametrosConfig) {
-	
-		autLogin(parametrosConfig.get("AUT_USER").toString(), parametrosConfig.get("AUT_PWD").toString());
-		
+
+		autLoginWithInit(parametrosConfig.get("AUT_USER").toString(), parametrosConfig.get("AUT_PWD").toString());
+
 	}
-	
-	@Test
-	public void autIniCadastroClienteConveniado() {
-		autLogin(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_SAFE_VALE_TROCA_LINX, "AUT_USER").toString(),autGetCurrentParameter("AUT_PWD").toString());
-		
-		
-		AUT_SAFE_TIPO_CONVENIO convenio = (AUT_SAFE_TIPO_CONVENIO)autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_SAFE_CADASTROS_CLIENTE_CONVENIADO_LINX,"AUT_TIPO_CONVENIO");
-		AUT_SAFE_TYPE_PERSONS tipoPessoa = (AUT_SAFE_TYPE_PERSONS)autGetCurrentParameter("AUT_TIPO_PESSOA");
-		String documento = autGetCurrentParameter("AUT_DOCUMENTO").toString();;
-		String nomeCliente = autGetCurrentParameter("AUT_PF_NOME").toString();;
-		String rgCliente = autGetCurrentParameter("AUT_PF_RG").toString();;			
-		String docOrgEmissor = autGetCurrentParameter("AUT_ORG_EMISSOR").toString();;
-		String dataNascimento = autGetCurrentParameter("AUT_DATA_NASCIMENTO").toString();;
-		AUT_SAFE_PROFISSOES profissoes = (AUT_SAFE_PROFISSOES)autGetCurrentParameter("AUT_PROFISSAO");
-		String email = autGetCurrentParameter("AUT_EMAIL").toString();;
-		String logradouro = autGetCurrentParameter("AUT_LOGRADOURO").toString();;
-		String numeroEndereco = autGetCurrentParameter("AUT_NUMERO_ENDERECO").toString();;
-		String complemento = autGetCurrentParameter("AUT_COMPLEMENTO_ENDERECO").toString();;
-		String bairro = autGetCurrentParameter("AUT_BAIRRO").toString();;
-		String cep = autGetCurrentParameter("AUT_CEP").toString();;
-		String cidade = autGetCurrentParameter("AUT_CIDADE").toString();
-		String uf = autGetCurrentParameter("AUT_UF").toString();;
-		String dd1 = autGetCurrentParameter("AUT_TEL_DD1").toString();;
-		String telefone1 = autGetCurrentParameter("AUT_TEL_FONE1").toString();;
-		String ramal1 = autGetCurrentParameter("AUT_TEL_RAMAL1").toString();;
-		
+
+
+	public void autIniCadastroClienteConveniado(java.util.HashMap<String,Object> parameters) {
+
+		autLoginWithInit(parameters.get("AUT_USER").toString(),parameters.get("AUT_PWD").toString());
+
+
+
+		AUT_SAFE_TIPO_CONVENIO convenio = (AUT_SAFE_TIPO_CONVENIO) parameters.get("AUT_TIPO_CONVENIO");
+		AUT_SAFE_TYPE_PERSONS tipoPessoa = (AUT_SAFE_TYPE_PERSONS)parameters.get("AUT_TIPO_PESSOA");
+
+		String documento = "";
+		String rgCliente = "";			
+		String docOrgEmissor = "";
+		String dataNascimento = "";
+		String nomeCliente = "";
+
+
+		switch(tipoPessoa) {		
+		case ESTRANGEIRO:{
+			documento = parameters.get("AUT_DOCUMENTO").toString();			
+			nomeCliente = parameters.get("AUT_NOME_ESTRANGEIRO").toString();
+
+			break;
+		}
+		case FISICA:{
+			documento = parameters.get("AUT_DOCUMENTO").toString();
+			rgCliente = parameters.get("AUT_PF_RG").toString();			
+			docOrgEmissor = parameters.get("AUT_ORG_EMISSOR").toString();
+			dataNascimento = parameters.get("AUT_DATA_NASCIMENTO").toString();
+			nomeCliente = parameters.get("AUT_NOME").toString();
+
+			break;
+		}
+		case FISICA2:{
+			documento = parameters.get("AUT_DOCUMENTO").toString();
+			rgCliente = parameters.get("AUT_PF_RG").toString();			
+			docOrgEmissor = parameters.get("AUT_ORG_EMISSOR").toString();
+			dataNascimento = parameters.get("AUT_DATA_NASCIMENTO").toString();
+			nomeCliente = parameters.get("AUT_NOME").toString();
+
+			break;
+		}
+		case JURIDICA:{
+			documento = parameters.get("AUT_DOCUMENTO").toString();
+			nomeCliente = parameters.get("AUT_NOME_PJ").toString();
+
+			break;
+		}
+		case JURIDICA2:{
+			documento = parameters.get("AUT_DOCUMENTO").toString();
+			nomeCliente = parameters.get("AUT_NOME_PJ").toString();
+
+			break;
+		}
+		case PASSAPORTE:{
+			documento = parameters.get("AUT_DOCUMENTO").toString();
+			nomeCliente = parameters.get("AUT_NOME_ESTRANGEIRO").toString();
+
+			break;
+		}
+		case RNE:{
+			documento = parameters.get("AUT_DOCUMENTO").toString();
+			nomeCliente = parameters.get("AUT_NOME_ESTRANGEIRO").toString();
+
+			break;
+		}
+
+		}
+
+		AUT_SAFE_PROFISSOES profissoes = (AUT_SAFE_PROFISSOES)parameters.get("AUT_PROFISSAO");
+		String email = parameters.get("AUT_EMAIL").toString();
+		String logradouro = parameters.get("AUT_LOGRADOURO").toString();
+		String numeroEndereco = parameters.get("AUT_NUMERO_ENDERECO").toString();
+		String complemento = parameters.get("AUT_COMPLEMENTO_ENDERECO").toString();
+		String bairro = parameters.get("AUT_BAIRRO").toString();
+		String cep = parameters.get("AUT_CEP").toString();
+		String cidade = parameters.get("AUT_CIDADE").toString();
+		String uf = parameters.get("AUT_UF").toString();
+		String dd1 = parameters.get("AUT_TEL_DD1").toString();
+		String telefone1 = parameters.get("AUT_TEL_FONE1").toString();
+		String ramal1 = parameters.get("AUT_TEL_RAMAL1").toString();
+		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.TelaInicial").exists("002MenuConvenio", 30000);
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002MenuConvenio").setFocus();
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002MenuConvenio").click();
@@ -75,17 +132,73 @@ public class AUTSafeCadastroConveniado extends AUTSafeBaseComponent {
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.001SubMenu002GestaoConveniado").click();
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002SubMenu002CadastroConveniado").setFocus();
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002SubMenu002CadastroConveniado").click();
-		
+		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoConvenio").setFocus();
 		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoConvenio").select(convenio.toString());
 		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoPessoa").select( tipoPessoa.toString());
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.NumeroDocumento").setText(documento);
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.NomeCliente").setText(nomeCliente);
-		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.RG").setText(rgCliente);
-		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.OrgaoEmissor").setText(docOrgEmissor);
-		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DataNascimento").setFocus();
-		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DataNascimento").setText(dataNascimento);
-		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaProfissoes").select(profissoes.toString());
+		autInsertScreenByScenario();
+		switch(tipoPessoa) {		
+		case ESTRANGEIRO:{
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.RG").setText(rgCliente);
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.OrgaoEmissor").setText(docOrgEmissor);
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DataNascimento").setFocus();
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DataNascimento").setText(dataNascimento);
+			AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaProfissoes").select(profissoes.toString());
+			autInsertScreenByScenario();
+			break;
+		}
+		case FISICA:{
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.RG").setText(rgCliente);
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.OrgaoEmissor").setText(docOrgEmissor);
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DataNascimento").setFocus();
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DataNascimento").setText(dataNascimento);
+			AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaProfissoes").select(profissoes.toString());
+			autInsertScreenByScenario();
+			break;
+		}
+		case FISICA2:{		
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.RG").setText(rgCliente);
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.OrgaoEmissor").setText(docOrgEmissor);
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DataNascimento").setFocus();
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DataNascimento").setText(dataNascimento);
+			AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaProfissoes").select(profissoes.toString());
+			autInsertScreenByScenario();
+			break;
+		}
+		case JURIDICA:{
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.RazaoSocial").setText(nomeCliente);		
+
+			break;
+		}
+		case JURIDICA2:{
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.RazaoSocial").setText(nomeCliente);		
+
+			break;
+		}
+		case PASSAPORTE:{
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.RG").setText(rgCliente);
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.OrgaoEmissor").setText(docOrgEmissor);
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DataNascimento").setFocus();
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DataNascimento").setText(dataNascimento);
+			AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaProfissoes").select(profissoes.toString());
+			autInsertScreenByScenario();
+			break;
+		}
+		case RNE:{
+			break;
+		}		
+		}
+
+
+		autInsertScreenByScenario();
+
+
 		AUT_AGENT_SILK4J.<DomCheckBox>find("SAFE.001TelaCadastroConveniado.CheckParceiro").check();
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Email").setText(email);
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Logradouro").setText(logradouro);
@@ -99,15 +212,26 @@ public class AUTSafeCadastroConveniado extends AUTSafeBaseComponent {
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DD1").setText(dd1);
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Telefone1").setText(telefone1);
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Ramal").setText(ramal1);
-		
+		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.BotaoSalvar").click();		
-
-		AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.CheckPointCadastro").waitForProperty("Text", AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.CheckPointCadastro").getText());	
-		AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.BotaoOKConfirmCad").click();		
-		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.001TelaCadastroConveniado").close();
+		autInsertScreenByScenario();
+		
+		try {
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.CheckPointCadastro").waitForProperty("Text", AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.CheckPointCadastro").getText());	
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.BotaoOKConfirmCad").click();		
+			AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.001TelaCadastroConveniado").close();
+		}
+		catch(java.lang.Exception e) {
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE").close();
+		}
+		
+		
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * Construtor padrão
@@ -117,4 +241,13 @@ public class AUTSafeCadastroConveniado extends AUTSafeBaseComponent {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * 
+	 * Construtor padrão
+	 * 
+	 */
+	public AUTSafeCadastroConveniado(boolean syncronizeDataFlow) {
+		super(syncronizeDataFlow);
+		// TODO Auto-generated constructor stub
+	}
 }
