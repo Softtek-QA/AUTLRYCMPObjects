@@ -245,6 +245,8 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.Clientes").click();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.NovoItem").click();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.SubMenuClienteDropDown").click();
+		
+		
 		autInsertScreenByScenario();
 		AUT_HMC_PERFIL_ACESSO hmcPerf = (AUT_HMC_PERFIL_ACESSO)autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_HMC_LOGIN,"AUT_PERFIL_ACESSO");		
 		switch(hmcPerf) {
@@ -285,6 +287,10 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaCadastroClientes.NomeUsuario").setText(userName.concat(userID));
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaCadastroClientes.DescricaoUsuario")
 		.setText(userName.concat(userID));
+		
+		AUT_USUARIO_CADASTRO_OUTPUT = userID;
+		AUT_USUARIO_CADASTRO_PWD_OUTPUT = novaSenha;
+
 		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaRemetentes.AbaRemetentes").click();
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaRemetentes.Email").setText(email);
@@ -335,8 +341,6 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		Assert.assertEquals(true, botaolSalvar.isVisible());
 		Assert.assertEquals("Salvar", botaolSalvar.getText());
 		autInsertScreenByScenario();
-		AUT_USUARIO_CADASTRO_OUTPUT = userID;
-		AUT_USUARIO_CADASTRO_PWD_OUTPUT = novaSenha;
 		
 	}
 

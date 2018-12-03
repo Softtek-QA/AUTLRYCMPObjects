@@ -64,6 +64,8 @@ public class AUTSAPBaseServices extends AUTBaseComponent {
 				}
 			};
 			sapConsultas = new AUTSAPConsultaEstoque();
+			sapConsultas.autSetExecutionMonitor(processMonitor);
+			
 			return (TSAPEstoques)sapConsultas;
 		}
 		else {

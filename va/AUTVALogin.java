@@ -4,6 +4,7 @@
 package br.lry.components.va;
 
 import br.lry.components.AUTVABaseComponent;
+import br.lry.functions.AUTVAProjectFunctions;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem;
 import junit.framework.AssertionFailedError;
 import junit.framework.JUnit4TestAdapter;
@@ -22,11 +23,17 @@ import com.borland.silktest.jtf.xbrowser.DomElement;
  */
 public class AUTVALogin extends AUTVABaseComponent {
 
+
+	
+	
+	/**
+	 * Inicialização Login VA, parametros pré-definidos
+	 */
 	public void autStartLoginDefault() {
 		try {	
 			
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
-			//autInitWebApplication();			
+			autInitWebApplicationVA();			
 			autLogin();
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: END");
 		}
@@ -36,11 +43,67 @@ public class AUTVALogin extends AUTVABaseComponent {
 			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
 		}
 	}	
+
+	
+	/**
+	 * Relaizar Login VA, com parametros pré-definidos
+	 */
+	public void autLogin() {
+		try {
+			AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
+			AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
+			
+			AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+
+	/**
+	 * Inicialização Login VA, com parametros configuráveis
+	 */
+	public void autStartLoginVA(java.util.HashMap<String, Object> parametros) {
+		try {	
+			
+			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
+			autInitWebApplicationVA();			
+			autLogin(parametros);
+			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: END");
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
+		}
+	}	
+
+	
+	/**
+	 * Relaizar Login VA, com parametros configuráveis
+	 */
+	public void autLogin(java.util.HashMap<String, Object> parametros) {
+		try {
+			AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
+			AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
+			
+			AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, parametros.get("AUT_USER").toString(), parametros.get("AUT_PASSWORD").toString());
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
 	
 	public void autStartLoginDefaultVA() {
 		try {			
 			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: INIT");
-			autInsertScreenByScenario();
 			autInitWebApplicationVA();
 			autLoginVA();
 			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: END");

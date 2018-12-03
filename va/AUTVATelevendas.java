@@ -3,26 +3,20 @@
  */
 package br.lry.components.va;
 
-import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import com.borland.silktest.jtf.xbrowser.BrowserApplication;
-import com.borland.silktest.jtf.xbrowser.BrowserWindow;
+
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomCheckBox;
 import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomLink;
 import com.borland.silktest.jtf.xbrowser.DomListBox;
-import com.borland.silktest.jtf.xbrowser.DomRadioButton;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
-import sun.management.resources.agent;
 
-import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_FLUXO_SAIDA;
 import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_MEIOS_PAGAMENTO;
 import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_PLANO_PAGAMENTO;
-import br.lry.dataflow.AUTDataFlow.*;
 
 import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.win32.AccessibleControl;
@@ -98,7 +92,7 @@ public class AUTVATelevendas extends AUTVALogin {
 		
 		AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
 		
-	
+
 		AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.LM").typeKeys("89296193");
 		AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.+").click();
 		AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.BotaoGerar").click();

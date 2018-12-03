@@ -476,6 +476,10 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 	public <TPDVPagamentos extends br.lry.process.AUTPDVPagamentoPedido> TPDVPagamentos autPDVPagamentos() {
 		if(pdvPagamentos==null) {
 			pdvPagamentos = new AUTPDVPagamentoPedido();
+			pdvPagamentos.AUT_AGENT_SILK4J = new com.borland.silktest.jtf.Desktop();
+			pdvPagamentos.AUT_AGENT_SILK4J_CONFIGURATION = new BaseState("pdv.settings");
+			pdvPagamentos.AUT_AGENT_SILK4J.executeBaseState(pdvPagamentos.AUT_AGENT_SILK4J_CONFIGURATION);
+			
 			return (TPDVPagamentos)pdvPagamentos;
 		}
 		else {	
@@ -490,7 +494,11 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 	 */
 	public <TPDVDevolucoes extends br.lry.process.AUTPDVDevolucaoItem> TPDVDevolucoes autPDVDevolucoes() {
 		if(pdvDevolucoes==null) {
-			pdvDevolucoes = new br.lry.process.AUTPDVDevolucaoItem();		
+			pdvDevolucoes = new br.lry.process.AUTPDVDevolucaoItem();
+			pdvDevolucoes.AUT_AGENT_SILK4J = new com.borland.silktest.jtf.Desktop();
+			pdvDevolucoes.AUT_AGENT_SILK4J_CONFIGURATION = new BaseState("pdv.settings");
+			pdvDevolucoes.AUT_AGENT_SILK4J.executeBaseState(pdvPagamentos.AUT_AGENT_SILK4J_CONFIGURATION);
+			
 			return (TPDVDevolucoes)pdvDevolucoes;
 		}
 		else {

@@ -4,6 +4,8 @@
 package br.lry.components;
 
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,9 +14,12 @@ import org.junit.internal.runners.TestClass;
 import com.borland.silktest.jtf.BrowserBaseState;
 import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.common.BrowserType;
+import com.borland.silktest.jtf.common.types.ItemIdentifier;
 import com.borland.silktest.jtf.win32.AccessibleControl;
 import com.borland.silktest.jtf.xbrowser.BrowserApplication;
+import com.borland.silktest.jtf.xbrowser.BrowserWindow;
 import com.borland.silktest.jtf.xbrowser.DomElement;
+import com.borland.silktest.jtf.xbrowser.DomListBox;
 import com.microfocus.silktest.jtf.*;
 
 import br.lry.dataflow.AUTDataFlow;
@@ -38,6 +43,10 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	private AUTDataFlow AUT_CURRENT_DATA_FLOW = null; //Objeto de gerenciamento do fluxo de dados
 	private AUTLogMensagem AUT_CURRENT_LOG_MANAGER = null; //Objeto de gerenciamento do log
 	protected AUT_TABLE_PARAMETERS_NAMES AUT_CURRENT_PARAMETERS_TABLE_NAME = null;
+	
+	public String AUT_USUARIO_LOGIN_DEFAULT = "";
+	public String AUT_SENHA_LOGIN_DEFAULT = "";
+	protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
 	
 	public static enum AUT_TEST_STATUS_EXECUCAO{
 		WAIT,
@@ -209,6 +218,66 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		}
 	}
 
+	
+
+	public void selectValor (DomListBox listCombo) {
+
+		String valor = null;
+		int contador=0;
+
+		List<ItemIdentifier> list = listCombo.getItems();
+
+		for(ItemIdentifier item:listCombo.getItems()) {
+
+			if (item.getText()  != null) {
+				valor = item.getText();
+				break;
+			}
+		}
+
+		listCombo.select(valor);
+
+	}
+
+
+	public void selectValor (DomListBox listCombo, String criterioSelecao) {
+
+		String valor = null;
+
+		List<ItemIdentifier> list = listCombo.getItems();
+
+		for(ItemIdentifier item : listCombo.getItems()) {
+			System.out.println(item.getText());
+			if(item.getText() != null && item.getText().trim() != "") {
+				java.util.regex.Pattern padrao = java.util.regex.Pattern.compile(criterioSelecao);
+				java.util.regex.Matcher analise = padrao.matcher(item.getText());
+
+				if(analise.find()) {
+					valor = item.getText();
+					System.out.println(valor);
+					listCombo.select(valor);
+					break;			
+				}
+			}
+		}
+	}
+
+	
+	public Double autGetDiv(String valueInput) {
+		String vlInput = valueInput;
+		String[] vlParts = valueInput.trim().split(",");		
+		Double dbValor = Double.parseDouble(vlParts[0]);
+		Double result = dbValor / 2;
+		
+		System.out.println(valueInput);
+		System.out.println(dbValor);
+		System.out.println(vlParts[1]);
+		System.out.println(result);
+		System.out.println(result * 2);
+		
+		return result*100;
+	}
+
 	/**
 	 * 
 	 * Recupera o valor do parametro especificado na fonte de dados corrente
@@ -322,6 +391,40 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	 */
 	public void autInitWebApplication() {
 		
+		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState("va.settings");
+		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
+		
+		try {
+			//AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		
+		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
+
+	}
+	
+	public void autInitWebApplicationHMC() {
+		
+		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState("hmc.settings");
+		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
+		
+		try {
+			//AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		
+		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
+
+	}
+	
+	public void autInitWebApplicationSafe() {
+		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState("safe.settings");
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
 		
@@ -337,14 +440,14 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 
 	}
 	
-	
 	public void autInitWebApplicationVA() {
 		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setUrl(autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN, "AUT_URL_VA").toString());
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
 		try {
-			AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
+			AUT_AGENT_SILK4J.<BrowserApplication>find("VA").maximize();
+			//AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
 		}
 		catch(java.lang.Exception e) {
 			System.out.println(e.getMessage());

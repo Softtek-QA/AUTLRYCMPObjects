@@ -134,6 +134,181 @@ public class AUTVACadastros extends AUTVALogin {
 	}
 
 	
+	/**
+	 * 
+	 * Inclusão os parametros de cadastro para pessoa física a partir do pedido 
+	 * 
+	 */
+	public void autCadastrarPF(java.util.HashMap parametros) {
+		String clienteNome = parametros.get("AUT_NOME").toString();
+		String clienteEmail = parametros.get("AUT_EMAIL").toString();
+		String ClienteInscricao = parametros.get("AUT_INCRICAO_ESTADUAL_PF").toString(); 
+
+		DomTextField nome = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Nome");
+		DomTextField email = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Email");
+		DomTextField numeroInscEstatual = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.InscricaoEstadual");
+
+		nome.click();
+		nome.domClick();
+		nome.setText(clienteNome);
+
+		email.click();
+		email.domClick();
+		email.setText(clienteEmail);
+
+		numeroInscEstatual.click();
+		numeroInscEstatual.domClick();
+		numeroInscEstatual.setText(ClienteInscricao);
+
+		String tipoTelefone = parametros.get("AUT_TIPO_TELEFONE").toString(); 
+		String numeroTelefone = parametros.get("AUT_NUMERO_TELEFONE").toString(); 
+
+		DomListBox listaTipoElement = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoTelefone");
+		listaTipoElement.click();
+		listaTipoElement.select(tipoTelefone);
+
+		DomTextField txtNumeroContato = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroTelefone");
+		txtNumeroContato.click();
+		txtNumeroContato.domClick();
+		txtNumeroContato.setText(numeroTelefone);
+		
+		txtNumeroContato.click();
+		txtNumeroContato.setFocus();
+		txtNumeroContato.domClick();
+
+		
+		
+		DomButton btPesquisarCEP = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.NaoSeiCEPPesquisa");
+		btPesquisarCEP.click();
+
+		String UFEnderecoPesquisa = parametros.get("AUT_UF_PESQUISA").toString();  
+		String cidade = parametros.get("AUT_CIDADE_PESQUISA").toString();   
+		String endereco = parametros.get("AUT_ENDERECO_PESQUISA").toString(); 
+		String bairro = parametros.get("AUT_BAIRRO_PESQUISA").toString();  
+		
+		DomListBox listUF = AUT_AGENT_SILK4J.<DomListBox>find("VA.PesquisaCEP.UF");
+
+		listUF.click();
+		listUF.domClick();
+		listUF.select(UFEnderecoPesquisa);
+
+		DomTextField txtCidadePesquisa = AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaCEP.Cidade");
+		DomTextField txtEnderecoPesquisa = AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaCEP.Endereco");
+		DomTextField txtBairroPesquisa = AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaCEP.Bairro");
+
+		txtCidadePesquisa.click();
+		txtCidadePesquisa.setText(cidade);
+
+		txtEnderecoPesquisa.click();
+		txtEnderecoPesquisa.setText(endereco);
+
+		txtBairroPesquisa.click();
+		txtBairroPesquisa.setText(bairro);
+
+		DomButton btBuscarEndereco = AUT_AGENT_SILK4J.<DomButton>find("VA.PesquisaCEP.Buscar");
+
+		btBuscarEndereco.click();
+		
+		if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.PesquisaCEP").exists("MsgStatusCEP",10000)) {
+			AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Fechar").click();
+		}
+		else {
+			DomElement itemSelectResultPesquisa = AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.ItemResultadoPesqSelecionado");
+
+			itemSelectResultPesquisa.click();		
+
+		}
+		
+
+		String tipoEndereco = parametros.get("AUT_TIPO_ENDERECO").toString();  
+		String cep = parametros.get("AUT_CEP").toString(); 
+		String nomeRuaEndereco = parametros.get("AUT_RUA_ENDERECO").toString();  
+		String numeroEndereco = parametros.get("AUT_NUMERO_ENDERECO").toString(); 
+		String bairroResidencia = parametros.get("AUT_BAIRRO_ENDERECO").toString();
+		String complementoResidencia = parametros.get("AUT_COMPLEMENTO_ENDERECO").toString(); 
+		String cidadeResidencia = parametros.get("AUT_CIDADE_ENDERECO").toString(); 
+		String estadoResidencia = parametros.get("AUT_ESTADO_ENDERECO").toString(); 
+		String referenciaResidencia = parametros.get("AUT_REFERENCIA_ENDERECO").toString(); 
+		String tipoImovelResidencia = parametros.get("AUT_TIPO_IMOVEL_RESIDENCIA").toString(); 
+
+		DomListBox listTipoEnd = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoEndereco");
+		DomTextField txtCEPEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.CEP");
+		DomTextField txtNumeroCasaEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroCasa");
+		DomTextField txtBairroEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Bairro");
+		DomTextField txtComplementoResidEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Complemento");
+		DomTextField txtCidadeEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Cidade");
+		DomListBox txtEstadoEnd = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.Estado");
+		DomTextField txtReferenciaEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Referencia");
+		DomListBox txtTipoImovelResidEnd = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoImovelResidencial");
+
+		listTipoEnd.click();
+		listTipoEnd.select(tipoEndereco);
+
+		txtCEPEnd.click();
+		txtCEPEnd.setText(cep);
+
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NomeRua").setText(endereco);
+		
+		txtNumeroCasaEnd.click();
+		txtNumeroCasaEnd.setText(numeroEndereco);
+
+		txtBairroEnd.click();
+		txtBairroEnd.setText(bairroResidencia);
+
+		txtComplementoResidEnd.click();
+		txtComplementoResidEnd.setText(complementoResidencia);
+
+		txtCidadeEnd.click();
+		txtCidadeEnd.setText(cidadeResidencia);
+
+		txtEstadoEnd.click();
+		txtEstadoEnd.select(estadoResidencia);
+
+		txtReferenciaEnd.click();
+		txtReferenciaEnd.setText(referenciaResidencia);
+
+		txtTipoImovelResidEnd.click();
+		txtTipoImovelResidEnd.select(tipoImovelResidencia);
+
+		
+		DomRadioButton btCheckAceitaNovidProp = AUT_AGENT_SILK4J.<DomRadioButton>find("VA.CadastroClientesDados.AceitarOfertaTelefoneSim");
+		btCheckAceitaNovidProp.select();
+		btCheckAceitaNovidProp.click();
+		btCheckAceitaNovidProp.select();
+
+		DomButton btCadastroPFAvanc = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.AvancarPaginaCadastro");
+
+		AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesEstrangeiro.BotaoPropagSMS").click();
+
+		btCheckAceitaNovidProp.select();
+		btCheckAceitaNovidProp.click();
+		btCheckAceitaNovidProp.select();
+		try {
+			btCadastroPFAvanc.click();
+			
+			btCheckAceitaNovidProp = AUT_AGENT_SILK4J.<DomRadioButton>find("VA.CadastroClientesDados.AceitarOfertaTelefoneSim");
+
+			btCheckAceitaNovidProp.select();
+			btCheckAceitaNovidProp.click();
+			btCheckAceitaNovidProp.select();
+
+			DomElement btCheckMalaDirectAceit = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.AceitaMalaDiretSim");
+
+			btCheckMalaDirectAceit.click();
+
+			AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.AceitarPropagandasSim").click();
+		}
+		catch(java.lang.Exception e ) {
+
+		}
+		
+		DomButton btCadastroPFAvanc2 = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.AvancarPaginaCadastro2");
+
+		btCadastroPFAvanc2.click();
+
+	}
+
+	
 	public void autCadastroClienteInvalido(String usuario,String senha,AUT_VA_TIPO_CLIENTE_INVALIDO tipoClienteInvalido) {
 		autInitWebApplicationVA();
 		autLoginVA(usuario, senha);
@@ -1091,9 +1266,7 @@ public class AUTVACadastros extends AUTVALogin {
 		
 	@Test
 	public void autInitClientMenuCadastroPF() {
-		autInsertScreenByScenario();
 		autInitWebApplicationVA();
-		autInsertScreenByScenario();
 		autStartLoginDefaultVA();
 		autInsertScreenByScenario();
 		//TIPO PESSOA
