@@ -4,6 +4,7 @@
 package br.lry.components.va.cat001;
 
 import br.lry.components.AUTBaseComponent;
+import br.lry.components.AUTVABaseComponent;
 import br.lry.functions.AUTVAProjectFunctions;
 
 
@@ -13,8 +14,65 @@ import br.lry.functions.AUTVAProjectFunctions;
  * @author Sottek-QA
  *
  */
-public class AUTVALogin extends AUTBaseComponent {
+public class AUTVALogin extends AUTVABaseComponent {
 
+	
+	public void autStartLoginBoitata(java.util.HashMap<String, Object> parametros) {
+		try {			
+			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: INIT");
+			autInitWebApplicationBoitata();
+			autLogin(parametros);
+			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: END");
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
+		}
+	}
+	
+	
+	public void autStartLoginDefault(String usuario, String senha) {
+		try {
+		
+			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
+			autInitWebApplication();
+			autLogin(usuario, senha);
+			
+			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: END");
+			//TESTE CONFIGURAÃ‡ÃƒO CUSTOMIZADA TESTE 111111111111111
+		}
+		catch(java.lang.Exception e) {
+			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	public void autLoginVATelevendas() {
+		
+		AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER_TELEVENDAS").toString();
+		AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
+		
+		AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
+	}
+	
+	public void autLoginVATelevendasDefault() {
+		try {
+			
+			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
+			autInitWebApplication();
+			autLoginVATelevendas();
+			
+			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: END");
+			//TESTE CONFIGURAÇÃO CUSTOMIZADA TESTE 111111111111111
+		}
+		catch(java.lang.Exception e) {
+			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * Inicialização Login VA, parametros pré-definidos
@@ -72,6 +130,7 @@ public class AUTVALogin extends AUTBaseComponent {
 		}
 	}	
 
+	
 	
 	/**
 	 * Relaizar Login VA, com parametros configuráveis

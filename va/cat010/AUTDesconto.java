@@ -53,13 +53,13 @@ public class AUTDesconto extends AUTBaseComponent {
 	 */
 	public boolean autDesconto(java.util.HashMap parametros) {			
 		try {
-			AUT_AGENT_SILK4J.<DomElement>find("VA02.Desconto.Valor").setFocus();
-			AUT_AGENT_SILK4J.<DomElement>find("VA02.Desconto.Valor").click();
-			AUT_AGENT_SILK4J.<DomListBox>find("VA02.Desconto.Motivo").setFocus();
-			AUT_AGENT_SILK4J.<DomListBox>find("VA02.Desconto.Motivo").click();
-			AUT_AGENT_SILK4J.<DomListBox>find("VA02.Desconto.Motivo").select(parametros.get("AUT_MOTIVO").toString());
-			AUT_AGENT_SILK4J.<DomTextField>find("VA02.Desconto.Porcentagem").click();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA02.Desconto.Porcentagem").setText(parametros.get("AUT_DESCONTO").toString());
+			AUT_AGENT_SILK4J.<DomElement>find("VA.Desconto.Valor").setFocus();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.Desconto.Valor").click();
+			AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo").setFocus();
+			AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo").click();
+			AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo").select(parametros.get("AUT_MOTIVO").toString());
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.Desconto.Porcentagem").click();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.Desconto.Porcentagem").setText(parametros.get("AUT_DESCONTO").toString());
 		
 			
 			
@@ -77,7 +77,7 @@ public class AUTDesconto extends AUTBaseComponent {
 	
 	public boolean autPopUpConfirmacao() {			
 		try {
-			AUT_AGENT_SILK4J.<DomListBox>find("VA02.Desconto.PopUpSim").click();
+			AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.PopUpSim").click();
 		
 			return true;
 	}

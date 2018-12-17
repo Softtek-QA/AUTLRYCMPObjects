@@ -18,14 +18,14 @@ public class AUTLogOffVA extends AUTVABaseComponent {
 	public boolean autRealizarLogOff() {
 		try {
 			
-			AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
-			AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.FinalizarAplicacao.Sair").click();
+			AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Fechar").click();
 			
 			
-			boolean status = AUT_AGENT_SILK4J.<BrowserApplication>find("VA02").exists("Fechar", 1000*5);
+			boolean status = AUT_AGENT_SILK4J.<BrowserApplication>find("VA").exists("Fechar", 1000*5);
 			if(status) {
 				
-				AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
+				AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Fechar").click();
 				
 			}
 			

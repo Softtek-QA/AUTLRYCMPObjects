@@ -339,11 +339,7 @@ public class AUTSafeBaseComponent extends AUTBaseComponent {
 	 * 
 	 */
 	public void autLoginWithInit(String usuario, String senha) {
-		
-		if(AUT_ENABLE_LOGIN_INIT) {
-			autInitWebApplication();
-		}
-		
+				
 		AUT_AGENT_SILK4J.<BrowserApplication>find("SAFE").maximize();
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.Login.Usuario").setText(usuario);
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.Login.Senha").setText(senha);

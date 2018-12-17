@@ -15,14 +15,14 @@ public class AUTAprovacao extends AUTVABaseComponent{
 	public boolean monitorAprovacaoComercial() {
 
 		try {
-			AUT_AGENT_SILK4J.<DomLink>find("VA02.LiberacaoPendentes.MenuLiberacaoPendentes").click();
-			AUT_AGENT_SILK4J.<DomLink>find("VA02.LiberacaoPendentes.OpcaoDesconto").click();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA02.LiberacaoPendentes.CampoPesquisaDesconto").setText("");
-			AUT_AGENT_SILK4J.<DomTextField>find("VA02.LiberacaoPendentes.CampoPesquisaDesconto").setText("/n");
+			AUT_AGENT_SILK4J.<DomLink>find("VA.LiberacaoPendentes.MenuLiberacaoPendentes").click();
+			AUT_AGENT_SILK4J.<DomLink>find("VA.LiberacaoPendentes.OpcaoDesconto").click();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.CampoPesquisaDesconto").setText("");
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.CampoPesquisaDesconto").setText("/n");
 			//pesquisar pra ver se esse botão AprovacaoAntiFraude também é valido 
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.AprovacaoAntifraude").click();
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.Sim").click();
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.Confirmar").click();
+			AUT_AGENT_SILK4J.<DomButton>find("VA.LiberacaoPendentes.AprovacaoAntifraude").click();
+			AUT_AGENT_SILK4J.<DomButton>find("VA.LiberacaoPendentes.Sim").click();
+			AUT_AGENT_SILK4J.<DomButton>find("VA.LiberacaoPendentes.Confirmar").click();
 
 			
 			

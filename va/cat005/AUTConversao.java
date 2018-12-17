@@ -12,7 +12,7 @@ public class AUTConversao extends AUTVABaseComponent{
 	 */
 	public boolean autVAConvercaoParaPedido() {
 		try {
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.Pedidos.ConverterPedido").click();	
+			AUT_AGENT_SILK4J.<DomButton>find("VA.Pedidos.ConverterPedido").click();	
 			return true;
 		}
 		catch(Exception e) {

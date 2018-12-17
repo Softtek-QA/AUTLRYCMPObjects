@@ -9,9 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
-import br.lry.components.va.AUTVALogin;
 import br.lry.components.va.cat001.AUTConfirmacaoLogin;
 import br.lry.components.va.cat001.AUTLoginBoitata;
+import br.lry.components.va.cat001.AUTVALogin;
 import br.lry.components.va.cat002.AUTRecuperacao;
 import br.lry.components.va.cat003.AUTItem;
 import br.lry.components.va.cat005.AUTConversao;
@@ -71,6 +71,38 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		// TODO Auto-generated constructor stub
 	}
 
+	public void autStartLoginDefaultVA() {
+		try {			
+			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: INIT");
+			autInsertScreenByScenario();
+			autInitWebApplicationVA();
+			autLoginVA();
+			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: END");
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
+		}
+	}	
+	
+	public void autStartLoginDefault() {
+		try {	
+			
+			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
+			//autInitWebApplication();			
+			autLogin();
+			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: END");
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
+		}
+	}	
+
+
+	
 	public boolean autLoginVA(Desktop agent, String user, String password) {
 		try {
 			
@@ -118,14 +150,13 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	}
 	
 	public void autLogin(String usuario, String senha) {
-		autInsertScreenByScenario();
 		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, usuario.toString(), senha.toString());
 		autInsertScreenByScenario();
 	}
 	
 	public void autLogoutApplication() {
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
-		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.FinalizarAplicacao.Sair").click();
+		AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Fechar").click();
 		
 	}
 
@@ -144,8 +175,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 
 	public void autVALogOff() {
-		AUT_AGENT_SILK4J.<DomElement>find("VA02.FinalizarAplicacao.Sair").click();
-		AUT_AGENT_SILK4J.<AccessibleControl>find("VA02.Fechar").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.FinalizarAplicacao.Sair").click();
+		AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Fechar").click();
 	}
 
 	
@@ -164,7 +195,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 
 	public void autInitConfigurationTelevendas() {
-		
+		autInsertScreenByScenario();
 		autVALogin = new AUTVALogin();
 		autBuscaCliente = new AUTBuscarCliente();
 		autLoginBoitata = new AUTLoginBoitata();
@@ -182,7 +213,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autCadastroCliente = new AUTCadastroCliente();
 		autMenuLiberacao = new AUTMenuLiberacaoPendente();
 		autDesconto = new AUTDesconto();
-
+		autInsertScreenByScenario();
 	}
 	
 	/**
@@ -195,7 +226,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public void CMP00002(java.util.HashMap<String, Object> parametros) {
 		
 		autInitConfigurationTelevendas();	
+		autInsertScreenByScenario();
 		autLoginBoitata.autStartLoginBoitata(parametros);
+		autInsertScreenByScenario();
 	}
 	
 	
@@ -207,7 +240,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00007(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
 		autRecuperacao.autRecuperarCarrinho();
+		autInsertScreenByScenario();
 
 	}
 	
@@ -221,7 +256,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00005(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
 		autRecuperacao.autRecuperarPedido(parametros);
+		autInsertScreenByScenario();
 	}
 	
 	
@@ -233,7 +270,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00009(HashMap<String, Object> parametros) {
+		//autInsertScreenByScenario();
 		autItem.autBoitataIncluirItemCarrinho(parametros);
+		autInsertScreenByScenario();
 	}
 	
 	
@@ -245,7 +284,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00011(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
 		autItem.autVAIncluirItemNoCarrinho(parametros);
+		autInsertScreenByScenario();
 	}
 	
 	/**
@@ -256,7 +297,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00008(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
 		autRecuperacao.autCriarCarrinho();
+		autInsertScreenByScenario();
 	}
 	
 	
@@ -269,7 +312,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00012(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
 		autConversao.autVAConvercaoParaPedido();
+		autInsertScreenByScenario();
 	}
 	
 	
@@ -281,8 +326,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00014(HashMap<String, Object> parametros) {
-
+		autInsertScreenByScenario();
 		autBuscaCliente.autBuscarCliente(parametros);
+
+		autInsertScreenByScenario();
 	}
 	
 	
@@ -294,8 +341,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00015(HashMap<String, Object> parametros) {
-
+		autInsertScreenByScenario();
 		autCadastroCliente.autCadastrarCliente(parametros);
+		autInsertScreenByScenario();
 	}
 	
 	
@@ -307,7 +355,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00016(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
 		autFluxoSaida.autSelecaoFluxoSaida(parametros);
+		autInsertScreenByScenario();
 	}
 	
 
@@ -322,7 +372,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */	
 	public void CMP00039(HashMap<String, Object> parametros) {
 		
-
+		autInsertScreenByScenario();
 
 	}
 		
@@ -336,6 +386,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public <TOutput extends AUTMeiosPagamento> TOutput CMP00020(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
 		return (TOutput) autMeiosPagamento;
 	}
 		
@@ -346,7 +397,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00022() {
+		autInsertScreenByScenario();
 		autLogOffVA.autRealizarLogOff();
+		autInsertScreenByScenario();
 	}
 	
 	
@@ -356,7 +409,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00023() {
+		autInsertScreenByScenario();
 		autLogOffBoitata.autRealizarLogOff();
+		autInsertScreenByScenario();
 	}
 	
 	
@@ -368,7 +423,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00027(HashMap<String, Object> parametros) {
-		
+		autInsertScreenByScenario();
 
 
 	}
@@ -382,7 +437,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public <TOutput extends AUTFinalizarPedidoVA> TOutput CMP00034(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
 		autLogFinalizarPedidoVA.autFinalizarPedidoVA(parametros);
+		autInsertScreenByScenario();
 		return (TOutput) autLogFinalizarPedidoVA;
 	}
 	
@@ -396,7 +453,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00036(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
 		autSelecaoLojaVA.autSelecaoDeLoja(parametros);
+		autInsertScreenByScenario();
 	}
 	
 	
@@ -420,7 +479,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00004(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
 		autVAConfirmacaoLogin.autConfirmacaoLogin(parametros);
+		autInsertScreenByScenario();
 	}
 	
 	
@@ -432,6 +493,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00030(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
 	}
 	
 	/**
@@ -442,7 +504,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */
 	public void CMP00043(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
 		autMenuLiberacao.autMonitorAntiFraudeReprovacao(parametros);
+		autInsertScreenByScenario();
 	}
 	
 	/**
@@ -453,7 +517,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */
 	public void CMP00040(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
 		autMenuLiberacao.monitorAprovacaoComercialAprovar(parametros);
+		autInsertScreenByScenario();
 	}
 	
 	
@@ -465,7 +531,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */
 	public void CMP00013(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
 		autDesconto.autDesconto(parametros);
+		autInsertScreenByScenario();
 	}
 	
 	

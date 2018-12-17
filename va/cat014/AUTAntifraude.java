@@ -35,10 +35,10 @@ public class AUTAntifraude extends AUTVABaseComponent {
 	 */
 	public boolean autMonitorAntiFraudeAprovacao() {
 		try { 
-		AUT_AGENT_SILK4J.<DomLink>find("VA02.LiberacaoPendentes.MenuAprovacaoAntifraude").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.AprovacaoAntifraude").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.Sim").click();
-		AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.Confirmar").click();
+		AUT_AGENT_SILK4J.<DomLink>find("VA.LiberacaoPendentes.MenuAprovacaoAntifraude").click();
+		AUT_AGENT_SILK4J.<DomButton>find("VA.LiberacaoPendentes.AprovacaoAntifraude").click();
+		AUT_AGENT_SILK4J.<DomButton>find("VA.LiberacaoPendentes.Sim").click();
+		AUT_AGENT_SILK4J.<DomButton>find("VA.LiberacaoPendentes.Confirmar").click();
 		
 		return true;
 		}catch (Exception e) {
@@ -56,13 +56,13 @@ public class AUTAntifraude extends AUTVABaseComponent {
 	public boolean autMonitorAntiFraudeReprovacao() {
 
 		try {
-			AUT_AGENT_SILK4J.<DomLink>find("VA02.LiberacaoPendentes.MenuLiberacaoPendentes").click();
-			AUT_AGENT_SILK4J.<DomLink>find("VA02.LiberacaoPendentes.OpcaoAntiFraude").click();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA02.LiberacaoPendentes.CampoPesquisaAnti").setText("");
-			AUT_AGENT_SILK4J.<DomTextField>find("VA02.LiberacaoPendentes.CampoPesquisaAnti").setText("/n");
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.AprovacaoAntifraude").click();
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.Sim").click();
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.LiberacaoPendentes.Confirmar").click();
+			AUT_AGENT_SILK4J.<DomLink>find("VA.LiberacaoPendentes.MenuLiberacaoPendentes").click();
+			AUT_AGENT_SILK4J.<DomLink>find("VA.LiberacaoPendentes.OpcaoAntiFraude").click();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.CampoPesquisaAnti").setText("");
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.CampoPesquisaAnti").setText("/n");
+			AUT_AGENT_SILK4J.<DomButton>find("VA.LiberacaoPendentes.AprovacaoAntifraude").click();
+			AUT_AGENT_SILK4J.<DomButton>find("VA.LiberacaoPendentes.Sim").click();
+			AUT_AGENT_SILK4J.<DomButton>find("VA.LiberacaoPendentes.Confirmar").click();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

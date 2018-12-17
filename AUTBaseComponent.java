@@ -130,7 +130,6 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		}
 	}
 	
-	
 	public void autSetMicrosoftEdgeBrowser() {
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.Edge);		
 	}	
@@ -139,6 +138,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.InternetExplorer);
 	}
 
+	
 	public void autSetFirefoxBrowser() {
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.Firefox);
 	}
@@ -275,7 +275,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		System.out.println(result);
 		System.out.println(result * 2);
 		
-		return result*100;
+		return result * 10000;
 	}
 
 	/**
@@ -392,23 +392,25 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	public void autInitWebApplication() {
 		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState("va.settings");
-		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
-		
-		try {
-			//AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
-		}
-		catch(java.lang.Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
-		
+		AUT_BASE_STATE_CONFIGURATION_BROWSER.setCommandLineArguments("--incognito");
+		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);		
 		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
 
 	}
-	
+
+	public void autInitWebApplicationBoitata() {
+		
+		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState("boitata.settings");
+		AUT_BASE_STATE_CONFIGURATION_BROWSER.setCommandLineArguments("--incognito");
+		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);		
+		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
+
+	}
 	public void autInitWebApplicationHMC() {
 		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState("hmc.settings");
+		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.GoogleChrome);
+		AUT_BASE_STATE_CONFIGURATION_BROWSER.setCommandLineArguments("--incognito");
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
 		
 		try {
@@ -426,6 +428,8 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	public void autInitWebApplicationSafe() {
 		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState("safe.settings");
+		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.GoogleChrome);
+		AUT_BASE_STATE_CONFIGURATION_BROWSER.setCommandLineArguments("--incognito");
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
 		
 		try {
@@ -443,6 +447,9 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	public void autInitWebApplicationVA() {
 		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();		
+		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.GoogleChrome);
+		AUT_BASE_STATE_CONFIGURATION_BROWSER.setCommandLineArguments("--incognito");
+		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setUrl(autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN, "AUT_URL_VA").toString());
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
 		try {
@@ -484,7 +491,10 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	 * 
 	 */
 	public void autCloseApplication() {
-		System.out.println("AUT INFO: FINALIZANDO APLICAÇÃO");			
+		
+		System.out.println("AUT INFO: FINALIZANDO APLICAÇÃO");	
+		AUT_AGENT_SILK4J.<BrowserApplication>find("VA").close();
+		
 	}
 
 	public AUTBaseComponent() {

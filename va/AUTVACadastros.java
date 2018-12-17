@@ -26,6 +26,7 @@ import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_RESIDENCIA;
 import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_FLUXO_SAIDA;
 import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_MEIOS_PAGAMENTO;
 import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_PLANO_PAGAMENTO;
+import br.lry.components.va.cat001.AUTVALogin;
 import br.lry.dataflow.AUTDataFlow.*;
 
 import com.borland.silktest.jtf.Desktop;
@@ -1022,7 +1023,7 @@ public class AUTVACadastros extends AUTVALogin {
 		
 		numeroInscEstatual.click();
 		numeroInscEstatual.domClick();
-		numeroInscEstatual.setText(ClienteInscricao);
+		//numeroInscEstatual.setText(ClienteInscricao);
 		autInsertScreenByScenario();
 		
 		String tipoTelefone = autGetCurrentParameter( "AUT_TIPO_TELEFONE")
@@ -1234,7 +1235,7 @@ public class AUTVACadastros extends AUTVALogin {
 			break;
 		}
 		case JURIDICA:{
-			DomTextField txtNumDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA02.PesquisaClienteCadastrado.NumeroDocumento");
+			DomTextField txtNumDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaClienteCadastrado.NumeroDocumento");
 			
 			numCNPJ = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_CNPJ").toString();
 			AUT_NUMERO_DOC_CNPJ_OUTPUT = numCNPJ;			
@@ -1313,7 +1314,12 @@ public class AUTVACadastros extends AUTVALogin {
 		
 		autInsertScreenByScenario();		
 		autCadastrarCliente(opCadastro);
-		
+		try {
+			autLogoutApplication();
+		}
+		catch(java.lang.Exception e) {
+			
+		}
 	}	
 	
 	

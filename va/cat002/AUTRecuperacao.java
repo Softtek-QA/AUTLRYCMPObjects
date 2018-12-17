@@ -24,7 +24,7 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 	 */
 	public boolean autRecuperarCarrinho() {
 		try {
-			AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.RecuperarCarrinho").click();
+			AUT_AGENT_SILK4J.<DomLink>find("VA.TelaInicialLoja.RecuperarCarrinho").click();
 			return true;
 		} catch (java.lang.Exception e) {
 			e.printStackTrace();
@@ -48,18 +48,18 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 		
 		try {
 			
-			AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.RecuperarPedido").click();
+			AUT_AGENT_SILK4J.<DomLink>find("VA.TelaInicialLoja.RecuperarPedido").click();
 			
 			consultaPedido.AUTVA03ConsultaPedido(parametros.get("AUT_NUMERO_PEDIDO").toString());
 			
 
-			AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaPedido.CopiarPedido").click();
+			AUT_AGENT_SILK4J.<DomLink>find("VA.TelaPedido.CopiarPedido").click();
 						
 			
-			boolean status = AUT_AGENT_SILK4J.<BrowserWindow>find("VA02.TelaPedido").exists("PrecosVigentes",10000);
+			boolean status = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TelaPedido").exists("PrecosVigentes",10000);
 			if(status) {
 				
-				AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaPedido.PrecosVigentes").click();
+				AUT_AGENT_SILK4J.<DomButton>find("VA.TelaPedido.PrecosVigentes").click();
 				
 			}
 			
@@ -80,7 +80,7 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 	 */
 	public boolean autRecuperarOrcamento() {
 		try {
-			AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.RecuperarOrcamento").click();
+			AUT_AGENT_SILK4J.<DomLink>find("VA.TelaInicialLoja.RecuperarOrcamento").click();
 			return true;
 		} catch (java.lang.Exception e) {
 			e.printStackTrace();
@@ -96,7 +96,7 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 	 */
 	public boolean autCriarCarrinho() {
 		try {
-			AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
+			AUT_AGENT_SILK4J.<DomLink>find("VA.TelaInicialLoja.CriarCarrinho").click();
 			return true;
 		} catch (java.lang.Exception e) {
 			e.printStackTrace();
@@ -146,16 +146,16 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 	public boolean autVAIniciarAtendimento(java.util.HashMap parametros) {
 		try {
 			if(parametros.get("OPCAO_INICIAR_ATENDIMENTO") == AUT_VA_INICIAR_ATENDIMENTO.CRIAR_CARRINHO) {
-				AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.CriarCarrinho").click();
+				AUT_AGENT_SILK4J.<DomLink>find("VA.TelaInicialLoja.CriarCarrinho").click();
 			}
 			else if(parametros.get("OPCAO_INICIAR_ATENDIMENTO") == AUT_VA_INICIAR_ATENDIMENTO.RECUPERAR_PEDIDO) {
-				AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.RecuperarPedido").click();
+				AUT_AGENT_SILK4J.<DomLink>find("VA.TelaInicialLoja.RecuperarPedido").click();
 			}
 			else if(parametros.get("OPCAO_INICIAR_ATENDIMENTO") == AUT_VA_INICIAR_ATENDIMENTO.RECUPERAR_ORCAMENTO) {
-				AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.RecuperarOrcamento").click();
+				AUT_AGENT_SILK4J.<DomLink>find("VA.TelaInicialLoja.RecuperarOrcamento").click();
 			}
 			else if (parametros.get("OPCAO_INICIAR_ATENDIMENTO") == AUT_VA_INICIAR_ATENDIMENTO.RECUPERAR_CARRINHO){
-				AUT_AGENT_SILK4J.<DomLink>find("VA02.TelaInicialLoja.RecuperarCarrinho").click();
+				AUT_AGENT_SILK4J.<DomLink>find("VA.TelaInicialLoja.RecuperarCarrinho").click();
 			}
 			return true;
 		}

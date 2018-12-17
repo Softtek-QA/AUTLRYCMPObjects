@@ -18,9 +18,9 @@ public class AUTItem extends AUTVABaseComponent{
 	 */
 	public boolean autVAIncluirItemNoCarrinho(java.util.HashMap<String, Object> parametros) {
 		try {
-			AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.QuantidadeItem").setText(parametros.get("AUT_QUANTIDADE_ITEM").toString());
-			AUT_AGENT_SILK4J.<DomTextField>find("VA02.TelaInicialLoja.CodigoItem").setText(parametros.get("AUT_CODIGO_ITEM").toString());
-			AUT_AGENT_SILK4J.<DomButton>find("VA02.TelaInicialLoja.PesquisarProduto").click();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaInicialLoja.QuantidadeItem").setText(parametros.get("AUT_QUANTIDADE_ITEM").toString());
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaInicialLoja.CodigoItem").setText(parametros.get("AUT_CODIGO_ITEM").toString());
+			AUT_AGENT_SILK4J.<DomButton>find("VA.TelaInicialLoja.PesquisarProduto").click();
 			return true;
 		}
 		catch(Exception e) {

@@ -219,20 +219,24 @@ public class AUTSelecaoLojaVA extends AUTVABaseComponent {
 	 * @param parametro - Parametros de usuário, senha e loja selecionadaS
 	 * @return - Verdadeiro para loja selecioanda
 	 */
-	public static boolean autSelecaoDeLoja(java.util.HashMap parametros) {
+	public boolean autSelecaoDeLoja(java.util.HashMap parametros) {
 		try {
+			autInsertScreenByScenario();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.BotaoLoja").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.Televendas.SelecionarLoja").click();
+			autInsertScreenByScenario();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.Televendas.CampoSelecaoLoja").click();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.Televendas.CampoSelecaoLoja").typeKeys(parametros.get("AUT_LOJA_SELECIONADA").toString());
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.Televendas.CampoSelecaoLoja").typeKeys("\n");
+			autInsertScreenByScenario();
 			AUT_AGENT_SILK4J.<DomButton>find("VA.Televendas.BotaoEscolher").click();
-			
+			autInsertScreenByScenario();
 			
 			boolean status = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.Televendas").exists("POPUPAprovacao", 1000*5);
 			if(status) {
 				
 				AUT_AGENT_SILK4J.<DomElement>find("VA.Televendas.POPUPAprovacao").click();
+				autInsertScreenByScenario();
 				
 			}
 			

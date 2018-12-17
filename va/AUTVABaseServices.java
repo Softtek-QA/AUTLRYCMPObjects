@@ -17,8 +17,8 @@ public class AUTVABaseServices extends AUTBaseComponent {
 	br.lry.components.va.AUTVACadastros cadastros = null;
 	br.lry.components.va.AUTVAGeradorPedido pedidos = null;
 	br.lry.components.va.AUTVA03ConsultaStatusPedido consultas = null;
-	
-	
+
+
 	/**
 	 * 
 	 * Retorna o componentes para gerenciamento de cadastros VA
@@ -28,8 +28,9 @@ public class AUTVABaseServices extends AUTBaseComponent {
 	 */
 	public <TVACadastros extends br.lry.components.va.AUTVACadastros> TVACadastros autVACadastros() {
 		if(cadastros==null) {
-			
+
 			cadastros = new br.lry.components.va.AUTVACadastros();						
+			cadastros.autGetDataFlow().autInitDataFlow();
 			cadastros.AUT_AGENT_SILK4J = new com.borland.silktest.jtf.Desktop();
 			cadastros.AUT_BASE_STATE_CONFIGURATION_BROWSER = new com.borland.silktest.jtf.BrowserBaseState("va.settings");
 			cadastros.AUT_AGENT_SILK4J.executeBaseState(cadastros.AUT_BASE_STATE_CONFIGURATION_BROWSER);
@@ -40,24 +41,58 @@ public class AUTVABaseServices extends AUTBaseComponent {
 			return (TVACadastros)cadastros;
 		}
 	}
-	
+
+
+	public <TVACadastros extends br.lry.components.va.AUTVACadastros> TVACadastros autVACadastros(boolean startApplication) {
+		if(cadastros==null) {
+
+			cadastros = new br.lry.components.va.AUTVACadastros();						
+			cadastros.autGetDataFlow().autInitDataFlow();
+			if(startApplication) {
+				cadastros.AUT_AGENT_SILK4J = new com.borland.silktest.jtf.Desktop();
+				cadastros.AUT_BASE_STATE_CONFIGURATION_BROWSER = new com.borland.silktest.jtf.BrowserBaseState("va.settings");
+				cadastros.AUT_AGENT_SILK4J.executeBaseState(cadastros.AUT_BASE_STATE_CONFIGURATION_BROWSER);
+				cadastros.autInitWebApplicationVA();
+			}
+			return (TVACadastros)cadastros;
+		}
+		else {			
+			return (TVACadastros)cadastros;
+		}
+	}
+
 	public <TVAPedidos extends br.lry.components.va.AUTVAGeradorPedido> TVAPedidos autVAPedidos() {
 		if(pedidos==null) {
-			
+
 			pedidos = new br.lry.components.va.AUTVAGeradorPedido();						
 			pedidos.AUT_AGENT_SILK4J = new com.borland.silktest.jtf.Desktop();
 			pedidos.AUT_BASE_STATE_CONFIGURATION_BROWSER = new com.borland.silktest.jtf.BrowserBaseState("va.settings");
 			pedidos.AUT_AGENT_SILK4J.executeBaseState(pedidos.AUT_BASE_STATE_CONFIGURATION_BROWSER);
 			pedidos.autInitWebApplication();
-			
+
 			return (TVAPedidos)pedidos;
 		}
 		else {			
 			return (TVAPedidos)pedidos;
 		}
 	}
-	
-	
+
+	public <TVAPedidos extends br.lry.components.va.AUTVAGeradorPedido> TVAPedidos autVAPedidos(boolean startApplication) {
+		if(pedidos==null) {
+			pedidos = new br.lry.components.va.AUTVAGeradorPedido();
+			if(startApplication) {
+				pedidos.AUT_AGENT_SILK4J = new com.borland.silktest.jtf.Desktop();
+				pedidos.AUT_BASE_STATE_CONFIGURATION_BROWSER = new com.borland.silktest.jtf.BrowserBaseState("va.settings");
+				pedidos.AUT_AGENT_SILK4J.executeBaseState(pedidos.AUT_BASE_STATE_CONFIGURATION_BROWSER);
+				pedidos.autInitWebApplication();
+			}
+			return (TVAPedidos)pedidos;
+		}
+		else {			
+			return (TVAPedidos)pedidos;
+		}
+	}
+
 	/**
 	 * 
 	 * Retorna o componente para consulta de pedidos
@@ -67,23 +102,49 @@ public class AUTVABaseServices extends AUTBaseComponent {
 	 */
 	public <TVAConsultas extends br.lry.components.va.AUTVA03ConsultaStatusPedido> TVAConsultas autVAConsultas() {
 		if(consultas==null) {
-			
+
 			consultas = new br.lry.components.va.AUTVA03ConsultaStatusPedido();						
 			consultas.AUT_AGENT_SILK4J = new com.borland.silktest.jtf.Desktop();
 			consultas.AUT_BASE_STATE_CONFIGURATION_BROWSER = new com.borland.silktest.jtf.BrowserBaseState("va.settings");
 			consultas.AUT_AGENT_SILK4J.executeBaseState(consultas.AUT_BASE_STATE_CONFIGURATION_BROWSER);
 			consultas.autInitWebApplication();
 			return (TVAConsultas)consultas;
-			
+
 		}
 		else {
-			
+
 			return (TVAConsultas)consultas;
-			
+
 		}
 	}
+
 	
+	public <TVAConsultas extends br.lry.components.va.AUTVA03ConsultaStatusPedido> TVAConsultas autVAConsultas(boolean startApplication) {
+		if(consultas==null) {
+			consultas = new br.lry.components.va.AUTVA03ConsultaStatusPedido();						
+
+			if(startApplication) {
+				consultas = new br.lry.components.va.AUTVA03ConsultaStatusPedido();						
+				consultas.AUT_AGENT_SILK4J = new com.borland.silktest.jtf.Desktop();
+				consultas.AUT_BASE_STATE_CONFIGURATION_BROWSER = new com.borland.silktest.jtf.BrowserBaseState("va.settings");
+				consultas.AUT_AGENT_SILK4J.executeBaseState(consultas.AUT_BASE_STATE_CONFIGURATION_BROWSER);
+				consultas.autInitWebApplication();
+			}
+			return (TVAConsultas)consultas;
+		}
+		else {
+			return (TVAConsultas)consultas;
+		}
+	}
+
 	
+	public <TVAConsultas extends br.lry.components.va.AUTVA03ConsultaStatusPedido> TVAConsultas autVAConsultaStatusPedido(String numeroPedido, String statusPedido,String usuario,String senha) {
+		AUTVA03ConsultaStatusPedido va = autVAConsultas();
+	
+		va.autConsultaPedido(numeroPedido, statusPedido, usuario, senha);
+		
+		return (TVAConsultas) va;
+	}
 	/**
 	 * 
 	 * 
