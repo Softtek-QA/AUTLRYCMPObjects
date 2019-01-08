@@ -389,11 +389,11 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	 * Inicializa aplicação da aplicaçao VA
 	 * 
 	 */
-	public void autInitWebApplication() {
-		
+	public void autInitWebApplication() {		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState("va.settings");
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setCommandLineArguments("--incognito");
-		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);		
+		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
+		AUT_AGENT_SILK4J.<BrowserApplication>find("VA").maximize();
 		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
 
 	}
@@ -406,8 +406,8 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
 
 	}
-	public void autInitWebApplicationHMC() {
-		
+	
+	public void autInitWebApplicationHMC() {		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState("hmc.settings");
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.GoogleChrome);
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setCommandLineArguments("--incognito");

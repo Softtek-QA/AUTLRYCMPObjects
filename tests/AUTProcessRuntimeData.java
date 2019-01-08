@@ -3,8 +3,11 @@ package br.lry.components.tests;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
-public class AUTChilldClass extends AUTParent {
-	
+import br.lry.functions.AUTProjectsFunctions;
+import br.lry.functions.AUTProjectsFunctions.AUT_TYPE_STATE_INSCRIPTION;
+import br.lry.functions.AUTProjectsFunctions.AUT_TYPE_DOCUMENT_GENERATOR;
+
+public class AUTProcessRuntimeData extends AUTParent {
 	
 	public static enum AUT_TYPE_OF_SUITE_OBJECTS{
 		AUT_STRING,
@@ -128,12 +131,17 @@ public class AUTChilldClass extends AUTParent {
 	
 	
 	public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException {
-		AUTChilldClass chl = new AUTChilldClass();
+		
+		/*		 
+		AUTProcessRuntimeData chl = new AUTProcessRuntimeData();
 		System.out.println("AUT INFO : CHILD CLASS");
 		chl.autGetRuntimeDataObject(chl,AUT_TYPE_OF_SUITE_OBJECTS.AUT_OBJECT);		
+		*/
+		System.out.println(AUTProjectsFunctions.autGetNewDocument(AUT_TYPE_DOCUMENT_GENERATOR.INSCRIPTION, AUT_TYPE_STATE_INSCRIPTION.PR_PARANA));
+	
 	}
 	
-	public AUTChilldClass() {
+	public AUTProcessRuntimeData() {
 		// TODO Auto-generated constructor stub
 	}
 

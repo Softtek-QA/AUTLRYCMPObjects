@@ -19,7 +19,7 @@ public class AUTLoginBoitata extends AUTBaseComponent{
 	public void autStartLoginBoitata(java.util.HashMap<String, Object> parametros) {
 		try {			
 			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: INIT");
-			autInitWebApplication();
+			autInitWebApplicationBoitata();
 			autLogin(parametros);
 			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: END");
 		}

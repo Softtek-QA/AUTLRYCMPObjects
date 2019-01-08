@@ -34,6 +34,7 @@ public class AUTBuscarCliente extends AUTVABaseComponent{
 		
 			AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaClienteCadastrado.BotaoPesquisarCliente").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaClienteCadastrado.ClientePesquisado").click();
+
 			return true;
 		}
 		catch(java.lang.Exception e) {
@@ -42,6 +43,30 @@ public class AUTBuscarCliente extends AUTVABaseComponent{
 			return false;
 		}
 	}
+	
+	
+	
+	public void autBuscarClienteCPF(java.util.HashMap parametros) {
+		
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaClienteCadastrado.IconeModoDePesquisa").click();
+		
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaClienteCadastrado.ItemCPF_CNPJ").click();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaClienteCadastrado.CampoPesquisaCliente").setFocus();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaClienteCadastrado.CampoPesquisaCliente").setText(parametros.get("AUT_NUMERO_DOCUMENTO").toString());
+			//
+			
+		//	AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesInicial.NumeroDocumento").setFocus();
+		//	AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesInicial.NumeroDocumento").setText(parametros.get("AUT_NUMERO_DOCUMENTO").toString());
+		//	AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaClienteCadastrado.CampoPesquisa").setFocus();
+		//	AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaClienteCadastrado.CampoPesquisa").click();
+		//	AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesInicial.NumeroDocumento").setText("/n");
+			
+			AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaClienteCadastrado.BotaoPesquisarCliente").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaClienteCadastrado.ClientePesquisado").click();
+		
+
+	}
+
 	
 	
 	

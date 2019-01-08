@@ -3,12 +3,12 @@
  */
 package br.lry.components;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Test;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
-
 import br.lry.components.va.cat001.AUTConfirmacaoLogin;
 import br.lry.components.va.cat001.AUTLoginBoitata;
 import br.lry.components.va.cat001.AUTVALogin;
@@ -29,11 +29,13 @@ import br.lry.components.va.cat018.AUTSelecaoLojaVA;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 import br.lry.functions.AUTVAProjectFunctions;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
-
 import com.borland.silktest.jtf.Desktop;
+import com.borland.silktest.jtf.Utils;
 import com.borland.silktest.jtf.win32.AccessibleControl;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
+import br.lry.qa.rsp.pjttrc.frt001.va.cat008.AUTServicoGarantia;
+
 
 /**
  * 
@@ -63,6 +65,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public static AUTCadastroCliente autCadastroCliente;
 	public static AUTMenuLiberacaoPendente autMenuLiberacao;
 	public static AUTDesconto autDesconto;
+	public static AUTServicoGarantia servicoGarantia;
 	protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
 	
 	
@@ -129,7 +132,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	}
 	/**
 	 * 
-	 * Realiza login na aplicação - VA
+	 * Realiza login na aplicaÃ§Ã£o - VA
 	 *
 	 */
 	
@@ -154,10 +157,23 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 	}
 	
+	
 	public void autLogoutApplication() {
-		AUT_AGENT_SILK4J.<DomElement>find("VA.FinalizarAplicacao.Sair").click();
-		AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Fechar").click();
-		
+		try {
+			AUT_AGENT_SILK4J.<DomElement>find("VA.FinalizarAplicacao.Sair").click();
+			AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Fechar").click();
+		}
+		catch(java.lang.Exception e) {
+			
+		}
+		/*try {
+			java.lang.Runtime.getRuntime().exec("cmd /c taskkill /f /t /im chrom*");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+		//Utils.asList(5*1000);
 	}
 
 	public void autLoginVA(String usuario,String senha) {
@@ -189,6 +205,13 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */
 	public void CMP00001(java.util.HashMap<String, Object> parametros) {
+		try {
+			autLogoutApplication();
+		}
+		catch(java.lang.Exception e) {
+			
+		}
+
 		autInitConfigurationTelevendas();	
 		autVALogin.autStartLoginVA(parametros);
 	}
@@ -213,6 +236,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autCadastroCliente = new AUTCadastroCliente();
 		autMenuLiberacao = new AUTMenuLiberacaoPendente();
 		autDesconto = new AUTDesconto();
+		servicoGarantia = new AUTServicoGarantia();
 		autInsertScreenByScenario();
 	}
 	
@@ -224,6 +248,12 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */
 	public void CMP00002(java.util.HashMap<String, Object> parametros) {
+		try {
+			autLogoutApplication();
+		}
+		catch(java.lang.Exception e) {
+			
+		}
 		
 		autInitConfigurationTelevendas();	
 		autInsertScreenByScenario();
@@ -241,12 +271,11 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */	
 	public void CMP00007(HashMap<String, Object> parametros) {
 		autInsertScreenByScenario();
-		autRecuperacao.autRecuperarCarrinho();
+		autRecuperacao.autRecuperarCarrinho(parametros);
 		autInsertScreenByScenario();
 
 	}
-	
-	
+		
 	
 	/**
 	 * 
@@ -257,7 +286,23 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */	
 	public void CMP00005(HashMap<String, Object> parametros) {
 		autInsertScreenByScenario();
+		System.out.println("Parametros no CMP"+parametros);
 		autRecuperacao.autRecuperarPedido(parametros);
+		autInsertScreenByScenario();
+	}
+	
+	
+	/**
+	 * 
+	 * CMP00001 - Recuperar OrÃ§amento
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00062(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
+		System.out.println("Parametros no CMP"+parametros);
+		autRecuperacao.autRecuperarOrcamento(parametros);
 		autInsertScreenByScenario();
 	}
 	
@@ -270,8 +315,15 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00009(HashMap<String, Object> parametros) {
-		//autInsertScreenByScenario();
+		autInsertScreenByScenario();
 		autItem.autBoitataIncluirItemCarrinho(parametros);
+		autInsertScreenByScenario();
+	}
+	
+	
+	public void CMP00009_1(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
+		autItem.autVAIncluirItemNoCarrinho(parametros);
 		autInsertScreenByScenario();
 	}
 	
@@ -318,6 +370,24 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	}
 	
 	
+	
+	/**
+	 * 
+	 * CMP00001 - Converter em Orcamento
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00061(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
+		autConversao.autVAConvercaoParaPedido();
+		autInsertScreenByScenario();
+	}
+	
+	
+	
+	
+	
 	/**
 	 * 
 	 * CMP00001 - Busca de Cliente
@@ -328,7 +398,6 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public void CMP00014(HashMap<String, Object> parametros) {
 		autInsertScreenByScenario();
 		autBuscaCliente.autBuscarCliente(parametros);
-
 		autInsertScreenByScenario();
 	}
 	
@@ -365,7 +434,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * CMP00002 - Cartão de Credito
+	 * CMP00002 - CartÃ£o de Credito
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
@@ -397,9 +466,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00022() {
-		autInsertScreenByScenario();
 		autLogOffVA.autRealizarLogOff();
-		autInsertScreenByScenario();
 	}
 	
 	
@@ -417,7 +484,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * CMP00003 - Busca de pedido para Aprovação Antifraude ou Desconto
+	 * CMP00003 - Busca de pedido para AprovaÃ§Ã£o Antifraude ou Desconto
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
@@ -431,7 +498,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * CMP00001 - Finalizar compra no sistema Boitatá
+	 * CMP00001 - Finalizar compra no sistema BoitatÃ¡
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
@@ -447,7 +514,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * CMP00001 - Seleção de loja Televendas VA
+	 * CMP00001 - SeleÃ§Ã£o de loja Televendas VA
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
@@ -461,7 +528,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * CMP00001 - Seleção de loja Televendas Boitata
+	 * CMP00001 - SeleÃ§Ã£o de loja Televendas Boitata
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
@@ -473,7 +540,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * CMP00004 - Confirmação de Login
+	 * CMP00004 - ConfirmaÃ§Ã£o de Login
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
@@ -482,6 +549,11 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 		autVAConfirmacaoLogin.autConfirmacaoLogin(parametros);
 		autInsertScreenByScenario();
+	}
+	
+	
+	public void CMP00014_CPF(HashMap<String, Object> parametros){
+		autBuscaCliente.autBuscarClienteCPF(parametros);
 	}
 	
 	
@@ -498,7 +570,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * CMP00001 - reprovação antifraude
+	 * CMP00001 - reprovaÃ§Ã£o antifraude
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
@@ -511,7 +583,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * CMP00002 - aprovação comercial
+	 * CMP00002 - aprovaÃ§Ã£o comercial
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
@@ -530,10 +602,22 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */
-	public void CMP00013(HashMap<String, Object> parametros) {
-		autInsertScreenByScenario();
-		autDesconto.autDesconto(parametros);
-		autInsertScreenByScenario();
+	
+	public <TOutput extends AUTDesconto> TOutput CMP00024(HashMap<String, Object> parametros) {		autInsertScreenByScenario();
+		return (TOutput) autDesconto;
+	}
+	
+	
+	public void CMP00017() {
+		servicoGarantia.autServicoGarantia();
+	}
+	
+	public void CMP00019(HashMap<String, Object> parametros) {
+		servicoGarantia.agendarServico(parametros);
+	}
+	
+	public void CMP00018(HashMap<String, Object> parametros) {
+		servicoGarantia.adicionarGarantia(parametros);
 	}
 	
 	
