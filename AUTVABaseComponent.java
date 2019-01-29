@@ -17,6 +17,7 @@ import br.lry.components.va.cat003.AUTItem;
 import br.lry.components.va.cat005.AUTConversao;
 import br.lry.components.va.cat006.AUTBuscarCliente;
 import br.lry.components.va.cat006.AUTCadastroCliente;
+import br.lry.components.va.cat006.AUTCadastroPJ;
 import br.lry.components.va.cat007.AUTFluxoSaida;
 import br.lry.components.va.cat009.AUTMeiosPagamento;
 import br.lry.components.va.cat010.AUTDesconto;
@@ -24,6 +25,7 @@ import br.lry.components.va.cat011.AUTLogOffBoitata;
 import br.lry.components.va.cat011.AUTLogOffVA;
 import br.lry.components.va.cat014.AUTMenuLiberacaoPendente;
 import br.lry.components.va.cat016.AUTFinalizarPedidoVA;
+import br.lry.components.va.cat017.AUTEcommerce;
 import br.lry.components.va.cat018.AUTSelecaoLojaBoitata;
 import br.lry.components.va.cat018.AUTSelecaoLojaVA;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
@@ -47,7 +49,8 @@ import br.lry.qa.rsp.pjttrc.frt001.va.cat008.AUTServicoGarantia;
 public class AUTVABaseComponent extends AUTBaseComponent {
 	public String AUT_USUARIO_LOGIN_DEFAULT = "";
 	public String AUT_SENHA_LOGIN_DEFAULT = "";
-	
+	public static AUTCadastroPJ cadastroPJ;
+
 	public static AUTVALogin autVALogin;
 	public static AUTBuscarCliente autBuscaCliente;
 	public static AUTLoginBoitata autLoginBoitata;
@@ -66,7 +69,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public static AUTMenuLiberacaoPendente autMenuLiberacao;
 	public static AUTDesconto autDesconto;
 	public static AUTServicoGarantia servicoGarantia;
-	protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
+	protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();		
+	public static AUTEcommerce autEcommerce;
 	
 	
 	public AUTVABaseComponent() {
@@ -306,6 +310,29 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 	}
 	
+	
+	/**
+	 * 
+	 * CMP00003 - Cadastro de PJ
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */
+	public void CMP00067(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
+		cadastroPJ.autCadastrarPJ(parametros);
+		autInsertScreenByScenario();
+	}
+
+	public void CMP00068(HashMap<String, Object> parametros) {
+		autEcommerce.autEcommercePedido(parametros);
+	}
+	
+	public void CMP00069(HashMap<String, Object> parametros) {
+		autEcommerce.autEcommerceClicaRetira(parametros);
+		
+	}
+
 	
 	/**
 	 * 

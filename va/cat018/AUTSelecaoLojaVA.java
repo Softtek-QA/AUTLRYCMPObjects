@@ -232,14 +232,16 @@ public class AUTSelecaoLojaVA extends AUTVABaseComponent {
 			AUT_AGENT_SILK4J.<DomButton>find("VA.Televendas.BotaoEscolher").click();
 			autInsertScreenByScenario();
 			
-			boolean status = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.Televendas").exists("POPUPAprovacao", 1000*5);
-			if(status) {
-				
-				AUT_AGENT_SILK4J.<DomElement>find("VA.Televendas.POPUPAprovacao").click();
-				autInsertScreenByScenario();
-				
-			}
+		
 			
+			boolean status = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.Login").exists("AprovadorComercial",10000);
+			
+			
+			if (status) {
+				AUT_AGENT_SILK4J.<DomElement>find("VA.Login.AprovadorComercial").click();
+				autInsertScreenByScenario();
+
+			}					
 			return true;
 		}
 		catch(Exception e) {

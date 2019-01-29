@@ -30,7 +30,9 @@ public class AUTMeiosPagamento extends AUTBaseComponent {
 		CHEQUE,
 		VOUCHER,
 		VISA,
+		MASTERCARD,
 		VALE_TROCA;
+		
 		
 		@Override
 		public String toString() {
@@ -66,6 +68,9 @@ public class AUTMeiosPagamento extends AUTBaseComponent {
 			case VISA: {
 				return "VISA";
 			}
+			case MASTERCARD: {
+				return "MASTERCARD";
+			}
 			case VALE_TROCA: {
 				return "VALE TROCA";
 			}
@@ -77,6 +82,7 @@ public class AUTMeiosPagamento extends AUTBaseComponent {
 	
 	
 	
+	
 	/**
 	 * Opções de plano de pagamento disponíveis a serem selecionadas no sistema VA
 	 * @author Softtek - QA
@@ -85,6 +91,7 @@ public class AUTMeiosPagamento extends AUTBaseComponent {
 	public enum AUT_VA_PLANO_PAGAMENTO{
 		A_VISTA,
 		SEM_JUROS_1X,
+		SEM_JUROS_2X,
 		SEM_JUROS_CELEBRE_1X;
 		
 		@Override
@@ -97,6 +104,10 @@ public class AUTMeiosPagamento extends AUTBaseComponent {
 			
 			case SEM_JUROS_1X: {
 				return "1X SEM JUROS";
+			}
+			
+			case SEM_JUROS_2X: {
+				return "2X SEM JUROS";
 			}
 			case SEM_JUROS_CELEBRE_1X: {
 				return "1X SEM JUROS CELEBRE";
@@ -114,12 +125,17 @@ public class AUTMeiosPagamento extends AUTBaseComponent {
 	 */
 	public boolean autSelecaoMeioPagamento(java.util.HashMap parametros) {			
 		try {
+			
+			if (parametros.get("AUT_MEIO_PAGAMENTO") == AUT_VA_MEIOS_PAGAMENTO.DINHEIRO) {
+			
 			AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.MeioPagamento").click();
 			AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.MeioPagamento").select(parametros.get("AUT_MEIO_PAGAMENTO").toString());
 			AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.PlanoPagamento").click();
 			AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.PlanoPagamento").select(parametros.get("AUT_PLANO_PAGAMENTO").toString());
 
-			if (parametros.get("AUT_MEIO_PAGAMENTO") != AUT_VA_MEIOS_PAGAMENTO.DINHEIRO) {
+			}
+			
+			else if (parametros.get("AUT_MEIO_PAGAMENTO") == AUT_VA_MEIOS_PAGAMENTO.CARTAO_CREDITO) {
 				AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaMeioPagamento.NumeroCartao").click();
 				AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaMeioPagamento.NumeroCartao").setText(parametros.get("AUT_NUMERO_CARTAO").toString());
 				AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaMeioPagamento.NomeTitular").click();
@@ -129,6 +145,45 @@ public class AUTMeiosPagamento extends AUTBaseComponent {
 				AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaMeioPagamento.Codigo").click();
 				AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaMeioPagamento.Codigo").setText(parametros.get("AUT_CODIGO_CARTAO").toString());
 			}
+			else if (parametros.get("AUT_MEIO_PAGAMENTO") == AUT_VA_MEIOS_PAGAMENTO.VOUCHER) {
+				AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.MeioPagamento").click();
+				AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.MeioPagamento").doubleClick();
+				AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.MeioPagamento").select(parametros.get("AUT_MEIO_PAGAMENTO").toString());
+
+				DomListBox listCombo = AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.Codigo_Voucher_VALETROCA");				
+				listCombo.getItemCount();
+				selectValor(listCombo, parametros.get("AUT_CODE_VOUCHER").toString());
+				
+				try {
+					AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.PlanoPagamento").click();
+					AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.PlanoPagamento").setDomAttribute("value", "2");	
+					AUT_AGENT_SILK4J.<DomButton>find("VA.TelaMeioPagamento.Avancar").click();							
+
+				}
+				catch(java.lang.Exception e) {
+				
+				}
+				
+				AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.PlanoPagamento").click();
+				AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.PlanoPagamento").select(parametros.get("AUT_PLANO_PAGAMENTO_2").toString());
+			}
+			
+			else if (parametros.get("AUT_MEIO_PAGAMENTO") == AUT_VA_MEIOS_PAGAMENTO.VALE_TROCA) {
+				
+				AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.MeioPagamento").click();
+				AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.MeioPagamento").doubleClick();
+				AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.MeioPagamento").select(parametros.get("AUT_MEIO_PAGAMENTO").toString());
+
+				DomListBox listCombo = AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.Codigo_Voucher_VALETROCA");				
+				listCombo.getItemCount();
+				selectValor(listCombo, parametros.get("AUT_CODE_VALE_TROCA").toString());
+				AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.PlanoPagamento").click();
+				AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.PlanoPagamento").select(parametros.get("AUT_PLANO_PAGAMENTO").toString());
+				AUT_AGENT_SILK4J.<DomButton>find("VA.TelaMeioPagamento.Avancar").click();
+				AUT_AGENT_SILK4J.<DomButton>find("VA.TelaMeioPagamento.ConfirmaValeTroca").click();
+			
+			}
+
 			return true;
 	}
 		catch(Exception e) {
@@ -138,6 +193,22 @@ public class AUTMeiosPagamento extends AUTBaseComponent {
 		}
 	
 	}
+	
+	public boolean autMeioDePagamentoSimples(java.util.HashMap parametros) {
+		try {
+			AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.MeioPagamento").click();
+			AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.MeioPagamento").select(parametros.get("AUT_MEIO_PAGAMENTO").toString());
+			AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.PlanoPagamento").click();
+			AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.PlanoPagamento").select(parametros.get("AUT_PLANO_PAGAMENTO").toString());
+			return true;
+			
+		}catch(java.lang.Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+	
 	
 	public boolean autVASegundoMeioPagamento(java.util.HashMap parametros) {
 	try {	
@@ -230,10 +301,7 @@ public class AUTMeiosPagamento extends AUTBaseComponent {
 				AUT_AGENT_SILK4J.<DomButton>find("VA.TelaMeioPagamento.ConfirmarValeTroca").click();
 			
 			}
-
-
-
-			
+		
 			return true;
 		}
 		catch(Exception e) {

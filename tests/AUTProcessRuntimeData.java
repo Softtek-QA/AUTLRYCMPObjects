@@ -8,7 +8,7 @@ import br.lry.functions.AUTProjectsFunctions.AUT_TYPE_STATE_INSCRIPTION;
 import br.lry.functions.AUTProjectsFunctions.AUT_TYPE_DOCUMENT_GENERATOR;
 
 public class AUTProcessRuntimeData extends AUTParent {
-	
+	public String AUT_SCANARIOS = "TESTES";
 	public static enum AUT_TYPE_OF_SUITE_OBJECTS{
 		AUT_STRING,
 		AUT_OBJECT,
@@ -35,7 +35,7 @@ public class AUTProcessRuntimeData extends AUTParent {
 				return "java\\.lang\\.Enum.*";
 			}
 			case AUT_TEST_OBJECT:{
-				return "AUT\\_OBJECT\\_.*";
+				return "AUT\\_.*";
 			}
 			case AUT_ALL_OBJECT:{
 				String outTypes = "(?i:";
@@ -130,15 +130,13 @@ public class AUTProcessRuntimeData extends AUTParent {
 	}
 	
 	
-	public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException {
-		
-		/*		 
+	public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException {		
+				 
 		AUTProcessRuntimeData chl = new AUTProcessRuntimeData();
 		System.out.println("AUT INFO : CHILD CLASS");
-		chl.autGetRuntimeDataObject(chl,AUT_TYPE_OF_SUITE_OBJECTS.AUT_OBJECT);		
-		*/
-		System.out.println(AUTProjectsFunctions.autGetNewDocument(AUT_TYPE_DOCUMENT_GENERATOR.INSCRIPTION, AUT_TYPE_STATE_INSCRIPTION.PR_PARANA));
-	
+		chl.autGetRuntimeDataObject(chl,AUT_TYPE_OF_SUITE_OBJECTS.AUT_TEST_OBJECT);		
+		
+		//System.out.println(AUTProjectsFunctions.autGetNewDocument(AUT_TYPE_DOCUMENT_GENERATOR.INSCRIPTION, AUT_TYPE_STATE_INSCRIPTION.PR_PARANA));	
 	}
 	
 	public AUTProcessRuntimeData() {

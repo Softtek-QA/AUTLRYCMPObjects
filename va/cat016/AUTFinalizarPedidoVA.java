@@ -21,6 +21,7 @@ public class AUTFinalizarPedidoVA extends AUTBaseComponent {
 			
 			AUT_AGENT_SILK4J.<DomButton>find("VA.TelaResumo.Finalizar").click();
 			
+			
 			autInsertScreenByScenario();
 			boolean status = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TelaResumo").exists("FecharPopUp",10000);
 			if(status) {

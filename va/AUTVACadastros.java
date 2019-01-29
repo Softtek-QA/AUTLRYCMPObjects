@@ -578,6 +578,12 @@ public class AUTVACadastros extends AUTVALogin {
 	}
 
 	public void autCadastroClienteVA(String usuario, String senha, AUT_VA_CADASTROS tipoPessoa, AUT_VA_TIPO_CONTATO tipoTelefone, AUT_VA_TIPO_ENDERECO tipoEndereco, AUT_VA_TIPO_RESIDENCIA tipoResidencia) {
+		try {
+			autLogoutApplication();
+		}
+		catch(java.lang.Exception e) {
+
+		}
 		autInitWebApplicationVA();
 		autLoginVA(usuario, senha);
 		autInsertScreenByScenario();
@@ -635,7 +641,7 @@ public class AUTVACadastros extends AUTVALogin {
 	 * 
 	 */
 	public void autCadastrarPJ(){
-		autInsertScreenByScenario();
+
 		String razaoSocial = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_NOME_PJ").toString();
 		String razaoFantasia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_NOME_PJ_FANTASIA").toString();
 		String inscricaoEstadual = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_INCRICAO_ESTADUAL").toString();
@@ -664,10 +670,10 @@ public class AUTVACadastros extends AUTVALogin {
 		txtRazaoFantasia.setText(razaoFantasia);
 
 		txtInscricaoEstadual.click();
-		txtInscricaoEstadual.setText(inscricaoEstadualEstra);
+		txtInscricaoEstadual.typeKeys(inscricaoEstadualEstra);
 		autInsertScreenByScenario();
 		txtInscricaoMunicipal.click();
-		txtInscricaoMunicipal.setText(inscricaoMunicipal);
+		txtInscricaoMunicipal.typeKeys(inscricaoMunicipal);
 		autInsertScreenByScenario();
 
 		txtNomeContato.click();
@@ -717,39 +723,44 @@ public class AUTVACadastros extends AUTVALogin {
 
 		slctTipoEndereco.click();
 		slctTipoEndereco.select(tipoEndereco.toString());
-		numCep.setText(cep);
+
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesPJ.CEP").typeKeys(cep);
+		com.borland.silktest.jtf.Utils.sleep(1000 * 5);
+		if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.PesquisaCEP").exists("MensagemSistemaIndisponivel", 5000)) {
+			AUT_AGENT_SILK4J.<DomButton>find("VA.PesquisaCEP.BotaoConfirmar").click();		
+		}
+
 		txtNomeRua.setText(nomeRuaEndereco);
 		txtNumeroLocal.setText(numeroEndereco);
 		txtBairro.setText(bairroResidencia);
 		txtCidade.setText(cidadeResidencia);
 		autInsertScreenByScenario();
 
-		/*AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesPJ.Avancar").click();
-
-		DomTextField btNovidadesN = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesPJ.RadioNovidades");
-		DomTextField btMalaDiretaN = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesPJ.RadioNovidades");
-
-		btNovidadesN.click();
-		btMalaDiretaN.click();
-
-		AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesPJ.Avancar").click();*/
 		DomButton btCadastroPFAvanc = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesPJ.Avancar");
 		btCadastroPFAvanc.click();
 		autInsertScreenByScenario();
 
-
-		DomElement btNovidadesN = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesPJ.RadioNovidades");
-		btNovidadesN.click();
-		//	btNovidadesN.domClick();
-
-		DomElement btMalaDiretaN = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesPJ.RadioMalaDireta");
-		btMalaDiretaN.click();
-		autInsertScreenByScenario();
-		//	btMalaDiretaN.domClick();
-
 		DomButton btCadastroPFAvanc2 = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.BotaoAvancarCadastro");
 		autInsertScreenByScenario();
 		btCadastroPFAvanc2.click();
+		autInsertScreenByScenario();
+
+		try {
+			DomElement btNovidadesN = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesPJ.RadioNovidades");
+			btNovidadesN.click();
+		}
+		catch(java.lang.Exception e) {
+
+		}
+
+		AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.BotaoAvancarCadastro").click();
+
+		AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesPJ.RadioMalaDireta").click();
+
+		autInsertScreenByScenario();
+
+		AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.BotaoAvancarCadastro").click();
+		com.borland.silktest.jtf.Utils.sleep(1000 * 4);
 		autInsertScreenByScenario();
 
 		try {
@@ -951,7 +962,7 @@ public class AUTVACadastros extends AUTVALogin {
 			btBuscarEndereco.click();
 			autInsertScreenByScenario();
 
-			if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.PesquisaCEP").exists("MsgStatusCEP",10000)) {
+			if(!AUT_AGENT_SILK4J.<BrowserWindow>find("VA.PesquisaCEP").exists("MsgStatusCEP",10000)) {
 				AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Fechar").click();
 			}
 			else {
@@ -1179,9 +1190,9 @@ public class AUTVACadastros extends AUTVALogin {
 			numeroDoc.click();
 			numeroDoc.setText(numCNPJ);
 			numeroDoc.typeKeys("\n");		
-			autInsertScreenByScenario();
 			autCadastrarPJ();
 			autInsertScreenByScenario();
+
 			break;
 		}		
 		}
