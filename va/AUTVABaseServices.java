@@ -17,7 +17,7 @@ public class AUTVABaseServices extends AUTBaseComponent {
 	br.lry.components.va.AUTVACadastros cadastros = null;
 	br.lry.components.va.AUTVAGeradorPedido pedidos = null;
 	br.lry.components.va.AUTVA03ConsultaStatusPedido consultas = null;
-
+	
 
 	/**
 	 * 

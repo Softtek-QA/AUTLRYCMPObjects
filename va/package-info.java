@@ -2,10 +2,7 @@
  * 
  */
 /**
- * Componentes genéricos - Aplicação VA 
- * 
- * 
- * @author Softtek-QA
+ * @author Administrador
  *
  */
 package br.lry.components.va;

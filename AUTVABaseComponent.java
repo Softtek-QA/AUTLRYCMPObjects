@@ -5,7 +5,6 @@ package br.lry.components;
 
 import java.io.IOException;
 import java.util.HashMap;
-
 import org.junit.Before;
 import org.junit.Test;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
@@ -13,14 +12,18 @@ import br.lry.components.va.cat001.AUTConfirmacaoLogin;
 import br.lry.components.va.cat001.AUTLoginBoitata;
 import br.lry.components.va.cat001.AUTVALogin;
 import br.lry.components.va.cat002.AUTRecuperacao;
+import br.lry.components.va.cat003.AUTInsercaoItens;
 import br.lry.components.va.cat003.AUTItem;
 import br.lry.components.va.cat005.AUTConversao;
 import br.lry.components.va.cat006.AUTBuscarCliente;
 import br.lry.components.va.cat006.AUTCadastroCliente;
+import br.lry.components.va.cat006.AUTCadastroEstrangeiro;
 import br.lry.components.va.cat006.AUTCadastroPJ;
 import br.lry.components.va.cat007.AUTFluxoSaida;
+import br.lry.components.va.cat007.AUTFluxoSaidaItens;
 import br.lry.components.va.cat009.AUTMeiosPagamento;
 import br.lry.components.va.cat010.AUTDesconto;
+import br.lry.components.va.cat010.AUTEdicao;
 import br.lry.components.va.cat011.AUTLogOffBoitata;
 import br.lry.components.va.cat011.AUTLogOffVA;
 import br.lry.components.va.cat014.AUTMenuLiberacaoPendente;
@@ -71,7 +74,11 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public static AUTServicoGarantia servicoGarantia;
 	protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();		
 	public static AUTEcommerce autEcommerce;
-	
+	public static AUTInsercaoItens autInsercaoItens;
+	public static AUTEdicao edicao;
+	public static AUTFluxoSaidaItens autfluxoSaidaItens;
+	public static AUTCadastroEstrangeiro cadastroEstrangeiro;
+
 	
 	public AUTVABaseComponent() {
 		super();
@@ -333,6 +340,62 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		
 	}
 
+	/**
+	 * 
+	 * CMP00001 - Inserção de vários itens no carrinho
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */
+	
+	public <TOutput extends AUTInsercaoItens> TOutput CMP00070(HashMap<String, Object> parametros) {		
+		autInsertScreenByScenario();
+		return (TOutput) autInsercaoItens;
+	}
+
+	/**
+	 * 
+	 * CMP00001 - Copia de pedido
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */
+	
+	public void CMP00071(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
+		edicao.autCopiaPedido(parametros);
+		autInsertScreenByScenario();
+	}
+
+
+	/**
+	 * 
+	 * CMP00003 - Cadastro de Estrangeiro no meio do fluxo de pedido
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */
+	public void CMP00072(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
+		cadastroEstrangeiro.autCadastrarEstrangeiro(parametros);
+		autInsertScreenByScenario();
+	}
+	
+
+	/**
+	 * 
+	 * CMP00001 - Fluxo de Saída para vários itens
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */
+	
+	public void CMP00080(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
+		autfluxoSaidaItens.autVAFluxoSaidaItens(parametros);
+		autInsertScreenByScenario();
+	}
+	
 	
 	/**
 	 * 
@@ -597,7 +660,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * CMP00001 - reprovaÃ§Ã£o antifraude
+	 * CMP00001 - reprovação antifraude
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
@@ -607,6 +670,28 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autMenuLiberacao.autMonitorAntiFraudeReprovacao(parametros);
 		autInsertScreenByScenario();
 	}
+
+	public void CMP00043_3(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
+		autMenuLiberacao.autMonitorAntiFraudeEnviandoProAntiFraude(parametros);
+		autInsertScreenByScenario();
+	}
+
+	
+	public void CMP00044(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
+		autMenuLiberacao.autMonitorAumentandoDescontoAprovando(parametros);
+		autInsertScreenByScenario();
+	}
+	
+	
+	public void CMP00045(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
+		autMenuLiberacao.autMonitorAprovandoECancelando(parametros);
+		autInsertScreenByScenario();
+	}
+	
+
 	
 	/**
 	 * 

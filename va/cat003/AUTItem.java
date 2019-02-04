@@ -19,7 +19,7 @@ public class AUTItem extends AUTVABaseComponent{
 	public boolean autVAIncluirItemNoCarrinho(java.util.HashMap<String, Object> parametros) {
 		try {
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaInicialLoja.QuantidadeItem").setText(parametros.get("AUT_QUANTIDADE_ITEM").toString());
-			AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaInicialLoja.CodigoItem").setText(parametros.get("AUT_CODIGO_ITEM").toString());
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaInicialLoja.CodigoItem").typeKeys(parametros.get("AUT_CODIGO_ITEM_VA").toString());
 			AUT_AGENT_SILK4J.<DomButton>find("VA.TelaInicialLoja.PesquisarProduto").click();
 			return true;
 		}
@@ -36,6 +36,16 @@ public class AUTItem extends AUTVABaseComponent{
 		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").setText(parametros.get("AUT_CODIGO_ITEM").toString());
 		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").typeKeys("\n");
 		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPesquisaBoitata.BtAdicionarCarrinho").click();
+	
+	}
+	
+	
+	public void autVAIncluirItemEmMassa(java.util.HashMap<String, Object> parametros) {
+		
+		AUT_AGENT_SILK4J.<DomButton>find("VA.TelaInicialLoja.ItemMassa").click();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaInicialLoja.InserirItensMassa").setText(parametros.get("AUT_CODIGO_ITEM").toString());
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaInicialLoja.InserirItensMassa").typeKeys("\n");
+		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.EnviarMassa").click();
 	
 	}
 

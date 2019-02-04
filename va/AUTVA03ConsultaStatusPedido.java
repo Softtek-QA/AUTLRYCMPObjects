@@ -220,6 +220,12 @@ public class AUTVA03ConsultaStatusPedido extends AUTVALogin{
 					for(TestObject obj : AUT_AGENT_SILK4J.<DomElement>find(fullLocator).getChildren()) {
 						System.out.println(obj.getText());
 						obj.highlightObject();	
+						AUT_AGENT_SILK4J.<BrowserWindow>find(locatorParent).typeKeys(new String(javafx.scene.input.KeyCode.DOWN.getName()));
+						AUT_AGENT_SILK4J.<BrowserWindow>find(locatorParent).typeKeys(new String(javafx.scene.input.KeyCode.DOWN.getName()));
+						AUT_AGENT_SILK4J.<BrowserWindow>find(locatorParent).typeKeys(new String(javafx.scene.input.KeyCode.DOWN.getName()));
+						AUT_AGENT_SILK4J.<BrowserWindow>find(locatorParent).typeKeys(new String(javafx.scene.input.KeyCode.DOWN.getName()));
+						AUT_AGENT_SILK4J.<BrowserWindow>find(locatorParent).typeKeys(new String(javafx.scene.input.KeyCode.DOWN.getName()));
+						AUT_AGENT_SILK4J.<BrowserWindow>find(locatorParent).typeKeys(new String(javafx.scene.input.KeyCode.DOWN.getName()));
 						try {
 							AUT_AGENT_SILK4J.<DomElement>find(locatorParent).click();
 						}
