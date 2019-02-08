@@ -1,6 +1,8 @@
 package br.lry.components.tests;
 
+import org.junit.FixMethodOrder;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
@@ -35,6 +37,7 @@ import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega010_RGR001;
 import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega010_RGR002;
 import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega010_RGR003;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(com.borland.silktest.jtf.SilkTestSuite.class)
 @SuiteClasses({
 	AUTEntrega001_RGR001.class,
