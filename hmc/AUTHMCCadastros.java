@@ -263,7 +263,7 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		}
 		case USUARIO_LOJA:{
 			canal = "channel_store";
-			autAdicionarPerfisUsuario(new String[] { lojaCadastro, "LB01", "channel_store","ASSESSOR DE TELEVENDAS", "32_ATV","35_ATV",
+			autAdicionarPerfisUsuario(new String[] { lojaCadastro, "LB01", "channel_store","ASSESSOR DE VENDAS", "32_ATV","35_ATV",
 					"b2bgroup", "employee_type_employee","50000425-PROJETO 3D VENDA ASSISTIDA"});
 			break;
 		}

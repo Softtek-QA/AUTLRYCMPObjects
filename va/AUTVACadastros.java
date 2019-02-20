@@ -5,6 +5,8 @@ package br.lry.components.va;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.io.IOException;
+
 import org.junit.After;
 import org.junit.Test;
 
@@ -30,6 +32,7 @@ import br.lry.components.va.cat001.AUTVALogin;
 import br.lry.dataflow.AUTDataFlow.*;
 
 import com.borland.silktest.jtf.Desktop;
+import com.borland.silktest.jtf.common.CommonOptions;
 import com.borland.silktest.jtf.win32.AccessibleControl;
 import org.junit.Assert;
 /**
@@ -758,11 +761,11 @@ public class AUTVACadastros extends AUTVALogin {
 		AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesPJ.RadioMalaDireta").click();
 
 		autInsertScreenByScenario();
-
+		autGetDataFlow().autUploadDataFlowInDB();
 		AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.BotaoAvancarCadastro").click();
 		com.borland.silktest.jtf.Utils.sleep(1000 * 4);
 		autInsertScreenByScenario();
-
+		autGetDataFlow().autUploadDataFlowInDB();
 		try {
 			//AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");		
 		}
@@ -907,15 +910,36 @@ public class AUTVACadastros extends AUTVALogin {
 
 		}
 
-
 		AUT_AGENT_SILK4J.<DomRadioButton>find("VA.CadastroClientesEstrangeiro.CheckItemPromocoes").click();
 
+		autGetDataFlow().autUploadDataFlowInDB();
 		DomButton btCadastroPFAvanc2 = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.BotaoAvancarCadastro");
 		autInsertScreenByScenario();
+		Thread th = new Thread(
+				new Runnable() {
 
-		btCadastroPFAvanc2.click();
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						com.borland.silktest.jtf.Utils.sleep(8000);
+						try {
+							java.lang.Runtime.getRuntime().exec("cmd /c taskkill /f /t /im chrome*");
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				});
+
+		th.start();
+		btCadastroPFAvanc2.click();	
+		
+
+		autGetDataFlow().autUploadDataFlowInDB();
 
 		autInsertScreenByScenario();		
+		System.out.println("AUT INFO: STOP CAD ESTRANGEIRO: TEST");
+	
 		//AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");			
 
 
@@ -1118,10 +1142,11 @@ public class AUTVACadastros extends AUTVALogin {
 		catch(java.lang.Exception e ) {
 
 		}
-
+		autGetDataFlow().autUploadDataFlowInDB();
 		DomButton btCadastroPFAvanc2 = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.AvancarPaginaCadastro2");
 		autInsertScreenByScenario();
 		btCadastroPFAvanc2.click();
+		autGetDataFlow().autUploadDataFlowInDB();
 		autInsertScreenByScenario();
 
 		try {
@@ -1136,7 +1161,6 @@ public class AUTVACadastros extends AUTVALogin {
 
 
 	public void autCadastrarCliente(AUT_VA_CADASTROS tipoCadastro) {
-		com.borland.silktest.jtf.Desktop dsk;
 		DomElement menuClient = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.MenuPrincipal");
 		menuClient.click();
 		DomElement subMenuCliente = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.SubMenuClientes");
@@ -1172,7 +1196,6 @@ public class AUTVACadastros extends AUTVALogin {
 			AUT_NUMERO_DOC_CPF_OUTPUT = numCPF;
 			numeroDoc.typeKeys(numCPF);
 			autCadastrarPF();
-
 			break;
 		}
 		case JURIDICA:{
