@@ -225,6 +225,9 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		Assert.assertEquals("Salvar", botaolSalvar.getText());
 		AUT_USUARIO_CADASTRO_OUTPUT = userID;
 		AUT_USUARIO_CADASTRO_PWD_OUTPUT = novaSenha;
+				
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN, "AUT_NUMERO_PEDIDO", AUT_USUARIO_CADASTRO_OUTPUT);
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN, "AUT_SENHA_LOJA", AUT_USUARIO_CADASTRO_PWD_OUTPUT);
 		autInsertScreenByScenario();
 		
 	}

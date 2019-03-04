@@ -16,7 +16,6 @@ public class AUTHMCBaseServices extends AUTBaseComponent {
 	br.lry.components.hmc.AUTHMCCadastros hmcCads = null;		
 	public <THMCCadastros extends br.lry.components.hmc.AUTHMCCadastros> THMCCadastros autHMCCadastros() {
 		if(hmcCads==null) {						
-			
 			hmcCads = new AUTHMCCadastros();
 			
 			return (THMCCadastros)hmcCads;

@@ -761,11 +761,11 @@ public class AUTVACadastros extends AUTVALogin {
 		AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesPJ.RadioMalaDireta").click();
 
 		autInsertScreenByScenario();
-		autGetDataFlow().autUploadDataFlowInDB();
+
 		AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.BotaoAvancarCadastro").click();
 		com.borland.silktest.jtf.Utils.sleep(1000 * 4);
 		autInsertScreenByScenario();
-		autGetDataFlow().autUploadDataFlowInDB();
+		
 		try {
 			//AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");		
 		}
@@ -912,7 +912,6 @@ public class AUTVACadastros extends AUTVALogin {
 
 		AUT_AGENT_SILK4J.<DomRadioButton>find("VA.CadastroClientesEstrangeiro.CheckItemPromocoes").click();
 
-		autGetDataFlow().autUploadDataFlowInDB();
 		DomButton btCadastroPFAvanc2 = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesEstrangeiro.BotaoAvancarCadastro");
 		autInsertScreenByScenario();
 		Thread th = new Thread(
@@ -934,9 +933,6 @@ public class AUTVACadastros extends AUTVALogin {
 		th.start();
 		btCadastroPFAvanc2.click();	
 		
-
-		autGetDataFlow().autUploadDataFlowInDB();
-
 		autInsertScreenByScenario();		
 		System.out.println("AUT INFO: STOP CAD ESTRANGEIRO: TEST");
 	
@@ -1142,11 +1138,9 @@ public class AUTVACadastros extends AUTVALogin {
 		catch(java.lang.Exception e ) {
 
 		}
-		autGetDataFlow().autUploadDataFlowInDB();
 		DomButton btCadastroPFAvanc2 = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.AvancarPaginaCadastro2");
 		autInsertScreenByScenario();
 		btCadastroPFAvanc2.click();
-		autGetDataFlow().autUploadDataFlowInDB();
 		autInsertScreenByScenario();
 
 		try {

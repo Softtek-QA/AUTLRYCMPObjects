@@ -43,11 +43,11 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	private AUTDataFlow AUT_CURRENT_DATA_FLOW = null; //Objeto de gerenciamento do fluxo de dados
 	private AUTLogMensagem AUT_CURRENT_LOG_MANAGER = null; //Objeto de gerenciamento do log
 	protected AUT_TABLE_PARAMETERS_NAMES AUT_CURRENT_PARAMETERS_TABLE_NAME = null;
-	
+
 	public String AUT_USUARIO_LOGIN_DEFAULT = "";
 	public String AUT_SENHA_LOGIN_DEFAULT = "";
 	protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
-	
+
 	public static enum AUT_TEST_STATUS_EXECUCAO{
 		WAIT,
 		PASSED,
@@ -77,7 +77,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 			return super.toString();
 		}
 	}
-	
+
 	public static enum AUT_SYNC_EXECUTION_STATE{
 		UPDATE_TABLE_PROJECT_DETAIL_WAIT,
 		UPDATE_TABLE_PROJECT_DETAIL_PASSED,
@@ -89,11 +89,11 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		EXECUTION,
 		ERROR,
 		FAILED;
-		
+
 		@Override
 		public String toString() {
 			// TODO Auto-generated method stub
-			
+
 			switch(this) {
 			case UPDATE_TABLE_PROJECT_DETAIL_PASSED:{
 				return "UPDATE LRY.aut_projects_status_details SET STD_DATE_CREATION=CURRENT_TIMESTAMP,std_status='PASSOU' WHERE STD_ITEM_CONFIGURATION=? AND PJT_ID IN(%s);";
@@ -129,7 +129,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 			return super.toString();
 		}
 	}
-	
+
 	public void autSetMicrosoftEdgeBrowser() {
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.Edge);		
 	}	
@@ -138,7 +138,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.InternetExplorer);
 	}
 
-	
+
 	public void autSetFirefoxBrowser() {
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.Firefox);
 	}
@@ -149,10 +149,10 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 
 	public boolean autSetCurrentDataFlowObject(AUTDataFlow newDataflow) {
 		try {
-			
+
 			AUT_CURRENT_DATA_FLOW = autGetDataFlow().autCopyDataFlow(autGetDataFlow(), newDataflow);
 			System.out.println("AUT : DATAFLOW : SET CURRENT OBJECT : OK");
-						
+
 			return true;
 		}
 		catch(java.lang.Exception e) {
@@ -172,7 +172,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	public AUTLogMensagem autGetLogManager()
 	{
 		try {
-		
+
 			System.out.println("AUT INFO: INICIALIZANDO SERVIÇO PARA GERENCIAMENTO DE LOGS DO SISTEMA");
 
 			AUT_CURRENT_LOG_MANAGER = ( AUT_CURRENT_LOG_MANAGER!=null ? AUT_CURRENT_LOG_MANAGER : new AUTLogMensagem());
@@ -191,6 +191,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	public void autSetHostExecution(String host) {
 		AUT_AGENT_SILK4J = new Desktop(host);
 	}
+
 
 	/**
 	 * 
@@ -218,7 +219,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		}
 	}
 
-	
+
 
 	public void selectValor (DomListBox listCombo) {
 
@@ -262,22 +263,23 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		}
 	}
 
-	
+
 	public Double autGetDiv(String valueInput) {
 		String vlInput = valueInput;
 		String[] vlParts = valueInput.trim().split(",");		
 		Double dbValor = Double.parseDouble(vlParts[0]);
 		Double result = dbValor / 2;
-		
+
 		System.out.println(valueInput);
 		System.out.println(dbValor);
 		System.out.println(vlParts[1]);
 		System.out.println(result);
 		System.out.println(result * 2);
-		
+
 		return result * 10000;
 	}
 
+	
 	/**
 	 * 
 	 * Recupera o valor do parametro especificado na fonte de dados corrente
@@ -288,36 +290,38 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	 */
 	public Object autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES tableName,String parameterName) {
 		try {
-
+			AUTRuntimeExecutionScenario scn = autGetCurrentScenarioRuntime();	
+			scn.AUT_DATAFLOW_SEARCH_KEY = tableName;			
 			AUT_CURRENT_PARAMETERS_TABLE_NAME = tableName;
+			System.out.println("AUT INFO: INIT DOWNLOAD SCENARIO DATA");	
 			
-			return autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_CURRENT_PARAMETERS_TABLE_NAME.toString()).get(1).get(parameterName);
+			return null;
 		}
 		catch(java.lang.Exception e) {
 			autGetLogManager().logMensagem("AUT ERROR: GET PARAMETER VALUE FROM CURRENT DATATABLE");
-
-			return null;
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return "";
 		}
 	}
 
-	
+
 	public boolean autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES tableName,String parameterName,Object value) {
 		try {
 
 			AUT_CURRENT_PARAMETERS_TABLE_NAME = tableName;
 
-			autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_CURRENT_PARAMETERS_TABLE_NAME.toString()).get(1).remove(parameterName);
-			autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_CURRENT_PARAMETERS_TABLE_NAME.toString()).get(1).put(parameterName, value);
-			
 			return true;
 		}
 		catch(java.lang.Exception e) {
 			autGetLogManager().logMensagem("AUT ERROR: SET PARAMETER VALUE FROM CURRENT DATATABLE");
-
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 			return false;
 		}
 	}
 
+	
 	/**
 	 * 
 	 * Retorna o valor do parametro especificado na tabela de parametros atualmente selecionada
@@ -329,34 +333,33 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	 */
 	public Object autGetCurrentParameter(String parameterName) {
 		try {
-			if(AUT_CURRENT_PARAMETERS_TABLE_NAME!=null) {
-				return autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_CURRENT_PARAMETERS_TABLE_NAME.toString()).get(1).get(parameterName);
+			if(AUT_CURRENT_PARAMETERS_TABLE_NAME!=null) {				
+				return autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME,parameterName);
 			}
 			else {
-				
+
 				autGetLogManager().logMensagem("AUT ERROR: GET PARAMETER VALUE: TABLE FROM DATA ORIGIN NOT DEFINE");
-				
+
 				return null;
 			}
 		}
 		catch(java.lang.Exception e) {
 			autGetLogManager().logMensagem("AUT ERROR: GET PARAMETER VALUE FROM CURRENT DATATABLE");
-
 			return null;
 		}
 	}
-	
+
 	public boolean autSetCurrentParameter(String parameterName,Object value) {
 		try {
 			if(AUT_CURRENT_PARAMETERS_TABLE_NAME!=null) {
 				autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_CURRENT_PARAMETERS_TABLE_NAME.toString()).get(1).remove(parameterName);
 				autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_CURRENT_PARAMETERS_TABLE_NAME.toString()).get(1).put(parameterName, value);
-				
+
 				return true;
 			}
 			else {				
 				autGetLogManager().logMensagem("AUT ERROR: SET PARAMETER VALUE: TABLE FROM DATA ORIGIN NOT DEFINE");
-				
+
 				return false;
 			}
 		}
@@ -365,8 +368,8 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 			return false;
 		}
 	}
-	
-	
+
+
 	public junit.framework.TestCase autStartNewTestObject(Class<?> testObject,String testName){
 		try {
 
@@ -399,20 +402,20 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	}
 
 	public void autInitWebApplicationBoitata() {
-		
+
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState("boitata.settings");
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setCommandLineArguments("--incognito");
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);		
 		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
 
 	}
-	
+
 	public void autInitWebApplicationHMC() {		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState("hmc.settings");
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.GoogleChrome);
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setCommandLineArguments("--incognito");
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
-		
+
 		try {
 			//AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
 		}
@@ -420,18 +423,18 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		
+
 		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
 
 	}
-	
+
 	public void autInitWebApplicationSafe() {
-		
+
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState("safe.settings");
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.GoogleChrome);
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setCommandLineArguments("--incognito");
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
-		
+
 		try {
 			//AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
 		}
@@ -439,17 +442,17 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		
+
 		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
 
 	}
-	
+
 	public void autInitWebApplicationVA() {
-		
+
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();		
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.GoogleChrome);
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setCommandLineArguments("--incognito");
-		
+
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setUrl(autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN, "AUT_URL_VA").toString());
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
 		try {
@@ -460,19 +463,19 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		
+
 		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
 
 	}
-	
+
 	public void autInitHmcApplication() {
-		
+
 		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();
-		
+
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setUrl(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN, "AUT_URL").toString());
-		
+
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
-		
+
 		try{
 			AUT_AGENT_SILK4J.<AccessibleControl>find("HMC.Maximizar").click();
 		}
@@ -481,9 +484,9 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
+
+
 
 	/**
 	 * 
@@ -491,10 +494,10 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	 * 
 	 */
 	public void autCloseApplication() {
-		
+
 		System.out.println("AUT INFO: FINALIZANDO APLICAÇÃO");	
 		AUT_AGENT_SILK4J.<BrowserApplication>find("VA").close();
-		
+
 	}
 
 	public AUTBaseComponent() {
@@ -505,5 +508,5 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	public AUTBaseComponent(boolean syncronizeDataFlow) {
 		super();
 	}
-	
+
 }
