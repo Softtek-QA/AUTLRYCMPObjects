@@ -20,20 +20,20 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 	public String AUT_USUARIO_CADASTRO_PWD_OUTPUT=null;
 	public String host = "127.0.0.1";
 
-	String usuario = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN, "AUT_USER").toString();
-	String senha = autGetCurrentParameter("AUT_PASSWORD").toString();
-	String userID = autGetCurrentParameter("AUT_USER_ID").toString();
-	String userName = autGetCurrentParameter("AUT_USER_NAME").toString();
-	String email = autGetCurrentParameter("AUT_USER_EMAIL").toString();
-	String novaSenha = autGetCurrentParameter("AUT_NOVA_SENHA").toString();
-	String canal = autGetCurrentParameter("AUT_CANAL").toString();
-	String tipo = autGetCurrentParameter("AUT_TIPO").toString();
-	String unidadeB2B = autGetCurrentParameter("AUT_UNIDADE_B2B_PADRAO").toString();
-	String departamento = autGetCurrentParameter("AUT_DEPARTAMENTO").toString();
-	String codigoCategoria = autGetCurrentParameter("AUT_CODIGO_CATEGORIA").toString();
-	String codigoDepartamento = autGetCurrentParameter("AUT_CODIGO_DEPARTAMENTO").toString();
-	String loja = autGetCurrentParameter("AUT_LOJA").toString();
-	String gestorArea = autGetCurrentParameter("AUT_GESTOR").toString();
+	String usuario = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_USER").toString();
+	String senha = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_PASSWORD").toString();
+	String userID = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_USER_ID").toString();
+	String userName = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_USER_NAME").toString();
+	String email = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_USER_EMAIL").toString();
+	String novaSenha = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_NOVA_SENHA").toString();
+	String canal = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_CANAL").toString();
+	String tipo = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_TIPO").toString();
+	String unidadeB2B = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_UNIDADE_B2B_PADRAO").toString();
+	String departamento = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_DEPARTAMENTO").toString();
+	String codigoCategoria = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_CODIGO_CATEGORIA").toString();
+	String codigoDepartamento = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_CODIGO_DEPARTAMENTO").toString();
+	String loja = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_LOJA").toString();
+	String gestorArea = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_GESTOR").toString();
 
 
 	public void autSetHostExecutionService(String host) {
@@ -237,12 +237,10 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 	public void autCadastrarUsuarioHMCV2(String lojaCadastro) {
 
 		String formatLoja = String.format("%s_LMStore",lojaCadastro);
-		autInsertScreenByScenario();
 		autStartLoginDefault(usuario, senha);
 		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomListBox>find("HMC.TelaInicial.ListaIdiomas").click();
 		AUT_AGENT_SILK4J.<DomListBox>find("HMC.TelaInicial.ListaIdiomas").select("Português do Brasil");
-		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.MenuLateralUsuarios").click();
 
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.Clientes").click();
@@ -250,8 +248,7 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaInicial.SubMenuClienteDropDown").click();
 		
 		
-		autInsertScreenByScenario();
-		AUT_HMC_PERFIL_ACESSO hmcPerf = (AUT_HMC_PERFIL_ACESSO)autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_HMC_LOGIN,"AUT_PERFIL_ACESSO");		
+		AUT_HMC_PERFIL_ACESSO hmcPerf = AUT_HMC_PERFIL_ACESSO.valueOf(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_PERFIL_ACESSO").toString());		
 		switch(hmcPerf) {
 		case APROVADOR_COMERCIAL:{
 			autAdicionarPerfisUsuario(new String[] { lojaCadastro,"employee_type_employee", "LB01", "channel_store", "32_ATV", "GERENTE COMERCIAL",
@@ -273,7 +270,7 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		case USUARIO_TELEVENDAS:{
 			canal = "channel_telesales";
 			lojaCadastro = formatLoja;
-			autSetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_HMC_LOGIN,"AUT_CANAL", canal);		
+			autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_CANAL", canal);		
 			autAdicionarPerfisUsuario(new String[] {"b2bgroup","employee_type_employee","ASSESSOR DE TELEVENDAS","50000425-PROJETO 3D VENDA ASSISTIDA","LB01","32_ATV","35_ATV", "67_ATV"});
 			
 			break;
@@ -290,20 +287,20 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaCadastroClientes.NomeUsuario").setText(userName.concat(userID));
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaCadastroClientes.DescricaoUsuario")
 		.setText(userName.concat(userID));
-		
+				
 		AUT_USUARIO_CADASTRO_OUTPUT = userID;
 		AUT_USUARIO_CADASTRO_PWD_OUTPUT = novaSenha;
+
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_LOGIN,"AUT_USER", userID);
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_LOGIN,"AUT_PASSWORD", novaSenha);
 
 		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaRemetentes.AbaRemetentes").click();
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaRemetentes.Email").setText(email);
-		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaSenha.AbaSenha").click();
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaSenha.NovaSenha").setText(novaSenha);
 		AUT_AGENT_SILK4J.<DomTextField>find("HMC.TelaSenha.Senha").setText(novaSenha);
-		autInsertScreenByScenario();
-		
-		
+				
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.AbaAdministracao").click();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Canal").setFocus();
 		AUT_AGENT_SILK4J.<DomElement>find("HMC.TelaAdministracao.Canal").typeKeys(canal);
