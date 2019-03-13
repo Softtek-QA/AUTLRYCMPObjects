@@ -652,7 +652,7 @@ public class AUTVACadastros extends AUTVALogin {
 		String nomeContato = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_NOME_PJ_CONTATO").toString();
 		String emailContato = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_PJ_EMAIL_CONTATO").toString();
 		String departamentoContato = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_PJ_DEPARTAMENTO_CONTATO").toString();
-		AUT_VA_TIPO_CONTATO numeroTipoTelefoneContato = (AUT_VA_TIPO_CONTATO)autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_TELEFONE");
+		AUT_VA_TIPO_CONTATO numeroTipoTelefoneContato = AUT_VA_TIPO_CONTATO.valueOf(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_TELEFONE").toString());
 		String numeroTelefoneContato = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_NUMERO_TELEFONE").toString();
 		String inscricaoEstadualEstra = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_INCRICAO_ESTADUAL").toString();
 
@@ -704,16 +704,16 @@ public class AUTVACadastros extends AUTVALogin {
 
 		autSearchCEP();
 
-		String tipoEndereco = autGetCurrentParameter("AUT_TIPO_ENDERECO").toString();
-		String cep = autGetCurrentParameter( "AUT_CEP").toString();
-		String nomeRuaEndereco = autGetCurrentParameter( "AUT_RUA_ENDERECO").toString();
-		String numeroEndereco = autGetCurrentParameter( "AUT_NUMERO_ENDERECO").toString();
-		String bairroResidencia = autGetCurrentParameter( "AUT_BAIRRO_ENDERECO").toString();
-		String complementoResidencia = autGetCurrentParameter( "AUT_COMPLEMENTO_ENDERECO").toString();
-		String cidadeResidencia = autGetCurrentParameter( "AUT_CIDADE_ENDERECO").toString();
-		String estadoResidencia = autGetCurrentParameter( "AUT_ESTADO_ENDERECO").toString();
-		String referenciaResidencia = autGetCurrentParameter( "AUT_REFERENCIA_ENDERECO").toString();
-		String tipoImovelResidencia = autGetCurrentParameter( "AUT_TIPO_IMOVEL_RESIDENCIA").toString();
+		AUT_VA_TIPO_ENDERECO tipoEndereco = AUT_VA_TIPO_ENDERECO.valueOf(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_ENDERECO").toString());
+		String cep = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_CEP").toString();
+		String nomeRuaEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_RUA_ENDERECO").toString();
+		String numeroEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_NUMERO_ENDERECO").toString();
+		String bairroResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_BAIRRO_ENDERECO").toString();
+		String complementoResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_COMPLEMENTO_ENDERECO").toString();
+		String cidadeResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_CIDADE_ENDERECO").toString();
+		String estadoResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_ESTADO_ENDERECO").toString();
+		String referenciaResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_REFERENCIA_ENDERECO").toString();
+		AUT_VA_TIPO_RESIDENCIA tipoImovelResidencia = AUT_VA_TIPO_RESIDENCIA.valueOf(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_IMOVEL_RESIDENCIA").toString());
 
 
 
@@ -727,6 +727,7 @@ public class AUTVACadastros extends AUTVALogin {
 		slctTipoEndereco.click();
 		slctTipoEndereco.select(tipoEndereco.toString());
 
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesPJ.CEP").setFocus();
 		AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesPJ.CEP").typeKeys(cep);
 		com.borland.silktest.jtf.Utils.sleep(1000 * 5);
 		if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.PesquisaCEP").exists("MensagemSistemaIndisponivel", 5000)) {
@@ -783,14 +784,14 @@ public class AUTVACadastros extends AUTVALogin {
 	 */
 	public void autCadastrarEstrangeiro() {
 		System.out.println("****** AUT INFO: INICIANDO CADASTRO DE CLIENTE ESTRANGEIRO : PASSAPORTE *****");
-
+		AUT_TABLE_PARAMETERS_NAMES.RSP_PJTTRC_FRT001_VA_MD00001_CN00003_CTP00001.name();
 		String nomeCliente = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_NOME_ESTRANGEIRO").toString();
 		String passaPorteCliente = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_PASSAPORTE").toString();
 		String emailCliente = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_EMAIL").toString();
-		AUT_VA_TIPO_CONTATO tipoContatoCliente = (AUT_VA_TIPO_CONTATO) autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_TIPO_TELEFONE");
+		AUT_VA_TIPO_CONTATO tipoContatoCliente = AUT_VA_TIPO_CONTATO.valueOf(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_TIPO_TELEFONE").toString());
 		String numeroTelefoneCliente = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_NUMERO_TELEFONE").toString();
-		AUT_VA_TIPO_ENDERECO tipoEnderecoCliente = (AUT_VA_TIPO_ENDERECO) autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_TIPO_ENDERECO");
-
+		AUT_VA_TIPO_ENDERECO tipoEnderecoCliente = AUT_VA_TIPO_ENDERECO.valueOf(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_TIPO_ENDERECO").toString());
+		
 		DomTextField nome = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Nome");
 		DomTextField numeroPassaPorte = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.PassaPorte");
 		DomTextField email = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Email");
@@ -821,19 +822,19 @@ public class AUTVACadastros extends AUTVALogin {
 		tipoEndereco.click();
 		tipoEndereco.select(tipoEnderecoCliente.toString());
 
-		String endereco = autGetCurrentParameter( "AUT_ENDERECO_PESQUISA").toString();
+		String endereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_ENDERECO_PESQUISA").toString();
 
 		autSearchCEP();
 
-		String cep = autGetCurrentParameter( "AUT_CEP").toString();
-		String nomeRuaEndereco = autGetCurrentParameter( "AUT_RUA_ENDERECO").toString();
-		String numeroEndereco = autGetCurrentParameter( "AUT_NUMERO_ENDERECO").toString();
-		String bairroResidencia = autGetCurrentParameter( "AUT_BAIRRO_ENDERECO").toString();
-		String complementoResidencia = autGetCurrentParameter( "AUT_COMPLEMENTO_ENDERECO").toString();
-		String cidadeResidencia = autGetCurrentParameter( "AUT_CIDADE_ENDERECO").toString();
-		String estadoResidencia = autGetCurrentParameter( "AUT_ESTADO_ENDERECO").toString();
-		String referenciaResidencia = autGetCurrentParameter( "AUT_REFERENCIA_ENDERECO").toString();
-		String tipoImovelResidencia = autGetCurrentParameter( "AUT_TIPO_IMOVEL_RESIDENCIA").toString();
+		String cep = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_CEP").toString();
+		String nomeRuaEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_RUA_ENDERECO").toString();
+		String numeroEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_NUMERO_ENDERECO").toString();
+		String bairroResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_BAIRRO_ENDERECO").toString();
+		String complementoResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_COMPLEMENTO_ENDERECO").toString();
+		String cidadeResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_CIDADE_ENDERECO").toString();
+		String estadoResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_ESTADO_ENDERECO").toString();
+		String referenciaResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_REFERENCIA_ENDERECO").toString();
+		String tipoImovelResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_IMOVEL_RESIDENCIA").toString();
 
 		DomTextField txtCEPEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.CEP");
 		DomTextField txtRuaCasaEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.NumeroCasa");
@@ -1006,9 +1007,9 @@ public class AUTVACadastros extends AUTVALogin {
 	 * 
 	 */
 	public void autCadastrarPF() {
-		String clienteNome = autGetCurrentParameter("AUT_NOME").toString();
-		String clienteEmail = autGetCurrentParameter("AUT_EMAIL").toString();
-		String ClienteInscricao = autGetCurrentParameter( "AUT_INCRICAO_ESTADUAL_PF").toString();
+		String clienteNome = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_NOME").toString();
+		String clienteEmail = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_EMAIL").toString();
+		String ClienteInscricao = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_INCRICAO_ESTADUAL_PF").toString();
 
 		DomTextField nome = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Nome");
 		DomTextField email = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Email");
@@ -1029,9 +1030,9 @@ public class AUTVACadastros extends AUTVALogin {
 		//numeroInscEstatual.setText(ClienteInscricao);
 		autInsertScreenByScenario();
 
-		String tipoTelefone = autGetCurrentParameter( "AUT_TIPO_TELEFONE")
+		String tipoTelefone = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_TELEFONE")
 				.toString();
-		String numeroTelefone = autGetCurrentParameter( "AUT_NUMERO_TELEFONE").toString();
+		String numeroTelefone = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_NUMERO_TELEFONE").toString();
 
 		DomListBox listaTipoElement = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoTelefone");
 		listaTipoElement.click();
@@ -1045,21 +1046,21 @@ public class AUTVACadastros extends AUTVALogin {
 		txtNumeroContato.click();
 		txtNumeroContato.setFocus();
 		txtNumeroContato.domClick();
-		String endereco = autGetCurrentParameter( "AUT_ENDERECO_PESQUISA").toString();
+		String endereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_ENDERECO_PESQUISA").toString();
 
 		autSearchCEP();
 
 		autInsertScreenByScenario();
-		String tipoEndereco = autGetCurrentParameter( "AUT_TIPO_ENDERECO").toString();
-		String cep = autGetCurrentParameter( "AUT_CEP").toString();
-		String nomeRuaEndereco = autGetCurrentParameter( "AUT_RUA_ENDERECO").toString();
-		String numeroEndereco = autGetCurrentParameter( "AUT_NUMERO_ENDERECO").toString();
-		String bairroResidencia = autGetCurrentParameter( "AUT_BAIRRO_ENDERECO").toString();
-		String complementoResidencia = autGetCurrentParameter( "AUT_COMPLEMENTO_ENDERECO").toString();
-		String cidadeResidencia = autGetCurrentParameter( "AUT_CIDADE_ENDERECO").toString();
-		String estadoResidencia = autGetCurrentParameter( "AUT_ESTADO_ENDERECO").toString();
-		String referenciaResidencia = autGetCurrentParameter( "AUT_REFERENCIA_ENDERECO").toString();
-		String tipoImovelResidencia = autGetCurrentParameter( "AUT_TIPO_IMOVEL_RESIDENCIA").toString();
+		String tipoEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_ENDERECO").toString();
+		String cep = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_CEP").toString();
+		String nomeRuaEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_RUA_ENDERECO").toString();
+		String numeroEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_NUMERO_ENDERECO").toString();
+		String bairroResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_BAIRRO_ENDERECO").toString();
+		String complementoResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_COMPLEMENTO_ENDERECO").toString();
+		String cidadeResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_CIDADE_ENDERECO").toString();
+		String estadoResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_ESTADO_ENDERECO").toString();
+		String referenciaResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_REFERENCIA_ENDERECO").toString();
+		String tipoImovelResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_IMOVEL_RESIDENCIA").toString();
 
 		DomListBox listTipoEnd = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoEndereco");
 		DomTextField txtCEPEnd = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.CEP");
@@ -1142,14 +1143,6 @@ public class AUTVACadastros extends AUTVALogin {
 		autInsertScreenByScenario();
 		btCadastroPFAvanc2.click();
 		autInsertScreenByScenario();
-
-		try {
-			//AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-CADASTRO");		
-		}
-		catch(java.lang.Exception e) {
-
-		}
-
 	}
 
 
@@ -1165,16 +1158,17 @@ public class AUTVACadastros extends AUTVALogin {
 		String numCNPJ = "";
 		String numPassPorte = "";
 		autInsertScreenByScenario();
-		AUT_VA_CADASTROS tpCadastroConfig =  (AUT_VA_CADASTROS)autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_CADASTRO");
+		
+		AUT_VA_CADASTROS tpCadastroConfig =  AUT_VA_CADASTROS.valueOf(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_CADASTRO").toString());
 
 		switch(tpCadastroConfig) {
 		case ESTRANGEIRO:{
 			btAddNovoClient.click();
-			numPassPorte = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_PASSAPORTE").toString();
-			System.out.println("AUT INFO: CADASTRO DE CLIENTE : ESTRANGEIRO - PASSA PORTE");
 			AUT_AGENT_SILK4J.<DomCheckBox>find("VA.CadastroClientesDados.ClienteEstrangeiro").check();			
 			numPassPorte = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_PASSAPORTE").toString();
-			AUT_NUMERO_DOC_PASSAPORTE_OUTPUT = numPassPorte;			
+			AUT_NUMERO_DOC_PASSAPORTE_OUTPUT = numPassPorte;
+			autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_PASSAPORTE", numPassPorte);
+			autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_NOME_ESTRANGEIRO","AUT NOME EST: ".concat(numPassPorte));			
 			autCadastrarEstrangeiro();
 
 			break;
@@ -1182,21 +1176,24 @@ public class AUTVACadastros extends AUTVALogin {
 		case FISICA:{
 			btAddNovoClient.click();
 			DomTextField numeroDoc = null;
-			numCPF = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_CPF").toString();
-			System.out.println("AUT INFO: CADASTRO DE CLIENTE : PF - CPF");			
 			numeroDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDocs.NumeroDocumento");
 			numeroDoc.click();
 			numCPF = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_CPF").toString();
 			AUT_NUMERO_DOC_CPF_OUTPUT = numCPF;
+			autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_CPF", numCPF);
+			autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_NOME","AUT NOME PF: ".concat(numCPF));
+			
 			numeroDoc.typeKeys(numCPF);
 			autCadastrarPF();
 			break;
 		}
 		case JURIDICA:{
 			DomTextField txtNumDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaClienteCadastrado.NumeroDocumento");
-
 			numCNPJ = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_CNPJ").toString();
-			AUT_NUMERO_DOC_CNPJ_OUTPUT = numCNPJ;			
+			AUT_NUMERO_DOC_CNPJ_OUTPUT = numCNPJ;
+			autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_CNPJ", numCNPJ);
+			autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_NOME_PJ","AUT NOME PJ: ".concat(numCPF));
+			
 			txtNumDoc.typeKeys(numCNPJ,500);
 
 			btAddNovoClient.click();
@@ -1208,8 +1205,6 @@ public class AUTVACadastros extends AUTVALogin {
 			numeroDoc.setText(numCNPJ);
 			numeroDoc.typeKeys("\n");		
 			autCadastrarPJ();
-			autInsertScreenByScenario();
-
 			break;
 		}		
 		}
@@ -1223,28 +1218,26 @@ public class AUTVACadastros extends AUTVALogin {
 	 * 
 	 */
 
-	@Test
+	
 	public void autInitClientMenuCadastroPF() {
 		autInitWebApplicationVA();
 		autStartLoginDefaultVA();
-		autInsertScreenByScenario();
-		//TIPO PESSOA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_CADASTRO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_CADASTRO", AUT_VA_CADASTROS.FISICA);
-		AUT_VA_CADASTROS opCadastro = (AUT_VA_CADASTROS) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_CADASTRO");
+		
+		AUT_VA_CADASTROS opCadastro = AUT_VA_CADASTROS.FISICA;
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_CADASTRO", opCadastro.toString());
+
+		
+		AUT_VA_TIPO_ENDERECO opTipoEndereco = AUT_VA_TIPO_ENDERECO.RESIDENCIAL;
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_ENDERECO", opTipoEndereco.toString());
 
 
-		//TIPO ENDERECO
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_ENDERECO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_ENDERECO", AUT_VA_TIPO_ENDERECO.COMERCIAL);
-		AUT_VA_TIPO_ENDERECO opTipoEndereco = (AUT_VA_TIPO_ENDERECO) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_ENDERECO");
+		AUT_VA_TIPO_RESIDENCIA opTipoResidencia = AUT_VA_TIPO_RESIDENCIA.CONDOMINIO;		
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_IMOVEL_RESIDENCIA", opTipoResidencia.toString());
 
-
-		//TIPO RESIDENCIA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_IMOVEL_RESIDENCIA");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_IMOVEL_RESIDENCIA", AUT_VA_TIPO_RESIDENCIA.LOJA_OU_SOBRELOJA);
-		AUT_VA_TIPO_RESIDENCIA opTipoResidencia = (AUT_VA_TIPO_RESIDENCIA) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_IMOVEL_RESIDENCIA");		
-
+		AUT_VA_TIPO_CONTATO opTipoContact = AUT_VA_TIPO_CONTATO.CELULAR;
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_TELEFONE", opTipoContact.toString());
+		
+		
 		autCadastrarCliente(opCadastro);
 	}	
 
@@ -1254,23 +1247,20 @@ public class AUTVACadastros extends AUTVALogin {
 		autInitWebApplicationVA();
 		autStartLoginDefaultVA();
 		//TIPO PESSOA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_CADASTRO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_CADASTRO", AUT_VA_CADASTROS.JURIDICA);
-		AUT_VA_CADASTROS opCadastro = (AUT_VA_CADASTROS) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_CADASTRO");
+		AUT_VA_CADASTROS opCadastro = AUT_VA_CADASTROS.JURIDICA;
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_CADASTRO", opCadastro.toString());
 
+		
+		AUT_VA_TIPO_ENDERECO opTipoEndereco = AUT_VA_TIPO_ENDERECO.COMERCIAL;
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_ENDERECO", opTipoEndereco.name());
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_ENDERECO", opTipoEndereco.name());
 
-		//TIPO ENDERECO
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_ENDERECO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_ENDERECO", AUT_VA_TIPO_ENDERECO.COMERCIAL);
-		AUT_VA_TIPO_ENDERECO opTipoEndereco = (AUT_VA_TIPO_ENDERECO) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_ENDERECO");
+		AUT_VA_TIPO_RESIDENCIA opTipoResidencia = AUT_VA_TIPO_RESIDENCIA.DEPOSITO_OU_GALPAO;		
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_IMOVEL_RESIDENCIA", opTipoResidencia.name());
 
+		AUT_VA_TIPO_CONTATO opTipoContact = AUT_VA_TIPO_CONTATO.CELULAR;
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_TELEFONE", opTipoContact.name());
 
-		//TIPO RESIDENCIA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_IMOVEL_RESIDENCIA");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_IMOVEL_RESIDENCIA", AUT_VA_TIPO_RESIDENCIA.LOJA_OU_SOBRELOJA);
-		AUT_VA_TIPO_RESIDENCIA opTipoResidencia = (AUT_VA_TIPO_RESIDENCIA) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_IMOVEL_RESIDENCIA");
-
-		autInsertScreenByScenario();		
 		autCadastrarCliente(opCadastro);
 		try {
 			autLogoutApplication();
@@ -1286,25 +1276,22 @@ public class AUTVACadastros extends AUTVALogin {
 		autInitWebApplicationVA();
 		autStartLoginDefaultVA();
 		//TIPO PESSOA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_CADASTRO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_CADASTRO", AUT_VA_CADASTROS.ESTRANGEIRO);
-		AUT_VA_CADASTROS opCadastro = (AUT_VA_CADASTROS) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_CADASTRO");
+		AUT_VA_CADASTROS opCadastro = AUT_VA_CADASTROS.ESTRANGEIRO;
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_CADASTRO", opCadastro.toString());
+
+		
+		AUT_VA_TIPO_ENDERECO opTipoEndereco = AUT_VA_TIPO_ENDERECO.RESIDENCIAL;
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_ENDERECO", opTipoEndereco.name());
 
 
-		//TIPO ENDERECO
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_ENDERECO");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_ENDERECO", AUT_VA_TIPO_ENDERECO.COMERCIAL);
-		AUT_VA_TIPO_ENDERECO opTipoEndereco = (AUT_VA_TIPO_ENDERECO) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_ENDERECO");
+		AUT_VA_TIPO_RESIDENCIA opTipoResidencia = AUT_VA_TIPO_RESIDENCIA.CASA;		
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_IMOVEL_RESIDENCIA", opTipoResidencia.toString());
 
+		AUT_VA_TIPO_CONTATO opTipoContact = AUT_VA_TIPO_CONTATO.CELULAR;
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_TELEFONE", opTipoContact.name());
 
-		//TIPO RESIDENCIA
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).remove("AUT_TIPO_IMOVEL_RESIDENCIA");
-		autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).put("AUT_TIPO_IMOVEL_RESIDENCIA", AUT_VA_TIPO_RESIDENCIA.LOJA_OU_SOBRELOJA);
-		AUT_VA_TIPO_RESIDENCIA opTipoResidencia = (AUT_VA_TIPO_RESIDENCIA) autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS.toString()).get(1).get("AUT_TIPO_IMOVEL_RESIDENCIA");
-
-		autInsertScreenByScenario();
+		
 		autCadastrarCliente(opCadastro);
-
 	}	
 
 

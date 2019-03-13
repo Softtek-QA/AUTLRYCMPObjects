@@ -26,6 +26,7 @@ import br.lry.dataflow.AUTDataFlow;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
+import br.stk.framework.db.management.AUTDBProcessDataFlow;
 import br.stk.framework.tests.AUTFWKTestObjectBase;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
@@ -279,7 +280,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		return result * 10000;
 	}
 
-	
+
 	/**
 	 * 
 	 * Recupera o valor do parametro especificado na fonte de dados corrente
@@ -291,11 +292,52 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	public Object autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES tableName,String parameterName) {
 		try {
 			AUTRuntimeExecutionScenario scn = autGetCurrentScenarioRuntime();	
-			scn.AUT_DATAFLOW_SEARCH_KEY = tableName;			
-			AUT_CURRENT_PARAMETERS_TABLE_NAME = tableName;
-			System.out.println("AUT INFO: INIT DOWNLOAD SCENARIO DATA");	
-			
-			return null;
+			java.util.HashMap<Integer,java.util.HashMap<String,Object>> prmOut = null;					
+			if(scn.AUT_SCENARIO_FULL_NAME!=null) {
+				java.util.HashMap<String,Object> parameters = new java.util.HashMap<String,Object>();
+				java.util.regex.Pattern regExp = java.util.regex.Pattern.compile("\\d+");
+				java.util.regex.Matcher verif = regExp.matcher(scn.AUT_PROJECT_ID);
+				if(verif.find()) {
+					Integer id = Integer.parseInt(verif.group());
+					AUTDBProcessDataFlow prc = autGetDataFlowDBIntegration();
+					parameters.put("PROJECT_ID", id);
+					parameters.put("PROCESS_NAME", scn.AUT_SCENARIO_FULL_NAME_RUNTIME);
+					parameters.put("PROCESS_DESCRIPTION", scn.AUT_SCENARIO_FULL_NAME_RUNTIME.concat(" : ").concat(tableName.toString()));
+					parameters.put("COLUMN_NAME_DATAFLOW", parameterName);
+					if(prc.autSelectValuesByParameters(parameters).size() == 0) {		
+						String colRow = "PARAMETER_ROW";
+						java.util.HashMap<Integer,java.util.HashMap<String,Object>> prns = autGetDataFlow().autGetParametersAllLines(tableName);
+						//Adiciona os parametros da tabela específicada no banco de dados
+						for(Integer row : autGetDataFlow().autGetParametersAllLines(tableName).keySet()) {
+							for(String colName : prns.get(row).keySet()) {
+								parameters.put("PARAMETER_NAME", colName);
+								parameters.put("PARAMETER_VALUE", prns.get(row).get(colName).toString());
+								parameters.put("PARAMETER_ROW", colRow);
+								prc.autDBAddParameter(parameters);
+								parameters.remove("PARAMETER_NAME");
+								parameters.remove("PARAMETER_VALUE");
+								parameters.remove("PARAMETER_ROW");						
+							}
+						}
+						//Carrega parametro do banco de dados
+						prmOut = prc.autSelectValuesByParameters(parameters);		
+						return new String((byte[])prmOut.get(0).get("DRV_PARAMETER_VALUE"));
+					}
+					else {
+						//Carrega parametro do banco de dados
+						prmOut = prc.autSelectValuesByParameters(parameters);					
+						return new String((byte[])prmOut.get(0).get("DRV_PARAMETER_VALUE"));
+					}
+				}
+				else {
+					//Carrega parametro configurado localmente no dataflow
+					return autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName).get(1).get(parameterName);
+				}
+			}
+			else {
+				//Carrega parametro configurado localmente no dataflow
+				return autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName).get(1).get(parameterName);
+			}
 		}
 		catch(java.lang.Exception e) {
 			autGetLogManager().logMensagem("AUT ERROR: GET PARAMETER VALUE FROM CURRENT DATATABLE");
@@ -311,6 +353,23 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 
 			AUT_CURRENT_PARAMETERS_TABLE_NAME = tableName;
 
+			AUTRuntimeExecutionScenario scn = autGetCurrentScenarioRuntime();
+			if(scn.AUT_SCENARIO_FULL_NAME!=null) {
+				java.util.regex.Pattern regExp = java.util.regex.Pattern.compile("\\d+");
+				java.util.regex.Matcher verif = regExp.matcher(scn.AUT_PROJECT_ID);
+				if(verif.find()) {
+					Integer id = Integer.parseInt(verif.group());
+					java.util.HashMap<String,Object> parameters = new java.util.HashMap<String,Object>();					
+					parameters.put("PROJECT_ID", id);
+					parameters.put("PROCESS_NAME", scn.AUT_SCENARIO_FULL_NAME_RUNTIME);
+					parameters.put("COLUMN_NAME", br.stk.framework.db.management.AUTDBProcessDataFlow.AUT_SQL_PROPERTIES.DRV_PARAMETER_NAME);
+					parameters.put("COLUMN_TARGET", parameterName);
+					parameters.put("COLUMN_VALUE", value);
+					
+					
+					autGetDataFlowDBIntegration().autUpdateParameters(parameters);					
+				}			
+			}
 			return true;
 		}
 		catch(java.lang.Exception e) {
@@ -321,7 +380,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		}
 	}
 
-	
+
 	/**
 	 * 
 	 * Retorna o valor do parametro especificado na tabela de parametros atualmente selecionada
@@ -333,15 +392,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	 */
 	public Object autGetCurrentParameter(String parameterName) {
 		try {
-			if(AUT_CURRENT_PARAMETERS_TABLE_NAME!=null) {				
-				return autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME,parameterName);
-			}
-			else {
-
-				autGetLogManager().logMensagem("AUT ERROR: GET PARAMETER VALUE: TABLE FROM DATA ORIGIN NOT DEFINE");
-
-				return null;
-			}
+			return autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME, parameterName);			
 		}
 		catch(java.lang.Exception e) {
 			autGetLogManager().logMensagem("AUT ERROR: GET PARAMETER VALUE FROM CURRENT DATATABLE");
