@@ -79,7 +79,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public static AUTFluxoSaidaItens autfluxoSaidaItens;
 	public static AUTCadastroEstrangeiro cadastroEstrangeiro;
 
-	
+
 	public AUTVABaseComponent() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -99,10 +99,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			//autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION");	
 		}
 	}	
-	
+
 	public void autStartLoginDefault() {
 		try {	
-			
+
 			autGetLogManager().logMensagem("AUT ERROR: LOGIN VA APPLICATION: INIT");
 			//autInitWebApplication();			
 			autLogin();
@@ -116,10 +116,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	}	
 
 
-	
+
 	public boolean autLoginVA(Desktop agent, String user, String password) {
 		try {
-			
+
 			autGetLogManager().logMensagem("AUT INFO: INICIANDO LOGIN : APLICACAO VA");
 			autInsertScreenByScenario();
 			agent.<DomTextField>find("VA.Login.Usuario").click();
@@ -131,13 +131,13 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			autGetLogManager().logMensagem("AUT INFO: LOGIN REALIZADO COM SUCESSO");
 			return true;
 		} catch (java.lang.Exception e) {
-			
+
 			autGetLogManager().logMensagem(AUT_TIPO_MSG_LOG.MENSAGEM_INFORMATIVA,
 					"AUT ERROR: LOGIN : APLICACAO VA");
 
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-			
+
 			return false;
 		}
 	}
@@ -146,36 +146,36 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * Realiza login na aplicaÃ§Ã£o - VA
 	 *
 	 */
-	
+
 	public void autLogin() {
-		
+
 		AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
 		AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
-		
+
 		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
 	}
-	
+
 	public void autLoginVA() {
-		
+
 		AUT_USUARIO_LOGIN_DEFAULT = autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN,"AUT_USER").toString();
 		AUT_SENHA_LOGIN_DEFAULT = autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN,"AUT_PASSWORD").toString();
 		AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
 		autInsertScreenByScenario();
 	}
-	
+
 	public void autLogin(String usuario, String senha) {
 		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, usuario.toString(), senha.toString());
 		autInsertScreenByScenario();
 	}
-	
-	
+
+
 	public void autLogoutApplication() {
 		try {
 			AUT_AGENT_SILK4J.<DomElement>find("VA.FinalizarAplicacao.Sair").click();
 			AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Fechar").click();
 		}
 		catch(java.lang.Exception e) {
-			
+
 		}
 		/*try {
 			java.lang.Runtime.getRuntime().exec("cmd /c taskkill /f /t /im chrom*");
@@ -183,7 +183,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		*/
+		 */
 		//Utils.asList(5*1000);
 	}
 
@@ -191,23 +191,23 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 
 		autSetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN, "AUT_USER", usuario);
 		autSetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN, "AUT_PASSWORD", senha);
-		
-		
+
+
 		AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
 		AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
 		autInsertScreenByScenario();
 		AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
 		autInsertScreenByScenario();
 	}
-	
+
 
 	public void autVALogOff() {
 		AUT_AGENT_SILK4J.<DomElement>find("VA.FinalizarAplicacao.Sair").click();
 		AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Fechar").click();
 	}
 
-	
-	
+
+
 	/**
 	 * 
 	 * CAT001
@@ -220,13 +220,13 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			autLogoutApplication();
 		}
 		catch(java.lang.Exception e) {
-			
+
 		}
 
 		autInitConfigurationTelevendas();	
 		autVALogin.autStartLoginVA(parametros);
 	}
-	
+
 
 	public void autInitConfigurationTelevendas() {
 		autInsertScreenByScenario();
@@ -250,7 +250,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		servicoGarantia = new AUTServicoGarantia();
 		autInsertScreenByScenario();
 	}
-	
+
 	/**
 	 * 
 	 * CAT001
@@ -263,16 +263,16 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			autLogoutApplication();
 		}
 		catch(java.lang.Exception e) {
-			
+
 		}
-		
+
 		autInitConfigurationTelevendas();	
 		autInsertScreenByScenario();
 		autLoginBoitata.autStartLoginBoitata(parametros);
 		autInsertScreenByScenario();
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * CMP00003 - Recuperar Carrinho de Compra
@@ -286,8 +286,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 
 	}
-		
-	
+
+
 	/**
 	 * 
 	 * CMP00001 - Recuperar Pedido de Compra
@@ -301,8 +301,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autRecuperacao.autRecuperarPedido(parametros);
 		autInsertScreenByScenario();
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * CMP00001 - Recuperar OrÃ§amento
@@ -316,8 +316,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autRecuperacao.autRecuperarOrcamento(parametros);
 		autInsertScreenByScenario();
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * CMP00003 - Cadastro de PJ
@@ -334,10 +334,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public void CMP00068(HashMap<String, Object> parametros) {
 		autEcommerce.autEcommercePedido(parametros);
 	}
-	
+
 	public void CMP00069(HashMap<String, Object> parametros) {
 		autEcommerce.autEcommerceClicaRetira(parametros);
-		
+
 	}
 
 	/**
@@ -347,7 +347,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */
-	
+
 	public <TOutput extends AUTInsercaoItens> TOutput CMP00070(HashMap<String, Object> parametros) {		
 		autInsertScreenByScenario();
 		return (TOutput) autInsercaoItens;
@@ -360,7 +360,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */
-	
+
 	public void CMP00071(HashMap<String, Object> parametros) {
 		autInsertScreenByScenario();
 		edicao.autCopiaPedido(parametros);
@@ -380,7 +380,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		cadastroEstrangeiro.autCadastrarEstrangeiro(parametros);
 		autInsertScreenByScenario();
 	}
-	
+
 
 	/**
 	 * 
@@ -389,14 +389,14 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */
-	
+
 	public void CMP00080(HashMap<String, Object> parametros) {
 		autInsertScreenByScenario();
 		autfluxoSaidaItens.autVAFluxoSaidaItens(parametros);
 		autInsertScreenByScenario();
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * CMP00001 - Inserir item no carrinho de compra pelo Boitata
@@ -409,15 +409,15 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autItem.autBoitataIncluirItemCarrinho(parametros);
 		autInsertScreenByScenario();
 	}
-	
-	
+
+
 	public void CMP00009_1(HashMap<String, Object> parametros) {
 		autInsertScreenByScenario();
 		autItem.autVAIncluirItemNoCarrinho(parametros);
 		autInsertScreenByScenario();
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * CMP00003 - Inserir item no carrinho de compra pelo VA
@@ -430,7 +430,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autItem.autVAIncluirItemNoCarrinho(parametros);
 		autInsertScreenByScenario();
 	}
-	
+
 	/**
 	 * 
 	 * CMP00004 - Criar carrinho
@@ -443,9 +443,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autRecuperacao.autCriarCarrinho();
 		autInsertScreenByScenario();
 	}
-	
-	
-	
+
+
+
 	/**
 	 * 
 	 * CMP00001 - Converter em Pedido
@@ -458,9 +458,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autConversao.autVAConvercaoParaPedido();
 		autInsertScreenByScenario();
 	}
-	
-	
-	
+
+
+
 	/**
 	 * 
 	 * CMP00001 - Converter em Orcamento
@@ -473,11 +473,11 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autConversao.autVAConvercaoParaPedido();
 		autInsertScreenByScenario();
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	/**
 	 * 
 	 * CMP00001 - Busca de Cliente
@@ -490,8 +490,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autBuscaCliente.autBuscarCliente(parametros);
 		autInsertScreenByScenario();
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * CMP00002 - Cadastro de cliente a partir da busca de clientes
@@ -504,8 +504,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autCadastroCliente.autCadastrarCliente(parametros);
 		autInsertScreenByScenario();
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * CMP00001 - Fluxo de Saida
@@ -518,10 +518,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autFluxoSaida.autSelecaoFluxoSaida(parametros);
 		autInsertScreenByScenario();
 	}
-	
 
-	
-	
+
+
+
 	/**
 	 * 
 	 * CMP00002 - CartÃ£o de Credito
@@ -530,13 +530,13 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00039(HashMap<String, Object> parametros) {
-		
+
 		autInsertScreenByScenario();
 
 	}
-		
-		
-	
+
+
+
 	/**
 	 * 
 	 * CMP00001 - Pagamento - VA
@@ -548,8 +548,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 		return (TOutput) autMeiosPagamento;
 	}
-		
-	
+
+
 	/**
 	 * 
 	 * CMP00001 - Realizar logOff VA
@@ -558,8 +558,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public void CMP00022() {
 		autLogOffVA.autRealizarLogOff();
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * CMP00001 - Realizar logOff Boitata
@@ -570,8 +570,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autLogOffBoitata.autRealizarLogOff();
 		autInsertScreenByScenario();
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * CMP00003 - Busca de pedido para AprovaÃ§Ã£o Antifraude ou Desconto
@@ -584,8 +584,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 
 
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * CMP00001 - Finalizar compra no sistema BoitatÃ¡
@@ -599,9 +599,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 		return (TOutput) autLogFinalizarPedidoVA;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * 
 	 * CMP00001 - SeleÃ§Ã£o de loja Televendas VA
@@ -614,8 +614,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autSelecaoLojaVA.autSelecaoDeLoja(parametros);
 		autInsertScreenByScenario();
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * CMP00001 - SeleÃ§Ã£o de loja Televendas Boitata
@@ -626,8 +626,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public void CMP00037(HashMap<String, Object> parametros) {
 		autSelecaoLojaBoitata.autSelecaoDeLoja(parametros);
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * CMP00004 - ConfirmaÃ§Ã£o de Login
@@ -640,13 +640,13 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autVAConfirmacaoLogin.autConfirmacaoLogin(parametros);
 		autInsertScreenByScenario();
 	}
-	
-	
+
+
 	public void CMP00014_CPF(HashMap<String, Object> parametros){
 		autBuscaCliente.autBuscarClienteCPF(parametros);
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * CMP00003 - Flag Ignorar Antifraude
@@ -657,7 +657,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public void CMP00030(HashMap<String, Object> parametros) {
 		autInsertScreenByScenario();
 	}
-	
+
 	/**
 	 * 
 	 * CMP00001 - reprovação antifraude
@@ -677,22 +677,22 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 	}
 
-	
+
 	public void CMP00044(HashMap<String, Object> parametros) {
 		autInsertScreenByScenario();
 		autMenuLiberacao.autMonitorAumentandoDescontoAprovando(parametros);
 		autInsertScreenByScenario();
 	}
-	
-	
+
+
 	public void CMP00045(HashMap<String, Object> parametros) {
 		autInsertScreenByScenario();
 		autMenuLiberacao.autMonitorAprovandoECancelando(parametros);
 		autInsertScreenByScenario();
 	}
-	
 
-	
+
+
 	/**
 	 * 
 	 * CMP00002 - aprovaÃ§Ã£o comercial
@@ -705,8 +705,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autMenuLiberacao.monitorAprovacaoComercialAprovar(parametros);
 		autInsertScreenByScenario();
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * CMP00001 - Desconto no pedido
@@ -714,23 +714,94 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */
-	
+
 	public <TOutput extends AUTDesconto> TOutput CMP00024(HashMap<String, Object> parametros) {		autInsertScreenByScenario();
-		return (TOutput) autDesconto;
+	return (TOutput) autDesconto;
 	}
-	
-	
+
+
 	public void CMP00017() {
 		servicoGarantia.autServicoGarantia();
 	}
-	
+
 	public void CMP00019(HashMap<String, Object> parametros) {
 		servicoGarantia.agendarServico(parametros);
 	}
-	
+
 	public void CMP00018(HashMap<String, Object> parametros) {
 		servicoGarantia.adicionarGarantia(parametros);
 	}
+
+	/**
+	 * public 
+	 * 
+	 * @param parametros
+	 */
+	public boolean CMP11001(java.util.HashMap<String,Object> parametros) {
+		try {
+			try {
+				java.lang.Runtime.getRuntime().exec("cmd /c taskkill /f /t /im chrome*");
+				com.borland.silktest.jtf.Utils.sleep(9 * 1000);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			autInitWebApplicationBoitata();
+			autLogin(parametros.get("AUT_USER").toString(), parametros.get("AUT_PASSWORD").toString());
+
+			return true;
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	 * 
+	 * Inclui um item padrão no carrinho de compras pelo fluxo do boitatá
+	 * 
+	 * @param parameters - Hash com os parametros de configuração do fluxo de negócio
+	 * 
+	 */
+	public boolean CMP11002(java.util.HashMap<String,Object> parameters) {
+		try {
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011BoitataTelaPedidosInicial.CampoPesquisa").click();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011BoitataTelaPedidosInicial.CampoPesquisa").setFocus();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011BoitataTelaPedidosInicial.CampoPesquisa").typeKeys(parameters.get("AUT_MATERIAL").toString());
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011BoitataTelaPedidosInicial.BotaoPesquisar").click();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011BoitataTelaPedidosInicial.QuantidadeItem").setText(parameters.get("AUT_MATERIAL_QUANTIDADE").toString());		
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011BoitataTelaPedidosInicial.AdicionarItemCarrinho").click();
+			return true;
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return false;
+		}
+	}
 	
-	
+	/**
+	 * 
+	 * Criar carrinho de compra
+	 * 
+	 * @param parameters - Parametros de configuração do fluxo de dados
+	 * 
+	 * @return boolean - True caso o processo seja finalizado com sucesso, false caso contrário
+	 * 
+	 */
+	public boolean CMP11003(java.util.HashMap<String,Object> parameters) {
+		try {
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011TelaInicialVA.CriarCarrinho").click();						
+			return true;
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+
 }
