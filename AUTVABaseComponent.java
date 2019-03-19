@@ -8,6 +8,8 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
+
+import br.lry.components.AUTBaseComponent.AUTStoreItem.AUT_SELECT_PRODUCT_OPTIONS;
 import br.lry.components.va.cat001.AUTConfirmacaoLogin;
 import br.lry.components.va.cat001.AUTLoginBoitata;
 import br.lry.components.va.cat001.AUTVALogin;
@@ -741,7 +743,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		try {
 			try {
 				java.lang.Runtime.getRuntime().exec("cmd /c taskkill /f /t /im chrome*");
-				com.borland.silktest.jtf.Utils.sleep(9 * 1000);
+				com.borland.silktest.jtf.Utils.sleep(5 * 1000);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -793,7 +795,21 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */
 	public boolean CMP11003(java.util.HashMap<String,Object> parameters) {
 		try {
-			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011TelaInicialVA.CriarCarrinho").click();						
+			br.lry.components.AUTBaseComponent.AUTStoreItem item = new br.lry.components.AUTBaseComponent.AUTStoreItem();
+			
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011TelaInicialVA.CriarCarrinho").click();
+			
+			while(item.autGetNextItemStore(AUT_SELECT_PRODUCT_OPTIONS.CONDITION_BY_SERVICE) != null) {
+				AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaInicialLoja.QuantidadeItem").setText("");
+				AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaInicialLoja.QuantidadeItem").setFocus();
+				AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaInicialLoja.QuantidadeItem").typeKeys(item.getQuantidadePadrao().toString());
+				AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.eanOrCode").setText("");
+				AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.eanOrCode").setFocus();
+				AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.eanOrCode").typeKeys(item.getLmMaterial().toString());
+				AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.eanOrCode").typeKeys("\n");
+				autScrollPage();				
+			}
+			
 			return true;
 		}
 		catch(java.lang.Exception e) {

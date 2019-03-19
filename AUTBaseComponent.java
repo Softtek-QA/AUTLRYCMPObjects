@@ -57,7 +57,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	 * @author Softtek-QA
 	 *
 	 */
-	public static abstract class AUTStoreItem extends AUTBaseComponent{
+	public static class AUTStoreItem extends AUTBaseComponent{
 		private Integer ID;       																		//ID EXCLUSIVO DO PRODUTO,
 		private Integer idProject;																		//DESCRIÇÃO DA FRENTE DE PROJETO ASSOCIADO AO PRODUTO
 		private Integer lmMaterial;																		//ID DO PRODUTO
@@ -92,6 +92,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		private String dataInclusao;																	//DEFINE A DATA DE INCLUSÃO DO ITEM
 		private String dataAlteracao;																	//DEFINE A DATA DE ALTERAÇÃO DO ITEM
 		private Boolean estaAtivo;																		//DEFINE SE O ITEM ESTÁ ATIVO PARA UTILIZAÇÃO
+		private Integer quantidadePadrao;
 		private AUTDBProject projDb = null;
 		AUT_SELECT_PRODUCT_OPTIONS filterOptions;
 		java.util.HashMap<Integer,java.util.HashMap<String,Object>> outputData = null;
@@ -130,7 +131,8 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 			 PRD_ITEM_FLUXO_SAIDA,
 			 PRD_DATA_INCLUSAO,
 			 PRD_DATA_ALTERACAO,
-			 PRD_ESTA_ATIVO
+			 PRD_ESTA_ATIVO,
+			 PRD_QUANTIDADE_CARRINHO_PADRAO
 		}
 		
 		
@@ -184,6 +186,20 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		}
 		
 		/**
+		 * @return the quantidadePadrao
+		 */
+		public Integer getQuantidadePadrao() {
+			return quantidadePadrao;
+		}
+
+		/**
+		 * @param quantidadePadrao the quantidadePadrao to set
+		 */
+		public void setQuantidadePadrao(Integer quantidadePadrao) {
+			this.quantidadePadrao = quantidadePadrao;
+		}
+
+		/**
 		 * Retorna as opções de filtro para seleção de itens
 		 * 
 		 * @return AUT_SELECT_PRODUCT_OPTIONS - Filter options
@@ -234,6 +250,8 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 				setDataInclusao(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_DATA_INCLUSAO.toString()).toString());
 				setDataAlteracao(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_DATA_ALTERACAO.toString()).toString());
 				setEstaAtivo((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ESTA_ATIVO.toString()));
+				setQuantidadePadrao(Integer.parseInt(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_QUANTIDADE_CARRINHO_PADRAO.toString()).toString()));
+
 				return true;
 			}
 			catch(java.lang.Exception e) {
@@ -937,6 +955,26 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.GoogleChrome);
 	}
 
+	public boolean autScrollPage() {
+		try {
+			AUT_AGENT_SILK4J.<BrowserWindow>find("//BrowserApplication//BrowserWindow").executeJavaScript("window.scroll(0,100000)");
+			return true;
+		}
+		catch(java.lang.Exception e) {
+			return false;
+		}
+	}
+	
+	public boolean autScrollPage(Integer coordenadaX,Integer coordenadaY) {
+		try {
+			AUT_AGENT_SILK4J.<BrowserWindow>find("//BrowserApplication//BrowserWindow").executeJavaScript(String.format("window.scroll(%s,%s)",coordenadaX,coordenadaY));
+			return true;
+		}
+		catch(java.lang.Exception e) {
+			return false;
+		}
+	}
+	
 	public boolean autSetCurrentDataFlowObject(AUTDataFlow newDataflow) {
 		try {
 
@@ -1069,7 +1107,10 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		return result * 10000;
 	}
 
-
+	public Object autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES tableName,String parameterName) {
+		AUT_CURRENT_PARAMETERS_TABLE_NAME = tableName;
+		return autGetParametersFromDataFlow(tableName,parameterName);
+	}
 	/**
 	 * 
 	 * Recupera o valor do parametro especificado na fonte de dados corrente
@@ -1078,55 +1119,9 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	 * 
 	 * @return Object - Valor do parametro
 	 */
-	public Object autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES tableName,String parameterName) {
+	public Object autGetParametersFromDataFlow(AUT_TABLE_PARAMETERS_NAMES tableName,String parameterName) {
 		try {
-			AUTRuntimeExecutionScenario scn = autGetCurrentScenarioRuntime();	
-			java.util.HashMap<Integer,java.util.HashMap<String,Object>> prmOut = null;					
-			if(scn.AUT_SCENARIO_FULL_NAME!=null) {
-				java.util.HashMap<String,Object> parameters = new java.util.HashMap<String,Object>();
-				java.util.regex.Pattern regExp = java.util.regex.Pattern.compile("\\d+");
-				java.util.regex.Matcher verif = regExp.matcher(scn.AUT_PROJECT_ID);
-				if(verif.find()) {
-					Integer id = Integer.parseInt(verif.group());
-					AUTDBProcessDataFlow prc = autGetDataFlowDBIntegration();
-					parameters.put("PROJECT_ID", id);
-					parameters.put("PROCESS_NAME", scn.AUT_SCENARIO_FULL_NAME_RUNTIME);
-					parameters.put("PROCESS_DESCRIPTION", scn.AUT_SCENARIO_FULL_NAME_RUNTIME.concat(" : ").concat(tableName.toString()));
-					parameters.put("COLUMN_NAME_DATAFLOW", parameterName);
-					if(prc.autSelectValuesByParameters(parameters).size() == 0) {		
-						String colRow = "PARAMETER_ROW";
-						java.util.HashMap<Integer,java.util.HashMap<String,Object>> prns = autGetDataFlow().autGetParametersAllLines(tableName);
-						//Adiciona os parametros da tabela específicada no banco de dados
-						for(Integer row : autGetDataFlow().autGetParametersAllLines(tableName).keySet()) {
-							for(String colName : prns.get(row).keySet()) {
-								parameters.put("PARAMETER_NAME", colName);
-								parameters.put("PARAMETER_VALUE", prns.get(row).get(colName).toString());
-								parameters.put("PARAMETER_ROW", colRow);
-								prc.autDBAddParameter(parameters);
-								parameters.remove("PARAMETER_NAME");
-								parameters.remove("PARAMETER_VALUE");
-								parameters.remove("PARAMETER_ROW");						
-							}
-						}
-						//Carrega parametro do banco de dados
-						prmOut = prc.autSelectValuesByParameters(parameters);		
-						return new String((byte[])prmOut.get(0).get("DRV_PARAMETER_VALUE"));
-					}
-					else {
-						//Carrega parametro do banco de dados
-						prmOut = prc.autSelectValuesByParameters(parameters);					
-						return new String((byte[])prmOut.get(0).get("DRV_PARAMETER_VALUE"));
-					}
-				}
-				else {
-					//Carrega parametro configurado localmente no dataflow
-					return autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName).get(1).get(parameterName);
-				}
-			}
-			else {
-				//Carrega parametro configurado localmente no dataflow
-				return autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName).get(1).get(parameterName);
-			}
+			return autGetDataFlow().autGetParametersFromTable(tableName, parameterName);
 		}
 		catch(java.lang.Exception e) {
 			autGetLogManager().logMensagem("AUT ERROR: GET PARAMETER VALUE FROM CURRENT DATATABLE");
@@ -1136,12 +1131,30 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		}
 	}
 
-
 	public boolean autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES tableName,String parameterName,Object value) {
+		
+		return autSetCurrentParameter(tableName, parameterName, value,1);
+		
+	}
+	
+	public boolean autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES tableName,String parameterName,Object value,Integer rowChange) {
 		try {
 
 			AUT_CURRENT_PARAMETERS_TABLE_NAME = tableName;
-
+			if(autGetDataFlow().AUT_GLOBAL_PARAMETERS.containsKey(tableName.toString())) {
+				if(autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).containsKey(parameterName)) {
+					autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).remove(parameterName);
+					autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).put(parameterName,value.toString());
+					AUTRuntimeExecutionScenario scn = autGetCurrentScenarioRuntime();
+					scn.AUT_DATAFLOW_SEARCH_KEY = tableName;
+					autGetDataFlowDBIntegration().autUploadDataFlow(autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()),scn);
+				}
+				else {
+					autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).put(parameterName,value.toString());
+					autGetDataFlowDBIntegration().autUploadDataFlow(autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()),autGetCurrentScenarioRuntime());
+				}
+			}
+			
 			AUTRuntimeExecutionScenario scn = autGetCurrentScenarioRuntime();
 			if(scn.AUT_SCENARIO_FULL_NAME!=null) {
 				java.util.regex.Pattern regExp = java.util.regex.Pattern.compile("\\d+");
@@ -1154,7 +1167,6 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 					parameters.put("COLUMN_NAME", br.stk.framework.db.management.AUTDBProcessDataFlow.AUT_SQL_PROPERTIES.DRV_PARAMETER_NAME);
 					parameters.put("COLUMN_TARGET", parameterName);
 					parameters.put("COLUMN_VALUE", value);
-
 
 					autGetDataFlowDBIntegration().autUpdateParameters(parameters);					
 				}			
@@ -1191,17 +1203,8 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 
 	public boolean autSetCurrentParameter(String parameterName,Object value) {
 		try {
-			if(AUT_CURRENT_PARAMETERS_TABLE_NAME!=null) {
-				autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_CURRENT_PARAMETERS_TABLE_NAME.toString()).get(1).remove(parameterName);
-				autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(AUT_CURRENT_PARAMETERS_TABLE_NAME.toString()).get(1).put(parameterName, value);
-
-				return true;
-			}
-			else {				
-				autGetLogManager().logMensagem("AUT ERROR: SET PARAMETER VALUE: TABLE FROM DATA ORIGIN NOT DEFINE");
-
-				return false;
-			}
+			autSetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME,parameterName,value);
+			return true;
 		}
 		catch(java.lang.Exception e) {
 			autGetLogManager().logMensagem("AUT ERROR: SET PARAMETER VALUE FROM CURRENT DATATABLE");
