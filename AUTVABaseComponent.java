@@ -90,7 +90,6 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public void autStartLoginDefaultVA() {
 		try {			
 			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: INIT");
-			autInsertScreenByScenario();
 			autInitWebApplicationVA();
 			autLoginVA();
 			autGetLogManager().logMensagem("AUT VA: LOGIN VA APPLICATION: END");
@@ -150,19 +149,26 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */
 
 	public void autLogin() {
-
-		AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
-		AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
+		String usuarioHMC = autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_HMC_LOGIN,"AUT_USER_ID").toString();
+		String senhaHMC = autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_HMC_LOGIN,"AUT_NOVA_SENHA").toString();
+		String usuarioVA = autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN,"AUT_USER").toString();
+		String senhaVA = autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN,"AUT_PASSWORD").toString();
+		
+		AUT_USUARIO_LOGIN_DEFAULT = (usuarioHMC==null ? usuarioVA : usuarioHMC);
+		AUT_SENHA_LOGIN_DEFAULT = (senhaHMC==null ? senhaVA : senhaHMC);
 
 		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
 	}
 
 	public void autLoginVA() {
-
-		AUT_USUARIO_LOGIN_DEFAULT = autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN,"AUT_USER").toString();
-		AUT_SENHA_LOGIN_DEFAULT = autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN,"AUT_PASSWORD").toString();
-		AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
-		autInsertScreenByScenario();
+		String usuarioHMC = autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_HMC_LOGIN,"AUT_USER_ID").toString();
+		String senhaHMC = autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_HMC_LOGIN,"AUT_NOVA_SENHA").toString();
+		String usuarioVA = autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN,"AUT_USER").toString();
+		String senhaVA = autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN,"AUT_PASSWORD").toString();
+		
+		AUT_USUARIO_LOGIN_DEFAULT = (usuarioHMC==null ? usuarioVA : usuarioHMC);
+		AUT_SENHA_LOGIN_DEFAULT = (senhaHMC==null ? senhaVA : senhaHMC);
+		AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);	
 	}
 
 	public void autLogin(String usuario, String senha) {

@@ -1153,11 +1153,9 @@ public class AUTVACadastros extends AUTVALogin {
 		DomElement subMenuCliente = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.SubMenuClientes");
 		subMenuCliente.click();
 		DomElement btAddNovoClient = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesInicial.BotaoAdicionarNovo");
-		autInsertScreenByScenario();
 		String numCPF = "";
 		String numCNPJ = "";
 		String numPassPorte = "";
-		autInsertScreenByScenario();
 		
 		AUT_VA_CADASTROS tpCadastroConfig =  AUT_VA_CADASTROS.valueOf(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_CADASTRO").toString());
 
@@ -1165,7 +1163,7 @@ public class AUTVACadastros extends AUTVALogin {
 		case ESTRANGEIRO:{
 			btAddNovoClient.click();
 			AUT_AGENT_SILK4J.<DomCheckBox>find("VA.CadastroClientesDados.ClienteEstrangeiro").check();			
-			numPassPorte = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_PASSAPORTE").toString();
+			numPassPorte = autGetCurrentParameterDataFlowLocal(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_PASSAPORTE").toString();
 			AUT_NUMERO_DOC_PASSAPORTE_OUTPUT = numPassPorte;
 			autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_PASSAPORTE", numPassPorte);
 			autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_NOME_ESTRANGEIRO","AUT NOME EST: ".concat(numPassPorte));			
@@ -1178,7 +1176,7 @@ public class AUTVACadastros extends AUTVALogin {
 			DomTextField numeroDoc = null;
 			numeroDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDocs.NumeroDocumento");
 			numeroDoc.click();
-			numCPF = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_CPF").toString();
+			numCPF = autGetCurrentParameterDataFlowLocal(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_CPF").toString();
 			AUT_NUMERO_DOC_CPF_OUTPUT = numCPF;
 			autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_CPF", numCPF);
 			autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_NOME","AUT NOME PF: ".concat(numCPF));
@@ -1189,7 +1187,7 @@ public class AUTVACadastros extends AUTVALogin {
 		}
 		case JURIDICA:{
 			DomTextField txtNumDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaClienteCadastrado.NumeroDocumento");
-			numCNPJ = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_CNPJ").toString();
+			numCNPJ = autGetCurrentParameterDataFlowLocal(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_CNPJ").toString();
 			AUT_NUMERO_DOC_CNPJ_OUTPUT = numCNPJ;
 			autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_CNPJ", numCNPJ);
 			autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_NOME_PJ","AUT NOME PJ: ".concat(numCPF));
@@ -1236,8 +1234,7 @@ public class AUTVACadastros extends AUTVALogin {
 
 		AUT_VA_TIPO_CONTATO opTipoContact = AUT_VA_TIPO_CONTATO.CELULAR;
 		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_TELEFONE", opTipoContact.toString());
-		
-		
+				
 		autCadastrarCliente(opCadastro);
 	}	
 

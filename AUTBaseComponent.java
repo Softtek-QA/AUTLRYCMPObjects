@@ -1107,10 +1107,21 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		return result * 10000;
 	}
 
+	public Object autGetCurrentParameterDataFlowLocal(AUT_TABLE_PARAMETERS_NAMES tableName,String parameterName) {
+		AUT_CURRENT_PARAMETERS_TABLE_NAME = tableName;
+		return autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(1).get(parameterName);
+	}
+	
+	public Object autGetCurrentParameterDataFlowLocal(AUT_TABLE_PARAMETERS_NAMES tableName,String parameterName,Integer rowItem) {
+		AUT_CURRENT_PARAMETERS_TABLE_NAME = tableName;
+		return autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName).get(rowItem).get(parameterName);
+	}
+
 	public Object autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES tableName,String parameterName) {
 		AUT_CURRENT_PARAMETERS_TABLE_NAME = tableName;
 		return autGetParametersFromDataFlow(tableName,parameterName);
 	}
+	
 	/**
 	 * 
 	 * Recupera o valor do parametro especificado na fonte de dados corrente
@@ -1141,6 +1152,8 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		try {
 
 			AUT_CURRENT_PARAMETERS_TABLE_NAME = tableName;
+			
+			/**
 			if(autGetDataFlow().AUT_GLOBAL_PARAMETERS.containsKey(tableName.toString())) {
 				if(autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).containsKey(parameterName)) {
 					autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).remove(parameterName);
@@ -1154,6 +1167,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 					autGetDataFlowDBIntegration().autUploadDataFlow(autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()),autGetCurrentScenarioRuntime());
 				}
 			}
+			**/
 			
 			AUTRuntimeExecutionScenario scn = autGetCurrentScenarioRuntime();
 			if(scn.AUT_SCENARIO_FULL_NAME!=null) {
