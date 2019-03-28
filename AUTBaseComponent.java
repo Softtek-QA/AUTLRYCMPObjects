@@ -13,6 +13,7 @@ import org.junit.internal.runners.TestClass;
 
 import com.borland.silktest.jtf.BrowserBaseState;
 import com.borland.silktest.jtf.Desktop;
+import com.borland.silktest.jtf.TestObject;
 import com.borland.silktest.jtf.common.BrowserType;
 import com.borland.silktest.jtf.common.types.ItemIdentifier;
 import com.borland.silktest.jtf.win32.AccessibleControl;
@@ -22,6 +23,7 @@ import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomListBox;
 import com.microfocus.silktest.jtf.*;
 
+import br.lry.components.AUTVABaseComponent.AUTVAFluxosSaidaComponente.FILIAIS;
 import br.lry.dataflow.AUTDataFlow;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem;
@@ -94,7 +96,118 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		private Boolean estaAtivo;																		//DEFINE SE O ITEM ESTÁ ATIVO PARA UTILIZAÇÃO
 		private Integer quantidadePadrao;
 		private AUTDBProject projDb = null;
-		AUT_SELECT_PRODUCT_OPTIONS filterOptions;
+		
+		private boolean autFluxoPedidoAlterarQuantidadePedido = false;
+		private boolean autFluxoPedidoAlterarDeposito = false;
+		private boolean autFluxoPedidoAlterarLoja = false;
+		private boolean autFluxoPedidoIncluirItemCarrinho = false;
+		private boolean autFluxoPedidoExcluirItemCarrinho = false;
+		
+		
+		/**
+		 * @return the autFluxoPedidoExcluirItemCarrinho
+		 */
+		public boolean isAutFluxoPedidoExcluirItemCarrinho() {
+			return autFluxoPedidoExcluirItemCarrinho;
+		}
+		/**
+		 * @param autFluxoPedidoExcluirItemCarrinho the autFluxoPedidoExcluirItemCarrinho to set
+		 */
+		public void setAutFluxoPedidoExcluirItemCarrinho(boolean autFluxoPedidoExcluirItemCarrinho) {
+			this.autFluxoPedidoExcluirItemCarrinho = autFluxoPedidoExcluirItemCarrinho;
+		}
+		/**
+		 * @return the autFluxoPedidoIncluirItemCarrinho
+		 */
+		public boolean isAutFluxoPedidoIncluirItemCarrinho() {
+			return autFluxoPedidoIncluirItemCarrinho;
+		}
+		/**
+		 * @param autFluxoPedidoIncluirItemCarrinho the autFluxoPedidoIncluirItemCarrinho to set
+		 */
+		public void setAutFluxoPedidoIncluirItemCarrinho(boolean autFluxoPedidoIncluirItemCarrinho) {
+			this.autFluxoPedidoIncluirItemCarrinho = autFluxoPedidoIncluirItemCarrinho;
+		}
+
+		private Integer inputFluxoPedidoAlterarQuantidadePedido = 0;
+		private FILIAIS inputFluxoPedidoAlterarDeposito = null;
+		private FILIAIS inputFluxoPedidoAlterarLoja = null;
+		
+		
+		/**
+		 * @return the autFluxoPedidoAlterarQuantidadePedido
+		 */
+		public boolean isAutFluxoPedidoAlterarQuantidadePedido() {
+			return autFluxoPedidoAlterarQuantidadePedido;
+		}
+		/**
+		 * @param autFluxoPedidoAlterarQuantidadePedido the autFluxoPedidoAlterarQuantidadePedido to set
+		 */
+		public void setAutFluxoPedidoAlterarQuantidadePedido(boolean autFluxoPedidoAlterarQuantidadePedido) {
+			this.autFluxoPedidoAlterarQuantidadePedido = autFluxoPedidoAlterarQuantidadePedido;
+		}
+		/**
+		 * @return the autFluxoPedidoAlterarDeposito
+		 */
+		public boolean isAutFluxoPedidoAlterarDeposito() {
+			return autFluxoPedidoAlterarDeposito;
+		}
+		/**
+		 * @param autFluxoPedidoAlterarDeposito the autFluxoPedidoAlterarDeposito to set
+		 */
+		public void setAutFluxoPedidoAlterarDeposito(boolean autFluxoPedidoAlterarDeposito) {
+			this.autFluxoPedidoAlterarDeposito = autFluxoPedidoAlterarDeposito;
+		}
+		/**
+		 * @return the autFluxoPedidoAlterarLoja
+		 */
+		public boolean isAutFluxoPedidoAlterarLoja() {
+			return autFluxoPedidoAlterarLoja;
+		}
+		/**
+		 * @param autFluxoPedidoAlterarLoja the autFluxoPedidoAlterarLoja to set
+		 */
+		public void setAutFluxoPedidoAlterarLoja(boolean autFluxoPedidoAlterarLoja) {
+			this.autFluxoPedidoAlterarLoja = autFluxoPedidoAlterarLoja;
+		}
+		/**
+		 * @return the inputFluxoPedidoAlterarQuantidadePedido
+		 */
+		public Integer getInputFluxoPedidoAlterarQuantidadePedido() {
+			return inputFluxoPedidoAlterarQuantidadePedido;
+		}
+		/**
+		 * @param inputFluxoPedidoAlterarQuantidadePedido the inputFluxoPedidoAlterarQuantidadePedido to set
+		 */
+		public void setInputFluxoPedidoAlterarQuantidadePedido(Integer inputFluxoPedidoAlterarQuantidadePedido) {
+			this.inputFluxoPedidoAlterarQuantidadePedido = inputFluxoPedidoAlterarQuantidadePedido;
+		}
+		/**
+		 * @return the inputFluxoPedidoAlterarDeposito
+		 */
+		public FILIAIS getInputFluxoPedidoAlterarDeposito() {
+			return inputFluxoPedidoAlterarDeposito;
+		}
+		/**
+		 * @param inputFluxoPedidoAlterarDeposito the inputFluxoPedidoAlterarDeposito to set
+		 */
+		public void setInputFluxoPedidoAlterarDeposito(FILIAIS inputFluxoPedidoAlterarDeposito) {
+			this.inputFluxoPedidoAlterarDeposito = inputFluxoPedidoAlterarDeposito;
+		}
+		/**
+		 * @return the inputFluxoPedidoAlterarLoja
+		 */
+		public FILIAIS getInputFluxoPedidoAlterarLoja() {
+			return inputFluxoPedidoAlterarLoja;
+		}
+		/**
+		 * @param inputFluxoPedidoAlterarLoja the inputFluxoPedidoAlterarLoja to set
+		 */
+		public void setInputFluxoPedidoAlterarLoja(FILIAIS inputFluxoPedidoAlterarLoja) {
+			this.inputFluxoPedidoAlterarLoja = inputFluxoPedidoAlterarLoja;
+		}
+
+		AUT_SELECT_PRODUCT_OPTIONS_BY_STORE filterOptions;
 		java.util.HashMap<Integer,java.util.HashMap<String,Object>> outputData = null;
 		Integer indexRow = 0;
 		enum AUT_SQL_PRODUCT_STRUCTURE{
@@ -136,7 +249,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		}
 		
 		
-		public enum AUT_SELECT_PRODUCT_OPTIONS{
+		public static enum AUT_SELECT_PRODUCT_OPTIONS_BY_STORE{
 			CONDITION_BY_ID,
 			CONDITION_BY_LM,
 			CONDITION_BY_WARRANTY,
@@ -185,6 +298,21 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 			}
 		}
 		
+		public <TItem extends AUTStoreItem> AUTStoreItem autCopyItemStore(TItem item) {
+			AUTStoreItem it = new AUTStoreItem();
+			it.setLmMaterial(item.getLmMaterial());
+			it.setLmDescricaoMaterial(item.getLmDescricaoMaterial());
+			it.setEstaAtivo(item.getEstaAtivo());
+			it.setIdProject(item.getIdProject());
+			it.setEGerenciadoPorLote(item.getEGerenciadoPorLote());
+			it.setTemEstoqueCentralDistribuicao(item.getTemEstoqueCentralDistribuicao());
+			it.setTemServico(item.getTemServico());
+			it.setTemGarantia(item.getTemGarantia());
+			it.setTemLoteUnico(item.getTemLoteUnico());
+			it.setTemMultiplosLotes(item.getTemMultiplosLotes());
+			it.setLmNomeMaterial(item.getLmNomeMaterial());
+			return it;
+		}
 		/**
 		 * @return the quantidadePadrao
 		 */
@@ -204,7 +332,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		 * 
 		 * @return AUT_SELECT_PRODUCT_OPTIONS - Filter options
 		 */
-		public AUT_SELECT_PRODUCT_OPTIONS autGetFilterOptions(){
+		public AUT_SELECT_PRODUCT_OPTIONS_BY_STORE autGetFilterOptions(){
 			return filterOptions;
 		}
 		
@@ -285,8 +413,8 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		 * @return AUTStoreItem - Caso existe registros para o critério especifica, null caso a lista esteja vazia ou não tenha mais registros
 		 * 
 		 */
-		public <TStoreItem extends AUTStoreItem,TOptionCondition extends java.lang.Enum<AUT_SELECT_PRODUCT_OPTIONS>> TStoreItem autGetNextItemStore(AUT_SELECT_PRODUCT_OPTIONS optionFilter) {
-			switch((AUT_SELECT_PRODUCT_OPTIONS)optionFilter) {
+		public <TStoreItem extends AUTStoreItem,TOptionCondition extends java.lang.Enum<AUT_SELECT_PRODUCT_OPTIONS_BY_STORE>> TStoreItem autGetNextItemStore(AUT_SELECT_PRODUCT_OPTIONS_BY_STORE optionFilter) {
+			switch((AUT_SELECT_PRODUCT_OPTIONS_BY_STORE)optionFilter) {
 			case CONDITION_BY_SERVICE:{
 				return autGetNextItemStore(optionFilter, "");
 			}
@@ -309,7 +437,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 			}
 			
 		}
-		
+			
 		/**
 		 * 
 		 * Retorna o proximo item de loja cadastrado na tabela de dados do sistema
@@ -321,7 +449,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		 * retorna null caso seja o último item da lista ou a lista esteja vazia
 		 *
 		 */
-		public <TStoreItem extends AUTStoreItem,TOptionCondition extends java.lang.Enum<AUT_SELECT_PRODUCT_OPTIONS>> TStoreItem autGetNextItemStore(TOptionCondition conditionByFilter,String parametersByFilter){
+		public <TStoreItem extends AUTStoreItem,TOptionCondition extends java.lang.Enum<AUT_SELECT_PRODUCT_OPTIONS_BY_STORE>> TStoreItem autGetNextItemStore(TOptionCondition conditionByFilter,String parametersByFilter){
 			try {				
 				if(outputData==null || outputData.size()==0) {
 					if(projDb==null) {
@@ -333,11 +461,11 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 					}	
 					
 					
-					String sqlCmd = AUT_SELECT_PRODUCT_OPTIONS.SELECT_ALL_ITEMS.toString();
+					String sqlCmd = AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.SELECT_ALL_ITEMS.toString();
 
-					switch((AUT_SELECT_PRODUCT_OPTIONS)conditionByFilter) {
+					switch((AUT_SELECT_PRODUCT_OPTIONS_BY_STORE)conditionByFilter) {
 					case CONDITION_BY_ID:{
-						sqlCmd = AUT_SELECT_PRODUCT_OPTIONS.SELECT_ALL_ITEMS.toString();
+						sqlCmd = AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.SELECT_ALL_ITEMS.toString();
 						sqlCmd = String.format(sqlCmd.concat(conditionByFilter.toString()),parametersByFilter);
 						outputData = autGetProjectManagerDB().autGetDataTableByProperties(sqlCmd, AUT_SQL_PRODUCT_STRUCTURE.class, new Object[] {});
 						if(outputData.size() > 0) {
@@ -346,7 +474,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 						break;
 					}
 					case CONDITION_BY_LM:{
-						sqlCmd = AUT_SELECT_PRODUCT_OPTIONS.SELECT_ALL_ITEMS.toString();
+						sqlCmd = AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.SELECT_ALL_ITEMS.toString();
 						sqlCmd = String.format(sqlCmd.concat(conditionByFilter.toString()),parametersByFilter);
 						outputData = autGetProjectManagerDB().autGetDataTableByProperties(sqlCmd, AUT_SQL_PRODUCT_STRUCTURE.class, new Object[] {});
 						if(outputData.size() > 0) {
@@ -355,36 +483,36 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 						break;
 					}
 					case SELECT_ALL_ITEMS_WITH_ORDER_LIST:{
-						outputData = autGetProjectManagerDB().autGetDataTableByProperties(AUT_SELECT_PRODUCT_OPTIONS.SELECT_ALL_ITEMS_WITH_ORDER_LIST.toString(), AUT_SQL_PRODUCT_STRUCTURE.class, new Object[] {});						
+						outputData = autGetProjectManagerDB().autGetDataTableByProperties(AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.SELECT_ALL_ITEMS_WITH_ORDER_LIST.toString(), AUT_SQL_PRODUCT_STRUCTURE.class, new Object[] {});						
 						if(outputData.size() > 0) {
 							setCurrentObject();
 						}
 						break;
 					}
 					case MATERIAL:{
-						autGetNextItemStore(AUT_SELECT_PRODUCT_OPTIONS.CONDITION_BY_LM, "%".concat(parametersByFilter.concat("%")));
+						autGetNextItemStore(AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.CONDITION_BY_LM, "%".concat(parametersByFilter.concat("%")));
 						break;
 					}
 					case STORE:{
-						autGetNextItemStore(AUT_SELECT_PRODUCT_OPTIONS.CONDITION_BY_STORE,"%".concat(parametersByFilter).concat("%"));
+						autGetNextItemStore(AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.CONDITION_BY_STORE,"%".concat(parametersByFilter).concat("%"));
 						break;
 					}
 					case CONDITION_BY_WARRANTY:{
-						outputData = autGetProjectManagerDB().autGetDataTableByProperties(AUT_SELECT_PRODUCT_OPTIONS.SELECT_ALL_ITEMS.toString().concat(AUT_SELECT_PRODUCT_OPTIONS.CONDITION_BY_WARRANTY.toString()), AUT_SQL_PRODUCT_STRUCTURE.class, new Object[] {});						
+						outputData = autGetProjectManagerDB().autGetDataTableByProperties(AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.SELECT_ALL_ITEMS.toString().concat(AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.CONDITION_BY_WARRANTY.toString()), AUT_SQL_PRODUCT_STRUCTURE.class, new Object[] {});						
 						if(outputData.size() > 0) {
 							setCurrentObject();
 						}
 						break;
 					}
 					case CONDITION_BY_SERVICE:{
-						outputData = autGetProjectManagerDB().autGetDataTableByProperties(AUT_SELECT_PRODUCT_OPTIONS.SELECT_ALL_ITEMS.toString().concat(AUT_SELECT_PRODUCT_OPTIONS.CONDITION_BY_SERVICE.toString()), AUT_SQL_PRODUCT_STRUCTURE.class, new Object[] {});						
+						outputData = autGetProjectManagerDB().autGetDataTableByProperties(AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.SELECT_ALL_ITEMS.toString().concat(AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.CONDITION_BY_SERVICE.toString()), AUT_SQL_PRODUCT_STRUCTURE.class, new Object[] {});						
 						if(outputData.size() > 0) {
 							setCurrentObject();
 						}
 						break;
 					}
 					case CUSTOM_CONDITION:{
-						sqlCmd = AUT_SELECT_PRODUCT_OPTIONS.SELECT_ALL_ITEMS.toString();
+						sqlCmd = AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.SELECT_ALL_ITEMS.toString();
 						sqlCmd = sqlCmd.concat(parametersByFilter);
 						outputData = autGetProjectManagerDB().autGetDataTableByProperties(sqlCmd, AUT_SQL_PRODUCT_STRUCTURE.class, new Object[] {});
 						if(outputData.size() > 0) {
@@ -393,8 +521,8 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 						break;
 					}
 					case CONDITION_BY_STORE:{
-						sqlCmd = AUT_SELECT_PRODUCT_OPTIONS.SELECT_ALL_ITEMS.toString();
-						sqlCmd = String.format(sqlCmd.concat(conditionByFilter.toString()),parametersByFilter);
+						sqlCmd = AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.SELECT_ALL_ITEMS.toString();
+						sqlCmd = String.format(sqlCmd.concat(conditionByFilter.toString()),"%".concat(parametersByFilter).concat("%"));
 						outputData = autGetProjectManagerDB().autGetDataTableByProperties(sqlCmd, AUT_SQL_PRODUCT_STRUCTURE.class, new Object[] {});
 						if(outputData.size() > 0) {
 							setCurrentObject();
@@ -402,7 +530,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 						break;
 					}
 					default:{
-						outputData = autGetProjectManagerDB().autGetDataTableByProperties(AUT_SELECT_PRODUCT_OPTIONS.SELECT_ALL_ITEMS_WITH_ORDER_LIST.toString(), AUT_SQL_PRODUCT_STRUCTURE.class, new Object[] {});		
+						//outputData = autGetProjectManagerDB().autGetDataTableByProperties(AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.SELECT_ALL_ITEMS_WITH_ORDER_LIST.toString(), AUT_SQL_PRODUCT_STRUCTURE.class, new Object[] {});		
 						break;
 					}
 					}
@@ -938,10 +1066,111 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		}
 	}
 
+	public <TObjectTest extends com.borland.silktest.jtf.xbrowser.DomElement> TObjectTest autSearchObject(TObjectTest container,String elementoJTF,String expressaoPesquisa,String expressaoSelecionarSubItem){
+		java.util.List<TestObject> ltChild = null;
+		java.util.regex.Pattern regExp = java.util.regex.Pattern.compile(expressaoPesquisa);
+		java.util.regex.Pattern regExpChild = java.util.regex.Pattern.compile(expressaoSelecionarSubItem);
+		java.util.regex.Matcher verif = null;
+
+		verif=regExp.matcher(expressaoPesquisa);
+		if(verif.find()) {
+			ltChild = container.findAll(String.format("//%s",elementoJTF));
+			for(TestObject it : ltChild) {
+				Object chObj = it.getProperty("outerHTML");
+				java.util.regex.Matcher verifChild = regExpChild.matcher(chObj.toString());
+				if(verifChild.find()) {					
+					System.out.println(it.getProperty("outerHTML"));
+					DomElement itemChild = (DomElement) it;
+					return (TObjectTest) itemChild;
+				}
+			}
+		}
+
+		
+		return null;
+	}
+	
+	
 	public void autSetMicrosoftEdgeBrowser() {
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.Edge);		
 	}	
 
+	/**
+	 * Retorna a data atual do sistema
+	 * 
+	 * @return String - data atual do sistema
+	 * 
+	 */
+	public String autGetDateNow() {
+		java.util.Calendar cld = java.util.Calendar.getInstance();
+		String dia = (cld.get(cld.DAY_OF_MONTH) < 10 ? String.format("0%s", cld.get(cld.DAY_OF_MONTH)) : cld.get(cld.DAY_OF_MONTH)).toString();
+		String mes = (cld.get(cld.MONTH) < 10 ? String.format("0%s", cld.get(cld.MONTH)) : cld.get(cld.MONTH)).toString();
+		Integer ano = cld.get(cld.YEAR);
+		String data = String.format("%s/%s/%s", dia,mes,ano);
+		
+		return data;
+	}
+	
+	/**
+	 * Retorna a data atual do sistema
+	 * 
+	 * @return String - data atual do sistema
+	 * 
+	 */
+	public String autGetDateNow(String caractereReplaceDate) {
+		return autGetDateNow().replaceAll("/", caractereReplaceDate);
+	}
+	
+	/**
+	 * 
+	 * Retorna a hora atual do sistema
+	 * 
+	 * @return String - Hora atual do sistema
+	 * 
+	 */
+	public String autGetTimeNow() {
+		java.util.Calendar cld = java.util.Calendar.getInstance();
+		String hora = (cld.get(cld.HOUR) < 10 ? String.format("0%s", cld.get(cld.HOUR)) : cld.get(cld.HOUR)).toString();
+		String minuto = (cld.get(cld.MINUTE) < 10 ? String.format("0%s", cld.get(cld.MINUTE)) : cld.get(cld.MINUTE)).toString();
+		String segundo = (cld.get(cld.SECOND) < 10 ? String.format("0%s", cld.get(cld.SECOND)) : cld.get(cld.SECOND)).toString();
+		String time = String.format("%s:%s:%s", hora,minuto,segundo);
+		
+		return time;
+	}
+
+	/**
+	 * 
+	 * Retorna a hora atual do sistema
+	 * 
+	 * @return String - Hora atual do sistema
+	 * 
+	 */
+	public String autGetTimeNow(String caractereReplaceDate) {
+		return autGetTimeNow().replaceAll(":", caractereReplaceDate);
+	}
+	
+	/**
+	 * 
+	 * Retorna a data e hora atual do sistema
+	 * 
+	 * @return String - Hora atual do sistema
+	 * 
+	 */
+	public String autGetDateAndTime() {
+		return autGetDateNow().concat(" ").concat(autGetTimeNow());
+	}
+	
+	/**
+	 * 
+	 * Retorna a data e hora atual do sistema
+	 * 
+	 * @return String - Hora atual do sistema
+	 * 
+	 */
+	public String autGetDateAndTime(String caractereReplaceDate,String caractereReplaceTime) {
+		return autGetDateNow().replaceAll("/", caractereReplaceDate).concat(" ").concat(autGetTimeNow().replaceAll(":", caractereReplaceTime));
+	}
+	
 	public void autSetInternetExplorerBrowser() {
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.InternetExplorer);
 	}
@@ -1153,31 +1382,19 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 
 			AUT_CURRENT_PARAMETERS_TABLE_NAME = tableName;
 			
-			/**
-			if(autGetDataFlow().AUT_GLOBAL_PARAMETERS.containsKey(tableName.toString())) {
-				if(autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).containsKey(parameterName)) {
-					autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).remove(parameterName);
-					autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).put(parameterName,value.toString());
-					AUTRuntimeExecutionScenario scn = autGetCurrentScenarioRuntime();
-					scn.AUT_DATAFLOW_SEARCH_KEY = tableName;
-					autGetDataFlowDBIntegration().autUploadDataFlow(autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()),scn);
-				}
-				else {
-					autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).put(parameterName,value.toString());
-					autGetDataFlowDBIntegration().autUploadDataFlow(autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()),autGetCurrentScenarioRuntime());
-				}
-			}
-			**/
-			
+			/*
 			AUTRuntimeExecutionScenario scn = autGetCurrentScenarioRuntime();
+			scn.AUT_DATAFLOW_SEARCH_KEY=tableName;
+			
 			if(scn.AUT_SCENARIO_FULL_NAME!=null) {
 				java.util.regex.Pattern regExp = java.util.regex.Pattern.compile("\\d+");
 				java.util.regex.Matcher verif = regExp.matcher(scn.AUT_PROJECT_ID);
 				if(verif.find()) {
+					java.lang.Enum op = (java.lang.Enum)scn.AUT_DATAFLOW_SEARCH_KEY;
 					Integer id = Integer.parseInt(verif.group());
 					java.util.HashMap<String,Object> parameters = new java.util.HashMap<String,Object>();					
 					parameters.put("PROJECT_ID", id);
-					parameters.put("PROCESS_NAME", scn.AUT_SCENARIO_FULL_NAME_RUNTIME);
+					parameters.put("PROCESS_NAME", "%".concat(System.getenv("USERDOMAIN")));
 					parameters.put("COLUMN_NAME", br.stk.framework.db.management.AUTDBProcessDataFlow.AUT_SQL_PROPERTIES.DRV_PARAMETER_NAME);
 					parameters.put("COLUMN_TARGET", parameterName);
 					parameters.put("COLUMN_VALUE", value);
@@ -1185,6 +1402,10 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 					autGetDataFlowDBIntegration().autUpdateParameters(parameters);					
 				}			
 			}
+			*/
+			autGetDataFlowDBIntegration().autStartDefaultConnection();
+			
+			autGetDataFlowDBIntegration().autExecSubStatements("update lry.aut_projects_process_datadrivers set drv_parameter_value=? where drv_process_name like ? and drv_parameter_name=?;", new Object[] {value,"%".concat(System.getenv("USERDOMAIN")).concat("%"),parameterName});
 			return true;
 		}
 		catch(java.lang.Exception e) {
@@ -1369,4 +1590,24 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		super();
 	}
 
+	
+	/**
+	 * 
+	 * Altera o conteudo do elemento via SetText + Type
+	 * 
+	 * - Tratamento para parametros com vários caracteres
+	 * 
+	 * @param content - Conteúdo do campo
+	 * @param objTest - Objeto alvo da alteração
+	 * 
+	 */
+	public void autSetContentWebTypeViaSetText(String content,DomElement objTest) {
+		Character chrItem = null;
+		for(Character chr : content.toCharArray()) {
+			chrItem = chr;
+		}
+		objTest.setFocus();
+		objTest.setProperty("value", content.substring(0, content.length()-1));
+		objTest.typeKeys(chrItem.toString());
+	}
 }

@@ -1148,6 +1148,7 @@ public class AUTVACadastros extends AUTVALogin {
 
 
 	public void autCadastrarCliente(AUT_VA_CADASTROS tipoCadastro) {
+		
 		DomElement menuClient = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.MenuPrincipal");
 		menuClient.click();
 		DomElement subMenuCliente = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.SubMenuClientes");
@@ -1156,8 +1157,9 @@ public class AUTVACadastros extends AUTVALogin {
 		String numCPF = "";
 		String numCNPJ = "";
 		String numPassPorte = "";
+		String tpDocCadastro = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_CADASTRO").toString();
 		
-		AUT_VA_CADASTROS tpCadastroConfig =  AUT_VA_CADASTROS.valueOf(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_CADASTRO").toString());
+		AUT_VA_CADASTROS tpCadastroConfig =  AUT_VA_CADASTROS.valueOf(tpDocCadastro);
 
 		switch(tpCadastroConfig) {
 		case ESTRANGEIRO:{
@@ -1218,9 +1220,11 @@ public class AUTVACadastros extends AUTVALogin {
 
 	
 	public void autInitClientMenuCadastroPF() {
+
 		autInitWebApplicationVA();
 		autStartLoginDefaultVA();
-		
+
+		autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_CADASTRO");
 		AUT_VA_CADASTROS opCadastro = AUT_VA_CADASTROS.FISICA;
 		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_CADASTRO", opCadastro.toString());
 
