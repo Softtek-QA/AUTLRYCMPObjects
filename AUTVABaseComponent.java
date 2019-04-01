@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
+import br.lry.components.AUTBaseComponent.AUT_SYNC_EXECUTION_STATE;
 import br.lry.components.AUTBaseComponent.AUTStoreItem.AUT_SELECT_PRODUCT_OPTIONS_BY_STORE;
 import br.lry.components.AUTVABaseComponent.DEPOSITOS;
 import br.lry.components.AUTVABaseComponent.AUTVAFluxosSaidaComponente.AUT_VA_TURNOS_ENTREGA;
@@ -21,6 +22,9 @@ import br.lry.components.AUTVABaseComponent.AUTVAFluxosSaidaComponente.FILIAIS;
 import br.lry.components.AUTVABaseComponent.AUTVAFluxosSaidaComponente.FLUXO_SAIDA_TIPOS;
 import br.lry.components.AUTVABaseComponent.AUTVAFluxosSaidaComponente.TIPOS_RETIRA;
 import br.lry.components.AUTVABaseComponent.AUTVAFluxosSaidaComponente.USAR_DATA_MAIS_PROXIMA;
+import br.lry.components.hmc.AUTHMCBaseServices;
+import br.lry.components.va.AUTVABaseServices;
+import br.lry.components.va.AUTVAGeradorPedido.AUT_VA_FLUXO_SAIDA;
 import br.lry.components.va.cat001.AUTConfirmacaoLogin;
 import br.lry.components.va.cat001.AUTLoginBoitata;
 import br.lry.components.va.cat001.AUTVALogin;
@@ -81,7 +85,15 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public String AUT_USUARIO_LOGIN_DEFAULT = "";
 	public String AUT_SENHA_LOGIN_DEFAULT = "";
 	public static AUTCadastroPJ cadastroPJ;
-
+	//PARA COMPONENTES DE INTEGRAÇÃO
+	public  AUTHMCBaseServices hmc = null;	
+	public  AUTVABaseServices va = null;
+	public  br.lry.components.pdv.AUTPDVBaseServices pdv = null;
+	public  br.lry.components.sap.AUTSAPBaseServices sap = null;
+	public  br.lry.components.safe.AUTSafeBaseServices safe = null;
+	public  br.lry.qa.rsp.pjttrc.entregas.AUTEntregasBase workflow = null;
+	
+	
 	public static AUTVALogin autVALogin;
 	public static AUTBuscarCliente autBuscaCliente;
 	public static AUTLoginBoitata autLoginBoitata;
@@ -137,9 +149,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		AUT_VA_TIPO_FRETE tipoFrete;
 		AUT_VA_TURNOS_ENTREGA turnoEntrega;
 
-		
-		
-				
+
+
+
 		/**
 		 * @return the turnoEntrega
 		 */
@@ -156,8 +168,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			this.turnoEntrega = turnoEntrega;
 		}
 
-		
-		
+
+
 		/**
 		 * @param turnoEntrega the turnoEntrega to set
 		 */
@@ -198,8 +210,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			selectValor(AUT_AGENT_SILK4J.<DomListBox>find(String.format("VA.TL011FluxosDeSaida.//SELECT[@id='deliveryOptionType-*'][%s]",rowIndex)),tipoFrete.toString());
 			this.tipoFrete = tipoFrete;
 		}
-		
-		
+
+
 		public void setTipoFrete(AUT_VA_TIPO_FRETE tipoFrete) {
 			selectValor(AUT_AGENT_SILK4J.<DomListBox>find("VA.TL011FluxosDeSaida.//SELECT[@id='delivery-option-freight']"),tipoFrete.toString());
 			this.tipoFrete = tipoFrete;
@@ -356,7 +368,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			}
 			}
 		}
-		
+
 		/**
 		 * 
 		 * Filial de estoque geral
@@ -423,8 +435,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			}
 			}
 		}
-		
-		
+
+
 		public void setFilialSaidaGeralPorIndexLinha(FILIAIS filialSaidaGeral,Integer rowIndex) {
 			switch(rowIndex) {
 			case 0:{
@@ -484,7 +496,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			}
 		}
 
-		
+
 		public void setDepositosGeralPorIndexLinha(DEPOSITOS depositosGeral,Integer rowIndex) {
 			switch(rowIndex) {
 			case 0:{
@@ -740,17 +752,30 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 
 
 		public void fecharPopupEnderecosParaEntrega() {
-			boolean exibiPopupEnderecos = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TL011PopupEnderecos").exists("PopUp1", 6 * 1000);
-			if(exibiPopupEnderecos) {
+			boolean exibErroConsultaEstoque = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.//BrowserWindow").exists("//DomButton[@textContents='Confirmar']", 5 * 1000);
+			boolean exibErroConsultaEstoqueBotao1 = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.//BrowserWindow").exists("//I[@class='modal-close glyph gl*'][2]", 5 * 1000);
+			boolean exibiCepNaoCadastrado = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TL011PopupEnderecos").exists("//I[@class='modal-close glyph gl*'][4]", 2 * 1000);			
+			boolean exibiPopupEnderecos = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TL011PopupEnderecos").exists("PopUp1", 4 * 1000);
 
+
+			if(exibErroConsultaEstoqueBotao1 || exibErroConsultaEstoque) {
+				AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//I[@class='modal-close glyph gl*'][2]").click();	
+			}
+
+
+			//Verifica se existe um popup informando erro na pesquisa de CEP			
+			if(exibiCepNaoCadastrado) {
+				AUT_AGENT_SILK4J.<DomElement>find("VA.TL011PopupEnderecos.//I[@class='modal-close glyph gl*'][4]").click();		
+			}
+
+
+			//Verifica o popup para pesquisa de endereços
+			if(exibiPopupEnderecos) {				
 				AUT_AGENT_SILK4J.<DomElement>find("VA.TL011PopupEnderecos.PopUp1.//LI[1]").click();				
 				boolean existInfoAdicionais = AUT_AGENT_SILK4J.<DomElement>find("VA.TL011PopupEnderecos.PopUp1").exists("//P[@textContents='Informações adiciona*']", 4 * 1000);
 				if(existInfoAdicionais) {
 					AUT_AGENT_SILK4J.<DomElement>find("VA.TL011PopupEnderecos.BotaoSalvar").click();
-
 				}
-				//AUT_AGENT_SILK4J.<DomElement>find("VA.TL011PopupEnderecos.BotaoFecharPopup").click();	
-
 			}
 		}
 
@@ -781,11 +806,11 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		 */
 		public void initFluxoSaidaEntrega() {
 			if(!startEntregas) {
-				
+
 				setFluxoEntregasGeral();
 				fecharPopupEnderecosParaEntrega();
 				AUT_AGENT_SILK4J.<DomRadioButton>find("VA.TL011FluxosDeSaida.CaixaEntrega").select();
-				
+
 				startEntregas = true;
 			}
 		}
@@ -870,10 +895,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			setTipoFretePorIndexLinha(tipoFrete, row);	
 			setTurnoEntregaPorIndexLinha(turnoEntregaInpupt, row);	
 		}
-		
+
 		public void autConfigPedidos(Integer row,FILIAIS tipo) {
 			row = ++row;
-			
+
 			switch(tipo) {
 			case CENTRAL_DISTRIBUICAO:{
 				autIniciarGeradorPedidosAgendados(row, AUT_VA_TIPO_FRETE.NORMAL, FILIAIS.LJ0014, FILIAIS.LJ0014, DEPOSITOS.C010, AUT_VA_TURNOS_ENTREGA.MANHA);				
@@ -885,8 +910,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			}
 			}
 		}
-		
-		
+
+
 		/**
 		 * 
 		 * 
@@ -903,9 +928,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 				autConfigPedidos(row, tipoPedido);				
 			}
 		}
-		
-		
+
+
 		public void setFluxoEntregasGeral() {
+
 			setTipoFluxoSaida(FLUXO_SAIDA_TIPOS.ENTREGA);
 			selectValor(AUT_AGENT_SILK4J.<DomListBox>find("VA.//BrowserWindow//DomListBox[@id='delivery-option-freight']"),AUT_VA_TIPO_FRETE.NORMAL.toString());
 			selectValor(AUT_AGENT_SILK4J.<DomListBox>find("VA.//BrowserWindow//SELECT[@id='delivery-option-exte*']"),FILIAIS.LJ0045.toString());
@@ -917,7 +943,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//INPUT[@id='deliveryOptionDate']").setText(autGetDateNow());
 			selectValor(AUT_AGENT_SILK4J.<DomListBox>find("VA.//BrowserWindow//SELECT[@id='delivery-option-turn']"));
 		}
-		
+
 		/**
 		 * 
 		 * Cria pedido com o fluxo de entrega padrão
@@ -929,7 +955,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			initFluxoSaidaEntrega();
 
 			Integer row = getIndexRowByItem(material);
-			
+
 			setTipoFrete(AUT_VA_TIPO_FRETE.NORMAL, row);
 			setFilialEstoqueGeral(FILIAIS.LJ0045,row);
 			setFilialSaidaGeral(FILIAIS.LJ0045,row);
@@ -1121,7 +1147,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		}
 
 
-		
+
 		/**
 		 * @param usarDataMaisProxima the usarDataMaisProxima to set
 		 */
@@ -1573,6 +1599,15 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Fechar").click();
 	}
 
+	public void autVALogOff(boolean closeBrowser) {
+		if(closeBrowser) {
+			AUT_AGENT_SILK4J.<DomElement>find("VA.FinalizarAplicacao.Sair").click();
+			AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Fechar").click();
+		}
+		else {
+			AUT_AGENT_SILK4J.<DomElement>find("VA.FinalizarAplicacao.Sair").click();
+		}
+	}
 
 
 	/**
@@ -2106,6 +2141,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */
 	public boolean CMP11001(java.util.HashMap<String,Object> parametros) {
 		try {
+
 			try {
 				java.lang.Runtime.getRuntime().exec("cmd /c taskkill /f /t /im chrome*");
 				com.borland.silktest.jtf.Utils.sleep(5 * 1000);
@@ -2117,7 +2153,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			autInitWebApplicationBoitata();
 			autLogin(parametros.get("AUT_USER").toString(), parametros.get("AUT_PASSWORD").toString());
 			AUT_AGENT_SILK4J.<BrowserApplication>find("VA").exists("TL011BoitataTelaPedidosInicial.CampoPesquisa", 120 * 1000);
-			
+
 			return true;
 		}
 		catch(java.lang.Exception e) {
@@ -2125,11 +2161,50 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			e.printStackTrace();
 			autInitWebApplicationVA();
 			autLogin(parametros.get("AUT_USER").toString(), parametros.get("AUT_PASSWORD").toString());
-			
+
 			return false;
 		}
 	}
 
+	public boolean CMP11001_V2(java.util.HashMap<String,Object> parametros) {
+		try {
+
+			try {
+				java.lang.Runtime.getRuntime().exec("cmd /c taskkill /f /t /im chrome*");
+				com.borland.silktest.jtf.Utils.sleep(5 * 1000);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(parametros.containsKey("AUT_INIT_APP_EXECUTE")) {
+				boolean initApp = (Boolean)parametros.containsKey("AUT_INIT_APP_EXECUTE");
+				if(initApp) {
+					autInitWebApplicationBoitata();
+					autLogin(parametros.get("AUT_USER").toString(), parametros.get("AUT_PASSWORD").toString());
+					AUT_AGENT_SILK4J.<BrowserApplication>find("VA").exists("TL011BoitataTelaPedidosInicial.CampoPesquisa", 60 * 1000);
+				}
+				else {
+					autLogin(parametros.get("AUT_USER").toString(), parametros.get("AUT_PASSWORD").toString());
+					AUT_AGENT_SILK4J.<BrowserApplication>find("VA").exists("TL011BoitataTelaPedidosInicial.CampoPesquisa", 60 * 1000);
+				}
+			}
+			else {
+				autInitWebApplicationBoitata();
+				autLogin(parametros.get("AUT_USER").toString(), parametros.get("AUT_PASSWORD").toString());
+				AUT_AGENT_SILK4J.<BrowserApplication>find("VA").exists("TL011BoitataTelaPedidosInicial.CampoPesquisa", 60 * 1000);
+			}
+
+			return true;
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			autInitWebApplicationVA();
+			autLogin(parametros.get("AUT_USER").toString(), parametros.get("AUT_PASSWORD").toString());
+
+			return false;
+		}
+	}
 	/**
 	 * 
 	 * Inclui um item padrão no carrinho de compras pelo fluxo do boitatá
@@ -2173,7 +2248,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			Integer indexItemExclusaoIndividual = Integer.parseInt(parameters.get("AUT_PARAMETRO_EXCLUSAO_ITENS").toString());
 			String[] indexMultiplosItens = parameters.get("AUT_PARAMETRO_EXCLUSAO_ITENS").toString().split("\\d+");
 			System.out.println("AUT INFO : INICIANDO EXCLUSAO DE ITENS DO CARRINHO DE COMPRA");
-			
+
 			if(opInitCarrinho.equals(AUT_CONFIRMACAO_USUARIO.CONFIRMAR) || opInitCarrinho.equals(AUT_CONFIRMACAO_USUARIO.SIM)) {
 				boolean existItem = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TL011VACarrinhoCompra").exists("BotaoExcluir",5 * 1000);
 				while(existItem) {
@@ -2244,44 +2319,81 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			java.util.List<AUTStoreItem> ltOutItems = new java.util.ArrayList<AUTStoreItem>();
 			br.lry.components.AUTBaseComponent.AUTStoreItem item = new br.lry.components.AUTBaseComponent.AUTStoreItem();
 			AUT_SELECT_PRODUCT_OPTIONS_BY_STORE opSelect = AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.valueOf(parameters.get("AUT_OPCAO_SELECAO_ITEM").toString());
-			
+
 			String parametroConfiguracao = parameters.get("AUT_OPCAO_SELECAO_PARAMETRO").toString();
 			Integer quantMaxItens = Integer.parseInt(parameters.get("AUT_QUANTIDADE_MAXIMA_ITENS").toString());
-			
-			
+
+
 			quantMaxItens = (quantMaxItens > 0 && quantMaxItens != 0? quantMaxItens : -1);
 			Integer contItens = 1;
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011TelaInicialVA.CriarCarrinho").waitForProperty("Visible", true);
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011TelaInicialVA.CriarCarrinho").click();									
 
 			CMP11003(parameters);
-			while(item.autGetNextItemStore(opSelect,(parametroConfiguracao != null ? parametroConfiguracao : "%")) != null) {				
-				if(quantMaxItens > 0 && contItens <= quantMaxItens) {	
-					ltOutItems.add(item.autCopyItemStore(item));
-					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setText("");
-					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setFocus();
-					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").typeKeys(item.getQuantidadePadrao().toString());
-					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setText("");
-					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setFocus();
-					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys(item.getLmMaterial().toString());
-					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys("\n");
+			switch(opSelect) {
+			case CONDITION_BY_STORE:{
+				while(item.autGetNextItemStore(opSelect,(parametroConfiguracao != null ? parametroConfiguracao : "%")) != null) {				
+					if(quantMaxItens > 0 && contItens <= quantMaxItens) {	
+						ltOutItems.add(item.autCopyItemStore(item));
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setText("");
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setFocus();
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").typeKeys(parameters.get("AUT_MATERIAL_QUANTIDADE").toString());
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setText("");
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setFocus();
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys(item.getLmMaterial().toString());
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys("\n");
 
-					autScrollPage();
+						autScrollPage();
+					}
+					else if(quantMaxItens==-1){
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setText("");
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setFocus();
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").typeKeys(item.getQuantidadePadrao().toString());
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setText("");
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setFocus();
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys(item.getLmMaterial().toString());
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys("\n");
+						autScrollPage();					
+					}
+					contItens++;
 				}
-				else if(quantMaxItens==-1){
-					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setText("");
-					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setFocus();
-					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").typeKeys(item.getQuantidadePadrao().toString());
-					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setText("");
-					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setFocus();
-					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys(item.getLmMaterial().toString());
-					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys("\n");
-					autScrollPage();					
-				}
-				contItens++;
+
+				//FIM DO SWITCH CASE
+				break;
 			}
-			
-			
+			case CONDITION_BY_ID:{
+
+				for(AUTStoreItem itemCorrente:CMP11004_V2(parameters)) {				
+					if(quantMaxItens > 0 && contItens <= quantMaxItens) {	
+						ltOutItems.add(itemCorrente.autCopyItemStore(itemCorrente));
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setText("");
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setFocus();
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").typeKeys(parameters.get("AUT_MATERIAL_QUANTIDADE").toString());
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setText("");
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setFocus();
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys(itemCorrente.getLmMaterial().toString());
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys("\n");
+
+						autScrollPage();
+					}
+					else if(quantMaxItens==-1){
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setText("");
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setFocus();
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").typeKeys(itemCorrente.getQuantidadePadrao().toString());
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setText("");
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setFocus();
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys(itemCorrente.getLmMaterial().toString());
+						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys("\n");
+						autScrollPage();					
+					}
+					contItens++;
+				}
+
+				break;
+			}
+			}
+
+
 			return ltOutItems;
 		}
 		catch(java.lang.Exception e) {
@@ -2302,10 +2414,11 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */
 	public java.util.List<AUTStoreItem> CMP11004_V2(java.util.HashMap<String,Object> parameters) {
 		try {
+
 			java.util.List<AUTStoreItem> ltOutItems = new java.util.ArrayList<AUTStoreItem>();
 			br.lry.components.AUTBaseComponent.AUTStoreItem item = new br.lry.components.AUTBaseComponent.AUTStoreItem();
 			AUT_SELECT_PRODUCT_OPTIONS_BY_STORE opSelect = AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.valueOf(parameters.get("AUT_OPCAO_SELECAO_ITEM").toString());
-			
+
 			String parametroConfiguracao = parameters.get("AUT_OPCAO_SELECAO_PARAMETRO").toString();
 			while(item.autGetNextItemStore(opSelect,(parametroConfiguracao != null ? parametroConfiguracao : "%")) != null) {								
 				ltOutItems.add(item.autCopyItemStore(item));
@@ -2331,6 +2444,207 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.Senha").setText(parameters.get("AUT_SENHA_VA").toString());			
 		AUT_AGENT_SILK4J.<DomButton>find("VA.TL011VACarrinhoCompra.Avançar").click();
 	}
+
+	public void CMP11013(java.util.HashMap<String,Object> parameters) {
+		if(parameters.containsKey("AUT_INIT_APP_EXECUTE")) {
+			parameters.remove("AUT_INIT_APP_EXECUTE");
+			parameters.put("AUT_INIT_APP_EXECUTE", false);			
+		}
+		else {
+			parameters.put("AUT_INIT_APP_EXECUTE", false);						
+		}
+		autVALogOff(false);
+		CMP11001_V2(parameters);
+	}
+
+	/**
+	 * Retorna o componente para teste integrado com PDV
+	 * 
+	 * @param parameters - Parametros de configuração do fluxo de pagamento
+	 * 
+	 * @return br.lry.components.pdv.AUTPDVBaseServices - Componente para teste integrado do PDV
+	 */
+	public <TPDVComponent extends br.lry.components.pdv.AUTPDVBaseServices> TPDVComponent CMP11014(java.util.HashMap<String,Object> parameters) {
+		if(pdv==null) {
+			pdv = new br.lry.components.pdv.AUTPDVBaseServices();
+			return (TPDVComponent) pdv;
+		}
+		else {
+			return (TPDVComponent) pdv;
+		}
+	}
+
+	/**
+	 * Componente para teste integrado de SAP
+	 * 
+	 * @param parameters - Parametros de configuração dos fluxos de SAP
+	 * @return br.lry.components.sap.AUTSAPBaseServices - Componente SAP
+	 */
+	public <TSAPComponent extends br.lry.components.sap.AUTSAPBaseServices> TSAPComponent CMP11016(java.util.HashMap<String,Object> parameters) {
+		if(sap==null) {
+			sap = new br.lry.components.sap.AUTSAPBaseServices();
+			return (TSAPComponent) sap;
+		}
+		else {
+			return (TSAPComponent) sap;
+		}
+	}
+	
+	/**
+	 * 
+	 * Executa procedimentos de faturamento no SAP
+	 * 
+	 * @param parameters - Parametros de configuração do SAP
+	 * 
+	 */
+	public void CMP11017(java.util.HashMap<String,Object> parameters) {
+		try {
+			CMP11016(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.EXECUTION);
+			CMP11016(parameters).autSAPFaturarPedido(parameters.get("AUT_NUMERO_PEDIDO").toString());			
+			CMP11016(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.PASSED);
+		}
+		catch(java.lang.Exception e) {
+			CMP11016(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.FAILED);
+		}
+	}
+	
+	
+	/**
+	 * 
+	 * Executa procedimento de devolução no PDV
+	 * 
+	 * @param parameters - Parametros de configuração do fluxo de devolução
+	 * 
+	 */
+	public void CMP11018(java.util.HashMap<String,Object> parameters) {
+		try {
+			CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.EXECUTION);
+			CMP11014(parameters).autStartDevolucaoItem("AUT_NUMERO_PEDIDO",AUT_VA_FLUXO_SAIDA.valueOf(parameters.get("AUT_TIPO_ENTREGA_FLUXO_SAIDA").toString()));
+			if(CMP11014(parameters).autPDVDevolucoes().AUT_STATUS_EXECUTION) {
+				CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.PASSED);
+			}
+			else {
+				CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.FAILED);
+			}	
+		}
+		catch(java.lang.Exception e) {
+			if(CMP11014(parameters).autPDVDevolucoes().AUT_STATUS_EXECUTION) {
+				CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.PASSED);
+			}
+			else {
+				CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.FAILED);
+			}	
+		}
+	}	
+	
+	
+	/**
+	 * Gerencia liberações pedentes - Antifraude
+	 * 
+	 * @param parameters - Parametros de configuração
+	 */
+	public void CMP11019(java.util.HashMap<String,Object> parameters) {
+		AUT_AGENT_SILK4J.<DomElement>find("//BrowserApplication//BrowserWindow//A[@textContents='Liberações Pendentes']").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.MenuPrincipal").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.LiberacoesPendentes").click();
+		AUT_AGENT_SILK4J.<DomRadioButton>find("VA.AtualizacaoDados.//INPUT[@id='antifraud']").select();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.//DIV[@class='caret'][2]").click();
+		AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_ITEM").setFocus();
+		AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_ITEM").click();
+		AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_ITEM").select(parameters.get("AUT_PONTO_VENDA_PEDIDO").toString());
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.//INPUT[@id='idAdvancedNumber']").click();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.//INPUT[@id='idAdvancedNumber']").setFocus();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.//INPUT[@id='idAdvancedNumber']").setText(parameters.get("AUT_NUMERO_PEDIDO").toString());
+
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Buscar").click();
+
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Buscar").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Buscar").click();
+
+	}
+	
+	/**
+	 * 
+	 * Consulta documentos vinculados associados ao numero de pedido
+	 * 
+	 * @param parameters - Parametros de configuração
+	 * 
+	 */
+	public void CMP11020(java.util.HashMap<String,Object> parameters) {
+		try {
+			CMP11021(parameters).autVAConsultas(false).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.EXECUTION);
+			CMP11021(parameters).autVAConsultas().AUTVAConsultaStatusPedidoCompleto(parameters.get("AUT_NUMERO_PEDIDO").toString(), parameters.get("AUT_PEDIDO_STATUS_ESPERADO").toString(),parameters.get("AUT_USER").toString(),parameters.get("AUT_PASSWORD").toString());			
+			CMP11021(parameters).autVAConsultas(false).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.PASSED);
+		}
+		catch(java.lang.Exception e) {
+			CMP11021(parameters).autVAConsultas(false).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.FAILED);
+		}
+	}
+
+	/**
+	 * 
+	 * Consulta status de pedido
+	 * 
+	 * @param parameters - Parametros de configuração
+	 * 
+	 */
+	public void CMP11022(java.util.HashMap<String,Object> parameters) {
+		try {
+			CMP11021(parameters).autVAConsultas(false).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.EXECUTION);
+			CMP11021(parameters).autVAConsultaStatusPedido(parameters.get("AUT_NUMERO_PEDIDO").toString(), parameters.get("AUT_PEDIDO_STATUS_ESPERADO").toString(),parameters.get("AUT_USER").toString(),parameters.get("AUT_PASSWORD").toString());			
+			CMP11021(parameters).autVAConsultas(false).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.PASSED);
+		}
+		catch(java.lang.Exception e) {
+			CMP11021(parameters).autVAConsultas(false).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.FAILED);
+		}
+	}
+
+	
+	/**
+	 * Retorna componente para teste integrado VA
+	 * 
+	 * @param parameters - Parametros de configuração
+	 */
+	public <TVAComponent extends br.lry.components.va.AUTVABaseServices> TVAComponent CMP11021(java.util.HashMap<String,Object> parameters) {
+		if(va==null) {
+			va = new br.lry.components.va.AUTVABaseServices();
+			return (TVAComponent) va;
+		}
+		else {
+			return (TVAComponent) va;
+		}
+	}
+	
+	
+	/**
+	 * 
+	 *Executa os procedimentos de pagamento do pedido
+	 *
+	 * @param parameters - HashMap parametros de configuração
+	 * 
+	 */
+	public  void CMP11015(java.util.HashMap<String,Object> parameters) {
+		CMP11014(parameters).autPDVPagamentos();
+		try {
+			CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.EXECUTION);	
+			CMP11014(parameters).autStartPagamentoPedido(parameters.get("AUT_NUMERO_PEDIDO").toString(),AUT_VA_FLUXO_SAIDA.valueOf(parameters.get("AUT_TIPO_ENTREGA_FLUXO_SAIDA").toString()));
+			if(CMP11014(parameters).autPDVPagamentos().AUT_STATUS_EXECUTION) {
+				CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.PASSED);	
+			}
+			else {
+				CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.FAILED);	
+			}
+		}
+		catch(java.lang.Exception e) {
+			if(CMP11014(parameters).autPDVPagamentos().AUT_STATUS_EXECUTION) {
+				CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.PASSED);	
+			}
+			else {
+				CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.FAILED);	
+			}		
+		}
+	}
+	
 	/**
 	 * 
 	 * Converte carrinho para pedido de compra - VA
@@ -2410,6 +2724,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011PesquisaClienteLoja.AvancarConfirmaCliente").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011VACarrinhoCompra.Avançar").click();
 
+			boolean existValidMultLotes = AUT_AGENT_SILK4J.<BrowserWindow>find("//BrowserApplication//BrowserWindow").exists("//DomElement[@textContents='Dividir por lotes']", 5  * 1000);
+			if(existValidMultLotes) {
+				AUT_AGENT_SILK4J.<DomElement>find("//BrowserApplication//BrowserWindow//DomElement[@textContents='Dividir por lotes']").click();
+			}
 			return true;
 		}
 		catch(java.lang.Exception e) {
@@ -2444,9 +2762,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			return null;
 		}
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Configura os meios de pagamento para um pedido específico
 	 * 
@@ -2535,7 +2853,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		}
 
 	}
-	
+
 
 	/**
 	 * 
@@ -2567,12 +2885,26 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 				}
 			}
 			switch(opEdit) {
+			case QUANTIDADE_ITEM_QUANT_ADICIONAR_POR_ATRIBUTO:{
+				if(item.isAutFluxoPedidoAlterarQuantidadePedido()) {
+					System.out.println("AUT INFO: ADICIONANDO QUANTIDADE NO ITEM:");
+					System.out.println(item.getLmMaterial());						
+					//DomElement itemList = (DomElement)autSearchObject(items, "DomTextField","class=\"cart-item-content\"", "id=\"input-\\d+\"");
+					//DomTextField itemLM = (DomTextField)autSearchObject(itemList, "DomTextField",item.getLmMaterial().toString(), "id=\"input-\\d+\"");
+
+				}
+				break;
+			}
 			case QUANTIDADE_ITEM_QUANT_ADICIONAR_PADRAO:{
 				for(DomElement itList : items) {
 					if(item.isAutFluxoPedidoAlterarQuantidadePedido()) {
+						//VA.//BrowserWindow//BUTTON[@class='cart-item-remove but*'][2] - Excluir
+						//.//BUTTON[@data-action='sum'][2] - Botao soma
+						//VA.//BrowserWindow//DIV[@class='field addon-right ac*'][2]//INPUT - Quantidade de item
+
 						System.out.println("AUT INFO: ADICIONANDO QUANTIDADE NO ITEM:");
 						System.out.println(item.getLmMaterial());						
-						DomTextField txt = (DomTextField)autSearchObject(itList, "DomTextField",item.getLmMaterial().toString(), "id=\"input-\\d+\"");
+						DomTextField txt = AUT_AGENT_SILK4J.<DomTextField>find("//VA.//BrowserWindow//DIV[@class='field addon-right ac*'][2]//INPUT");
 						txt.scrollIntoView();						
 						txt.setText("");
 						txt.setFocus();

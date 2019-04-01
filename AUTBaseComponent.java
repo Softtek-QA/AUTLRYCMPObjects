@@ -1091,6 +1091,32 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	}
 	
 	
+	public <TObjectTest extends java.util.List<com.borland.silktest.jtf.xbrowser.DomElement>,TChildItem extends com.borland.silktest.jtf.xbrowser.DomElement> TChildItem autSearchObject(TObjectTest container,String elementoJTF,String expressaoPesquisa,String expressaoSelecionarSubItem){
+		java.util.List<TestObject> ltChild = null;
+		java.util.regex.Pattern regExp = java.util.regex.Pattern.compile(expressaoPesquisa);
+		java.util.regex.Pattern regExpChild = java.util.regex.Pattern.compile(expressaoSelecionarSubItem);
+		java.util.regex.Matcher verif = null;
+
+		for(DomElement domItem : container) {
+			verif=regExp.matcher(domItem.getProperty("outerHTML").toString());
+			System.out.println(domItem.getProperty("outerHTML").toString());
+			if(verif.find()) {
+				ltChild = domItem.findAll(String.format("//%s",elementoJTF));
+				for(TestObject it : ltChild) {
+					Object chObj = it.getProperty("outerHTML");
+					java.util.regex.Matcher verifChild = regExpChild.matcher(chObj.toString());
+					if(verifChild.find()) {					
+						System.out.println(it.getProperty("outerHTML"));
+						DomElement itemChild = (DomElement) it;
+						return (TChildItem) itemChild;
+					}
+				}
+			}			
+		}
+
+		
+		return null;
+	}
 	public void autSetMicrosoftEdgeBrowser() {
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.Edge);		
 	}	
