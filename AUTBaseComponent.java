@@ -102,8 +102,27 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		private boolean autFluxoPedidoAlterarLoja = false;
 		private boolean autFluxoPedidoIncluirItemCarrinho = false;
 		private boolean autFluxoPedidoExcluirItemCarrinho = false;
+		private Integer autIndexItemCarrinhoWebPage = null;
 		
 		
+		/**
+		 * 
+		 * Retorna o index do item no carrinho
+		 * 
+		 * @return the autIndexItemCarrinhoWebPage
+		 */
+		public Integer getAutIndexItemCarrinhoWebPage() {
+			return autIndexItemCarrinhoWebPage;
+		}
+		/**
+		 * 
+		 * Altera o index do item no carrinho
+		 * 
+		 * @param autIndexItemCarrinhoWebPage the autIndexItemCarrinhoWebPage to set
+		 */
+		public void setAutIndexItemCarrinhoWebPage(Integer autIndexItemCarrinhoWebPage) {
+			this.autIndexItemCarrinhoWebPage = autIndexItemCarrinhoWebPage;
+		}
 		/**
 		 * @return the autFluxoPedidoExcluirItemCarrinho
 		 */
@@ -209,7 +228,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 
 		AUT_SELECT_PRODUCT_OPTIONS_BY_STORE filterOptions;
 		java.util.HashMap<Integer,java.util.HashMap<String,Object>> outputData = null;
-		Integer indexRow = 0;
+		Integer indexRowCurrentItem = 0;
 		enum AUT_SQL_PRODUCT_STRUCTURE{
 			ID,
 			 PJT_ID,
@@ -336,6 +355,11 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 			return filterOptions;
 		}
 		
+		public Integer setRowIndexFromCurrentItem(Integer newRow) {
+			indexRowCurrentItem=newRow;
+			return indexRowCurrentItem;
+		}
+		
 		/**
 		 * Atualiza os valores do objeto local com os inputs de dados do banco de dados
 		 * 
@@ -344,41 +368,41 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		 */
 		private boolean setCurrentObject() {
 			try {
-				setID(Integer.parseInt(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.ID.toString()).toString()));
-				setIdProject(Integer.parseInt(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PJT_ID.toString()).toString()));
-				setLmMaterial(Integer.parseInt(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ID.toString()).toString()));
-				setLmNomeMaterial(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_NOME.toString()).toString());
-				setLmDescricaoMaterial(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_DESCRICAO.toString()).toString());
-				setLojaMaterial(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_LOJA.toString()).toString());
-				setEUnidadePedidoFracionado((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_FRACIONADO.toString()));
-				setEUnidadePedidoUnitaria((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_UNITARIO.toString()));				
-				setEGerenciadoPorLote((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_CONTROLE_LOTE.toString()));			
-				setEGerenciadoPorLote((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_CONTROLE_LOTE.toString()));
-				setTemMultiplosLotes((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_CONTROLE_LOTE_MULTIPLOS.toString()));
-				setTemLoteUnico((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_CONTROLE_LOTE_UNICO.toString()));
-				setSemLoteAssociado((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_SEM_LOTE_ASSOCIADO.toString()));
-				setSemLoteAssociado((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_SEM_LOTE_ASSOCIADO.toString()));
-				setPrecoBoitata(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_PRECO_BOITATA.toString()).toString());
-				setPrecoEcommerce(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_PRECO_ECOMMERCE.toString()).toString());
-				setPrecoVA(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_PRECO_VA.toString()).toString());
-				setPrecoPDV(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_PRECO_PDV.toString()).toString());
-				setPrecoSAP(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_PRECO_SAP.toString()).toString());
-				setPrecoHMC(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_PRECO_HMC.toString()).toString());
-				setTemServico((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_COM_SERVICO.toString()));
-				setTemGarantia((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_COM_GARANTIA.toString()));
-				setETop0((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_TOP0.toString()));
-				setETop1((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_TOP1.toString()));
-				setETop2((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_TOP2.toString()));
-				setETop3((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_TOP3.toString()));
-				setETop4((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_TOP4.toString()));
-				setETop5((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_TOP5.toString()));
-				setTemEstoqueCentralDistribuicao((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_POSSUI_ESTOQUE_CD.toString()));
-				setTemEstoqueLoja((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_POSSUI_ESTOQUE_LOJA.toString()));
-				setFluxoSaida(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_FLUXO_SAIDA.toString()).toString());
-				setDataInclusao(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_DATA_INCLUSAO.toString()).toString());
-				setDataAlteracao(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_DATA_ALTERACAO.toString()).toString());
-				setEstaAtivo((Boolean) outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ESTA_ATIVO.toString()));
-				setQuantidadePadrao(Integer.parseInt(outputData.get(indexRow).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_QUANTIDADE_CARRINHO_PADRAO.toString()).toString()));
+				setID(Integer.parseInt(outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.ID.toString()).toString()));
+				setIdProject(Integer.parseInt(outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PJT_ID.toString()).toString()));
+				setLmMaterial(Integer.parseInt(outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ID.toString()).toString()));
+				setLmNomeMaterial(outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_NOME.toString()).toString());
+				setLmDescricaoMaterial(outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_DESCRICAO.toString()).toString());
+				setLojaMaterial(outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_LOJA.toString()).toString());
+				setEUnidadePedidoFracionado((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_FRACIONADO.toString()));
+				setEUnidadePedidoUnitaria((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_UNITARIO.toString()));				
+				setEGerenciadoPorLote((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_CONTROLE_LOTE.toString()));			
+				setEGerenciadoPorLote((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_CONTROLE_LOTE.toString()));
+				setTemMultiplosLotes((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_CONTROLE_LOTE_MULTIPLOS.toString()));
+				setTemLoteUnico((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_CONTROLE_LOTE_UNICO.toString()));
+				setSemLoteAssociado((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_SEM_LOTE_ASSOCIADO.toString()));
+				setSemLoteAssociado((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_SEM_LOTE_ASSOCIADO.toString()));
+				setPrecoBoitata(outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_PRECO_BOITATA.toString()).toString());
+				setPrecoEcommerce(outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_PRECO_ECOMMERCE.toString()).toString());
+				setPrecoVA(outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_PRECO_VA.toString()).toString());
+				setPrecoPDV(outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_PRECO_PDV.toString()).toString());
+				setPrecoSAP(outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_PRECO_SAP.toString()).toString());
+				setPrecoHMC(outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_PRECO_HMC.toString()).toString());
+				setTemServico((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_COM_SERVICO.toString()));
+				setTemGarantia((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_COM_GARANTIA.toString()));
+				setETop0((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_TOP0.toString()));
+				setETop1((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_TOP1.toString()));
+				setETop2((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_TOP2.toString()));
+				setETop3((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_TOP3.toString()));
+				setETop4((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_TOP4.toString()));
+				setETop5((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_TOP5.toString()));
+				setTemEstoqueCentralDistribuicao((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_POSSUI_ESTOQUE_CD.toString()));
+				setTemEstoqueLoja((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_POSSUI_ESTOQUE_LOJA.toString()));
+				setFluxoSaida(outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ITEM_FLUXO_SAIDA.toString()).toString());
+				setDataInclusao(outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_DATA_INCLUSAO.toString()).toString());
+				setDataAlteracao(outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_DATA_ALTERACAO.toString()).toString());
+				setEstaAtivo((Boolean) outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_ESTA_ATIVO.toString()));
+				setQuantidadePadrao(Integer.parseInt(outputData.get(indexRowCurrentItem).get(AUT_SQL_PRODUCT_STRUCTURE.PRD_QUANTIDADE_CARRINHO_PADRAO.toString()).toString()));
 
 				return true;
 			}
@@ -393,7 +417,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		public boolean autResetListProductStore() {
 			try {
 				System.out.println("AUT INFO: RESET LIST PRODUCTS");
-				indexRow = 1;
+				indexRowCurrentItem = 1;
 				outputData.clear();
 				return true;
 			}
@@ -536,12 +560,13 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 					}
 
 						
-					indexRow++;
+					indexRowCurrentItem++;
 				}
 				else {
-					indexRow++;			
-					if(outputData.containsKey(indexRow)) {
+								
+					if(outputData.containsKey(indexRowCurrentItem)) {
 						setCurrentObject();
+						indexRowCurrentItem++;
 					}
 					else {
 						return null;
@@ -972,7 +997,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		public String toString() {
 			// TODO Auto-generated method stub
 			String strOut = String.format("INDEX: %s / %s      PROJECT ID: %s : ID : %s : MATERIAL: %s : LOJA: %s : NOME: %s : DESC : %s : É FRAC : %s : É UN : %s : É Ger.Por Lote: %s : Tem Multiplos Lotes: %s : Tem Lote Unico: %s : POSSUI SERVICO: %s : POSSUI GARANTIA: %s",
-					indexRow,outputData.size(),getIdProject(),getID(),getLmMaterial(),getLojaMaterial(),
+					indexRowCurrentItem,outputData.size(),getIdProject(),getID(),getLmMaterial(),getLojaMaterial(),
 					getLmNomeMaterial(),getLmDescricaoMaterial(),
 					getEUnidadePedidoFracionado(),getEUnidadePedidoUnitaria(),
 					getEGerenciadoPorLote(),getTemMultiplosLotes(),getTemLoteUnico(),

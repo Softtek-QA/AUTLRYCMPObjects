@@ -92,8 +92,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public  br.lry.components.sap.AUTSAPBaseServices sap = null;
 	public  br.lry.components.safe.AUTSafeBaseServices safe = null;
 	public  br.lry.qa.rsp.pjttrc.entregas.AUTEntregasBase workflow = null;
-	
-	
+
+
 	public static AUTVALogin autVALogin;
 	public static AUTBuscarCliente autBuscaCliente;
 	public static AUTLoginBoitata autLoginBoitata;
@@ -148,8 +148,33 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 
 		AUT_VA_TIPO_FRETE tipoFrete;
 		AUT_VA_TURNOS_ENTREGA turnoEntrega;
+		Boolean habilitarEncomenda = false;
 
 
+
+		/**
+		 * 
+		 * Habilitar encomenda para item especifico
+		 * 
+		 * 
+		 * @return the habilitarEncomenda
+		 * 
+		 */
+		public Boolean getHabilitarEncomenda() {
+			return habilitarEncomenda;
+		}
+
+
+		/**
+		 * 
+		 * Habilita encomenda para item específico
+		 * 
+		 * @param habilitarEncomenda the habilitarEncomenda to set
+		 * 
+		 */
+		public void setHabilitarEncomenda(Boolean habilitarEncomenda) {
+			habilitarEncomenda = habilitarEncomenda;
+		}
 
 
 		/**
@@ -711,13 +736,14 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			switch(encomendarItem) {
 			case NAO:{
 				if(rowIndex > 0) {
-					AUT_AGENT_SILK4J.<DomCheckBox>find(String.format("VA.TL011FluxosDeSaida.//DomCheckBox[@id='retire-order-%s']",(rowIndex > 0 ? --rowIndex : 0))).uncheck();		
+					AUT_AGENT_SILK4J.<DomCheckBox>find(String.format("VA.TL011FluxosDeSaida.//INPUT[@id='delivery-order-%s']",(rowIndex > 0 ? --rowIndex : 0))).uncheck();		
 				}
 				break;
 			}
 			case SIM:{
 				if(rowIndex > 0) {
-					AUT_AGENT_SILK4J.<DomCheckBox>find(String.format("VA.TL011FluxosDeSaida.//DomCheckBox[@id='retire-order-%s']",(rowIndex > 0 ? --rowIndex : 0))).check();					
+					//VA.//BrowserWindow//INPUT[@id='delivery-order-2']
+					AUT_AGENT_SILK4J.<DomCheckBox>find(String.format("VA.TL011FluxosDeSaida.//INPUT[@id='delivery-order-%s']",(rowIndex > 0 ? --rowIndex : 0))).check();					
 				}
 				break;
 			}
@@ -878,6 +904,15 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		}
 
 		/**
+		 * Seleciona a opção de entrega para um item individual
+		 * 
+		 * @param row
+		 */
+		public void setOpcaoItemEntrega(Integer row) {
+			AUT_AGENT_SILK4J.<DomRadioButton>find(String.format("VA.//BrowserWindow//INPUT[@id='itementrega-%s']",--row)).select();
+		}
+
+		/**
 		 * Cria pedido com fluxo de entrega para central de distribuição
 		 * 
 		 * @param material - Material
@@ -885,15 +920,33 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		public void autIniciarGeradorPedidosAgendados(Integer row,AUT_VA_TIPO_FRETE tipoFrete,FILIAIS filialEstoque,FILIAIS filialSaida,DEPOSITOS deposito,AUT_VA_TURNOS_ENTREGA turnoEntregaInpupt) {
 			autScrollPage();
 			initFluxoSaidaEntrega();
-
+			setOpcaoItemEntrega(row);
 			setTipoFretePorIndexLinha(tipoFrete, row);
-			setFilialEstoqueGeralPorIndexLinha(filialEstoque,row);
+
+			if(getHabilitarEncomenda()) {
+				setEncomendarItem(ENCOMENDA.SIM);
+			}
+			setTipoFretePorIndexLinha(tipoFrete, row);
+
+			if(!getHabilitarEncomenda()) {
+				setFilialEstoqueGeralPorIndexLinha(filialEstoque,row);				
+			}
+
 			setFilialSaidaGeralPorIndexLinha(filialSaida,row);
 			setDepositosGeralPorIndexLinha(deposito,row);				
-			try{setUsarDataMaisProximaPorIndexLinha(USAR_DATA_MAIS_PROXIMA.SIM,row);}catch(java.lang.Exception e) {System.out.println(e.getMessage());e.printStackTrace();}
+			try{
+				if(!getHabilitarEncomenda()) {
+					setUsarDataMaisProximaPorIndexLinha(USAR_DATA_MAIS_PROXIMA.SIM,row);			
+				}
+			}
+			catch(java.lang.Exception e) {
+				System.out.println(e.getMessage());e.printStackTrace();
+				}
 			setTurnoEntregaPorIndexLinha(turnoEntregaInpupt, row);	
 			setTipoFretePorIndexLinha(tipoFrete, row);	
 			setTurnoEntregaPorIndexLinha(turnoEntregaInpupt, row);	
+
+			setHabilitarEncomenda(false);	
 		}
 
 		public void autConfigPedidos(Integer row,FILIAIS tipo) {
@@ -901,11 +954,11 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 
 			switch(tipo) {
 			case CENTRAL_DISTRIBUICAO:{
-				autIniciarGeradorPedidosAgendados(row, AUT_VA_TIPO_FRETE.NORMAL, FILIAIS.LJ0014, FILIAIS.LJ0014, DEPOSITOS.C010, AUT_VA_TURNOS_ENTREGA.MANHA);				
+				autIniciarGeradorPedidosAgendados(row, AUT_VA_TIPO_FRETE.NORMAL, FILIAIS.LJ0014, FILIAIS.LJ0045, DEPOSITOS.C010, AUT_VA_TURNOS_ENTREGA.MANHA);				
 				break;
 			}
 			case LOJA:{
-				autIniciarGeradorPedidosAgendados(row, AUT_VA_TIPO_FRETE.NORMAL, FILIAIS.LJ0045, FILIAIS.LJ0045, DEPOSITOS.C050, AUT_VA_TURNOS_ENTREGA.MANHA);				
+				autIniciarGeradorPedidosAgendados(row, AUT_VA_TIPO_FRETE.NORMAL, FILIAIS.LJ0045, FILIAIS.LJ0045, DEPOSITOS.C010, AUT_VA_TURNOS_ENTREGA.MANHA);				
 				break;
 			}
 			}
@@ -915,18 +968,55 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		/**
 		 * 
 		 * 
-		 * Gera pedidos numa sequencia específica
+		 * Configura o fluxo de saída para todos os itens no fluxo
 		 * 
 		 * 
 		 * - Por Index
 		 * 
 		 */
-		public void autGerarPedidosEntrega(FILIAIS tipoPedido) {
+		public void autConfigurarFluxosSaidaEntrega(FILIAIS tipoPedido) {
 			Integer row = 0;
 			int totItens = getRowsCount();
 			for(row=0;row < totItens;row++) {
 				autConfigPedidos(row, tipoPedido);				
 			}
+		}
+
+		/**
+		 * 
+		 * 
+		 * Configura o fluxo de saída para todos os itens no fluxo
+		 * 
+		 * 
+		 * - Por Index
+		 * 
+		 */
+		public void autConfigurarFluxosSaidaEntrega(FILIAIS fluxoParaTodosOsItens,FILIAIS fluxoParaItensEspecificos,Integer itemInicial,Integer itemFinal) {
+			Integer row = 0;
+			int totItens = getRowsCount();
+			for(row=0;row < totItens;row++) {
+				if(row >= itemInicial && row <= itemFinal) {
+					autConfigPedidos(row, fluxoParaItensEspecificos);
+				}
+				else {
+					autConfigPedidos(row, fluxoParaTodosOsItens);
+				}		
+			}
+		}
+
+
+
+		/**
+		 * 
+		 * 
+		 * Configura o fluxo de saída para todos os itens no fluxo
+		 * 
+		 * 
+		 * - Por Index
+		 * 
+		 */
+		public void autConfigurarFluxosSaidaEntrega(FILIAIS tipoPedido,Integer row) {
+			autConfigPedidos(row, tipoPedido);
 		}
 
 
@@ -2363,29 +2453,20 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			}
 			case CONDITION_BY_ID:{
 
-				for(AUTStoreItem itemCorrente:CMP11004_V2(parameters)) {				
-					if(quantMaxItens > 0 && contItens <= quantMaxItens) {	
-						ltOutItems.add(itemCorrente.autCopyItemStore(itemCorrente));
-						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setText("");
-						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setFocus();
-						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").typeKeys(parameters.get("AUT_MATERIAL_QUANTIDADE").toString());
-						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setText("");
-						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setFocus();
-						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys(itemCorrente.getLmMaterial().toString());
-						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys("\n");
+				//CARREGA OS ITENS DO CATÁLOGO DE PRODUTOS PELO CRITÉRIO DE FILTRO ESPECÍFICO
+				for(AUTStoreItem itemCorrente:CMP11004_V2(parameters)) {		
 
-						autScrollPage();
-					}
-					else if(quantMaxItens==-1){
-						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setText("");
-						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setFocus();
-						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").typeKeys(itemCorrente.getQuantidadePadrao().toString());
-						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setText("");
-						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setFocus();
-						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys(itemCorrente.getLmMaterial().toString());
-						AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys("\n");
-						autScrollPage();					
-					}
+					ltOutItems.add(itemCorrente.autCopyItemStore(itemCorrente));
+					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setText("");
+					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setFocus();
+					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").typeKeys(parameters.get("AUT_MATERIAL_QUANTIDADE").toString());
+					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setText("");
+					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setFocus();
+					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys(itemCorrente.getLmMaterial().toString());
+					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys("\n");
+
+					autScrollPage();
+
 					contItens++;
 				}
 
@@ -2423,6 +2504,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			while(item.autGetNextItemStore(opSelect,(parametroConfiguracao != null ? parametroConfiguracao : "%")) != null) {								
 				ltOutItems.add(item.autCopyItemStore(item));
 			}
+
+
 			System.out.println(ltOutItems.size());
 			return ltOutItems;
 		}
@@ -2489,7 +2572,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			return (TSAPComponent) sap;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * Executa procedimentos de faturamento no SAP
@@ -2507,8 +2590,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			CMP11016(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.FAILED);
 		}
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * Executa procedimento de devolução no PDV
@@ -2536,8 +2619,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			}	
 		}
 	}	
-	
-	
+
+
 	/**
 	 * Gerencia liberações pedentes - Antifraude
 	 * 
@@ -2562,7 +2645,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Buscar").click();
 
 	}
-	
+
 	/**
 	 * 
 	 * Consulta documentos vinculados associados ao numero de pedido
@@ -2599,7 +2682,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		}
 	}
 
-	
+
 	/**
 	 * Retorna componente para teste integrado VA
 	 * 
@@ -2614,8 +2697,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			return (TVAComponent) va;
 		}
 	}
-	
-	
+
+
 	/**
 	 * 
 	 *Executa os procedimentos de pagamento do pedido
@@ -2644,7 +2727,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			}		
 		}
 	}
-	
+
 	/**
 	 * 
 	 * Converte carrinho para pedido de compra - VA
@@ -2880,9 +2963,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 				AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys("\n");
 			}
 			else if(item.isAutFluxoPedidoExcluirItemCarrinho()) {			
-				for(DomElement itList : items) {
-					CMP11003(parameters);
-				}
+				AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.TL011VACarrinhoCompra.//I[@class='glyph glyph-trash-ca*'][%s]",Integer.parseInt(parameters.get("AUT_PARAMETRO_EXCLUSAO_ITENS").toString()))).click();
+				AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TL011VACarrinhoCompra").exists("PopUp1", 5000);
+				AUT_AGENT_SILK4J.<DomElement>find("VA.TL011VACarrinhoCompra.PopUp1").waitForProperty("Visible", true,4 * 1000);
+				AUT_AGENT_SILK4J.<DomElement>find("VA.TL011VACarrinhoCompra.Sim").click();
 			}
 			switch(opEdit) {
 			case QUANTIDADE_ITEM_QUANT_ADICIONAR_POR_ATRIBUTO:{
@@ -2896,20 +2980,18 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 				break;
 			}
 			case QUANTIDADE_ITEM_QUANT_ADICIONAR_PADRAO:{
-				for(DomElement itList : items) {
-					if(item.isAutFluxoPedidoAlterarQuantidadePedido()) {
-						//VA.//BrowserWindow//BUTTON[@class='cart-item-remove but*'][2] - Excluir
-						//.//BUTTON[@data-action='sum'][2] - Botao soma
-						//VA.//BrowserWindow//DIV[@class='field addon-right ac*'][2]//INPUT - Quantidade de item
+				if(item.isAutFluxoPedidoAlterarQuantidadePedido()) {
+					//VA.//BrowserWindow//BUTTON[@class='cart-item-remove but*'][2] - Excluir
+					//.//BUTTON[@data-action='sum'][2] - Botao soma
+					//VA.//BrowserWindow//DIV[@class='field addon-right ac*'][2]//INPUT - Quantidade de item
 
-						System.out.println("AUT INFO: ADICIONANDO QUANTIDADE NO ITEM:");
-						System.out.println(item.getLmMaterial());						
-						DomTextField txt = AUT_AGENT_SILK4J.<DomTextField>find("//VA.//BrowserWindow//DIV[@class='field addon-right ac*'][2]//INPUT");
-						txt.scrollIntoView();						
-						txt.setText("");
-						txt.setFocus();
-						txt.setText(item.getInputFluxoPedidoAlterarQuantidadePedido().toString());						
-					}
+					System.out.println("AUT INFO: ADICIONANDO QUANTIDADE NO ITEM:");
+					System.out.println(item.getLmMaterial());						
+					DomTextField txt = AUT_AGENT_SILK4J.<DomTextField>find(String.format("VA.//BrowserWindow//DIV[@class='field addon-right ac*'][%s]//INPUT",item.getAutIndexItemCarrinhoWebPage()));
+					txt.scrollIntoView();						
+					txt.setText("");
+					txt.setFocus();
+					txt.setText(item.getInputFluxoPedidoAlterarQuantidadePedido().toString());						
 				}
 				break;
 			}
@@ -2922,7 +3004,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 					}
 				}				
 				break;
-			}		
+			}
+			case ALTERAR_CONFIGURACAO_FLUXO_SAIDA:{
+
+			}
 			}
 		}		
 	}

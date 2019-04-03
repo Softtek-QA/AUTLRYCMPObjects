@@ -399,6 +399,7 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 		parametrosConfig.put("AUT_PWD_OPERADOR", dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_PWD_OPERADOR"));
 		parametrosConfig.put("AUT_COORDENADOR", dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_COORDENADOR"));
 		parametrosConfig.put("AUT_FLUXO_SAIDA", fluxoSaida.name());
+		
 		autPDVPagamentos().autStartProcess(parametrosConfig);	
 	}
 	
@@ -485,8 +486,7 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 			
 			@Override
 			public void autEndProcess() {
-				// TODO Auto-generated method stub
-				
+				// TODO Auto-generated method stub				
 			}
 		};
 		autPDVDevolucoes().autStartProcess(parametrosConfig);			
