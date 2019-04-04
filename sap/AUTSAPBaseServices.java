@@ -221,6 +221,55 @@ public class AUTSAPBaseServices extends AUTBaseComponent {
 		}
 	}
 
+	
+	public <TSAPFaturamentos extends br.lry.process.AUTSAP01Faturamentos> TSAPFaturamentos autSAPFaturarPedido(java.util.HashMap<String,Object> parameters) {
+		Integer pedNum = Integer.parseInt(parameters.get("AUT_PEDIDO").toString());
+		AUTSAP01Faturamentos sap = autSAPFaturamentos();
+
+		try {
+			if(parameters.containsKey("AUT_PEDIDO")) {
+				parameters.remove("AUT_PEDIDO");
+				parameters.put("AUT_PEDIDO",pedNum);
+			}
+			else {
+				parameters.put("AUT_PEDIDO",pedNum);
+			}
+
+			sap.autFaturarPedido(parameters, new IAUTSAPProcessExecution() {
+
+				@Override
+				public void autProcessExecution() {
+					// TODO Auto-generated method stub
+					autInsertScreenByScenario();
+				}
+
+				@Override
+				public void autParallelProcess() {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void autInitProcess() {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void autEndProcess() {
+					// TODO Auto-generated method stub
+
+				}
+			});
+
+			return (TSAPFaturamentos) sap;
+		}
+		catch(java.lang.Exception e) {
+			autSAPFaturamentos().autSAPLogout();
+			return null;
+		}
+	}
+
 	/**
 	 * 
 	 * Componente para consulta de estoques

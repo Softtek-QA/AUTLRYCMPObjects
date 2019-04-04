@@ -134,6 +134,22 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 			}
 		}
 		
+		public void autPDVLoginDefault(java.util.HashMap<String,Object> parameters) {
+			try {
+			
+				autGetSharedBaseComponent().autInsertScreenByScenario();
+				String operador = parameters.get("AUT_OPERADOR").toString();
+				String pwd = parameters.get("AUT_PWD_OPERADOR").toString();
+				autPDVStartLogin(operador, pwd);				
+			}
+			catch(java.lang.Exception e) {
+				System.out.println("AUT ERROR : LOGIN PDV DEFAULT");
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+			}
+		}
+		
+		
 		public void autPDVStartLogout(String coordenador,String senha) {
 			AUTBaseComponent bs = new AUTBaseComponent() {};
 			bs.autGetDataFlow().autInitDataFlow();			
@@ -402,7 +418,50 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 		
 		autPDVPagamentos().autStartProcess(parametrosConfig);	
 	}
-	
+
+	public void autStartPagamentoPedido(java.util.HashMap<String,Object> parameters) {
+		String numeroPedido = parameters.get("AUT_NUMERO_PEDIDO").toString();
+		AUT_VA_FLUXO_SAIDA fluxoSaida =  AUT_VA_FLUXO_SAIDA.valueOf(parameters.get("AUT_FLUXO_SAIDA").toString());
+		
+		AUTBaseComponent dt = new AUTBaseComponent() {};
+		autPDVPagamentos().AUT_SYNC_PROCESS_EXECUTION = new AUTPDVSyncProcess() {
+			
+			@Override
+			public void autStartProcess() {
+				// TODO Auto-generated method stub
+				autInsertScreenByScenario();
+			}
+			
+			@Override
+			public void autStartParallelProcess() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void autInitProcess() {
+				// TODO Auto-generated method stub
+				autInsertScreenByScenario();
+			}
+			
+			@Override
+			public void autEndProcess() {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		
+		java.util.HashMap<String,Object> parametrosConfig = new java.util.HashMap<String,Object>();
+		parametrosConfig.put("AUT_MATERIAL", parameters.get("AUT_MATERIAL"));
+		parametrosConfig.put("AUT_PEDIDO", Integer.parseInt(numeroPedido));		
+		parametrosConfig.put("AUT_OPERADOR", parameters.get("AUT_OPERADOR"));
+		parametrosConfig.put("AUT_PWD_OPERADOR", parameters.get("AUT_PWD_OPERADOR"));
+		parametrosConfig.put("AUT_COORDENADOR", parameters.get("AUT_COORDENADOR"));
+		parametrosConfig.put("AUT_FLUXO_SAIDA", fluxoSaida.name());
+		
+		autPDVPagamentos().autStartProcess(parametrosConfig);	
+	}
+
 	public void autStartDevolucaoItem(String numeroPedido) {
 		AUTBaseComponent dt = new AUTBaseComponent() {};
 		autInsertScreenByScenario();
