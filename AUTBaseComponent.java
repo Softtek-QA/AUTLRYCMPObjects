@@ -278,7 +278,8 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 			MATERIAL,
 			STORE,
 			SELECT_ALL_ITEMS,
-			SELECT_ALL_ITEMS_WITH_ORDER_LIST;			
+			SELECT_ALL_ITEMS_WITH_ORDER_LIST,
+			INCLUSAO_PARCIAL_ITENS_CARRINHO_CRIADO;			
 			@Override
 			public String toString() {
 				// TODO Auto-generated method stub

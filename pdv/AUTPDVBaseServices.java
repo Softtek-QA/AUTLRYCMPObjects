@@ -452,6 +452,7 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 		};
 		
 		java.util.HashMap<String,Object> parametrosConfig = new java.util.HashMap<String,Object>();
+			
 		parametrosConfig.put("AUT_MATERIAL", parameters.get("AUT_MATERIAL"));
 		parametrosConfig.put("AUT_PEDIDO", Integer.parseInt(numeroPedido));		
 		parametrosConfig.put("AUT_OPERADOR", parameters.get("AUT_OPERADOR"));
@@ -459,7 +460,9 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 		parametrosConfig.put("AUT_COORDENADOR", parameters.get("AUT_COORDENADOR"));
 		parametrosConfig.put("AUT_FLUXO_SAIDA", fluxoSaida.name());
 		
-		autPDVPagamentos().autStartProcess(parametrosConfig);	
+		autPDVPagamentos().autStartProcess(parametrosConfig);
+		
+		
 	}
 
 	public void autStartDevolucaoItem(String numeroPedido) {
@@ -550,6 +553,38 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 		};
 		autPDVDevolucoes().autStartProcess(parametrosConfig);			
 	}
+
+	
+	
+	public void autStartDevolucaoItem(java.util.HashMap<String,Object> parameters) {
+		
+		autPDVDevolucoes().AUT_SYNC_PROCESS_EXECUTION = new AUTPDVSyncProcess() {			
+			@Override
+			public void autStartProcess() {
+				// TODO Auto-generated method stub
+				autInsertScreenByScenario();
+			}
+			
+			@Override
+			public void autStartParallelProcess() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void autInitProcess() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void autEndProcess() {
+				// TODO Auto-generated method stub				
+			}
+		};
+		autPDVDevolucoes().autStartProcess(parameters);			
+	}
+
 	
 	/**
 	 * 

@@ -93,7 +93,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public  br.lry.components.sap.AUTSAPBaseServices sap = null;
 	public  br.lry.components.safe.AUTSafeBaseServices safe = null;
 	public  br.lry.qa.rsp.pjttrc.entregas.AUTEntregasBase workflow = null;
-
+	br.lry.components.AUTVABaseComponent.AUTVAFormasPagamento autFormasPagamentoGerenciador = null;
 
 	public static AUTVALogin autVALogin;
 	public static AUTBuscarCliente autBuscaCliente;
@@ -120,6 +120,995 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public static AUTFluxoSaidaItens autfluxoSaidaItens;
 	public static AUTCadastroEstrangeiro cadastroEstrangeiro;
 	public AUTVAFluxosSaidaComponente autFluxosSaidaComponenteV2;
+
+
+	/**
+	 * 
+	 * Define os perfis de acesso padrão dos sistemas
+	 * 
+	 * @author Softtek-QA
+	 *
+	 */
+	public static enum AUT_TIPO_ACESSO_LOGIN{
+		USUARIO_LOJA,
+		USUARIO_TELEVENDAS,
+		USUARIO_GERENTE_APROVADOR
+	}
+
+
+	/**
+	 * Lojas ecommerce - Boitata
+	 * 
+	 * @author Softtek-QA
+	 *
+	 */
+	public static enum AUT_BOITATA_LOJAS{
+		SP_SAO_PAULO,
+		SP_RAPOSO_TAVARES,
+		SAO_BERNARDO_CAMPO;		
+		@Override
+		public String toString() {
+			// TODO Auto-generated method stub
+			switch(this) {
+			case SAO_BERNARDO_CAMPO:{				
+				return "Loja | São Bernardo do Campo";
+			}
+			case SP_RAPOSO_TAVARES:{
+				return "Loja | São Bernardo do Campo";
+			}
+			case SP_SAO_PAULO:{
+				return "Loja | São Bernardo do Campo";
+			}
+			}
+			return super.toString();
+		}
+	}
+
+	/**
+	 * 
+	 * Classe para gerenciamento de formas de pagamento
+	 * 
+	 * @author Softtek-QA
+	 *
+	 */
+	public static class AUTVAFormasPagamento <TObject extends com.borland.silktest.jtf.xbrowser.DomElement> extends AUTVABaseComponent{
+		static AUTVAFormasPagamento currentObject=null;
+		static CAMPOS_CONFIGURACAO campoConfiguracao=null;
+		Integer indexItem=0;
+		String valorCompra; //TODAS AS OPÇÕES DE PAGAMENTO
+		METODOS_PAGAMENTO metodoPagamento; //TODOS AS OPÇÕES DE PAGAMENTO
+		PLANOS_PAGAMENTO planoPagamento; //8-FORMAS DE PAGAMENTO - CARTAO + 1 - DINHEIRO
+		String numeroCartao; //Número do cartão
+		String nomeTitular; //Nome do titular
+		String validade; //Validade do cartão
+		String codigoSeguranca;	//Código de Segurança
+		Boolean adicionarValorRestante; //Define se o valor restante para pagamento será utilizado na configuração da forma de pagamento atual
+		Boolean excluirMeioPagamento; //Define a forma de pagamento atual será excluída
+		Boolean naoAlterarMeioPagamentoCaixa; //Define se essa forma de pagamento poderá ser alterada no caixa;
+		Boolean ignorarAntifraude; //Define se essa forma de pagamento poderá ser alterada no caixa;		
+		String codigoValePresente; //Define o vale presente
+		String codigoValeTroca; //Define o vale troca
+		String codigoVoucher; //Define o código do voucher
+
+		TObject valorCompraObject; //TODAS AS OPÇÕES DE PAGAMENTO
+		TObject metodoPagamentoObject; //TODOS AS OPÇÕES DE PAGAMENTO
+		TObject planoPagamentoObject; //8-FORMAS DE PAGAMENTO - CARTAO + 1 - DINHEIRO
+		TObject numeroCartaoObject; //Número do cartão
+		TObject nomeTitularObject; //Nome do titular
+		TObject validadeObject; //Validade do cartão
+		TObject codigoSegurancaObject;	//Código de Segurança
+		TObject adicionarValorRestanteObject; //Define se o valor restante para pagamento será utilizado na configuração da forma de pagamento atual
+		TObject excluirMeioPagamentoObject; //Define a forma de pagamento atual será excluída
+		TObject naoAlterarMeioPagamentoCaixaObject; //Define se essa forma de pagamento poderá ser alterada no caixa;
+		TObject codigoValePresenteObject; //Define o código do vale presente
+		TObject codigoValeTrocaObject; //Define o código do vale troca
+		TObject codigoVoucherObject; //Define o código do voucher
+		PagamentoCartao autPagCartao = null;
+		private Boolean pagarNaLoja;
+
+		/**
+		 * 
+		 * Campos configurados fluxo de saída
+		 * 
+		 * @author Softtek-QA
+		 *
+		 */
+		public static enum CAMPOS_CONFIGURACAO{
+			VALOR_COMPRA,
+			MEIO_PAGAMENTO,
+			PLANO_PAGAMENTO,
+			NUMERO_CARTAO,
+			NOME_TITULAR_CARTAO,
+			DATA_VALIDADE_CARTAO,
+			CODIGO_SEGURANCA,
+			CODIGO_VALE_PRESENTE,
+			CODIGO_VALE_TROCA,
+			CODIDO_VOUCHER,
+			IGNORAR_ANTIFRAUDE,
+			PAGAR_NA_LOJA
+		}
+
+		/**
+		 * Gerencia formas de pagamento com cartão
+		 * 
+		 * @author Administrador
+		 *
+		 */
+		public static class PagamentoCartao{
+			AUTVAFormasPagamento formasPag = null;
+			CAMPOS_CONFIGURACAO cmpConfig = null;
+
+
+			/**
+			 * 
+			 * Altera o campo alvo para edição de conteudo
+			 * 
+			 * @param campo - Campo para edição
+			 * 
+			 */
+			public void setCampoEdicao(CAMPOS_CONFIGURACAO campo) {
+				cmpConfig = campo;
+				inicializar();
+			}
+
+
+			/**
+			 * Retorna o campo alvo da edição
+			 * 
+			 * @return CAMPOS_CONFIGURACAO - Campo alvo da edição
+			 */
+			public CAMPOS_CONFIGURACAO getCampoEdicao() {
+				return cmpConfig;
+			}
+
+
+
+
+			/**
+			 * 
+			 * Executa procedimentos para pagamento com cartão - MASTERCARD
+			 * 
+			 * @param parameters - Parametros de configuração
+			 * 
+			 */
+			public void processarPagamento(java.util.HashMap<String, Object> parameters) {
+				Boolean bFlagLoja = (parameters.get("AUT_PAGAR_NA_LOJA").toString()=="0"? false : true);
+				Boolean bFlagAntFraude = (parameters.get("AUT_IGNORAR_ANTIFRAUDE").toString()== "0" ? false : true);
+
+				setPagarNaLoja(bFlagLoja);
+				setMeioPagamento(METODOS_PAGAMENTO.valueOf(parameters.get("AUT_METODO_PAGAMENTO").toString()));
+				setPlanoPagamento(PLANOS_PAGAMENTO.valueOf(parameters.get("AUT_PLANO_PAGAMENTO").toString()));
+				setNumeroCartao(parameters.get("AUT_NUMERO_CARTAO_PESSOAL").toString());
+				setNomeTitular(parameters.get("AUT_CARTAO_NOME_TITULAR").toString());
+				setValidadeCartao(parameters.get("AUT_CARTAO_DATA_VALIDADE").toString());
+				setCodigoSeguranca(parameters.get("AUT_CARTAO_CODIGO_SEGURANCA").toString());				
+				setIgnorarAntifraude(bFlagAntFraude);				
+
+			}
+
+
+			/**
+			 * 
+			 * Executa procedimentos de inicialização do sistema
+			 * 
+			 */
+			public void inicializar() {
+				switch(getCampoEdicao()) {
+				case VALOR_COMPRA:{
+					//getCurrentObject().setMeioPagamentoObject(AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//DomListBox[@id='payment-method-0']"));										
+					break;
+				}
+				case MEIO_PAGAMENTO:{
+					getCurrentObject().setMeioPagamentoObject(AUT_AGENT_SILK4J.<DomListBox>find("VA.//BrowserWindow//DomListBox[@id='payment-method-0']"));					
+					break;
+				}
+				case PLANO_PAGAMENTO:{
+					getCurrentObject().setPlanoPagamentoObject(AUT_AGENT_SILK4J.<DomListBox>find("VA.//BrowserWindow//DomListBox[@id='payment-plan-0']"));									
+					break;
+				}
+				case NUMERO_CARTAO:{
+					getCurrentObject().setNumeroCartaoObject(AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//DomTextField[@id='payment-card-number-0']"));	
+					break;
+				}
+				case NOME_TITULAR_CARTAO:{
+					getCurrentObject().setNomeTitularObject(AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//DomTextField[@name='paymentModes[0].cardName']"));					
+					break;
+				}
+				case DATA_VALIDADE_CARTAO:{
+					getCurrentObject().setValidadeCartaoObject(AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//DomTextField[@id='payment-card-expiration-0']"));					
+					break;
+				}
+				case CODIGO_SEGURANCA:{
+					getCurrentObject().setCodigoSegurancaObject(AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//DomTextField[@id='payment-card-code-0']"));
+					break;
+				}
+				case IGNORAR_ANTIFRAUDE:{					
+					break;
+				}
+				case PAGAR_NA_LOJA:{
+					break;
+				}
+				}										
+			}
+
+
+			/**
+			 * 
+			 * Alterar valor do pagamento para opção selecionada
+			 * 
+			 * @param valorPagamento - Valor do pagamento
+			 * 
+			 */
+			public void setValorCompra(String valorPagamento) {
+				setCampoEdicao(CAMPOS_CONFIGURACAO.VALOR_COMPRA);
+				getCurrentObject().setValorCompra(valorPagamento);
+			}
+
+			/**
+			 * 
+			 * Altera o meio de pagamento padrão utilizado pelo sistema
+			 *
+			 * 
+			 * @param meioPagamento - Meio de Pagamento
+			 * 
+			 */
+			public void setMeioPagamento(METODOS_PAGAMENTO meioPagamento) {
+				setCampoEdicao(CAMPOS_CONFIGURACAO.MEIO_PAGAMENTO);
+				getCurrentObject().setMeioPagamento(meioPagamento);
+			}
+
+			/**
+			 * 
+			 * Altera o plano de pagamento padrão utilizado pelo sistema
+			 *
+			 * 
+			 * @param meioPagamento - Plano de pagamento
+			 * 
+			 */
+			public void setPlanoPagamento(PLANOS_PAGAMENTO planoPagamento) {
+				setCampoEdicao(CAMPOS_CONFIGURACAO.PLANO_PAGAMENTO);
+				getCurrentObject().setPlanoPagamento(planoPagamento);
+			}
+
+			/**
+			 * 
+			 * Altera o numero do cartao padrão utilizado pelo sistema
+			 *
+			 * 
+			 * @param numeroCartao - Numero do cartao
+			 * 
+			 */
+			public void setNumeroCartao(String numeroCartao) {
+				setCampoEdicao(CAMPOS_CONFIGURACAO.NUMERO_CARTAO);
+				getCurrentObject().setNumeroCartao(numeroCartao);
+			}
+
+			/**
+			 * 
+			 * Altera o nome do titular cartao padrão utilizado pelo sistema
+			 *
+			 * 
+			 * @param numeroCartao - Numero do cartao
+			 * 
+			 */
+			public void setNomeTitular(String nomeTitular) {
+				setCampoEdicao(CAMPOS_CONFIGURACAO.NOME_TITULAR_CARTAO);
+				getCurrentObject().setNomeTitular(nomeTitular);
+			}
+
+			/**
+			 * 
+			 * Altera data de validade do cartao padrão utilizado pelo sistema
+			 *
+			 * 
+			 * @param validadeCartao - Validade do cartao exemplo:04/19
+			 * 
+			 */
+			public void setValidadeCartao(String validadeCartao) {
+				setCampoEdicao(CAMPOS_CONFIGURACAO.DATA_VALIDADE_CARTAO);
+				getCurrentObject().setValidadeCartao(validadeCartao);
+			}
+
+
+			/**
+			 * 
+			 * Altera código de segurança do cartão padrão utilizado pelo sistema
+			 *
+			 * 
+			 * @param validadeCartao - Validade do cartao exemplo:04/19
+			 * 
+			 */
+			public void setCodigoSeguranca(String codigoSegurancaCartao) {
+				setCampoEdicao(CAMPOS_CONFIGURACAO.CODIGO_SEGURANCA);
+				getCurrentObject().setCodigoSeguranca(codigoSegurancaCartao);
+			}
+
+			public void setIgnorarAntifraude(Boolean ignorar) {
+				setCampoEdicao(CAMPOS_CONFIGURACAO.IGNORAR_ANTIFRAUDE);
+				getCurrentObject().setIgnorarAntifraude(ignorar);
+			}
+
+			public void setPagarNaLoja(Boolean ignorar) {
+				setCampoEdicao(CAMPOS_CONFIGURACAO.PAGAR_NA_LOJA);
+				getCurrentObject().setPagarNaLoja(false);
+			}
+
+			/**
+			 * 
+			 * 
+			 * Retorna o objeto corrente para gerencimento das formas de pagamento cadastrados no sistema
+			 * 
+			 * @return AUTVAFormasPagamento - Objeto para gerenciamento
+			 * 
+			 */
+			public AUTVAFormasPagamento getCurrentObject() {
+				if(formasPag==null) {
+					formasPag = getCurrentInstance();
+					return formasPag;
+				}
+				else {
+					return formasPag;
+				}
+			}			
+		}
+
+		/**
+		 * 
+		 * Oções para pagamento em dinheiro
+		 * 
+		 * @author Softtek-QA
+		 *
+		 */
+		public static class PagamentoDinheiro extends AUTVABaseComponent{
+			Integer indexCorrente;
+			AUTVAFormasPagamento formasPag = null;
+
+			/**
+			 * 
+			 * Gerencia as formas de pagamento
+			 * 
+			 * @return AUTVAFormasPagamento - Formas de pagamento
+			 */
+			public AUTVAFormasPagamento getCurrentObject() {
+				if(formasPag==null) {
+					formasPag = getCurrentInstance();
+					return formasPag;
+				}
+				else {
+					return formasPag;
+				}
+			}
+
+			/**
+			 * 
+			 * Inicializa os objectos do meio de pagamento
+			 * 
+			 */
+			public void inicializar() {
+				getCurrentObject().setValorCompraObject(AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DomTextField[@id='payment-value-0']"));
+				getCurrentObject().setMeioPagamentoObject(AUT_AGENT_SILK4J.<DomElement>find("VA.Desconto.//DomListBox[@id='payment-method-0']"));
+				getCurrentObject().setPlanoPagamentoObject(AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DomListBox[@id='payment-plan-0']"));				
+			}
+
+			public void alterarValor(String valorPagamento) {
+
+			}
+		}
+
+		public static enum PLANOS_PAGAMENTO{
+			VALOR_DINAMICO,
+			PARCELA_1X,
+			PARCELA_2X,
+			PARCELA_3X,
+			PARCELA_4X,
+			PARCELA_5X,
+			PARCELA_6X,
+			PARCELA_7X,
+			PARCELA_8X,
+			PARCELA_9X,
+			PARCELA_10X,
+			PARCELA_11X,
+			PARCELA_12X,
+			PARCELA_13X,
+			PARCELA_14X,
+			PARCELA_15X,
+			PARCELA_16X,
+			PARCELA_17X,
+			PARCELA_18X,
+			PARCELA_19X,
+			PARCELA_20X,
+			PARCELA_21X,
+			PARCELA_22X,
+			PARCELA_23X,
+			PARCELA_24X,
+			PARCELA_25X,
+			PARCELA_26X,
+			AVISTA;
+
+			@Override
+			public String toString() {
+				// TODO Auto-generated method stub
+				switch(this) {
+				case AVISTA:{
+					return "A VISTA";
+				}
+				case PARCELA_1X:{
+					return "(?i:1x|1 x)";
+				}
+				case PARCELA_2X:{
+					return "(?i:2x|2 x)";
+				}
+				case PARCELA_3X:{
+					return "(?i:3x|3 x)";
+				}
+				case PARCELA_4X:{
+					return "(?i:4x|4 x)";
+				}
+				case PARCELA_5X:{
+					return "(?i:6x|6 x)";
+				}
+				case PARCELA_6X:{
+					return "(?i:7x|7 x)";
+				}
+				case PARCELA_8X:{
+					return "(?i:8x|8 x)";
+				}
+				case PARCELA_9X:{
+					return "(?i:9x|9 x)";
+				}
+				case PARCELA_10X:{
+					return "(?i:10x|10 x)";
+				}
+				case PARCELA_11X:{
+					return "(?i:11x|11 x)";
+				}
+				case PARCELA_12X:{
+					return "(?i:11x|11 x)";
+				}
+				case PARCELA_13X:{
+					return "(?i:13x|13 x)";
+				}
+				case PARCELA_14X:{
+					return "(?i:14x|14 x)";
+				}
+				case PARCELA_15X:{
+					return "(?i:15x|15 x)";
+				}
+				case PARCELA_16X:{
+					return "(?i:16x|16 x)";
+				}
+				case PARCELA_17X:{
+					return "(?i:17x|17 x)";
+				}
+				case PARCELA_18X:{
+					return "(?i:18x|18 x)";
+				}
+				case PARCELA_19X:{
+					return "(?i:19x|19 x)";
+				}
+				case PARCELA_20X:{
+					return "(?i:20x|20 x)";
+				}
+				case PARCELA_21X:{
+					return "(?i:21x|21 x)";
+				}
+				case PARCELA_22X:{
+					return "(?i:22x|22 x)";
+				}
+				case PARCELA_23X:{
+					return "(?i:23x|23 x)";
+				}
+				case PARCELA_24X:{
+					return "(?i:24x|24 x)";
+				}
+				case PARCELA_25X:{
+					return "(?i:25x|25 x)";
+				}
+				case PARCELA_26X:{
+					return "(?i:26x|26 x)";
+				}
+				}
+				return super.toString();
+			}
+		}
+		/**
+		 * 
+		 * Opções de pagamento
+		 * 
+		 * @author Softtek-QA
+		 *
+		 */
+		public static enum METODOS_PAGAMENTO{
+			VALOR_DINAMICO,
+			ELO_CREDITO,
+			MASTERCARD,
+			HIPERCARD,
+			CARTÃO_PROPRIO,
+			C_CREDITO,
+			DINNERS,
+			DINHEIRO,
+			AMERICAN_EXPRESS,
+			VOUCHER,
+			VISA,
+			VALE_PRESENTE,
+			VALE_TROCA;
+
+			@Override
+			public String toString() {
+				// TODO Auto-generated method stub
+				switch(this) {
+				case AMERICAN_EXPRESS:{
+					return "AMERICAN EXPRESS";
+				}
+				case C_CREDITO:{
+					return "C. CRÉDITO";
+				}
+				case CARTÃO_PROPRIO:{
+					return "CARTÃO PRÓPRIO";
+				}
+				case DINHEIRO:{
+					return "DINHEIRO";
+				}
+				case DINNERS:{
+					return "DINNERS";
+				}
+				case ELO_CREDITO:{
+					return "ELO CRÉDITO";
+				} 
+				case HIPERCARD:{
+					return "HIPERCARD";
+				}
+				case MASTERCARD:{
+					return "MASTERCARD";
+				}
+				case VALE_PRESENTE:{
+					return "VALE PRESENTE";
+				}
+				case VALE_TROCA:{
+					return "VALE TROCA";
+				}
+				case VISA:{
+					return "VISA";
+				}
+				case VOUCHER:{
+					return "VOUCHER";
+				}
+				}
+				return super.toString();
+			}
+		}
+
+
+		/**
+		 * 
+		 * Retorna o gerenciador de pagamentos para cartões
+		 * 
+		 * @return PagamentoCartao - Componente
+		 */
+		public PagamentoCartao getGerenciadorFormasPagamentoCartoes() {
+			if(autPagCartao==null) {
+				autPagCartao = new PagamentoCartao();				
+				return autPagCartao;
+			}
+			else {				
+				return autPagCartao;
+			}
+		}
+
+		public static AUTVAFormasPagamento getCurrentInstance() {
+			if(currentObject==null) {
+				currentObject = new AUTVAFormasPagamento();
+				return currentObject;
+			}
+			else {
+				return currentObject;
+			}
+		}
+
+		/**
+		 * 
+		 * @return the valorCompraObject
+		 * 
+		 */
+		public TObject getValorCompraObject() {
+			return valorCompraObject;
+		}
+
+		/**
+		 * @param valorCompraObject the valorCompraObject to set
+		 */
+		public void setValorCompraObject(TObject valorCompraObject) {
+			this.valorCompraObject = valorCompraObject;
+		}
+
+		/**
+		 * @return the metodoPagamentoObject
+		 */
+		public TObject getMetodoPagamentoObject() {
+			return metodoPagamentoObject;
+		}
+		/**
+		 * @param metodoPagamentoObject the metodoPagamentoObject to set
+		 */
+		public void setMeioPagamentoObject(TObject metodoPagamentoObject) {
+			this.metodoPagamentoObject = metodoPagamentoObject;
+		}
+		/**
+		 * @return the planoPagamentoObject
+		 */
+		public TObject getPlanoPagamentoObject() {
+			return planoPagamentoObject;
+		}
+		/**
+		 * @param planoPagamentoObject the planoPagamentoObject to set
+		 */
+		public void setPlanoPagamentoObject(TObject planoPagamentoObject) {
+			this.planoPagamentoObject = planoPagamentoObject;
+		}
+		/**
+		 * @return the numeroCartaoObject
+		 */
+		public TObject getNumeroCartaoObject() {
+			return numeroCartaoObject;
+		}
+		/**
+		 * @param numeroCartaoObject the numeroCartaoObject to set
+		 */
+		public void setNumeroCartaoObject(TObject numeroCartaoObject) {
+			this.numeroCartaoObject = numeroCartaoObject;
+		}
+		/**
+		 * @return the nomeTitularObject
+		 */
+		public TObject getNomeTitularObject() {
+			return nomeTitularObject;
+		}
+		/**
+		 * @param nomeTitularObject the nomeTitularObject to set
+		 */
+		public void setNomeTitularObject(TObject nomeTitularObject) {
+			this.nomeTitularObject = nomeTitularObject;
+		}
+		/**
+		 * @return the validadeObject
+		 */
+		public TObject getValidadeObject() {
+			return validadeObject;
+		}
+		/**
+		 * @param validadeObject the validadeObject to set
+		 */
+		public void setValidadeCartaoObject(TObject validadeObject) {
+			this.validadeObject = validadeObject;
+		}
+		/**
+		 * @return the codigoSegurancaObject
+		 */
+		public TObject getCodigoSegurancaObject() {
+			return codigoSegurancaObject;
+		}
+		/**
+		 * @param codigoSegurancaObject the codigoSegurancaObject to set
+		 */
+		public void setCodigoSegurancaObject(TObject codigoSegurancaObject) {
+			this.codigoSegurancaObject = codigoSegurancaObject;
+		}
+		/**
+		 * @return the adicionarValorRestanteObject
+		 */
+		public TObject getAdicionarValorRestanteObject() {
+			return adicionarValorRestanteObject;
+		}
+		/**
+		 * @param adicionarValorRestanteObject the adicionarValorRestanteObject to set
+		 */
+		public void setAdicionarValorRestanteObject(TObject adicionarValorRestanteObject) {
+			this.adicionarValorRestanteObject = adicionarValorRestanteObject;
+		}
+		/**
+		 * @return the excluirMeioPagamentoObject
+		 */
+		public TObject getExcluirMeioPagamentoObject() {
+			return excluirMeioPagamentoObject;
+		}
+		/**
+		 * @param excluirMeioPagamentoObject the excluirMeioPagamentoObject to set
+		 */
+		public void setExcluirMeioPagamentoObject(TObject excluirMeioPagamentoObject) {
+			this.excluirMeioPagamentoObject = excluirMeioPagamentoObject;
+		}
+		/**
+		 * @return the naoAlterarMeioPagamentoCaixaObject
+		 */
+		public TObject getNaoAlterarMeioPagamentoCaixaObject() {
+			return naoAlterarMeioPagamentoCaixaObject;
+		}
+		/**
+		 * @param naoAlterarMeioPagamentoCaixaObject the naoAlterarMeioPagamentoCaixaObject to set
+		 */
+		public void setNaoAlterarMeioPagamentoCaixaObject(TObject naoAlterarMeioPagamentoCaixaObject) {
+			this.naoAlterarMeioPagamentoCaixaObject = naoAlterarMeioPagamentoCaixaObject;
+		}
+		/**
+		 * @return the codigoValePresenteObject
+		 */
+		public TObject getCodigoValePresenteObject() {
+			return codigoValePresenteObject;
+		}
+		/**
+		 * @param codigoValePresenteObject the codigoValePresenteObject to set
+		 */
+		public void setCodigoValePresenteObject(TObject codigoValePresenteObject) {
+			this.codigoValePresenteObject = codigoValePresenteObject;
+		}
+		/**
+		 * @return the codigoValeTrocaObject
+		 */
+		public TObject getCodigoValeTrocaObject() {
+			return codigoValeTrocaObject;
+		}
+		/**
+		 * @param codigoValeTrocaObject the codigoValeTrocaObject to set
+		 */
+		public void setCodigoValeTrocaObject(TObject codigoValeTrocaObject) {
+			this.codigoValeTrocaObject = codigoValeTrocaObject;
+		}
+		/**
+		 * @return the codigoVoucherObject
+		 */
+		public TObject getCodigoVoucherObject() {
+			return codigoVoucherObject;
+		}
+		/**
+		 * @param codigoVoucherObject the codigoVoucherObject to set
+		 */
+		public void setCodigoVoucherObject(TObject codigoVoucherObject) {
+			this.codigoVoucherObject = codigoVoucherObject;
+		}
+		/**
+		 * @return the indexItem
+		 */
+		public Integer getIndexItem() {
+			return indexItem;
+		}
+		/**
+		 * @param indexItem the indexItem to set
+		 */
+		public void setIndexItem(Integer indexItem) {
+			this.indexItem = indexItem;
+		}
+		/**
+		 * @return the valorCompra
+		 */
+		public String getValorCompra() {
+			return valorCompra;
+		}
+		/**
+		 * @param valorCompra the valorCompra to set
+		 */
+		public void setValorCompra(String valorCompra) {
+			DomTextField txt = (DomTextField) getValorCompraObject();
+			txt.setText(valorCompra);
+			this.valorCompra = valorCompra;
+		}
+		/**
+		 * @return the metodoPagamento
+		 */
+		public METODOS_PAGAMENTO getMetodoPagamento() {
+			return metodoPagamento;
+		}
+		/**
+		 * @param metodoPagamento the metodoPagamento to set
+		 */
+		public void setMeioPagamento(METODOS_PAGAMENTO metodoPagamento) {
+			DomListBox list = (DomListBox) getMetodoPagamentoObject();
+			selectValor(list,metodoPagamento.toString());
+			this.metodoPagamento = metodoPagamento;
+		}
+		/**
+		 * @return the planoPagamento
+		 */
+		public PLANOS_PAGAMENTO getPlanoPagamento() {
+			return planoPagamento;
+		}
+		/**
+		 * @param planoPagamento the planoPagamento to set
+		 */
+		public void setPlanoPagamento(PLANOS_PAGAMENTO planoPagamento) {
+			DomListBox list = (DomListBox)getPlanoPagamentoObject();
+			selectValor(list, planoPagamento.toString());
+			this.planoPagamento = planoPagamento;
+		}
+
+
+		/**
+		 * @return the numeroCartao
+		 */
+		public String getNumeroCartao() {
+			return numeroCartao;
+		}
+		/**
+		 * @param numeroCartao the numeroCartao to set
+		 */
+		public void setNumeroCartao(String numeroCartao) {
+			DomTextField txt = (DomTextField) getNumeroCartaoObject();
+			txt.setFocus();
+			txt.click();
+			txt.scrollIntoView();
+			txt.setText(numeroCartao);
+			this.numeroCartao = numeroCartao;
+		}
+
+
+		/**
+		 * @return the nomeTitular
+		 */
+		public String getNomeTitular() {
+			return nomeTitular;
+		}
+		/**
+		 * @param nomeTitular the nomeTitular to set
+		 */
+		public void setNomeTitular(String nomeTitular) {
+			DomTextField txt = (DomTextField) getNomeTitularObject();
+			txt.setFocus();
+			txt.click();
+			txt.scrollIntoView();
+			txt.setText(nomeTitular);
+			this.nomeTitular = nomeTitular;
+		}
+
+
+		/**
+		 * @return the validade
+		 */
+		public String getValidade() {
+			return validade;
+		}
+		/**
+		 * @param validade the validade to set
+		 */
+		public void setValidadeCartao(String validade) {
+			DomTextField txt = (DomTextField) getValidadeObject();
+			txt.setFocus();
+			txt.click();
+			txt.scrollIntoView();
+			txt.setText(validade);
+			this.validade = validade;
+		}
+		/**
+		 * @return the codigoSeguranca
+		 */
+		public String getCodigoSeguranca() {
+			return codigoSeguranca;
+		}
+		/**
+		 * @param codigoSeguranca the codigoSeguranca to set
+		 */
+		public void setCodigoSeguranca(String codigoSeguranca) {
+			DomTextField txt = (DomTextField) getCodigoSegurancaObject();
+			txt.setText(codigoSeguranca);
+			this.codigoSeguranca = codigoSeguranca;
+		}
+
+
+		/**
+		 * @return the adicionarValorRestante
+		 */
+		public Boolean getAdicionarValorRestante() {
+			return adicionarValorRestante;
+		}
+		/**
+		 * @param adicionarValorRestante the adicionarValorRestante to set
+		 */
+		public void setAdicionarValorRestante(Boolean adicionarValorRestante) {
+			this.adicionarValorRestante = adicionarValorRestante;
+		}
+		/**
+		 * @return the ignorarAntifraude
+		 */
+		public Boolean getIgnorarAntifraude() {
+			return ignorarAntifraude;
+		}
+
+		/**
+		 * @param ignorarAntifraude the ignorarAntifraude to set
+		 */
+		public void setIgnorarAntifraude(Boolean ignorarAntifraude) {
+			autScrollPage();
+			AUT_AGENT_SILK4J.<DomCheckBox>find("VA.//BrowserWindow//DomCheckBox[@id='antifraud-option']").waitForProperty("Visible", "true",20 * 1000);
+			AUT_AGENT_SILK4J.<DomCheckBox>find("VA.//BrowserWindow//DomCheckBox[@id='antifraud-option']").scrollIntoView();
+			if(ignorarAntifraude) {				
+				AUT_AGENT_SILK4J.<DomCheckBox>find("VA.//BrowserWindow//DomCheckBox[@id='antifraud-option']").check();
+			}
+			else {
+				AUT_AGENT_SILK4J.<DomCheckBox>find("VA.//BrowserWindow//DomCheckBox[@id='antifraud-option']").uncheck();				
+			}
+			this.ignorarAntifraude = ignorarAntifraude;
+		}
+
+
+		/**
+		 * @param pagarNaLoja configura opção de pagamento na loja
+		 */
+		public void setPagarNaLoja(Boolean pagarNaLoja) {
+			if(pagarNaLoja) {
+				AUT_AGENT_SILK4J.<DomCheckBox>find("VA.//BrowserWindow//DomCheckBox[@id='store-payment-option']").check();
+			}
+			else {
+				AUT_AGENT_SILK4J.<DomCheckBox>find("VA.//BrowserWindow//DomCheckBox[@id='store-payment-option']").uncheck();				
+			}
+			this.pagarNaLoja = pagarNaLoja;
+		}
+
+		/**
+		 * 
+		 * 
+		 * @return the excluirMeioPagamento
+		 */
+		public Boolean getExcluirMeioPagamento() {
+			return excluirMeioPagamento;
+		}
+		/**
+		 * @param excluirMeioPagamento the excluirMeioPagamento to set
+		 */
+		public void setExcluirMeioPagamento(Boolean excluirMeioPagamento) {
+			this.excluirMeioPagamento = excluirMeioPagamento;
+		}
+		/**
+		 * @return the naoAlterarMeioPagamentoCaixa
+		 */
+		public Boolean getNaoAlterarMeioPagamentoCaixa() {
+			return naoAlterarMeioPagamentoCaixa;
+		}
+		/**
+		 * @param naoAlterarMeioPagamentoCaixa the naoAlterarMeioPagamentoCaixa to set
+		 */
+		public void setNaoAlterarMeioPagamentoCaixa(Boolean naoAlterarMeioPagamentoCaixa) {
+			this.naoAlterarMeioPagamentoCaixa = naoAlterarMeioPagamentoCaixa;
+		}
+		/**
+		 * @return the codigoValePresente
+		 */
+		public String getCodigoValePresente() {
+			return codigoValePresente;
+		}
+		/**
+		 * @param codigoValePresente the codigoValePresente to set
+		 */
+		public void setCodigoValePresente(String codigoValePresente) {
+			this.codigoValePresente = codigoValePresente;
+		}
+		/**
+		 * @return the codigoValeTroca
+		 */
+		public String getCodigoValeTroca() {
+			return codigoValeTroca;
+		}
+		/**
+		 * @param codigoValeTroca the codigoValeTroca to set
+		 */
+		public void setCodigoValeTroca(String codigoValeTroca) {
+			this.codigoValeTroca = codigoValeTroca;
+		}
+		/**
+		 * @return the codigoVoucher
+		 */
+		public String getCodigoVoucher() {
+			return codigoVoucher;
+		}
+		/**
+		 * @param codigoVoucher the codigoVoucher to set
+		 */
+		public void setCodigoVoucher(String codigoVoucher) {
+			this.codigoVoucher = codigoVoucher;
+		}		
+
+
+
+
+	}
+
 
 	/**
 	 * 
@@ -741,7 +1730,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 					boolean exibiMsgLoteAlerta = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.//BrowserWindow").exists("//DIV[@class='modal-body']//DomElement[@textContents='Continuar']", 3 * 1000);
 					if(exibiMsgLoteAlerta) {
 						AUT_AGENT_SILK4J.<BrowserWindow>find("VA.//BrowserWindow//DIV[@class='modal-body']//DomElement[@textContents='Continuar']").click();
-						
+
 					}
 				}
 				break;
@@ -750,7 +1739,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 				if(rowIndex > 0) {
 					//VA.//BrowserWindow//INPUT[@id='delivery-order-2']
 					AUT_AGENT_SILK4J.<DomCheckBox>find(String.format("VA.TL011FluxosDeSaida.//INPUT[@id='delivery-order-%s']",(rowIndex > 0 ? --rowIndex : 0))).check();	
-					
+
 					boolean exibiMsgLoteAlerta = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.//BrowserWindow").exists("//DIV[@class='modal-body']//DomElement[@textContents='Continuar']", 3 * 1000);
 					if(exibiMsgLoteAlerta) {
 						AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DIV[@class='modal-body']//DomElement[@textContents='Continuar']").click();						
@@ -794,17 +1783,17 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			boolean exibiCepNaoCadastrado = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TL011PopupEnderecos").exists("//I[@class='modal-close glyph gl*'][4]", 1 * 1000);			
 			boolean exibiMsgLoteAlerta = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.//BrowserWindow").exists("//DIV[@class='modal-body']//DomElement[@textContents='Continuar']", 1 * 1000);
 			boolean exibiPopupEnderecos = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TL011PopupEnderecos").exists("PopUp1", 1 * 1000);
-			
+
 
 			if(exibErroConsultaEstoqueBotao1 || exibErroConsultaEstoque) {
 				AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//I[@class='modal-close glyph gl*'][2]").click();	
 			}
-			
+
 			if(exibiMsgLoteAlerta) {
 				AUT_AGENT_SILK4J.<DomElement>find("VA.BrowserWindow//DIV[@class='modal-body']//DomElement[@textContents='Continuar']").click();
 			}
-			
-			
+
+
 			//Verifica se existe um popup informando erro na pesquisa de CEP			
 			if(exibiCepNaoCadastrado) {
 				AUT_AGENT_SILK4J.<DomElement>find("VA.TL011PopupEnderecos.//I[@class='modal-close glyph gl*'][4]").click();		
@@ -851,8 +1840,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 
 				setFluxoEntregasGeral();
 				fecharPopupEnderecosParaEntrega();
-				
-				
+
+
 				AUT_AGENT_SILK4J.<DomRadioButton>find("VA//BrowserWindow//INPUT[@id='itemcaixa-1']").select();
 				AUT_AGENT_SILK4J.<DomRadioButton>find("VA.TL011FluxosDeSaida.CaixaEntrega").select();
 				startEntregas = true;
@@ -951,7 +1940,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			setFilialEstoqueGeralPorIndexLinha(filialSaida,row);
 			setDepositosGeralPorIndexLinha(deposito,row);				
 			setTurnoEntregaPorIndexLinha(turnoEntregaInpupt, row);	
-			
+
 			autScrollPage();
 		}
 
@@ -970,8 +1959,19 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			}
 		}
 
-
+		private void autExceptionFluxoEntregas() {
+			/*
+			Boolean bMsgConfirmServico = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.//BrowserWindow//DIV[@class='container-fluid alig*'][3]").exists("//BUTTON[@textContents='Confirmar']", 3 * 1000);			
+			if(bMsgConfirmServico) {
+				AUT_AGENT_SILK4J.<DomButton>find("VA.//BrowserWindow//DIV[@class='container-fluid alig*'][3]//DomButton[@textContents='Confirmar']").click();
+				com.borland.silktest.jtf.Utils.sleep(3 * 1000);
+				AUT_AGENT_SILK4J.<DomButton>find("VA.//BrowserWindow//DIV[@class='container-fluid alig*'][3]//DomButton[@textContents='Confirmar']").click();				
+			}
+			*/
+		}
 		/**
+		 * 
+		 *
 		 * 
 		 * 
 		 * Configura o fluxo de saída para todos os itens no fluxo
@@ -981,6 +1981,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		 * 
 		 */
 		public void autConfigurarFluxosSaidaEntrega(FILIAIS tipoPedido) {
+			autExceptionFluxoEntregas();
 			Integer row = 0;
 			int totItens = getRowsCount();
 			for(row=0;row < totItens;row++) {
@@ -998,6 +1999,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		 * 
 		 */
 		public void autConfigurarFluxosSaidaEntrega(FILIAIS fluxoParaTodosOsItens,FILIAIS fluxoParaItensEspecificos,Integer itemInicial,Integer itemFinal) {
+			autExceptionFluxoEntregas();
 			Integer row = 0;
 			int totItens = getRowsCount();
 			for(row=0;row < totItens;row++) {
@@ -1022,6 +2024,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		 * 
 		 */
 		public void autConfigurarFluxosSaidaEntrega(FILIAIS tipoPedido,Integer row) {
+			autExceptionFluxoEntregas();
 			autConfigPedidos(row, tipoPedido);
 		}
 
@@ -1204,12 +2207,17 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 
 
 
-		public void autFinalizarPedido() {
-			autIrProximaPagina();
+		public void autFinalizarPedido() {			
+			autIrProximaPagina();			
 			autIrProximaPagina();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FluxosDeSaida.Finalizar").click();		
 		}
 
+		public void autFinalizarPedidoFromConfigFormasPagamento() {
+			
+			autIrProximaPagina();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FluxosDeSaida.Finalizar").click();		
+		}
 
 		/**
 		 * @param usarDataMaisProxima the usarDataMaisProxima to set
@@ -1257,14 +2265,14 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 				switch(getTipoFluxoSaida()) {
 				case ENTREGA:{
 					try {
-						
+
 						//AUT_AGENT_SILK4J.<DomCheckBox>find(String.format("VA.TL011FluxosDeSaida.//DomCheckBox[@id='nearDate-*-delivery'][%s]",rowIndex)).check();
 						AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//INPUT[@id='delivery-option-date-%s']",rowIndex)).scrollIntoView();
 						AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//INPUT[@id='delivery-option-date-%s']",rowIndex)).click();												
 						AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DIV[@class='dayContainer']//SPAN[@class='flatpickr-day'][1]").click();						
 					}
 					catch(java.lang.Exception e) {
-						
+
 					}
 					break;
 				}
@@ -1273,6 +2281,37 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			}
 			this.usarDataMaisProxima = usarDataMaisProxima;
 		}
+		
+		/**
+		 * @param usarDataMaisProxima the usarDataMaisProxima to set
+		 */
+		public void setUsarDataMaisProximaPorIndexLinha(USAR_DATA_MAIS_PROXIMA usarDataMaisProxima,Integer rowIndex,Integer indexDataPosterior) {
+			switch(usarDataMaisProxima) {
+			case NAO:{
+				AUT_AGENT_SILK4J.<DomCheckBox>find(String.format("VA.TL011FluxosDeSaida.//DomCheckBox[@id='nearDate-*-delivery'][%s]",rowIndex)).uncheck();
+				break;
+			}
+			case SIM:{
+				switch(getTipoFluxoSaida()) {
+				case ENTREGA:{
+					try {
+
+						//AUT_AGENT_SILK4J.<DomCheckBox>find(String.format("VA.TL011FluxosDeSaida.//DomCheckBox[@id='nearDate-*-delivery'][%s]",rowIndex)).check();
+						AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//INPUT[@id='delivery-option-date-%s']",rowIndex)).scrollIntoView();
+						AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//INPUT[@id='delivery-option-date-%s']",rowIndex)).click();												
+						AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DIV[@class='dayContainer']//SPAN[@class='flatpickr-day'][%s]",indexDataPosterior)).click();						
+					}
+					catch(java.lang.Exception e) {
+
+					}
+					break;
+				}
+				}
+			}
+			}
+			this.usarDataMaisProxima = usarDataMaisProxima;
+		}
+		
 		/**
 		 * @return the enderecoCadastrado
 		 */
@@ -1706,11 +2745,11 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 
 	public void autVALogOff(boolean closeBrowser) {
 		if(closeBrowser) {
-			AUT_AGENT_SILK4J.<DomElement>find("VA.FinalizarAplicacao.Sair").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.//A[@class='dropdown-link' and @title='Sair']").click();
 			AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Fechar").click();
 		}
 		else {
-			AUT_AGENT_SILK4J.<DomElement>find("VA.FinalizarAplicacao.Sair").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.//A[@class='dropdown-link' and @title='Sair']").click();
 		}
 	}
 
@@ -2240,25 +3279,138 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	}
 
 	/**
+	 * 
+	 * Altera a loja padrão
+	 * 
+	 */
+	public void CMP11024(java.util.HashMap<String,Object> parameters) {		
+		AUT_BOITATA_LOJAS loja = AUT_BOITATA_LOJAS.valueOf(parameters.get("AUT_LOJA_TELEVENDAS").toString());		
+		AUT_AGENT_SILK4J.<DomListBox>find("VA.//BrowserWindow//DomListBox[@id='leroy-region']").setFocus();
+		AUT_AGENT_SILK4J.<DomListBox>find("VA.//BrowserWindow//DomListBox[@id='leroy-region']").scrollIntoView();
+		AUT_AGENT_SILK4J.<DomListBox>find("VA.//BrowserWindow//DomListBox[@id='leroy-region']").select(loja.toString());
+	}
+
+	/**
+	 * 
+	 * Componente para gerenciamento das formas de pagamento
+	 * 
+	 * @param parameters - Parametros de configuração do projeto
+	 * 
+	 * @return br.lry.components.AUTVABaseComponent.AUTVAFormasPagamento - Componente
+	 */
+	public <TFormasPagamento extends  br.lry.components.AUTVABaseComponent.AUTVAFormasPagamento> TFormasPagamento CMP11025(java.util.HashMap<String,Object> parameters) {
+		try {
+			System.out.println("AUT INFO : CARREGANDO COMPONENTE DE GERENCIAMENTO : FORMAS DE PAGAMENTO");
+			if(autFormasPagamentoGerenciador==null) {
+				autFormasPagamentoGerenciador = new AUTVAFormasPagamento();
+				return (TFormasPagamento) autFormasPagamentoGerenciador;
+			}
+			else {
+				return (TFormasPagamento) autFormasPagamentoGerenciador;				
+			}
+		}
+		catch(java.lang.Exception e) {
+			System.out.println("AUT ERROR: CARREGANDO COMPONENTE PARA GERENCIAMENTO DE FORMAS DE PAGAMENTO");
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+
+
+	/**
+	 * 
+	 * Executa procedimentos para pagamento com uma forma de pagamento do tipo cartão
+	 * 
+	 * 
+	 * @param parameters - Parametros de configuração do componente
+	 */
+	public void CMP11026(java.util.HashMap<String,Object> parameters) {
+		CMP11025(parameters);
+	}
+
+	/**
+	 * 
+	 * Edita o número do lote do material
+	 * 
+	 * 
+	 * @param parameters - Parametros de configuração do componente
+	 */
+	public void CMP11027(java.util.HashMap<String,Object> parameters) {	
+		CMP11012(parameters);
+		AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DomElement[@data-code='%s']//DomButton[@textContents='*Lote*']",parameters.get("INDEX_MATERIAL_POSSUI_LOTE"))).click();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//DomElement[@id='batch-consult']").setFocus();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//DomElement[@id='batch-consult']").scrollIntoView();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DomElement[@id='batch-consult']").typeKeys(parameters.get("AUT_NUMERO_LOTE_ALTERACAO").toString());		
+		AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DomElement[@id='batch-consult']").typeKeys("\n");
+		//AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//FORM[@data-component='form cart/item/batch-consult validation']//DomButton[@type='submit']").click();		
+		AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//LI[@class='list-item color-prim*']/DIV[@class='row']").click();		
+		
+	}
+
+
+
+
+	/**
 	 * public 
 	 * 
 	 * @param parametros
 	 */
 	public boolean CMP11001(java.util.HashMap<String,Object> parametros) {
-		try {
+		try {			
+			if(parametros.containsKey("AUT_INIT_APP")) {
 
-			try {
-				java.lang.Runtime.getRuntime().exec("cmd /c taskkill /f /t /im chrome*");
-				com.borland.silktest.jtf.Utils.sleep(5 * 1000);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Boolean startApp = (Integer.parseInt(parametros.get("AUT_INIT_APP").toString()) == 0 ? false : true);
+
+				if(startApp) {
+					try {						
+						java.lang.Runtime.getRuntime().exec("cmd /c taskkill /f /t /im chrome*");
+						com.borland.silktest.jtf.Utils.sleep(5 * 1000);
+						autInitWebApplicationBoitata();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}					
+				}
+				else {					
+					System.out.println("AUT INFO: INICIALIZACAO DO BROWSER NAO É NECESSÁRIA");
+				}
+			}
+			else {
+				try {						
+					java.lang.Runtime.getRuntime().exec("cmd /c taskkill /f /t /im chrome*");
+					com.borland.silktest.jtf.Utils.sleep(5 * 1000);
+					autInitWebApplicationBoitata();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
-			autInitWebApplicationBoitata();
-			autLogin(parametros.get("AUT_USER").toString(), parametros.get("AUT_PASSWORD").toString());
-			AUT_AGENT_SILK4J.<BrowserApplication>find("VA").exists("TL011BoitataTelaPedidosInicial.CampoPesquisa", 120 * 1000);
-
+			if(parametros.containsKey("AUT_TIPO_ACESSO_LOGIN")) {
+				AUT_TIPO_ACESSO_LOGIN tipoAcesso = AUT_TIPO_ACESSO_LOGIN.valueOf(parametros.get("AUT_TIPO_ACESSO_LOGIN").toString());			
+				switch(tipoAcesso) {
+				case USUARIO_GERENTE_APROVADOR:{
+					autLogin(parametros.get("AUT_USER_GERENTE").toString(), parametros.get("AUT_PASSWORD_GERENTE").toString());
+					AUT_AGENT_SILK4J.<BrowserApplication>find("VA").exists("TL011BoitataTelaPedidosInicial.CampoPesquisa", 120 * 1000);									
+					break;
+				}
+				case USUARIO_LOJA:{
+					autLogin(parametros.get("AUT_USER").toString(), parametros.get("AUT_PASSWORD").toString());
+					AUT_AGENT_SILK4J.<BrowserApplication>find("VA").exists("TL011BoitataTelaPedidosInicial.CampoPesquisa", 120 * 1000);														
+					break;
+				}
+				case USUARIO_TELEVENDAS:{
+					autLogin(parametros.get("AUT_USER_TELEVENDAS").toString(), parametros.get("AUT_PASSWORD_TELEVENDAS").toString());
+					AUT_AGENT_SILK4J.<BrowserApplication>find("VA").exists("TL011BoitataTelaPedidosInicial.CampoPesquisa", 120 * 1000);																			
+					CMP11024(parametros);					
+					break;
+				}
+				}
+			}
+			else {
+				autLogin(parametros.get("AUT_USER").toString(), parametros.get("AUT_PASSWORD").toString());
+				AUT_AGENT_SILK4J.<BrowserApplication>find("VA").exists("TL011BoitataTelaPedidosInicial.CampoPesquisa", 120 * 1000);				
+			}			
 			return true;
 		}
 		catch(java.lang.Exception e) {
@@ -2319,7 +3471,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */
 	public boolean CMP11002(java.util.HashMap<String,Object> parameters) {
 		try {
-			String quantDefault = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.RSP_PJTTRC_FRT001_VA_MD00009_CN00001_CTP00001, "AUT_MATERIAL_QUANTIDADE").toString();
+			String quantDefault = parameters.get("AUT_MATERIAL_QUANTIDADE").toString();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011BoitataTelaPedidosInicial.CampoPesquisa").waitForProperty("Visible", true,60 * 1000);
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011BoitataTelaPedidosInicial.CampoPesquisa").click();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011BoitataTelaPedidosInicial.CampoPesquisa").setFocus();
@@ -2428,13 +3580,14 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			String parametroConfiguracao = parameters.get("AUT_OPCAO_SELECAO_PARAMETRO").toString();
 			Integer quantMaxItens = Integer.parseInt(parameters.get("AUT_QUANTIDADE_MAXIMA_ITENS").toString());
 
-
-			quantMaxItens = (quantMaxItens > 0 && quantMaxItens != 0? quantMaxItens : -1);
+			quantMaxItens = (quantMaxItens > 0 && quantMaxItens != 0 ? quantMaxItens : -1);
 			Integer contItens = 1;
-			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011TelaInicialVA.CriarCarrinho").waitForProperty("Visible", true,30*1000);
-			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011TelaInicialVA.CriarCarrinho").click();									
+			if(!opSelect.equals(AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.INCLUSAO_PARCIAL_ITENS_CARRINHO_CRIADO)) {
+				AUT_AGENT_SILK4J.<DomElement>find("VA.TL011TelaInicialVA.CriarCarrinho").waitForProperty("Visible", true,30*1000);
+				AUT_AGENT_SILK4J.<DomElement>find("VA.TL011TelaInicialVA.CriarCarrinho").click();													
+				CMP11003(parameters);
+			}
 
-			CMP11003(parameters);
 			switch(opSelect) {
 			case CONDITION_BY_STORE:{
 				while(item.autGetNextItemStore(opSelect,(parametroConfiguracao != null ? parametroConfiguracao : "%")) != null) {				
@@ -2462,7 +3615,6 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 					}
 					contItens++;
 				}
-
 				//FIM DO SWITCH CASE
 				break;
 			}
@@ -2479,17 +3631,35 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setFocus();
 					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys(itemCorrente.getLmMaterial().toString());
 					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys("\n");
+					autScrollPage();
+					contItens++;
+				}
+				break;
+			}
+			case INCLUSAO_PARCIAL_ITENS_CARRINHO_CRIADO:{
+				//CARREGA OS ITENS DO CATÁLOGO DE PRODUTOS PELO CRITÉRIO DE FILTRO ESPECÍFICO
+				parameters.remove("AUT_OPCAO_SELECAO_ITEM");
+				parameters.put("AUT_OPCAO_SELECAO_ITEM", AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.CONDITION_BY_ID.name());				
+
+				for(AUTStoreItem itemCorrente:CMP11004_V2(parameters)) {		
+
+					ltOutItems.add(itemCorrente.autCopyItemStore(itemCorrente));
+
+					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setText("");
+					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setFocus();
+					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").typeKeys(parameters.get("AUT_MATERIAL_QUANTIDADE").toString());
+					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setText("");
+					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").setFocus();
+					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys(itemCorrente.getLmMaterial().toString());
+					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.eanOrCode").typeKeys("\n");
 
 					autScrollPage();
 
 					contItens++;
-				}
-
+				}							
 				break;
+			}			
 			}
-			}
-
-
 			return ltOutItems;
 		}
 		catch(java.lang.Exception e) {
@@ -2514,13 +3684,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			java.util.List<AUTStoreItem> ltOutItems = new java.util.ArrayList<AUTStoreItem>();
 			br.lry.components.AUTBaseComponent.AUTStoreItem item = new br.lry.components.AUTBaseComponent.AUTStoreItem();
 			AUT_SELECT_PRODUCT_OPTIONS_BY_STORE opSelect = AUT_SELECT_PRODUCT_OPTIONS_BY_STORE.valueOf(parameters.get("AUT_OPCAO_SELECAO_ITEM").toString());
-
 			String parametroConfiguracao = parameters.get("AUT_OPCAO_SELECAO_PARAMETRO").toString();
 			while(item.autGetNextItemStore(opSelect,(parametroConfiguracao != null ? parametroConfiguracao : "%")) != null) {								
 				ltOutItems.add(item.autCopyItemStore(item));
 			}
-
-
 			System.out.println(ltOutItems.size());
 			return ltOutItems;
 		}
@@ -2553,7 +3720,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			parameters.put("AUT_INIT_APP_EXECUTE", false);						
 		}
 		autVALogOff(false);
-		CMP11001_V2(parameters);
+		//CMP11001_V2(parameters);
 	}
 
 	/**
@@ -2597,16 +3764,36 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * 
 	 */
 	public void CMP11017(java.util.HashMap<String,Object> parameters) {
-		try {
-			CMP11016(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.EXECUTION);
-			CMP11016(parameters).autSAPFaturarPedido(parameters.get("AUT_NUMERO_PEDIDO").toString());			
-			CMP11016(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.PASSED);
+		try {			
+			CMP11016(parameters).autSAPFaturamentos().autIniciarFaturamento(parameters);			
 		}
 		catch(java.lang.Exception e) {
-			CMP11016(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.FAILED);
+			System.out.println("AUT ERRO: FATURAMENTO SAP");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
+	
+	/**
+	 * 
+	 * Consulta items de uma ordem de venda para um pedido específico
+	 * 
+	 * @param parameters - Parametros de configuração do SAP
+	 * 
+	 */
+	public void CMP11028(java.util.HashMap<String,Object> parameters) {
+		try {			
+			CMP11016(parameters).autSAPFaturamentos().autConsultaItensOrdemVenda(parameters);			
+		}
+		catch(java.lang.Exception e) {
+			System.out.println("AUT ERRO: FATURAMENTO SAP");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
 
 	/**
 	 * 
@@ -2619,20 +3806,12 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		try {
 			CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.EXECUTION);
 			CMP11014(parameters).autStartDevolucaoItem("AUT_NUMERO_PEDIDO",AUT_VA_FLUXO_SAIDA.valueOf(parameters.get("AUT_TIPO_ENTREGA_FLUXO_SAIDA").toString()));
-			if(CMP11014(parameters).autPDVDevolucoes().AUT_STATUS_EXECUTION) {
-				CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.PASSED);
-			}
-			else {
-				CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.FAILED);
-			}	
+			CMP11014(parameters).AUT_AGENT_SILK4J.detachAll();
+			CMP11014(parameters).AUT_AGENT_SILK4J = null;
 		}
 		catch(java.lang.Exception e) {
-			if(CMP11014(parameters).autPDVDevolucoes().AUT_STATUS_EXECUTION) {
-				CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.PASSED);
-			}
-			else {
-				CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.FAILED);
-			}	
+			CMP11014(parameters).AUT_AGENT_SILK4J.detachAll();
+			CMP11014(parameters).AUT_AGENT_SILK4J = null;
 		}
 	}	
 
@@ -2657,11 +3836,39 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 
 		AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Buscar").click();
 
-		AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Buscar").click();
-		AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Buscar").click();
+		//AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Buscar").click();
+		//AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Buscar").click();
 
 	}
 
+	/**
+	 * Gerencia liberações pedentes - Antifraude
+	 * 
+	 * @param parameters - Parametros de configuração
+	 */
+	public void CMP11019_V2(java.util.HashMap<String,Object> parameters) {
+		AUT_AGENT_SILK4J.<DomElement>find("//BrowserApplication//BrowserWindow//A[@textContents='Liberações Pendentes']").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.MenuPrincipal").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.LiberacoesPendentes").click();
+		AUT_AGENT_SILK4J.<DomRadioButton>find("VA.AtualizacaoDados.//INPUT[@id='antifraud']").select();
+		com.borland.silktest.jtf.Utils.sleep(2*1000);
+		//AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//DomTextField[@name='orderNumber' and @data-context='input']").click();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//DomTextField[@name='orderNumber' and @data-context='input']").scrollIntoView();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//DomTextField[@name='orderNumber' and @data-context='input']").setText(parameters.get("AUT_NUMERO_PEDIDO").toString());
+		AUT_AGENT_SILK4J.<DomButton>find("VA.//BrowserWindow//BUTTON[@class='button button-text'][2]").scrollIntoView();		
+		AUT_AGENT_SILK4J.<DomButton>find("VA.//BrowserWindow//BUTTON[@class='button button-text'][2]").click();
+		try {
+			AUT_AGENT_SILK4J.<DomButton>find("VA.//BrowserWindow//BUTTON[@textContents='Liberar sem*']").click();	
+			AUT_AGENT_SILK4J.<DomButton>find("VA.//BrowserWindow//BUTTON[@textContents='Confirmar*']").click();
+		}
+		catch(java.lang.Exception e) {
+			System.out.println("AUT ERRO: LIBERAR ANTIFRAUDE");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
 	/**
 	 * 
 	 * Consulta documentos vinculados associados ao numero de pedido
@@ -2723,30 +3930,18 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * 
 	 */
 	public  void CMP11015(java.util.HashMap<String,Object> parameters) {
-		CMP11014(parameters).autPDVPagamentos();
 		try {
-			
-			
-			CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.EXECUTION);	
 			CMP11014(parameters).autStartPagamentoPedido(parameters);
-			if(CMP11014(parameters).autPDVPagamentos().AUT_STATUS_EXECUTION) {
-				CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.PASSED);	
-			}
-			else {
-				CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.FAILED);	
-			}
+			CMP11014(parameters).AUT_AGENT_SILK4J.detachAll();
+			CMP11014(parameters).AUT_AGENT_SILK4J = null;
 		}
 		catch(java.lang.Exception e) {
-			if(CMP11014(parameters).autPDVPagamentos().AUT_STATUS_EXECUTION) {
-				CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.PASSED);	
-			}
-			else {
-				CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.FAILED);	
-			}		
+			CMP11014(parameters).AUT_AGENT_SILK4J.detachAll();
+			CMP11014(parameters).AUT_AGENT_SILK4J = null;			
 		}
 	}
 
-	
+
 	/**
 	 * 
 	 *Executa os procedimentos para login no PDV
@@ -2756,18 +3951,18 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */
 	public  void CMP11023(java.util.HashMap<String,Object> parameters) {
 		try {
-			CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.EXECUTION);
 			CMP11014(parameters).autPDVAcessos().autPDVLoginDefault(parameters);
-			CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.PASSED);	
+			CMP11014(parameters).AUT_AGENT_SILK4J.detachAll();
+			CMP11014(parameters).AUT_AGENT_SILK4J=null;
 		}
 		catch(java.lang.Exception e) {			
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-			CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.FAILED);	
 		}
 	}
-	
-	
+
+
+
 	/**
 	 * 
 	 * Converte carrinho para pedido de compra - VA
@@ -2912,6 +4107,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			Boolean popup = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TL011ConfirmacaoPedido").exists("PopUp1");
 
 			if(popup) {
+				
 				AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011ConfirmacaoPedido.NumeroCartao").setText(parameters.get("AUT_NUMERO_CARTAO").toString());			
 				AUT_AGENT_SILK4J.<DomElement>find("VA.TL011ConfirmacaoPedido.BotaoSalvar").click();							
 			}
@@ -2937,11 +4133,60 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 
 	public void CMP11010(java.util.HashMap<String,Object> parameters) {
 		AUT_MODO_CONSULTAS_VA_SELECAO_ITEM opSelect = AUT_MODO_CONSULTAS_VA_SELECAO_ITEM.valueOf(parameters.get("AUT_MODO_CONSULTA_ITEM").toString());
-		
+
 
 		switch(opSelect) {
 		case COPIA:{
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FiltroPesquisa.CopiaPedido").click();
+			break;
+		}
+		case CONSULTA_STATUS_PEDIDO:{
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011MenuCarrinho.IconeCarrinho").click();;
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011MenuCarrinho.BotaoBuscarPedidos").click();;
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FiltroPesquisa.BotaoPesquisa").click();
+
+			AUT_AGENT_SILK4J.<DomButton>find("VA.TL011FiltroPesquisa.LimparPesquisa").scrollIntoView();
+			AUT_AGENT_SILK4J.<DomButton>find("VA.TL011FiltroPesquisa.LimparPesquisa").click();		
+			AUT_AGENT_SILK4J.<DomRadioButton>find("VA.TL011FiltroPesquisa.TipoPesquisaPedido").select();
+
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011FiltroPesquisa.NumeroPedido").scrollIntoView();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011FiltroPesquisa.NumeroPedido").click();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011FiltroPesquisa.NumeroPedido").setFocus();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011FiltroPesquisa.NumeroPedido").setText(parameters.get("AUT_NUMERO_PEDIDO").toString());		
+
+			AUT_AGENT_SILK4J.<DomButton>find("VA.TL011FiltroPesquisa.BuscarPedido").scrollIntoView();
+			AUT_AGENT_SILK4J.<DomButton>find("VA.TL011FiltroPesquisa.BuscarPedido").click();
+
+			
+			break;
+		}
+		case EDICAO_DO_BOITATA:{
+			AUT_AGENT_SILK4J.<DomElement>find("//BrowserApplication//BrowserWindow//A[@class='color-text']//DIV[@textContents='Buscar Pedidos']").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FiltroPesquisa.BotaoPesquisa").click();
+
+			AUT_AGENT_SILK4J.<DomButton>find("VA.TL011FiltroPesquisa.LimparPesquisa").scrollIntoView();
+			AUT_AGENT_SILK4J.<DomButton>find("VA.TL011FiltroPesquisa.LimparPesquisa").click();		
+			AUT_AGENT_SILK4J.<DomRadioButton>find("VA.TL011FiltroPesquisa.TipoPesquisaPedido").select();
+
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011FiltroPesquisa.NumeroPedido").scrollIntoView();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011FiltroPesquisa.NumeroPedido").click();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011FiltroPesquisa.NumeroPedido").setFocus();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011FiltroPesquisa.NumeroPedido").setText(parameters.get("AUT_NUMERO_PEDIDO").toString());		
+
+			AUT_AGENT_SILK4J.<DomButton>find("VA.TL011FiltroPesquisa.BuscarPedido").scrollIntoView();
+			AUT_AGENT_SILK4J.<DomButton>find("VA.TL011FiltroPesquisa.BuscarPedido").click();
+
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FiltroPesquisa.EditarPedido").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FiltroPesquisa.EditarPedido").waitForProperty("Visible", true,30 *1000);
+			boolean existConf = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TL011FiltroPesquisa").exists("SimEditarPedido", 5 * 1000);
+			boolean existAvanc = AUT_AGENT_SILK4J.<BrowserWindow>find("//BrowserApplication//BrowserWindow").exists("//DomButton[@textContents='Confirmar']", 2 * 1000);
+			if(existConf) {
+				AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FiltroPesquisa.SimEditarPedido").click();			
+			}
+			else if(existAvanc) {
+				AUT_AGENT_SILK4J.<DomElement>find("//BrowserApplication//BrowserWindow//DomButton[@textContents='Avançar']").click();				
+			}
+
 			break;
 		}
 		case EDICAO:{
@@ -2960,18 +4205,17 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 
 			AUT_AGENT_SILK4J.<DomButton>find("VA.TL011FiltroPesquisa.BuscarPedido").scrollIntoView();
 			AUT_AGENT_SILK4J.<DomButton>find("VA.TL011FiltroPesquisa.BuscarPedido").click();
-	
+
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FiltroPesquisa.EditarPedido").click();
-			com.borland.silktest.jtf.Utils.sleep(3*1000);
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FiltroPesquisa.EditarPedido").waitForProperty("Visible", true,30 *1000);
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FiltroPesquisa.SimEditarPedido").click();
-			com.borland.silktest.jtf.Utils.sleep(3*1000);
 			CMP11012(parameters);
 			break;
 		}
 		case EXIBICAO_DOCUMENTOS_VINCULADOS:{
 			AUT_AGENT_SILK4J.<DomElement>find("//BrowserApplication//BrowserWindow//DomElement[@textContents='Buscar Pedidos']").click();
-			
-			
+
+
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FiltroPesquisa.BotaoPesquisa").click();
 
 			AUT_AGENT_SILK4J.<DomButton>find("VA.TL011FiltroPesquisa.LimparPesquisa").scrollIntoView();
@@ -2985,7 +4229,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 
 			AUT_AGENT_SILK4J.<DomButton>find("VA.TL011FiltroPesquisa.BuscarPedido").scrollIntoView();
 			AUT_AGENT_SILK4J.<DomButton>find("VA.TL011FiltroPesquisa.BuscarPedido").click();
-			
+
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FiltroPesquisa.DocumentosVinculados").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPedidos.BotaoDocsRelExibir").click();
 			DomElement containerDocs = AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.//DIV[@class='container-fluid']");
@@ -2995,6 +4239,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 				it.scrollIntoView();
 				it.highlightObject();
 			}
+			AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DomElement[@class='modal-close*']").click();
 			break;
 		}
 		case IMPRESSAO:{
@@ -3071,6 +4316,13 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 						autSearchObject(itList, "DomButton",item.getLmMaterial().toString(), "type=\"button\" data-action=\"sum\"").click();
 					}
 				}				
+				break;
+			}
+			case DATA_AGENDAMENTO_FLUXO_ENTREGAS:{			
+				AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FiltroPesquisa.EditarPedido").click();
+				AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FiltroPesquisa.EditarPedido").waitForProperty("Visible", true,30 *1000);
+				AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FiltroPesquisa.SimEditarPedido").click();
+				AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FluxosDeSaida.Finalizar").click();
 				break;
 			}
 			case ALTERAR_CONFIGURACAO_FLUXO_SAIDA:{
