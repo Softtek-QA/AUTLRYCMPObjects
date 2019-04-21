@@ -3844,7 +3844,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * Executa procedimentos de faturamento no SAP
+	 * Executa procedimentos de faturamento parcial no SAP
 	 * 
 	 * @param parameters - Parametros de configuração do SAP
 	 * 
@@ -3866,6 +3866,31 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		}
 	}
 
+
+	
+	/**
+	 * 
+	 * Executa procedimentos de faturamento parcial no SAP
+	 * 
+	 * @param parameters - Parametros de configuração do SAP
+	 * 
+	 */
+	public void CMP11030(java.util.HashMap<String,Object> parameters) {
+		try {			
+			if(!parameters.containsKey("AUT_FATURAR_ITENS_COM_LOTE")) {
+				parameters.put("AUT_FATURAR_ITENS_COM_LOTE","");
+				CMP11016(parameters).autSAPFaturamentos().autIniciarFaturamento(parameters);							
+			}
+			else {
+				CMP11016(parameters).autSAPFaturamentos().autIniciarFaturamento(parameters);			
+			}
+		}
+		catch(java.lang.Exception e) {
+			System.out.println("AUT ERRO: FATURAMENTO SAP");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * 
