@@ -429,7 +429,7 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 			@Override
 			public void autStartProcess() {
 				// TODO Auto-generated method stub
-				autInsertScreenByScenario();
+				//autInsertScreenByScenario();
 			}
 			
 			@Override
@@ -441,7 +441,7 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 			@Override
 			public void autInitProcess() {
 				// TODO Auto-generated method stub
-				autInsertScreenByScenario();
+				//autInsertScreenByScenario();
 			}
 			
 			@Override

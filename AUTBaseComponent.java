@@ -4,6 +4,8 @@
 package br.lry.components;
 
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.List;
 
 import org.junit.After;
@@ -21,6 +23,7 @@ import com.borland.silktest.jtf.xbrowser.BrowserApplication;
 import com.borland.silktest.jtf.xbrowser.BrowserWindow;
 import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomListBox;
+import com.borland.silktest.jtf.xbrowser.DomTextField;
 import com.microfocus.silktest.jtf.*;
 
 import br.lry.components.AUTVABaseComponent.AUTVAFluxosSaidaComponente.FILIAIS;
@@ -50,6 +53,17 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	public String AUT_USUARIO_LOGIN_DEFAULT = "";
 	public String AUT_SENHA_LOGIN_DEFAULT = "";
 	protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
+	
+	/**
+	 * 
+	 * Interface para definição de função dinâmicas
+	 * 
+	 * @author Softtek-QA
+	 *
+	 */
+	public abstract class AUTFunctionProcess{
+		public abstract void autProcessByItem(java.util.HashMap<String,Object> parameters);
+	}
 	
 	
 	/**
@@ -103,6 +117,170 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		private boolean autFluxoPedidoIncluirItemCarrinho = false;
 		private boolean autFluxoPedidoExcluirItemCarrinho = false;
 		private Integer autIndexItemCarrinhoWebPage = null;
+		static java.util.HashMap<String,AUTFunctionProcess> hashFunctionServicosEGarantias;		
+		
+		
+		/**
+		 * 
+		 * Funções para configuração do fluxo de agendamento de serviço
+		 * 
+		 * @return the hashFunctionServicosEGarantias - Lista de funções para executadas
+		 *
+		 */
+		public static java.util.HashMap<String, AUTFunctionProcess> getHashFunctionServicosEGarantias() {
+			if(hashFunctionServicosEGarantias==null) {
+				hashFunctionServicosEGarantias = new java.util.HashMap<String,AUTFunctionProcess>();
+				return hashFunctionServicosEGarantias;
+			}
+			else {
+				return hashFunctionServicosEGarantias;
+			}
+		}
+
+
+		/**
+		 * 
+		 * Altera a lista de funções pré configuradas
+		 * 
+		 * @param hashFunctionServicosEGarantias the hashFunctionServicosEGarantias to set
+		 */
+		public static void setHashFunctionServicosEGarantias(
+				java.util.HashMap<String, AUTFunctionProcess> hashFunctionServicosEGarantias) {
+			AUTStoreItem.hashFunctionServicosEGarantias = hashFunctionServicosEGarantias;
+		}
+
+		
+		
+		/**
+		 * 
+		 * Adiciona uma função de configuração de agenda de serviço para o item atual - Corrente
+		 * 
+		 * @param function - Função de configuração
+		 */
+		public <TFunctionProcess extends  br.lry.components.AUTBaseComponent.AUTFunctionProcess> void autAdicionarFuncaoParaConfiguracaoAgendaServico(TFunctionProcess function)
+		{
+			getHashFunctionServicosEGarantias().put(getLmMaterial().toString(), function);
+		}
+		
+		
+		/**
+		 * 
+		 * Adiciona uma função de configuração de agenda de serviço para o item definido pela chave de pesquisa
+		 * 
+		 * @param function - Função de configuração
+		 */
+		public <TFunctionProcess extends  br.lry.components.AUTBaseComponent.AUTFunctionProcess> void autAdicionarFuncaoParaConfiguracaoAgendaServico(String item,TFunctionProcess function)
+		{
+			getHashFunctionServicosEGarantias().put(item, function);
+		}
+		
+		
+		/**
+		 * 
+		 * Adiciona o serviço padrão configurado para o item
+		 * 
+		 */
+		public void autHTMLAdicionarServico() {
+			java.util.HashMap<String,Object> parameters = new java.util.HashMap<String,Object>();
+			parameters.put("AUT_MATERIAL_COM_SERVICO_CONFIGURADO", getLmMaterial());
+			parameters.put("AUT_INDEX_SERVICO_ASSOCIADO_MATERIAL", "1");		
+			autHTMLAdicionarServico(parameters);
+		}
+		
+		
+		/*
+		 * 
+		 * Adiciona o serviço especificado pelo hash de configuração do item
+		 * 
+		 */
+		public void autHTMLAdicionarServico(java.util.HashMap<String,Object> parameters) {
+			java.util.regex.Pattern regExp = java.util.regex.Pattern.compile("\\d+");
+			java.util.regex.Matcher verif = null;			
+			AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DomButton[@data-component='cart/service-sale' and @data-product-code='%s']",parameters.get("AUT_MATERIAL_COM_SERVICO_CONFIGURADO"))).click();
+			String codigoServico = AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DomElement[@class='service-info'][%s]/DomElement[@class='service-info-content']/DomElement[@class='product-description *']/DomElement[@textContents='Cód. do produto:*']",parameters.get("AUT_INDEX_SERVICO_ASSOCIADO_MATERIAL"))).getText();
+			if(codigoServico!=null && !codigoServico.isEmpty()) {
+				verif = regExp.matcher(codigoServico);
+				if(verif.find()) {
+					codigoServico = verif.group();
+				}
+				else {
+					codigoServico = "errocarregarcodigoservico";
+				}
+				if(parameters.containsKey("AUT_MATERIAL_COM_SERVICO_COD_SERVICO_CATALOGO")) {
+					parameters.remove("AUT_MATERIAL_COM_SERVICO_COD_SERVICO_CATALOGO");
+					parameters.put("AUT_MATERIAL_COM_SERVICO_COD_SERVICO_CATALOGO", codigoServico);
+				}
+				else {
+					parameters.put("AUT_MATERIAL_COM_SERVICO_COD_SERVICO_CATALOGO", codigoServico);
+				}
+			}
+			AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DIV[@class='product-service']//BUTTON[@data-product-code='%s'][%s]",parameters.get("AUT_MATERIAL_COM_SERVICO_CONFIGURADO"),parameters.get("AUT_INDEX_SERVICO_ASSOCIADO_MATERIAL"))).click();			
+		}
+		
+		/**
+		 * 
+		 * Adiciona o adiciona padrão configurado para o item
+		 * 
+		 */
+		public void autHTMLGarantiaServico() {
+			java.util.HashMap<String,Object> parameters = new java.util.HashMap<String,Object>();
+			parameters.put("AUT_MATERIAL_COM_GARANTIA_CONFIGURADO", getLmMaterial());
+			parameters.put("AUT_GARANTIA_QUANTIDADE_PADRAO", "1");	
+			parameters.put("AUT_INDEX_GARANTIA_ASSOCIADO_MATERIAL", "2");
+			autHTMLGarantiaServico(parameters);
+		}
+		
+		
+		/**
+		 * 
+		 * Configura o serviço padrão agendado
+		 * 
+		 */
+		public void autAlterarDataAgendaServico() {
+			java.util.HashMap<String,Object> parameters = new java.util.HashMap<String,Object>();
+			parameters.put("AUT_SERVICO_AGENDA_PROXIMO_DIA", "0"); //Define o index do serviço agendado, exemplo: adicionamos serviço para três itens - valores possíveis = 1,2,3 
+			parameters.put("AUT_ITEM_SERVICO_DATA_AGENDAMENTO", "0"); //Define o index do serviço agendado, exemplo: adicionamos serviço para três itens - valores possíveis = 1,2,3 			
+			parameters.put("AUT_SERVICO_INDEX_DATA_AGENDAMENTO", "1"); //Define o index da data disponivel para agendamento, exemplo: no calendário aparece 5 datas disponiveis no mes atual - valores possíveis = 1,2,3,4,5 - 1 = 1ª data disponivel,2 = 2ª data disponivel...			
+			
+			autAlterarDataAgendaServico(parameters);
+		}
+		
+		
+		/**
+		 * 
+		 * 
+		 * Altera a data de agendamento do serviço específico
+		 * 
+		 * @param parameters - Parametros de configuração do processo de negócio
+		 */
+		public void autAlterarDataAgendaServico(java.util.HashMap<String,Object> parameters) {
+			if(parameters.containsKey("AUT_SERVICO_AGENDA_PROXIMO_DIA")) {
+				String locData = String.format("VA.//BrowserWindow//LI[@data-component='order/services/service-group-container' and @data-entry-number='%s']//INPUT[@data-component='datepicker']",parameters.get("AUT_ITEM_SERVICO_DATA_AGENDAMENTO"));
+				String locDataDiaAgenda= String.format("VA.//BrowserWindow//DomElement[@class='dayContainer']//SPAN[@class='flatpickr-day nextMonthDay'][%s]",parameters.get("AUT_SERVICO_INDEX_DATA_AGENDAMENTO"));
+				String locTurno = String.format("VA.//BrowserWindow//LI[@data-component='order/services/service-group-container' and @data-entry-number='%s']//DomListBox[@id='hour-%s']",parameters.get("AUT_ITEM_SERVICO_DATA_AGENDAMENTO"),parameters.get("AUT_ITEM_SERVICO_DATA_AGENDAMENTO"));
+				
+				System.out.println(locData);
+				System.out.println(locDataDiaAgenda);
+				System.out.println(locTurno);
+							
+				AUT_AGENT_SILK4J.<DomElement>find(locData).click();
+				AUT_AGENT_SILK4J.<DomElement>find(locDataDiaAgenda).click();	
+									
+				selectValor(AUT_AGENT_SILK4J.find(locTurno));
+			}
+			
+		}
+		
+		/*
+		 * 
+		 * Adiciona o garantia especificado pelo hash de configuração do item
+		 * 
+		 */
+		public void autHTMLGarantiaServico(java.util.HashMap<String,Object> parameters) {
+			AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DomButton[@data-component='cart/service-sale' and @data-product-code='%s']",parameters.get("AUT_MATERIAL_COM_GARANTIA_CONFIGURADO"))).click();
+			AUT_AGENT_SILK4J.<DomTextField>find(String.format("VA.//BrowserWindow//DomElement[@data-component='cart/item/quantity'][%s]//DomTextField",parameters.get("AUT_INDEX_GARANTIA_ASSOCIADO_MATERIAL"))).setText(parameters.get("AUT_GARANTIA_QUANTIDADE_PADRAO").toString());
+			AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DIV[@class='product-service']//BUTTON[@data-product-code='%s'][%s]",parameters.get("AUT_MATERIAL_COM_GARANTIA_CONFIGURADO"),parameters.get("AUT_INDEX_GARANTIA_ASSOCIADO_MATERIAL"))).click();
+		}
 		
 		
 		/**

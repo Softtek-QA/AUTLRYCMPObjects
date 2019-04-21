@@ -53,6 +53,7 @@ import br.lry.dataflow.AUTDataFlow.AUT_CONFIRMACAO_USUARIO;
 import br.lry.dataflow.AUTDataFlow.AUT_EDICAO_PEDIDO;
 import br.lry.dataflow.AUTDataFlow.AUT_MODO_CONSULTAS_VA_SELECAO_ITEM;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
+import br.lry.dataflow.AUTDataFlow.AUT_TIPO_TELEFONE_PARA_CONTATO;
 import br.lry.dataflow.AUTDataFlow.AUT_VA_TIPO_DOCUMENTO_PESQUISA;
 import br.lry.functions.AUTVAProjectFunctions;
 import br.lry.functions.AUTProjectsFunctions;
@@ -69,6 +70,7 @@ import com.borland.silktest.jtf.xbrowser.BrowserWindow;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomCheckBox;
 import com.borland.silktest.jtf.xbrowser.DomElement;
+import com.borland.silktest.jtf.xbrowser.DomForm;
 import com.borland.silktest.jtf.xbrowser.DomListBox;
 import com.borland.silktest.jtf.xbrowser.DomRadioButton;
 
@@ -1967,7 +1969,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 				com.borland.silktest.jtf.Utils.sleep(3 * 1000);
 				AUT_AGENT_SILK4J.<DomButton>find("VA.//BrowserWindow//DIV[@class='container-fluid alig*'][3]//DomButton[@textContents='Confirmar']").click();				
 			}
-			*/
+			 */
 		}
 		/**
 		 * 
@@ -2213,8 +2215,39 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FluxosDeSaida.Finalizar").click();		
 		}
 
-		public void autFinalizarPedidoFromConfigFormasPagamento() {
+		public void autFinalizarPedidoFromConfigAgendamentoServicoGarantia(java.util.HashMap<String,Object> parameters) {			
+			AUT_TIPO_TELEFONE_PARA_CONTATO tipoTel = AUT_TIPO_TELEFONE_PARA_CONTATO.valueOf(parameters.get("AUT_TIPO_TELEFONE_PARA_CONTATO_AGENDA_ENTREGA").toString());
 			
+			
+			AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DomElement[@data-action-flow='next']").click();		
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//DomTextField[@id='phoneNumber']").click();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//DomTextField[@id='phoneNumber']").setText(parameters.get("AUT_TELEFONE_PARA_CONTATO_AGENDA_ENTREGA").toString());			
+		
+			AUT_AGENT_SILK4J.<DomButton>find("VA.//BrowserWindow//DomForm[@data-form='phone-number']//DomButton[@type='submit']").scrollIntoView();
+			
+			AUT_AGENT_SILK4J.<DomButton>find("VA.//BrowserWindow//DomForm[@data-form='phone-number']//DomButton[@type='submit']").click();
+			
+			boolean cadastrarTel = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.//BrowserWindow").exists("//DomForm[@data-form='new-phone-number']",3 * 1000);
+			if(cadastrarTel) {
+				
+				DomListBox lt = AUT_AGENT_SILK4J.<DomListBox>find("VA.//BrowserWindow//DomForm[@data-form='new-phone-number']//DomListBox[@id='phoneType']");
+				selectValor(lt,tipoTel.toString());
+				AUT_AGENT_SILK4J.<DomButton>find("VA.//BrowserWindow//DomForm[@data-form='new-phone-number']//DomButton[@type='submit']").click();
+				
+			}
+
+			autIrProximaPagina();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FluxosDeSaida.Finalizar").click();	
+		}
+		
+		
+		
+		public void autFinalizarPedidoFromFluxosSaida() {			
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FluxosDeSaida.Finalizar").click();		
+		}
+
+		public void autFinalizarPedidoFromConfigFormasPagamento() {
+
 			autIrProximaPagina();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TL011FluxosDeSaida.Finalizar").click();		
 		}
@@ -2281,7 +2314,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			}
 			this.usarDataMaisProxima = usarDataMaisProxima;
 		}
-		
+
 		/**
 		 * @param usarDataMaisProxima the usarDataMaisProxima to set
 		 */
@@ -2311,7 +2344,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			}
 			this.usarDataMaisProxima = usarDataMaisProxima;
 		}
-		
+
 		/**
 		 * @return the enderecoCadastrado
 		 */
@@ -3337,14 +3370,48 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */
 	public void CMP11027(java.util.HashMap<String,Object> parameters) {	
 		CMP11012(parameters);
-		AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DomElement[@data-code='%s']//DomButton[@textContents='*Lote*']",parameters.get("INDEX_MATERIAL_POSSUI_LOTE"))).click();
+		String locItem1 = "//DomButton[@textContents='*Lote:*']";
+		String locItem2 = "//DomButton[@textContents='Definir lote especifico']";
+		//VA.//BrowserWindow//LI[@data-code='89627601']//DomButton[@textContents='*Lote*']
+		
+		String locFull1 = String.format("VA.//BrowserWindow//LI[@data-code='*%s*']%s",parameters.get("INDEX_MATERIAL_POSSUI_LOTE"),locItem1);		
+		String locFull2 = String.format("VA.//BrowserWindow//DIV[@textContents='LM: %s*']",parameters.get("INDEX_MATERIAL_POSSUI_LOTE")).concat(locItem2);
+		
+		System.out.println(locItem1);
+		System.out.println(locItem2);
+		System.out.println(locFull1);
+		System.out.println(locFull2);
+		
+		boolean exitsLoteSelect = AUT_AGENT_SILK4J.exists(locFull1, 2 * 1000);	
+		boolean exitsLote = AUT_AGENT_SILK4J.exists(locFull2,2 * 1000);
+		
+		
+		if(exitsLoteSelect) {
+			AUT_AGENT_SILK4J.<DomElement>find(locFull1).click();			
+		}
+		else if(exitsLote) {
+			AUT_AGENT_SILK4J.<DomElement>find(locFull2).click();						
+		}
+		
+		
+		
+		
 		AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//DomElement[@id='batch-consult']").setFocus();
 		AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//DomElement[@id='batch-consult']").scrollIntoView();
 		AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DomElement[@id='batch-consult']").typeKeys(parameters.get("AUT_NUMERO_LOTE_ALTERACAO").toString());		
 		AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DomElement[@id='batch-consult']").typeKeys("\n");
 		//AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//FORM[@data-component='form cart/item/batch-consult validation']//DomButton[@type='submit']").click();		
-		AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//LI[@class='list-item color-prim*']/DIV[@class='row']").click();		
-		
+
+		Boolean existRowSelect = AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//LI[@class='list-item color-prim*']").exists("/DIV[@class='row']", 3 * 1000);
+
+
+		if(!exitsLoteSelect) {
+			AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//LI[@class='list-item color-prim*']/DIV[@class='row']").click();	
+		}
+		else {
+			AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DomButton[@textContents='Confirmar troca de Lote']").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DomButton[@id='btModificationOrder']").click();				
+		}		
 	}
 
 
@@ -3357,7 +3424,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */
 	public boolean CMP11001(java.util.HashMap<String,Object> parametros) {
 		try {			
-			if(parametros.containsKey("AUT_INIT_APP")) {
+			if(parametros.get("AUT_INIT_APP").equals(true)) {
 
 				Boolean startApp = (Integer.parseInt(parametros.get("AUT_INIT_APP").toString()) == 0 ? false : true);
 
@@ -3510,6 +3577,16 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 				boolean existItem = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TL011VACarrinhoCompra").exists("BotaoExcluir",5 * 1000);
 				while(existItem) {
 					switch(opExclusaoItens) {
+					case EXCLUIR_ITEM_POR_LM:{
+						String lm = indexItemExclusaoIndividual.toString();
+						String locItem = String.format("VA.//BrowserWindow//DomElement[@data-code='%s']//BUTTON[@data-trigger='item-removal']",lm);
+						AUT_AGENT_SILK4J.<DomButton>find(locItem).click();
+						
+						AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TL011VACarrinhoCompra").exists("PopUp1", 5000);
+						AUT_AGENT_SILK4J.<DomElement>find("VA.TL011VACarrinhoCompra.PopUp1").waitForProperty("Visible", true,4 * 1000);
+						AUT_AGENT_SILK4J.<DomElement>find("VA.TL011VACarrinhoCompra.Sim").click();
+						
+					}
 					case EXCLUIR_ITEM_POR_ATRIB_MATERIAL:{
 						AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.TL011VACarrinhoCompra.//I[@class='glyph glyph-trash-ca*'][%s]",parameters.get("AUT_INDEX_EXCLUSAO").toString())).click();
 						AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TL011VACarrinhoCompra").exists("PopUp1", 5000);
@@ -3619,10 +3696,18 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 				break;
 			}
 			case CONDITION_BY_ID:{
-
+				AUTFunctionProcess func = null;
+				if(parameters.containsKey("AUT_FUNCTION_BY_ITEM_PROCESS")) {
+					if(!parameters.get("AUT_FUNCTION_BY_ITEM_PROCESS").equals(null)) {
+						func = (AUTFunctionProcess)parameters.get("AUT_FUNCTION_BY_ITEM_PROCESS");
+					}
+				}
+				
 				//CARREGA OS ITENS DO CATÁLOGO DE PRODUTOS PELO CRITÉRIO DE FILTRO ESPECÍFICO
 				for(AUTStoreItem itemCorrente:CMP11004_V2(parameters)) {		
-
+					if(func!=null) {
+						func.autProcessByItem(parameters);
+					}
 					ltOutItems.add(itemCorrente.autCopyItemStore(itemCorrente));
 					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setText("");
 					AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011VACarrinhoCompra.QuantidadeItem").setFocus();
@@ -3756,6 +3841,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		}
 	}
 
+	
 	/**
 	 * 
 	 * Executa procedimentos de faturamento no SAP
@@ -3765,7 +3851,13 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */
 	public void CMP11017(java.util.HashMap<String,Object> parameters) {
 		try {			
-			CMP11016(parameters).autSAPFaturamentos().autIniciarFaturamento(parameters);			
+			if(parameters.containsKey("AUT_FATURAR_ITENS_COM_LOTE")) {
+				parameters.remove("AUT_FATURAR_ITENS_COM_LOTE");
+				CMP11016(parameters).autSAPFaturamentos().autIniciarFaturamento(parameters);							
+			}
+			else {
+				CMP11016(parameters).autSAPFaturamentos().autIniciarFaturamento(parameters);			
+			}
 		}
 		catch(java.lang.Exception e) {
 			System.out.println("AUT ERRO: FATURAMENTO SAP");
@@ -3774,7 +3866,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		}
 	}
 
-	
+
 	/**
 	 * 
 	 * Consulta items de uma ordem de venda para um pedido específico
@@ -3792,9 +3884,32 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			e.printStackTrace();
 		}
 	}
-	
-	
 
+
+	/**
+	 * 
+	 * Consulta items de uma ordem de venda para um pedido específico
+	 * 
+	 * @param parameters - Parametros de configuração do SAP
+	 * 
+	 */
+	public void CMP11029(java.util.HashMap<String,Object> parameters) {
+		try {			
+			AUTStoreItem managItem = new AUTStoreItem();
+			System.out.println("AUT INFO: TOTAL FUNCOES CONFIG AGENDA SERVICOS E GARANTIA");
+			System.out.println(managItem.getHashFunctionServicosEGarantias().size());
+			for(AUTFunctionProcess fc : managItem.getHashFunctionServicosEGarantias().values()) {
+				fc.autProcessByItem(parameters);
+			}
+		}
+		catch(java.lang.Exception e) {
+			System.out.println("AUT ERRO: FATURAMENTO SAP");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	
 	/**
 	 * 
 	 * Executa procedimento de devolução no PDV
@@ -3805,7 +3920,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public void CMP11018(java.util.HashMap<String,Object> parameters) {
 		try {
 			CMP11014(parameters).autSyncStateExecution(AUT_SYNC_EXECUTION_STATE.EXECUTION);
-			CMP11014(parameters).autStartDevolucaoItem("AUT_NUMERO_PEDIDO",AUT_VA_FLUXO_SAIDA.valueOf(parameters.get("AUT_TIPO_ENTREGA_FLUXO_SAIDA").toString()));
+			CMP11014(parameters).autStartDevolucaoItem(parameters);
 			CMP11014(parameters).AUT_AGENT_SILK4J.detachAll();
 			CMP11014(parameters).AUT_AGENT_SILK4J = null;
 		}
@@ -3867,8 +3982,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * Consulta documentos vinculados associados ao numero de pedido
@@ -3933,11 +4048,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		try {
 			CMP11014(parameters).autStartPagamentoPedido(parameters);
 			CMP11014(parameters).AUT_AGENT_SILK4J.detachAll();
-			CMP11014(parameters).AUT_AGENT_SILK4J = null;
 		}
 		catch(java.lang.Exception e) {
-			CMP11014(parameters).AUT_AGENT_SILK4J.detachAll();
-			CMP11014(parameters).AUT_AGENT_SILK4J = null;			
+			CMP11014(parameters).AUT_AGENT_SILK4J.detachAll();		
 		}
 	}
 
@@ -3953,7 +4066,6 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		try {
 			CMP11014(parameters).autPDVAcessos().autPDVLoginDefault(parameters);
 			CMP11014(parameters).AUT_AGENT_SILK4J.detachAll();
-			CMP11014(parameters).AUT_AGENT_SILK4J=null;
 		}
 		catch(java.lang.Exception e) {			
 			System.out.println(e.getMessage());
@@ -4107,7 +4219,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			Boolean popup = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TL011ConfirmacaoPedido").exists("PopUp1");
 
 			if(popup) {
-				
+
 				AUT_AGENT_SILK4J.<DomTextField>find("VA.TL011ConfirmacaoPedido.NumeroCartao").setText(parameters.get("AUT_NUMERO_CARTAO").toString());			
 				AUT_AGENT_SILK4J.<DomElement>find("VA.TL011ConfirmacaoPedido.BotaoSalvar").click();							
 			}
@@ -4157,7 +4269,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			AUT_AGENT_SILK4J.<DomButton>find("VA.TL011FiltroPesquisa.BuscarPedido").scrollIntoView();
 			AUT_AGENT_SILK4J.<DomButton>find("VA.TL011FiltroPesquisa.BuscarPedido").click();
 
-			
+
 			break;
 		}
 		case EDICAO_DO_BOITATA:{
@@ -4282,13 +4394,20 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 				AUT_AGENT_SILK4J.<DomElement>find("VA.TL011VACarrinhoCompra.Sim").click();
 			}
 			switch(opEdit) {
+			case GARANTIA_ITEM_INDIVIDUAL:{
+				
+				break;
+			}
 			case QUANTIDADE_ITEM_QUANT_ADICIONAR_POR_ATRIBUTO:{
 				if(item.isAutFluxoPedidoAlterarQuantidadePedido()) {
 					System.out.println("AUT INFO: ADICIONANDO QUANTIDADE NO ITEM:");
 					System.out.println(item.getLmMaterial());						
 					//DomElement itemList = (DomElement)autSearchObject(items, "DomTextField","class=\"cart-item-content\"", "id=\"input-\\d+\"");
 					//DomTextField itemLM = (DomTextField)autSearchObject(itemList, "DomTextField",item.getLmMaterial().toString(), "id=\"input-\\d+\"");
-
+					String locInput = String.format("VA.//BrowserWindow//DomElement[@data-product-code='%s']//DomTextField[@data-quantity='input']",item.getLmMaterial());
+					System.out.println(locInput);
+					AUT_AGENT_SILK4J.<DomTextField>find(locInput).scrollIntoView();					
+					AUT_AGENT_SILK4J.<DomTextField>find(locInput).setText(item.getInputFluxoPedidoAlterarQuantidadePedido().toString());
 				}
 				break;
 			}
