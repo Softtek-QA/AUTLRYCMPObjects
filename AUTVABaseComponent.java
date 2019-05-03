@@ -1798,7 +1798,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 
 			//Verifica se existe um popup informando erro na pesquisa de CEP			
 			if(exibiCepNaoCadastrado) {
-				AUT_AGENT_SILK4J.<DomElement>find("VA.TL011PopupEnderecos.//I[@class='modal-close glyph gl*'][4]").click();		
+				//AUT_AGENT_SILK4J.<DomElement>find("VA.TL011PopupEnderecos.//I[@class='modal-close glyph gl*'][4]").click();		
+				AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DomElement[@data-modal='partial-address-select*']//LI[1]").click();
 			}
 
 
@@ -1971,6 +1972,12 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 			}
 			 */
 		}
+		private void scenarioRecovery() {
+			boolean confirmServicos = AUT_AGENT_SILK4J.exists("VA.//BrowserWindow//DomElement[@class='modal-body']//BUTTON[@textContents='Prosseguir sem servi*']",2 * 1000);
+			if(confirmServicos) {
+				AUT_AGENT_SILK4J.<DomButton>find("VA.//BrowserWindow//DomElement[@class='modal-body']//BUTTON[@textContents='Prosseguir sem servi*']").click();
+			}
+		}
 		/**
 		 * 
 		 *
@@ -1983,6 +1990,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		 * 
 		 */
 		public void autConfigurarFluxosSaidaEntrega(FILIAIS tipoPedido) {
+			scenarioRecovery();
 			autExceptionFluxoEntregas();
 			Integer row = 0;
 			int totItens = getRowsCount();
@@ -2001,6 +2009,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		 * 
 		 */
 		public void autConfigurarFluxosSaidaEntrega(FILIAIS fluxoParaTodosOsItens,FILIAIS fluxoParaItensEspecificos,Integer itemInicial,Integer itemFinal) {
+			scenarioRecovery();
 			autExceptionFluxoEntregas();
 			Integer row = 0;
 			int totItens = getRowsCount();
@@ -2026,6 +2035,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		 * 
 		 */
 		public void autConfigurarFluxosSaidaEntrega(FILIAIS tipoPedido,Integer row) {
+			scenarioRecovery();
 			autExceptionFluxoEntregas();
 			autConfigPedidos(row, tipoPedido);
 		}
@@ -2204,10 +2214,17 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		 *
 		 */
 		public void autIrProximaPagina() {
+			boolean confirmServicos = AUT_AGENT_SILK4J.exists("VA.//BrowserWindow//DomElement[@class='modal-body']//BUTTON[@textContents='Prosseguir sem servi*']",2 * 1000);
+			if(confirmServicos) {
+				AUT_AGENT_SILK4J.<DomButton>find("VA.//BrowserWindow//DomElement[@class='modal-body']//BUTTON[@textContents='Prosseguir sem servi*']").click();
+			}
 			AUT_AGENT_SILK4J.<DomButton>find("VA.TL011FluxosDeSaida.AvancarPagina").click();						
 		}
 
 
+		public void autSalvarEdicaoPedido() {
+			AUT_AGENT_SILK4J.<DomButton>find("VA.//BrowserWindow//DomButton[@id='btModificationOrder']").click();
+		}
 
 		public void autFinalizarPedido() {			
 			autIrProximaPagina();			
@@ -3426,7 +3443,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		try {			
 			if(parametros.get("AUT_INIT_APP").equals(true)) {
 
-				Boolean startApp = (Integer.parseInt(parametros.get("AUT_INIT_APP").toString()) == 0 ? false : true);
+				Boolean startApp = parametros.get("AUT_INIT_APP").equals(true);
 
 				if(startApp) {
 					try {						
@@ -3844,7 +3861,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * Executa procedimentos de faturamento parcial no SAP
+	 * Executa procedimentos de faturamento total no SAP
 	 * 
 	 * @param parameters - Parametros de configuração do SAP
 	 * 
@@ -3853,11 +3870,14 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		try {			
 			if(parameters.containsKey("AUT_FATURAR_ITENS_COM_LOTE")) {
 				parameters.remove("AUT_FATURAR_ITENS_COM_LOTE");
-				CMP11016(parameters).autSAPFaturamentos().autIniciarFaturamento(parameters);							
 			}
-			else {
-				CMP11016(parameters).autSAPFaturamentos().autIniciarFaturamento(parameters);			
+			
+			if(parameters.containsKey("AUT_FATURAR_ITENS_SEM_LOTE")) {
+				parameters.remove("AUT_FATURAR_ITENS_SEM_LOTE");
 			}
+			
+			CMP11016(parameters).autSAPFaturamentos().autIniciarFaturamento(parameters);							
+
 		}
 		catch(java.lang.Exception e) {
 			System.out.println("AUT ERRO: FATURAMENTO SAP");
@@ -3870,7 +3890,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * Executa procedimentos de faturamento parcial no SAP
+	 * Executa procedimentos de faturamento parcial - Itens com lote no SAP
 	 * 
 	 * @param parameters - Parametros de configuração do SAP
 	 * 
@@ -3892,6 +3912,46 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		}
 	}
 
+	
+	/**
+	 * 
+	 * Executa procedimentos de faturamento parcial - Itens sem lote no SAP
+	 * 
+	 * @param parameters - Parametros de configuração do SAP
+	 * 
+	 */
+	public void CMP11031(java.util.HashMap<String,Object> parameters) {
+		try {			
+			if(!parameters.containsKey("AUT_FATURAR_ITENS_SEM_LOTE")) {
+								
+				parameters.put("AUT_FATURAR_ITENS_SEM_LOTE","");
+				
+				if(parameters.containsKey("AUT_FATURAR_ITENS_COM_LOTE")) {
+					parameters.remove("AUT_FATURAR_ITENS_COM_LOTE");
+				}
+		
+				CMP11016(parameters).autSAPFaturamentos().autIniciarFaturamento(parameters);							
+			}
+			else if(parameters.containsKey("AUT_FATURAR_ITENS_SEM_LOTE")) {
+				
+				if(parameters.containsKey("AUT_FATURAR_ITENS_COM_LOTE")) {
+					parameters.remove("AUT_FATURAR_ITENS_COM_LOTE");
+				}
+				
+				CMP11016(parameters).autSAPFaturamentos().autIniciarFaturamento(parameters);
+			}
+			else {
+				CMP11016(parameters).autSAPFaturamentos().autIniciarFaturamento(parameters);			
+			}
+		}
+		catch(java.lang.Exception e) {
+			System.out.println("AUT ERRO: FATURAMENTO SAP");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
 	/**
 	 * 
 	 * Consulta items de uma ordem de venda para um pedido específico

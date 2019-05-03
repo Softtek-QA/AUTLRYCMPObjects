@@ -175,6 +175,51 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		}
 		
 		
+		public void autHTMLAlterarNumeroDoLote(java.util.HashMap<String,Object> parameters) {
+			String locItem1 = "//DomButton[@textContents='*Lote:*']";
+			String locItem2 = "//DomButton[@textContents='Definir lote especifico']";
+			//VA.//BrowserWindow//LI[@data-code='89627601']//DomButton[@textContents='*Lote*']
+			
+			String locFull1 = String.format("VA.//BrowserWindow//LI[@data-code='*%s*']%s",parameters.get("INDEX_MATERIAL_POSSUI_LOTE"),locItem1);		
+			String locFull2 = String.format("VA.//BrowserWindow//DIV[@textContents='LM: %s*']",parameters.get("INDEX_MATERIAL_POSSUI_LOTE")).concat(locItem2);
+			
+			System.out.println(locItem1);
+			System.out.println(locItem2);
+			System.out.println(locFull1);
+			System.out.println(locFull2);
+			
+			boolean exitsLoteSelect = AUT_AGENT_SILK4J.exists(locFull1, 2 * 1000);	
+			boolean exitsLote = AUT_AGENT_SILK4J.exists(locFull2,2 * 1000);
+			
+			
+			if(exitsLoteSelect) {
+				AUT_AGENT_SILK4J.<DomElement>find(locFull1).click();			
+			}
+			else if(exitsLote) {
+				AUT_AGENT_SILK4J.<DomElement>find(locFull2).click();						
+			}
+			
+			
+			
+			
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//DomElement[@id='batch-consult']").setFocus();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.//BrowserWindow//DomElement[@id='batch-consult']").scrollIntoView();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DomElement[@id='batch-consult']").typeKeys(parameters.get("AUT_NUMERO_LOTE_ALTERACAO").toString());		
+			AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DomElement[@id='batch-consult']").typeKeys("\n");
+			//AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//FORM[@data-component='form cart/item/batch-consult validation']//DomButton[@type='submit']").click();		
+
+			Boolean existRowSelect = AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//LI[@class='list-item color-prim*']").exists("/DIV[@class='row']", 3 * 1000);
+
+
+			if(!exitsLoteSelect) {
+				AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//LI[@class='list-item color-prim*']/DIV[@class='row']").click();	
+			}
+			else {
+				AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DomButton[@textContents='Confirmar troca de Lote']").click();
+				AUT_AGENT_SILK4J.<DomElement>find("VA.//BrowserWindow//DomButton[@id='btModificationOrder']").click();				
+			}
+		}
+		
 		/**
 		 * 
 		 * Adiciona o serviço padrão configurado para o item
@@ -196,7 +241,20 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		public void autHTMLAdicionarServico(java.util.HashMap<String,Object> parameters) {
 			java.util.regex.Pattern regExp = java.util.regex.Pattern.compile("\\d+");
 			java.util.regex.Matcher verif = null;			
-			AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DomButton[@data-component='cart/service-sale' and @data-product-code='%s']",parameters.get("AUT_MATERIAL_COM_SERVICO_CONFIGURADO"))).click();
+			
+			
+			String lm = "";
+			if(parameters.containsKey("AUT_MATERIAL_COM_SERVICO_CONFIGURADO")) {
+				if(parameters.get("AUT_MATERIAL_COM_SERVICO_CONFIGURADO").equals("")) {
+					lm = getLmMaterial().toString();
+				}
+				else {
+					lm = parameters.get("AUT_MATERIAL_COM_SERVICO_CONFIGURADO").toString();
+				}
+			}
+			
+			AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DomButton[@data-component='cart/service-sale' and @data-product-code='%s']",lm)).click();
+
 			String codigoServico = AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DomElement[@class='service-info'][%s]/DomElement[@class='service-info-content']/DomElement[@class='product-description *']/DomElement[@textContents='Cód. do produto:*']",parameters.get("AUT_INDEX_SERVICO_ASSOCIADO_MATERIAL"))).getText();
 			if(codigoServico!=null && !codigoServico.isEmpty()) {
 				verif = regExp.matcher(codigoServico);
@@ -214,7 +272,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 					parameters.put("AUT_MATERIAL_COM_SERVICO_COD_SERVICO_CATALOGO", codigoServico);
 				}
 			}
-			AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DIV[@class='product-service']//BUTTON[@data-product-code='%s'][%s]",parameters.get("AUT_MATERIAL_COM_SERVICO_CONFIGURADO"),parameters.get("AUT_INDEX_SERVICO_ASSOCIADO_MATERIAL"))).click();			
+			AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DIV[@class='product-service']//BUTTON[@data-product-code='%s'][%s]",lm,parameters.get("AUT_INDEX_SERVICO_ASSOCIADO_MATERIAL"))).click();			
 		}
 		
 		/**
@@ -226,7 +284,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 			java.util.HashMap<String,Object> parameters = new java.util.HashMap<String,Object>();
 			parameters.put("AUT_MATERIAL_COM_GARANTIA_CONFIGURADO", getLmMaterial());
 			parameters.put("AUT_GARANTIA_QUANTIDADE_PADRAO", "1");	
-			parameters.put("AUT_INDEX_GARANTIA_ASSOCIADO_MATERIAL", "2");
+			parameters.put("AUT_INDEX_GARANTIA_ASSOCIADO_MATERIAL", "1");
 			autHTMLGarantiaServico(parameters);
 		}
 		
@@ -253,7 +311,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		 * 
 		 * @param parameters - Parametros de configuração do processo de negócio
 		 */
-		public void autAlterarDataAgendaServico(java.util.HashMap<String,Object> parameters) {
+		public void autAlterarDataAgendaServico(java.util.HashMap<String,Object> parameters) {			
 			if(parameters.containsKey("AUT_SERVICO_AGENDA_PROXIMO_DIA")) {
 				String locData = String.format("VA.//BrowserWindow//LI[@data-component='order/services/service-group-container' and @data-entry-number='%s']//INPUT[@data-component='datepicker']",parameters.get("AUT_ITEM_SERVICO_DATA_AGENDAMENTO"));
 				String locDataDiaAgenda= String.format("VA.//BrowserWindow//DomElement[@class='dayContainer']//SPAN[@class='flatpickr-day nextMonthDay'][%s]",parameters.get("AUT_SERVICO_INDEX_DATA_AGENDAMENTO"));
@@ -277,9 +335,19 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		 * 
 		 */
 		public void autHTMLGarantiaServico(java.util.HashMap<String,Object> parameters) {
-			AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DomButton[@data-component='cart/service-sale' and @data-product-code='%s']",parameters.get("AUT_MATERIAL_COM_GARANTIA_CONFIGURADO"))).click();
+			String lm = "";
+			if(parameters.containsKey("AUT_MATERIAL_COM_GARANTIA_CONFIGURADO")) {
+				if(parameters.get("AUT_MATERIAL_COM_GARANTIA_CONFIGURADO").equals("")) {
+					lm = getLmMaterial().toString();
+				}
+				else {
+					lm = parameters.get("AUT_MATERIAL_COM_GARANTIA_CONFIGURADO").toString();
+				}
+			}
+			
+			AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DomButton[@data-component='cart/service-sale' and @data-product-code='%s']",lm)).click();
 			AUT_AGENT_SILK4J.<DomTextField>find(String.format("VA.//BrowserWindow//DomElement[@data-component='cart/item/quantity'][%s]//DomTextField",parameters.get("AUT_INDEX_GARANTIA_ASSOCIADO_MATERIAL"))).setText(parameters.get("AUT_GARANTIA_QUANTIDADE_PADRAO").toString());
-			AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DIV[@class='product-service']//BUTTON[@data-product-code='%s'][%s]",parameters.get("AUT_MATERIAL_COM_GARANTIA_CONFIGURADO"),parameters.get("AUT_INDEX_GARANTIA_ASSOCIADO_MATERIAL"))).click();
+			AUT_AGENT_SILK4J.<DomElement>find(String.format("VA.//BrowserWindow//DIV[@class='product-service']//BUTTON[@data-product-code='%s'][%s]",lm,parameters.get("AUT_INDEX_GARANTIA_ASSOCIADO_MATERIAL"))).click();
 		}
 		
 		
@@ -1601,8 +1669,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		}
 	}
 
-	public boolean autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES tableName,String parameterName,Object value) {
-		
+	public boolean autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES tableName,String parameterName,Object value) {		
 		return autSetCurrentParameter(tableName, parameterName, value,1);
 		
 	}
@@ -1633,9 +1700,28 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 				}			
 			}
 			*/
-			autGetDataFlowDBIntegration().autStartDefaultConnection();
+			if(!AUT_DB_CONNECTION_OFFLINE) {
+				autGetDataFlowDBIntegration().autStartDefaultConnection();
+				
+				autGetDataFlowDBIntegration().autExecSubStatements("update lry.aut_projects_process_datadrivers set drv_parameter_value=? where drv_process_name like ? and drv_parameter_name=?;", new Object[] {value,"%".concat(System.getenv("USERDOMAIN")).concat("%"),parameterName});
 			
-			autGetDataFlowDBIntegration().autExecSubStatements("update lry.aut_projects_process_datadrivers set drv_parameter_value=? where drv_process_name like ? and drv_parameter_name=?;", new Object[] {value,"%".concat(System.getenv("USERDOMAIN")).concat("%"),parameterName});
+				if(autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).containsKey(parameterName)) {
+					autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).remove(parameterName);
+					autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).put(parameterName, value);
+				}
+				else {
+					autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).put(parameterName, value);
+				}
+			}
+			else {
+				if(autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).containsKey(parameterName)) {
+					autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).remove(parameterName);
+					autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).put(parameterName, value);
+				}
+				else {
+					autGetDataFlow().AUT_GLOBAL_PARAMETERS.get(tableName.toString()).get(rowChange).put(parameterName, value);
+				}
+			}
 			return true;
 		}
 		catch(java.lang.Exception e) {
