@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
+import com.borland.silktest.jtf.xbrowser.BrowserWindow;
+import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomListBox;
 import com.borland.silktest.jtf.xbrowser.DomRadioButton;
@@ -145,9 +146,15 @@ public class AUTDesconto extends AUTBaseComponent {
 			AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_SECAO").setFocus();
 			AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_SECAO").click();
 			AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_SECAO").select(parametros.get("AUT_MOTIVO").toString());
-			AUT_AGENT_SILK4J.<DomTextField>find("VA.Desconto.DescontoPorcentagem_SECAO").click();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA.Desconto.DescontoPorcentagem_SECAO").setText(parametros.get("AUT_DESCONTO").toString());
-
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.DescontoPorcentagem_SECAO2").click();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.DescontoPorcentagem_SECAO2").typeKeys(parametros.get("AUT_DESCONTO").toString());
+		
+			//Verifica aviso de desconto não possível de ser aplicado
+			if (AUT_AGENT_SILK4J.<BrowserWindow>find("VA.AtualizacaoDados").exists("Confirmar", 5000)) {
+				autInsertScreenByScenario();
+				AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Confirmar").click();
+			}
+			autInsertScreenByScenario();
 			
 			return true;
 	}
@@ -188,6 +195,13 @@ public class AUTDesconto extends AUTBaseComponent {
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.Desconto.DescontoPorcentagem_ITEM").click();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.Desconto.DescontoPorcentagem_ITEM").typeKeys(parametros.get("AUT_DESCONTO").toString());
 
+			//Verifica aviso de desconto não possível de ser aplicado
+			if (AUT_AGENT_SILK4J.<BrowserWindow>find("VA.AtualizacaoDados").exists("Confirmar", 5000)) {
+				autInsertScreenByScenario();
+				AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Confirmar").click();
+			}
+			autInsertScreenByScenario();
+			
 			return true;
 	}
 		catch(Exception e) {
@@ -198,6 +212,15 @@ public class AUTDesconto extends AUTBaseComponent {
 	
 	}
 	
+	public void descontoNormal(java.util.HashMap parametros) {
+		AUT_AGENT_SILK4J.<DomElement>find("VA.Desconto.ValorItem").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.Desconto.ValorItem").click();
+		AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_ITEM").click();
+		AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_ITEM").select(parametros.get("AUT_MOTIVO").toString());
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.Desconto.DescontoPorcentagem_ITEM").click();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.Desconto.DescontoPorcentagem_ITEM").typeKeys(parametros.get("AUT_DESCONTO").toString());
+
+	}
 	
 	/**
 	 * Desconto sobre o valor do Total
@@ -226,8 +249,15 @@ public class AUTDesconto extends AUTBaseComponent {
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.Desconto.DescontoPorcentagem_TOTAL").click();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.Desconto.DescontoPorcentagem_TOTAL").typeKeys(parametros.get("AUT_DESCONTO").toString());
 
+			//Verifica aviso de desconto não possível de ser aplicado
+			if (AUT_AGENT_SILK4J.<BrowserWindow>find("VA.AtualizacaoDados").exists("Confirmar", 5000)) {
+				autInsertScreenByScenario();
+				AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Confirmar").click();
+			}
+			autInsertScreenByScenario();
 			
 			return true;
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();

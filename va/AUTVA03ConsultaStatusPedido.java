@@ -18,6 +18,9 @@ import br.lry.components.va.cat001.AUTVALogin;
 import com.borland.silktest.jtf.xbrowser.BrowserWindow;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomRadioButton;
+
+import java.util.GregorianCalendar;
+
 import org.junit.Assert;
 
 /**
@@ -119,7 +122,37 @@ public class AUTVA03ConsultaStatusPedido extends AUTVALogin{
 
 	}
 	
-	
+	public boolean autConsultaPedidoPorStatusEData(String Status, int DiaMes) {
+		String index;
+		
+		try {
+			
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPedidos.BotaoFiltroPedido").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPedidos.OpcoesDeFiltro").click();
+			
+			AUT_AGENT_SILK4J.<DomElement>find("VA.Pedidos.DataCriacaoIni").click();
+						
+			index = String.format("VA.Pedidos.//SPAN[@textContents=%s]", Integer.toString(DiaMes));			
+			AUT_AGENT_SILK4J.<DomElement>find(index).click();
+
+			AUT_AGENT_SILK4J.<DomElement>find("VA.Pedidos.DataCriacaoFim").click();
+			AUT_AGENT_SILK4J.<DomElement>find(index).click();
+								
+			AUT_AGENT_SILK4J.<DomElement>find("VA.Pedidos.ComboStatus").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.Pedidos.ComboStatus").typeKeys(Status);		
+			AUT_AGENT_SILK4J.<DomElement>find("VA.Pedidos.ComboStatus").typeKeys("\n\t");
+			
+			AUT_AGENT_SILK4J.<DomButton>find("VA.TelaPedidos.OpcoesDeFiltro.Buscar").click();
+
+			return true;
+		
+		} catch (java.lang.Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+			return false;
+		}
+
+	}
 	public void AUTVAConsultaStatusPedidoCompleto(String numeroPedido, String statusPedido) {
 		autInsertScreenByScenario();
 		try {

@@ -50,6 +50,7 @@ public class AUTFluxoSaida extends AUTVABaseComponent{
 
 	public static enum AUT_VA_TIPO_FRETE{
 		NORMAL,
+		EXPRESSA,
 		VIAGEM;
 		
 		@Override
@@ -59,7 +60,9 @@ public class AUTFluxoSaida extends AUTVABaseComponent{
 			case NORMAL: {
 				return "NORMAL";
 			}
-			
+			case EXPRESSA: {
+				return "EXPRESSA";
+			}
 			case VIAGEM: {
 				return "VIAGEM";
 			}
@@ -116,9 +119,14 @@ public class AUTFluxoSaida extends AUTVABaseComponent{
 	 */
 	public boolean autSelecaoFluxoSaida(java.util.HashMap parametros) {
 		try {
+			
+			//Verifica se  existe mensagem informando que  existem serviços para o item
+			if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.AtualizacaoDados").exists("ProsseguirSemServico",5000)) {
+				AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.ProsseguirSemServico").click();
+			}
 
 			if(parametros.get("AUT_FLUXO_SAIDA").toString() ==  AUT_VA_FLUXO_SAIDA.CAIXA.toString()) {
-				AUT_AGENT_SILK4J.<DomRadioButton>find("VA.FluxoSaida.OpcaoCaixa").select();
+				
 				
 				boolean statusListaEndereco = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.FluxoSaida").exists("ListaEndereco",10000);
 				if(statusListaEndereco) {
@@ -138,27 +146,55 @@ public class AUTFluxoSaida extends AUTVABaseComponent{
 					selectValor(listComboEntrega);	
 					autInsertScreenByScenario();
 				}	
-				
+				AUT_AGENT_SILK4J.<DomRadioButton>find("VA.FluxoSaida.OpcaoCaixa").select();
 
 			}
 			else if(parametros.get("AUT_FLUXO_SAIDA").toString() == AUT_VA_FLUXO_SAIDA.ENTREGA.toString()) {
 				AUT_AGENT_SILK4J.<DomRadioButton>find("VA.FluxoSaida.Entrega").select();
-				AUT_AGENT_SILK4J.<DomElement>find("VA.FluxoSaida.ListaEndereco").click();
-				AUT_AGENT_SILK4J.<DomElement>find("VA.FluxoSaida.PopUpFreteAdicional").click();
-				DomListBox listComboEntrega= AUT_AGENT_SILK4J.<DomListBox>find("VA.ConfirmacaoLogin.Turno");
-				selectValor(listComboEntrega);
+				
+				if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.FluxoSaida").exists("ListaEndereco",4000)) {
+					AUT_AGENT_SILK4J.<DomElement>find("VA.FluxoSaida.ListaEndereco").click();
+				}
+				
+				if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.FluxoSaida").exists("PopUpFreteAdicional",4000)) {
+					
+					try {
+						
+						//Para cenários onde precisa selecionar frete adicional
+						if (parametros.get("AUT_FRETE_ADICIONAL") != null  & parametros.get("AUT_FRETE_ADICIONAL").toString() == "SIM") {
+							
+							DomListBox listComboFrete = AUT_AGENT_SILK4J.<DomListBox>find("VA.FluxoSaida.SelecionarFrete");
+							selectValor(listComboFrete);
+		
+							autInsertScreenByScenario();
+							AUT_AGENT_SILK4J.<DomButton>find("VA.FluxoSaida.BotaoSalvar").click(); 												
+						}
+					} catch (Exception e) {
+						// só pra tratar qdo dataflow não tiver campo AUT_FRETE_ADICIONAL
+						AUT_AGENT_SILK4J.<DomElement>find("VA.FluxoSaida.PopUpFreteAdicional").click();
+					}	
+					
+				}
+				DomListBox listFilialEstoque = AUT_AGENT_SILK4J.<DomListBox>find("VA.AtualizacaoDados.FilialEstoque2");
+				selectValor(listFilialEstoque,parametros.get("AUT_OPCAO_LOJA").toString());
+				
+				DomListBox listComboFrete= AUT_AGENT_SILK4J.<DomListBox>find("VA.AtualizacaoDados.ComboTipoFrete");
+				selectValor(listComboFrete,parametros.get("AUT_TIPO_FRETE").toString());
+				
+				selectValor(AUT_AGENT_SILK4J.<DomListBox>find("VA.ConfirmacaoLogin.Turno"));
+				  
 			} 
 			
 			else if(parametros.get("AUT_FLUXO_SAIDA") == AUT_VA_FLUXO_SAIDA.RETIRA_EXTERNA_AGENDADA) {
+				
 				AUT_AGENT_SILK4J.<DomRadioButton>find("VA.FluxoSaida.OpcaoRetirada").select();
 				AUT_AGENT_SILK4J.<DomListBox>find("VA.FluxoSaida.TipoRetirada").select(AUT_VA_FLUXO_SAIDA.RETIRA_EXTERNA_AGENDADA.toString());
 				
-				
-				DomListBox listFilialEstoque = AUT_AGENT_SILK4J.<DomListBox>find("VA.FluxoSaida.FilialEstoque");
-				selectValor(listFilialEstoque);
-				
 				AUT_AGENT_SILK4J.<DomCheckBox>find("VA.FluxoSaida.UsarDataMaisProxima").click(); 
 				
+				DomListBox listFilialEstoque = AUT_AGENT_SILK4J.<DomListBox>find("VA.FluxoSaida.FilialEstoque");
+				selectValor(listFilialEstoque,parametros.get("AUT_OPCAO_LOJA").toString());
+		
 				DomListBox listComboHorario = AUT_AGENT_SILK4J.<DomListBox>find("VA.ConfirmacaoLogin.Horario");
 				selectValor(listComboHorario);
 			}
@@ -167,14 +203,36 @@ public class AUTFluxoSaida extends AUTVABaseComponent{
 				AUT_AGENT_SILK4J.<DomListBox>find("VA.FluxoSaida.TipoRetirada").select(AUT_VA_FLUXO_SAIDA.RETIRA_EXTERNA_IMEDIATA.toString());
 			}
 			else if(parametros.get("AUT_FLUXO_SAIDA") == AUT_VA_FLUXO_SAIDA.RETIRA_INTERNA_IMEDIATA) {
+				
+				boolean janelaEndereco = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.FluxoSaida").exists("ListaEndereco",5000);
+				if(janelaEndereco) {
+					AUT_AGENT_SILK4J.<DomElement>find("VA.FluxoSaida.ListaEndereco").click();
+				}	
+				
 				AUT_AGENT_SILK4J.<DomRadioButton>find("VA.FluxoSaida.OpcaoRetirada").select();
 				AUT_AGENT_SILK4J.<DomListBox>find("VA.FluxoSaida.TipoRetirada").select(AUT_VA_FLUXO_SAIDA.RETIRA_INTERNA_IMEDIATA.toString());
 			}
 			else if(parametros.get("AUT_FLUXO_SAIDA") == AUT_VA_FLUXO_SAIDA.RETIRA_INTERNA_AGENDADA) {
+
+				boolean janelaEndereco = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.FluxoSaida").exists("ListaEndereco",5000);
+				if(janelaEndereco) {
+					AUT_AGENT_SILK4J.<DomElement>find("VA.FluxoSaida.ListaEndereco").click();
+				}	
+				
+				boolean statusPopUpFrete = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.FluxoSaida").exists("PopUpFreteAdicional",10000);
+				if(statusPopUpFrete ) {
+					AUT_AGENT_SILK4J.<DomElement>find("VA.FluxoSaida.PopUpFreteAdicional").click();
+					autInsertScreenByScenario();
+				}	
+				
+				
 				AUT_AGENT_SILK4J.<DomRadioButton>find("VA.FluxoSaida.OpcaoRetirada").select();
 				AUT_AGENT_SILK4J.<DomListBox>find("VA.FluxoSaida.TipoRetirada").select(AUT_VA_FLUXO_SAIDA.RETIRA_INTERNA_AGENDADA.toString());
 				AUT_AGENT_SILK4J.<DomCheckBox>find("VA.FluxoSaida.UsarDataMaisProxima").click();
-				AUT_AGENT_SILK4J.<DomListBox>find("VA.ConfirmacaoLogin.turno").select(parametros.get("AUT_HORARIO").toString());
+				DomListBox listFilialEstoque = AUT_AGENT_SILK4J.<DomListBox>find("VA.FluxoSaida.FilialEstoque");
+				selectValor(listFilialEstoque);							
+				DomListBox listComboHorario = AUT_AGENT_SILK4J.<DomListBox>find("VA.FluxoSaida.ConfirmaLoginTurno");
+				selectValor(listComboHorario);
 			}
 			else if(parametros.get("AUT_FLUXO_SAIDA") == AUT_VA_FLUXO_SAIDA.ENCOMENDA) {
 				AUT_AGENT_SILK4J.<DomRadioButton>find("VA.FluxoSaida.OpcaoRetirada").select();

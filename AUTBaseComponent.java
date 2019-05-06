@@ -266,21 +266,44 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 
 
 	public Double autGetDiv(String valueInput) {
-		String vlInput = valueInput;
-		String[] vlParts = valueInput.trim().split(",");		
-		Double dbValor = Double.parseDouble(vlParts[0]);
-		Double result = dbValor / 2;
-
-		System.out.println(valueInput);
-		System.out.println(dbValor);
-		System.out.println(vlParts[1]);
-		System.out.println(result);
-		System.out.println(result * 2);
-
-		return result * 10000;
+//		String vlInput = valueInput;
+//		String[] vlParts = valueInput.trim().split(",");		
+//		Double dbValor = Double.parseDouble(vlParts[0]);
+//		Double result = dbValor / 2;
+//
+//		System.out.println(valueInput);
+//		System.out.println(dbValor);
+//		System.out.println(vlParts[1]);
+//		System.out.println(result);
+//		System.out.println(result * 2);
+//		
+//		return result * 10000;
+		
+		//Separa inteiro dos centavos
+		String[] vlParts = valueInput.trim().split(",");
+		
+		vlParts[0] = vlParts[0].replace(".", "");
+		
+		
+		Double dbValorInteiro = Double.parseDouble(vlParts[0]);
+		Double dbCentavos = Double.parseDouble(vlParts[1]) / 100;
+		Double dbDiferenca = 0.00;
+		
+		//Transforma em numero par para não dar conta fracionada
+		if(dbValorInteiro%2 != 0) {
+			dbValorInteiro = dbValorInteiro -1;
+			dbDiferenca = 1.00;
+			
+		}
+			
+		Double Parcela1 = (dbValorInteiro /2) + dbCentavos; 
+		
+		return Parcela1;
 	}
 
 
+	
+	
 	/**
 	 * 
 	 * Recupera o valor do parametro especificado na fonte de dados corrente

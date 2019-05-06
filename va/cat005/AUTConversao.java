@@ -23,5 +23,19 @@ public class AUTConversao extends AUTVABaseComponent{
 	}
 	
 	
+	public boolean autVAConvercaoParaOrcamento() {
+		try {
+			AUT_AGENT_SILK4J.<DomButton>find("VA.Pedidos.ConverterOrcamento").click();	
+			return true;
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
+	
 	
 }

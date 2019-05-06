@@ -142,7 +142,7 @@ public class Item {
 		
 			
 		Item cimento = new Item();
-		cimento.setCodItem(89368790);
+		cimento.setCodItem(89296193); //89368790
 		cimento.setQuantidadeItem(2);
 		cimento.setFluxoSaida(AUT_VA_FLUXO_SAIDA.ENTREGA);
 		cimento.setTipoFrete(AUTFluxoSaida.AUT_VA_TIPO_FRETE.NORMAL);
@@ -153,15 +153,18 @@ public class Item {
 		
 		
 		Item prego = new Item();
-		prego.setCodItem(86607542);
+		prego.setCodItem(89232220); //86607542 
 		prego.setQuantidadeItem(2);
-		prego.setFluxoSaida(AUT_VA_FLUXO_SAIDA.RETIRA_EXTERNA_AGENDADA);	
-		prego.setTipoFrete(AUTFluxoSaida.AUT_VA_TIPO_FRETE.VIAGEM);
+//		prego.setFluxoSaida(AUT_VA_FLUXO_SAIDA.RETIRA_EXTERNA_AGENDADA);	
+//		prego.setTipoFrete(AUTFluxoSaida.AUT_VA_TIPO_FRETE.VIAGEM);
+		prego.setFluxoSaida(AUT_VA_FLUXO_SAIDA.ENTREGA);
+		prego.setTipoFrete(AUTFluxoSaida.AUT_VA_TIPO_FRETE.EXPRESSA);
 		prego.setDataProxima(true);
-		prego.setTipoDesconto(AUTDesconto.AUT_TIPO_DESCONTO.PORCENTAGEM);
-		prego.setMotivoDesconto(AUTDesconto.AUT_VA_MOTIVO.SALDO);
+//		prego.setTipoDesconto(AUTDesconto.AUT_TIPO_DESCONTO.PORCENTAGEM);
+		prego.setTipoDesconto(AUTDesconto.AUT_TIPO_DESCONTO.REAIS);
+//		prego.setMotivoDesconto(AUTDesconto.AUT_VA_MOTIVO.SALDO);
 		prego.setValorDesconto(1);
-		
+	
 		
 		Item argamassa = new Item();
 		argamassa.setCodItem(89388663);

@@ -2,10 +2,12 @@ package br.lry.components.va.cat014;
 
 import java.util.HashMap;
 
+import com.borland.silktest.jtf.xbrowser.BrowserWindow;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomCheckBox;
 import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomLink;
+import com.borland.silktest.jtf.xbrowser.DomListBox;
 
 import br.lry.components.AUTVABaseComponent;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
@@ -69,18 +71,22 @@ public class AUTMenuLiberacaoPendente extends AUTVABaseComponent {
 		public boolean autMonitorAntiFraudeReprovacao(HashMap<String, Object> parametros) {
 
 			try {
-				AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Fechar").click();
+				//AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Fechar").click();
+				if(AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.PopDesconto").exists()) {
+					AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.FechaJanelaComentario").click();
+				}
 				AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.menu").click();
-				AUT_AGENT_SILK4J.<DomLink>find("VA.LiberacaoPendentes.MenuLiberacaoPendentes").click();
+				AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.LiberacoesPendentes").click();
 				AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.AntiFraude").click();
 				AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.NumeroPedido").setFocus();
 				AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.NumeroPedido").setText(parametros.get("AUT_NUMERO_PEDIDO").toString());
 				AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.BotaoPesquisar").click();
-				AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.Reprovar").setFocus();
-				AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.Reprovar").click();
-					if(AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.PopDesconto").isVisible()) {
-						AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.SimDesconto").click();
-					}
+// DESCOMENTAR O TRECHO ABIXO, CASO HABILITE A INTEGRAÇÃO COM CLEARSAFE
+//				AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.Reprovar").setFocus();
+//				AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.Reprovar").click();
+//					if(AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.PopDesconto").isVisible()) {
+//						AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.SimDesconto").click();
+//					}
 				return true;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -90,35 +96,40 @@ public class AUTMenuLiberacaoPendente extends AUTVABaseComponent {
 		}
 
 		/**
-	 * Acessa o monitor liberação Antifraude - Reprovação
-	 * @return true Reprovação
+	 * Acessa o monitor liberação Antifraude - Aprovação
+	 * @return true Aprovação
 	 */
 	public boolean monitorAprovacaoComercialAprovar(HashMap<String, Object> parametros) {
 
 		try {
-			AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Fechar").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.menu").click();
-			AUT_AGENT_SILK4J.<DomLink>find("VA.LiberacaoPendentes.MenuLiberacaoPendentes").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.LiberacoesPendentes").click();
+			
 			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.Desconto").click();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.NumPedido").setFocus();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.NumPedido").setText(parametros.get("AUT_NUMERO_PEDIDO").toString());
-			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.BotaoPesquisar").click();
+			
+			//P/ busca direta pelo numero do pedido
+			//AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.NumPedido").setFocus();
+			//AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.NumPedido").setText(parametros.get("AUT_NUMERO_PEDIDO").toString());
+			
+			//P/ busca avançada
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPedidos.BuscarPedido").click();
+			AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_ITEM").select(parametros.get("AUT_CANAL").toString());
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.BuscaAvancadaNumeroPedido").setText(parametros.get("AUT_NUMERO_PEDIDO").toString());
+			AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Buscar").click();
+			
+			
 			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.Pedido").setFocus();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.Pedido").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.AprovarDesconta").setFocus();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.AprovarDesconta").click();
-			//if(AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes").exists("PopDesconto", 10000)){
-				if(AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.PopDesconto").isVisible()) {
-					AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.SimDesconto").click();
-					//AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.SimDesconto").click();
-					
-				}
+//			if(AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes").exists("PopDesconto", 10000)){
+//				AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.SimDesconto").click();		
+//			}
+			if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.LiberacaoPendentes").exists("SimDesconto", 40000)){
+				AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.SimDesconto").click();		
+			}
 				
-				
-		//	}
-			
-			
-
+	
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -129,9 +140,10 @@ public class AUTMenuLiberacaoPendente extends AUTVABaseComponent {
 	
 	public void autMonitorAntiFraudeEnviandoProAntiFraude(HashMap<String, Object> parametros) {
 
-		AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Fechar").click();
+		//AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Fechar").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.menu").click();
-		AUT_AGENT_SILK4J.<DomLink>find("VA.LiberacaoPendentes.MenuLiberacaoPendentes").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.LiberacoesPendentes").click();
+		//AUT_AGENT_SILK4J.<DomLink>find("VA.LiberacaoPendentes.MenuLiberacaoPendentes").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.AntiFraude").click();
 		AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.NumeroPedido").setFocus();
 		AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.NumeroPedido").typeKeys(parametros.get("AUT_NUMERO_PEDIDO").toString());
@@ -147,36 +159,69 @@ public class AUTMenuLiberacaoPendente extends AUTVABaseComponent {
 	
 	public void autMonitorAumentandoDescontoAprovando(HashMap<String, Object> parametros) {
 
-		AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Fechar").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.menu").click();
-		AUT_AGENT_SILK4J.<DomLink>find("VA.LiberacaoPendentes.MenuLiberacaoPendentes").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.LiberacoesPendentes").click();
+		
 		AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.Desconto").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.NumeroPedidoDesconto").setFocus();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.NumeroPedidoDesconto").setText(parametros.get("AUT_NUMERO_PEDIDO").toString());
-		AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.BotaoPesquisaDesconto").click();
+		
+		//P/ busca direta pelo numero do pedido
+		//AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.NumPedido").setFocus();
+		//AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.NumPedido").setText(parametros.get("AUT_NUMERO_PEDIDO").toString());
+		
+		//P/ busca avançada
+		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPedidos.BuscarPedido").click();
+		AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_ITEM").select("Loja");
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.BuscaAvancadaNumeroPedido").setText(parametros.get("AUT_NUMERO_PEDIDO").toString());
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Buscar").click();
+		
+		
+		AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.Pedido").setFocus();
 		AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.Pedido").click();
+		
 		AUT_AGENT_SILK4J.<DomTextField>find("VA.Desconto.Porcentagem").setText(parametros.get("AUT_DESCONTO_AUMENTA").toString());
-		AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Aprovar").click();
-		 if(AUT_AGENT_SILK4J.<DomElement>find("VA.TelaMeioPagamento.PopUpConfirmar").isVisible()) {
-				AUT_AGENT_SILK4J.<DomElement>find("VA.TelaMeioPagamento.ConfirmarSim").click();
-			}
+		
+		autInsertScreenByScenario();
+		
+		AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.AprovarDesconta").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.AprovarDesconta").click();
+		if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.LiberacaoPendentes").exists("SimDesconto", 40000)){
+			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.SimDesconto").click();		
+		}
+		
 }
 	
 	public boolean autMonitorAprovandoECancelando(HashMap<String, Object> parametros) {
 
 		try {
-			AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Fechar").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.menu").click();
-			AUT_AGENT_SILK4J.<DomLink>find("VA.LiberacaoPendentes.MenuLiberacaoPendentes").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.LiberacoesPendentes").click();
+			
 			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.Desconto").click();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.NumeroPedidoDesconto").setFocus();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.NumeroPedidoDesconto").setText(parametros.get("AUT_NUMERO_PEDIDO").toString());
-			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.BotaoPesquisaDesconto").click();
+			
+			//P/ busca direta pelo numero do pedido
+			//AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.NumPedido").setFocus();
+			//AUT_AGENT_SILK4J.<DomTextField>find("VA.LiberacaoPendentes.NumPedido").setText(parametros.get("AUT_NUMERO_PEDIDO").toString());
+			
+			//P/ busca avançada
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPedidos.BuscarPedido").click();
+			AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_ITEM").select("Loja");
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.BuscaAvancadaNumeroPedido").setText(parametros.get("AUT_NUMERO_PEDIDO").toString());
+			AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.Buscar").click();
+			
+			
+			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.Pedido").setFocus();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.Pedido").click();
-			AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Aprovar").click();
-			 if(AUT_AGENT_SILK4J.<DomElement>find("VA.TelaMeioPagamento.PopUpConfirmar").isVisible()) {
-					AUT_AGENT_SILK4J.<DomElement>find("VA.TelaMeioPagamento.ConfirmarENao").click();
-				}
+			
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.Desconto.Porcentagem").setText(parametros.get("AUT_DESCONTO_AUMENTA").toString());
+			
+			autInsertScreenByScenario();
+			
+			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.AprovarDesconta").setFocus();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.AprovarDesconta").click();
+			if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TelaMeioPagamento").exists("ConfirmarENao", 40000)){
+				AUT_AGENT_SILK4J.<DomElement>find("VA.TelaMeioPagamento.ConfirmarENao").click();		
+			}
+
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

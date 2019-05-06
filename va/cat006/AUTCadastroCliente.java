@@ -17,6 +17,117 @@ public class AUTCadastroCliente extends AUTVABaseComponent{
 	
 	public static String AUT_NUMERO_DOC_CPF_OUTPUT=null,AUT_NUMERO_DOC_CNPJ_OUTPUT=null,AUT_NUMERO_DOC_PASSAPORTE_OUTPUT=null;
 
+	/**
+	 * Realizar cadastro de cliente no momento da criação do pedido
+	 * @param parametros - Dados do cliente
+	 * @param btCheckAceitaMalaDiretSim 
+	 * @param AUT_CEP 
+	 * @param UFEnderecoPesquisa 
+	 * @return - Verdadeiro para a busca de clientes realizada
+	 */
+	
+	public boolean autCadastrarClienteComCep(java.util.HashMap parametros) {
+		try {
+
+			String numCPF = "";
+			DomElement btAddNovoClient = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesInicial.BotaoAdicionarNovo");
+			btAddNovoClient.click();
+			DomTextField numeroDoc = null;
+			numCPF = parametros.get("AUT_CPF").toString();
+			System.out.println("AUT INFO: CADASTRO DE CLIENTE : PF - CPF");			
+			numeroDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDocs.NumeroDocumento");
+			numeroDoc.click();
+			numCPF = parametros.get("AUT_CPF").toString();
+			AUT_NUMERO_DOC_CPF_OUTPUT = numCPF;
+			numeroDoc.typeKeys(numCPF);
+
+			String clienteNome = parametros.get("AUT_NOME").toString();
+			String clienteEmail = parametros.get("AUT_EMAIL").toString();
+
+			DomTextField nome = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Nome");
+			DomTextField email = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Email");
+
+			nome.click();
+			nome.domClick();
+			nome.setText(clienteNome);
+
+			email.click();
+			email.domClick();
+			email.setText(clienteEmail);
+			String tipoTelefone = parametros.get("AUT_TIPO_TELEFONE").toString();
+			String numeroTelefone = parametros.get("AUT_NUMERO_TELEFONE").toString();
+
+			DomListBox listaTipoElement = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoTelefone");
+			listaTipoElement.click();
+			listaTipoElement.select(tipoTelefone);
+
+			DomTextField txtNumeroContato = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroTelefone");
+			txtNumeroContato.click();
+			txtNumeroContato.domClick();
+			txtNumeroContato.setText(numeroTelefone);
+
+			txtNumeroContato.click();
+			txtNumeroContato.setFocus();
+			txtNumeroContato.domClick();
+			
+			String txtDataNascimento = parametros.get("AUT_NASCIMENTO").toString();
+
+			DomListBox listaGeneros = AUT_AGENT_SILK4J.<DomListBox>find("VA.AtualizacaoDados.gender-pf");
+			DomTextField txtDataNascimentoField = AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.nascimento-pf");
+			
+						
+			String txtTipo_Endereco = parametros.get("AUT_TIPO_ENDERECO").toString();
+			DomListBox TipoEndereco = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoEndereco");
+			TipoEndereco.select(txtTipo_Endereco);		
+			listaGeneros.select(1);
+			txtDataNascimentoField.setText(txtDataNascimento);
+			
+			DomRadioButton btCheckAceitaNovidProp = AUT_AGENT_SILK4J.<DomRadioButton>find("VA.CadastroClientesDados.AceitarOfertaTelefoneSim");
+			btCheckAceitaNovidProp.select();
+			btCheckAceitaNovidProp.click();
+			btCheckAceitaNovidProp.select();
+
+			AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesEstrangeiro.BotaoPropagSMS").click();
+			btCheckAceitaNovidProp.select();
+			btCheckAceitaNovidProp.click();
+			btCheckAceitaNovidProp.select();
+			
+			
+			
+			String txtCEP = parametros.get("AUT_CEP").toString();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.CEP").click();			
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.CEP").typeKeys(txtCEP);
+			
+			String txtCASA = parametros.get("AUT_NUMERO_ENDERECO").toString();
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroCasa").typeKeys(txtCASA);
+			
+			DomElement btCheckAceitaMalaDiretSim = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.AceitaMalaDiretSim");
+			AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.AceitaMalaDiretSim").click();
+			btCheckAceitaMalaDiretSim.mouseMove();
+			btCheckAceitaMalaDiretSim.click(); // nao está clicando aqui
+		
+			 AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Avançar").mouseMove();	
+			 AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Avançar").click();
+	
+			 //Verificar se existe para clicar
+			 if (AUT_AGENT_SILK4J.<BrowserWindow>find("VA.CadastroClientesDados").exists("AceitarPropagandasSim",5000)) {
+				 
+				 AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.AceitarPropagandasSim").mouseMove();
+				 AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.AceitarPropagandasSim").click();
+				 autInsertScreenByScenario();
+		
+				 AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Avançar").mouseMove();	
+				 AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Avançar").click();
+			 }
+			
+			
+		} catch (java.lang.Exception e) {
+
+		}
+
+		return true;
+
+}
 	
 	/**
 	 * Realizar cadastro de cliente no momento da criação do pedido

@@ -1,5 +1,7 @@
 package br.lry.components.va.cat002;
 
+import java.util.GregorianCalendar;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,7 +35,7 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.BuscarCarrinho").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPedidos.BotaoFiltroPedido").click();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPedidos.NumeroPedido").setFocus();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPedidos.NumeroPedido").typeKeys(parametros.get("AUT_NUMERO_CARRINHO").toString());
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPedidos.NumeroPedido").typeKeys(parametros.get("AUT_NUMERO_PEDIDO").toString());
 			AUT_AGENT_SILK4J.<DomButton>find("VA.TelaPedidos.OpcoesDeFiltro.Buscar").click();
 			
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPedidos.CopiarPedido").click();
@@ -69,13 +71,23 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPedidos.CopiarPedido").click();
 
 
-			boolean status = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TelaPedidos").exists("PrecosVigentes", 10000);
-			if (status) {
+			//boolean status = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TelaPedidos").exists("PrecosVigentes", 10000);
+			//if (status) {
 
-				AUT_AGENT_SILK4J.<DomButton>find("VA.TelaPedidos.PrecosVigentes").click();
+			//	AUT_AGENT_SILK4J.<DomButton>find("VA.TelaPedidos.PrecosVigentes").click();
 
+			//}
+			
+			//Confirma Manter condição comercial
+			if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.AtualizacaoDados").exists("ManterCondicoes", 5000)){
+				AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.ManterCondicoes").click();
 			}
-
+			
+			//Confirma edição de pedido finalizado
+			if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.Desconto").exists("PopUp1", 5000)){
+				AUT_AGENT_SILK4J.<DomButton>find("VA.Desconto.Confirmar").click();
+			}
+			
 			return true;
 
 		} catch (java.lang.Exception e) {
@@ -99,7 +111,7 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPedidos.OpcoesDeFiltro").click();
 			AUT_AGENT_SILK4J.<DomRadioButton>find("VA.TelaPedidos.OpcoesDeFiltro.OpcaoNumeroPedidoVenda").select();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPedidos.NumeroPedido").setFocus();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPedidos.NumeroPedido").typeKeys(parametros.get("AUT_NUMERO_ORCAMENTO").toString());
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPedidos.NumeroPedido").typeKeys(parametros.get("AUT_NUMERO_PEDIDO").toString());
 
 			AUT_AGENT_SILK4J.<DomButton>find("VA.TelaPedidos.OpcoesDeFiltro.Buscar").click();
 
@@ -135,13 +147,15 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 			
 			
 			
+			
 			return true;
 		} catch (java.lang.Exception e) {
 			e.printStackTrace();
 			e.getMessage();
 			return false;
 		}
-	}
+	
+}
 	
 	
 	/**
@@ -205,7 +219,89 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 	}
 	
 	
+	/**
+	 * Recuperação de pedido de compra e edita
+	 * @return - Verdadeiro para pedido de compra recuperado
+	 */
+	public boolean autRecuperarPedidoEditar(java.util.HashMap parametros) {
+
+		AUTVA03ConsultaStatusPedido consultaPedido = new AUTVA03ConsultaStatusPedido();
+
+		try {
+			
+			System.out.println("Parametros na Recuperacao"+parametros);
+
+			
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.BotaoCarrinho").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.Buscar pedidos").click();
+
+			consultaPedido.AUTVA03ConsultaPedido(parametros.get("AUT_NUMERO_PEDIDO").toString());
+
+			AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.EditarPedido").click();
+
+
+			//boolean status = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TelaPedidos").exists("PrecosVigentes", 10000);
+			//if (status) {
+
+			//	AUT_AGENT_SILK4J.<DomButton>find("VA.TelaPedidos.PrecosVigentes").click();
+
+			//}
+			
+			//Confirma edição de pedido finalizado
+			if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.AtualizacaoDados").exists("Confirmar", 10000)){
+				AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Confirmar").click();
+			}
+
+			return true;
+
+		} catch (java.lang.Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+			return false;
+		}
+
+
+	}
 	
+	/**
+	 * Recuperação de pedido de compra
+	 * @return - Verdadeiro para pedido de compra recuperado
+	 */
+	public boolean autRecuperarPedidoStatusEData(java.util.HashMap parametros) {
+
+		AUTVA03ConsultaStatusPedido consultaPedido = new AUTVA03ConsultaStatusPedido();
+
+		try {
+			
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.BotaoCarrinho").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.Buscar pedidos").click();
+
+			GregorianCalendar calendar = new GregorianCalendar();
+			int dia = calendar.get(GregorianCalendar.DAY_OF_MONTH) - 1;
 	
+			consultaPedido.autConsultaPedidoPorStatusEData(parametros.get("AUT_STATUS_PEDIDO").toString(), dia);
+
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPedidos.CopiarPedido").click();
+			
+			//Confirma Manter condição comercial
+			if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.AtualizacaoDados").exists("ManterCondicoes", 5000)){
+				AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.ManterCondicoes").click();
+			}
+			
+			//Confirma edição de pedido finalizado
+			if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.Desconto").exists("PopUp1", 5000)){
+				AUT_AGENT_SILK4J.<DomButton>find("VA.Desconto.Confirmar").click();
+			}
+			
+			return true;
+
+		} catch (java.lang.Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+			return false;
+		}
+
+
+	}
 		
 }

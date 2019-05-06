@@ -8,7 +8,7 @@ import br.lry.components.AUTBaseComponent;
 public class AUTSelecaoLojaBoitata extends AUTBaseComponent{
 	
 	
-	public static enum AUT_VA_LISTA_LOJAS{
+	public static enum AUT_BOITATA_LISTA_LOJAS{
 		LM_0001_INTERLAGOS,
 		LM_0002_RIBEIRAO_PRETO,
 		LM_0003_CAMPINAS_DOM_PEDRO,
@@ -108,7 +108,7 @@ public class AUTSelecaoLojaBoitata extends AUTBaseComponent{
 				return "0018 - Goiânia";
 			}
 			case LM_0019_PORTO_ALEGRE: {
-				return "0019 - Porto Alegre";
+				return "Loja | Porto Alegre";
 			}
 			case LM_0020_BH_SUL: {
 				return "0020 - BH Sul";
@@ -201,10 +201,12 @@ public class AUTSelecaoLojaBoitata extends AUTBaseComponent{
 	
 	public boolean autSelecaoDeLoja(java.util.HashMap parametros) {
 		try {
-			System.out.println(parametros);
+			com.borland.silktest.jtf.Utils.sleep(5000);
+			autInsertScreenByScenario();
 			AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaLoginHomog1.SelecionarLoja").click();
 			AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaLoginHomog1.SelecionarLoja").select(parametros.get("AUT_LOJA_SELECIONADA").toString());
-
+			com.borland.silktest.jtf.Utils.sleep(2000);
+			autInsertScreenByScenario();
 			return true;
 		}
 		catch(Exception e) {

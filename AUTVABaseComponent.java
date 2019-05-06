@@ -37,6 +37,7 @@ import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
 import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.Utils;
 import com.borland.silktest.jtf.win32.AccessibleControl;
+import com.borland.silktest.jtf.xbrowser.BrowserWindow;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
 import br.lry.qa.rsp.pjttrc.frt001.va.cat008.AUTServicoGarantia;
@@ -225,6 +226,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 
 		autInitConfigurationTelevendas();	
 		autVALogin.autStartLoginVA(parametros);
+		
+		if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.Desconto").exists("PopUp1", 3000)) {
+			AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.FechaJanelaComentario").click();
+		}
 	}
 	
 
@@ -290,7 +295,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	/**
 	 * 
-	 * CMP00001 - Recuperar Pedido de Compra
+	 * CMP00001 - Recuperar Pedido de Compra e Copia
 	 * 
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
@@ -302,6 +307,33 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 	}
 	
+	/**
+	 * 
+	 * CMP00001 - Recuperar Pedido de Compra e Copia
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00005_2(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
+		System.out.println("Parametros no CMP"+parametros);
+		autRecuperacao.autRecuperarPedidoEditar(parametros);
+		autInsertScreenByScenario();
+	}
+	
+	/**
+	 * 
+	 * CMP00001 - Recuperar Pedido de Compra e Copia
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00005_3(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
+		System.out.println("Parametros no CMP"+parametros);
+		autRecuperacao.autRecuperarPedidoStatusEData(parametros);
+		autInsertScreenByScenario();
+	}
 	
 	/**
 	 * 
@@ -327,6 +359,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */
 	public void CMP00067(HashMap<String, Object> parametros) {
 		autInsertScreenByScenario();
+		cadastroPJ = new AUTCadastroPJ();
 		cadastroPJ.autCadastrarPJ(parametros);
 		autInsertScreenByScenario();
 	}
@@ -350,6 +383,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	public <TOutput extends AUTInsercaoItens> TOutput CMP00070(HashMap<String, Object> parametros) {		
 		autInsertScreenByScenario();
+		autInsercaoItens = new AUTInsercaoItens();
 		return (TOutput) autInsercaoItens;
 	}
 
@@ -377,6 +411,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */
 	public void CMP00072(HashMap<String, Object> parametros) {
 		autInsertScreenByScenario();
+		cadastroEstrangeiro = new AUTCadastroEstrangeiro();
 		cadastroEstrangeiro.autCadastrarEstrangeiro(parametros);
 		autInsertScreenByScenario();
 	}
@@ -392,6 +427,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	public void CMP00080(HashMap<String, Object> parametros) {
 		autInsertScreenByScenario();
+		autfluxoSaidaItens = new AUTFluxoSaidaItens();
 		autfluxoSaidaItens.autVAFluxoSaidaItens(parametros);
 		autInsertScreenByScenario();
 	}
@@ -413,7 +449,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	public void CMP00009_1(HashMap<String, Object> parametros) {
 		autInsertScreenByScenario();
-		autItem.autVAIncluirItemNoCarrinho(parametros);
+		autItem.autVAIncluirItemEmMassa(parametros);
 		autInsertScreenByScenario();
 	}
 	
@@ -470,7 +506,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */	
 	public void CMP00061(HashMap<String, Object> parametros) {
 		autInsertScreenByScenario();
-		autConversao.autVAConvercaoParaPedido();
+		autConversao.autVAConvercaoParaOrcamento();
 		autInsertScreenByScenario();
 	}
 	
@@ -505,6 +541,18 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 	}
 	
+	/**
+	 * 
+	 * CMP000015_2 - Cadastro de cliente a partir da busca de clientes com CEP
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00015_2(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
+		autCadastroCliente.autCadastrarClienteComCep(parametros);		
+		autInsertScreenByScenario();
+	}
 	
 	/**
 	 * 
@@ -566,9 +614,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00023() {
-		autInsertScreenByScenario();
+		//autInsertScreenByScenario();
 		autLogOffBoitata.autRealizarLogOff();
-		autInsertScreenByScenario();
+		//autInsertScreenByScenario();
 	}
 	
 	
@@ -666,7 +714,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */
 	public void CMP00043(HashMap<String, Object> parametros) {
-		autInsertScreenByScenario();
+		//autInsertScreenByScenario();
 		autMenuLiberacao.autMonitorAntiFraudeReprovacao(parametros);
 		autInsertScreenByScenario();
 	}
@@ -724,6 +772,11 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		servicoGarantia.autServicoGarantia();
 	}
 	
+	public void CMP00017(HashMap<String, Object> parameters) {
+		servicoGarantia.autServicoGarantia();
+	}
+	
+	
 	public void CMP00019(HashMap<String, Object> parametros) {
 		servicoGarantia.agendarServico(parametros);
 	}
@@ -733,4 +786,23 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	}
 	
 	
+	/**
+	 * 
+	 * CMP00081 - Tela para  Adicionar descrição da ocorrência
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00081(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
+		
+		String comentario = parametros.get("AUT_COMENTARIO").toString();
+		AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.AdicionarOcorrencia").click();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.DescricaoOcorrencia").typeKeys(comentario);
+		AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.AdicionarComentario").click();
+
+		autInsertScreenByScenario();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.FechaJanelaComentario").click();
+		
+	}
 }

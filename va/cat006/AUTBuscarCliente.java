@@ -19,13 +19,15 @@ public class AUTBuscarCliente extends AUTVABaseComponent{
 		try {
 			AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaClienteCadastrado.IconeModoDePesquisa").click();
 			
-			if(parametros.get("AUT_NUMERO_DOCUMENTO").toString().length() >= 2) {
+			if(parametros.get("AUT_NUMERO_DOCUMENTO").toString().length() >= 1) {
 				AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaClienteCadastrado.Passaporte").click();
 				AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaClienteCadastrado.NumeroPassaporte").setFocus();
 				AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaClienteCadastrado.NumeroPassaporte").setText(parametros.get("AUT_NUMERO_DOCUMENTO").toString());		
 				
 			}
 			else {
+				AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaClienteCadastrado.IconeModoDePesquisa").click();
+				AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaClienteCadastrado.ItemCPF_CNPJ").click();
 				AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaClienteCadastrado.ItemCPF_CNPJ").click();
 				AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaClienteCadastrado.CampoPesquisa").setFocus();
 				AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaClienteCadastrado.CampoPesquisa").setText(parametros.get("AUT_NUMERO_DOCUMENTO").toString());

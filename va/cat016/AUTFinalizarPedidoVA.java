@@ -21,6 +21,11 @@ public class AUTFinalizarPedidoVA extends AUTBaseComponent {
 			
 			AUT_AGENT_SILK4J.<DomButton>find("VA.TelaResumo.Finalizar").click();
 			
+			//PopUp de confirmação de alçada
+			if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TelaMeioPagamento").exists("ConfirmarSim",3000)) {
+				autInsertScreenByScenario();
+				AUT_AGENT_SILK4J.<DomElement>find("VA.TelaMeioPagamento.ConfirmarSim").click();
+			}
 			
 			autInsertScreenByScenario();
 			boolean status = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TelaResumo").exists("FecharPopUp",10000);
@@ -30,8 +35,16 @@ public class AUTFinalizarPedidoVA extends AUTBaseComponent {
 				autInsertScreenByScenario();
 			}
 			
-			AUT_NUMERO_PEDIDO = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaFinalPedidos.NumeroPedido").getText();
-
+			if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TelaFinalPedidos").exists("NumeroOrcamento", 5000)){
+				AUT_NUMERO_PEDIDO = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaFinalPedidos.NumeroOrcamento").getText();
+			
+			}else if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TelaFinalPedidos").exists("NumeroCarrinho", 5000)) {
+				AUT_NUMERO_PEDIDO = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaFinalPedidos.NumeroCarrinho").getText();
+			}
+			else{ 
+				AUT_NUMERO_PEDIDO = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaFinalPedidos.NumeroPedido").getText();
+			}
+			
 			System.out.println("O número do pedido é "+AUT_NUMERO_PEDIDO);
 			autInsertScreenByScenario();
 			java.util.regex.Pattern padrao = java.util.regex.Pattern.compile("\\d+");
@@ -42,7 +55,9 @@ public class AUTFinalizarPedidoVA extends AUTBaseComponent {
 			else {
 				AUT_NUMERO_PEDIDO= "00000000000";
 			}
-					
+			
+			//autGetCurrentParameter(AUT_NUMERO_PEDIDO);
+								
 			return true;
 
 	}
