@@ -37,6 +37,7 @@ import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
 import com.borland.silktest.jtf.Desktop;
 import com.borland.silktest.jtf.Utils;
 import com.borland.silktest.jtf.win32.AccessibleControl;
+import com.borland.silktest.jtf.xbrowser.BrowserApplication;
 import com.borland.silktest.jtf.xbrowser.BrowserWindow;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
@@ -172,8 +173,21 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	public void autLogoutApplication() {
 		try {
-			AUT_AGENT_SILK4J.<DomElement>find("VA.FinalizarAplicacao.Sair").click();
-			AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Fechar").click();
+		//	AUT_AGENT_SILK4J.<DomElement>find("VA.FinalizarAplicacao.Sair").click();
+		//	AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Fechar").click();
+			
+			if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.FinalizarAplicacao").exists("Sair", 4000)) {
+				AUT_AGENT_SILK4J.<DomElement>find("VA.FinalizarAplicacao.Sair").click();
+			
+		}
+			
+			boolean status = AUT_AGENT_SILK4J.<BrowserApplication>find("VA").exists("Fechar", 1000*5);
+			if(status) {
+				
+				AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Fechar").click();
+				
+			}
+			
 		}
 		catch(java.lang.Exception e) {
 			

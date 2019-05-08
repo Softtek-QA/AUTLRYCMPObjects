@@ -13,18 +13,18 @@ public class AUTLogOffBoitata extends AUTVABaseComponent {
 	 * @return - Verdadeiro para LogOff realizado
 	 */
 	public boolean autRealizarLogOff() {
-		try {
+		//try {
 			
 			AUT_AGENT_SILK4J.<DomElement>find("Boitata.MenuLogOff.BotaoUsuario").click();
 			AUT_AGENT_SILK4J.<DomElement>find("Boitata.MenuLogOff.Sair").click();
 			AUT_AGENT_SILK4J.<AccessibleControl>find("Boitata.Fechar").click();
 			return true;
-		}
-		catch(java.lang.Exception e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			return false;
-		}
+		//}
+//		catch(java.lang.Exception e) {
+//			e.printStackTrace();
+//			System.out.println(e.getMessage());
+//			return false;
+//		}
 	}
 
 }
