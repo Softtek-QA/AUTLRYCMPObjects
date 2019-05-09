@@ -17,8 +17,6 @@ public class AUTFinalizarPedidoVA extends AUTBaseComponent {
 	
 	
 	public boolean autFinalizarPedidoVA(java.util.HashMap parametros) {			
-		try {
-			
 			AUT_AGENT_SILK4J.<DomButton>find("VA.TelaResumo.Finalizar").click();
 			
 			//PopUp de confirmação de alçada
@@ -61,12 +59,6 @@ public class AUTFinalizarPedidoVA extends AUTBaseComponent {
 			return true;
 
 	}
-		catch(Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-			return false;
-		}
 
-	}
 
 }

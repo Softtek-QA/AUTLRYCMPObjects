@@ -16,8 +16,6 @@ public class AUTLogOffVA extends AUTVABaseComponent {
 	 * @return - Verdadeiro para LogOff realizado
 	 */
 	public boolean autRealizarLogOff() {
-		try {
-			
 			AUT_AGENT_SILK4J.<DomElement>find("VA.FinalizarAplicacao.Sair").click();
 			AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Fechar").click();
 			
@@ -31,11 +29,5 @@ public class AUTLogOffVA extends AUTVABaseComponent {
 //			}
 			
 			return true;
-		}
-		catch(java.lang.Exception e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			return false;
-		}
 	}
 }
