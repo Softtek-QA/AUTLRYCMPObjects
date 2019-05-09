@@ -203,7 +203,7 @@ public class AUTFluxoSaidaItens extends AUTVABaseComponent {
 						}
 						
 						if (material.isDataProxima() == true) {
-							AUT_AGENT_SILK4J.<DomCheckBox>find("VA.AtualizacaoDados.//INPUT[@id='nearDate-"+ contador +"-delivery']").click();
+							//AUT_AGENT_SILK4J.<DomCheckBox>find("VA.AtualizacaoDados.//INPUT[@id='nearDate-"+ contador +"-delivery']").click();
 
 						}
 						
@@ -266,7 +266,7 @@ public class AUTFluxoSaidaItens extends AUTVABaseComponent {
 						}
 						
 						if (material.isDataProxima() == true) {
-							AUT_AGENT_SILK4J.<DomCheckBox>find("VA.AtualizacaoDados.//INPUT[@id='nearDate-"+ contador +"-retire']").click();
+							//AUT_AGENT_SILK4J.<DomCheckBox>find("VA.AtualizacaoDados.//INPUT[@id='nearDate-"+ contador +"-retire']").click();
 							
 						}
 						
