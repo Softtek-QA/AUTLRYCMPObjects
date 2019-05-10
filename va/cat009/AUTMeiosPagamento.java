@@ -329,8 +329,9 @@ try {
 
 				DomListBox listCombo = AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaInicialLoja.ValorValeTroca");				
 				listCombo.getItemCount();
-				selectValor(listCombo, parametros.get("AUT_CODE_VOUCHER").toString());
+				//selectValor(listCombo, parametros.get("AUT_CODE_VOUCHER").toString());
 				//selectValor(listCombo, ".*\\d{19}");
+				selectValor(listCombo);
 				try {
 					AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.PlanoPagamento2").click();
 					AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.PlanoPagamento2").setDomAttribute("value", "2");	
