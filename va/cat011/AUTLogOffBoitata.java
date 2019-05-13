@@ -3,6 +3,7 @@ package br.lry.components.va.cat011;
 import com.borland.silktest.jtf.win32.AccessibleControl;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
+import com.borland.silktest.jtf.xbrowser.DomLink;
 
 import br.lry.components.AUTVABaseComponent;
 
@@ -25,6 +26,21 @@ public class AUTLogOffBoitata extends AUTVABaseComponent {
 //			System.out.println(e.getMessage());
 //			return false;
 //		}
+	}
+	
+	
+	/**
+	 * Realiza LogOff no sistema Boitata - Ecommerce
+	 * @return - Verdadeiro para LogOff realizado
+	 */
+	public boolean autRealizarEcommerceLogOff() {
+
+		AUT_AGENT_SILK4J.<DomLink>find("VA.TelaPesquisaBoitata.BtLeroySuperior").mouseMove();
+		AUT_AGENT_SILK4J.<DomLink>find("VA.TelaPesquisaBoitata.BtLeroySuperior").click();
+		
+		AUT_AGENT_SILK4J.<AccessibleControl>find("Boitata.Fechar").click();
+		return true;
+
 	}
 
 }

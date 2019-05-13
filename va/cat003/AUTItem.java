@@ -48,5 +48,13 @@ public class AUTItem extends AUTVABaseComponent{
 		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.EnviarMassa").click();
 	
 	}
+	
+	
+	public void autBoitataPesquisarItem(java.util.HashMap<String, Object> parametros) {
+		
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPesquisaBoitata.MaterialPesquisa").typeKeys(parametros.get("AUT_CODIGO_ITEM").toString());
+		AUT_AGENT_SILK4J.<DomButton>find("VA.TelaPesquisaBoitata.BtPesquisaMaterial").mouseMove();
+		AUT_AGENT_SILK4J.<DomButton>find("VA.TelaPesquisaBoitata.BtPesquisaMaterial").click();
+	}
 
 }

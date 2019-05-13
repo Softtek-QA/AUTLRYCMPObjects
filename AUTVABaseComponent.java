@@ -267,6 +267,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autMenuLiberacao = new AUTMenuLiberacaoPendente();
 		autDesconto = new AUTDesconto();
 		servicoGarantia = new AUTServicoGarantia();
+		autEcommerce = new AUTEcommerce();
+		
 		autInsertScreenByScenario();
 	}
 	
@@ -467,7 +469,12 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 	}
 	
-	
+
+	public void CMP00009_2(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
+		autItem.autBoitataPesquisarItem(parametros);;
+		autInsertScreenByScenario();
+	}
 	/**
 	 * 
 	 * CMP00003 - Inserir item no carrinho de compra pelo VA
@@ -633,6 +640,14 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		//autInsertScreenByScenario();
 	}
 	
+	/**
+	 * 
+	 * CMP00001 - Realizar logOff Boitata Ecommerce
+	 * @return
+	 */	
+	public void CMP00023_2() {
+		autLogOffBoitata.autRealizarEcommerceLogOff();
+	}
 	
 	/**
 	 * 
@@ -830,4 +845,5 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public void CMP00082(HashMap<String, Object> parametros) {
 		autSelecaoLojaBoitata.autSelecaoDeRegiao(parametros);
 	}
+	
 }
