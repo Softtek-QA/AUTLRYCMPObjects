@@ -215,5 +215,50 @@ public class AUTSelecaoLojaBoitata extends AUTBaseComponent{
 			return false;
 		}
 	}
+	
+	
+	public static enum AUT_BOITATA_LISTA_REGIAO{
+		SP_SAO_PAULO_REGIAO,
+		RS_PORTO_ALEGRE_REGIAO,
+		MG_UBERLANDIA,
+		DEMAIS_REGIOES;
 
+		@Override
+		public String toString() {
+			switch(this) {
+			case SP_SAO_PAULO_REGIAO: {
+				return "SP | São Paulo e Região";
+			}
+			case RS_PORTO_ALEGRE_REGIAO: {
+				return "RS | Porto Alegre e Região";
+			}
+			case MG_UBERLANDIA: {
+				return "MG | Uberlândia";
+			}
+			case DEMAIS_REGIOES: {
+				return "- | Demais Regiões";
+			}
+			}
+			return super.toString();
+		}
+	}
+	
+	public boolean autSelecaoDeRegiao(java.util.HashMap parametros) {
+		try {
+			com.borland.silktest.jtf.Utils.sleep(5000);
+			AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaPesquisaBoitata.BtPesquisaLocalidade").domMouseMove();
+			AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaPesquisaBoitata.BtPesquisaLocalidade").click();
+			AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaPesquisaBoitata.BtPesquisaLocalidade").select(parametros.get("AUT_REGIAO_SELECIONADA").toString());
+			AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaPesquisaBoitata.BtPesquisaLocalidade").typeKeys("/n");
+			com.borland.silktest.jtf.Utils.sleep(2000);
+			autInsertScreenByScenario();
+			return true;
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 }
