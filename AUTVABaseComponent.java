@@ -819,4 +819,15 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.FechaJanelaComentario").click();
 		
 	}
+	
+	/**
+	 * 
+	 * CMP00082 - SeleÃ§Ã£o da Região no Boitata
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00082(HashMap<String, Object> parametros) {
+		autSelecaoLojaBoitata.autSelecaoDeRegiao(parametros);
+	}
 }
