@@ -51,7 +51,7 @@ public class AUTCadastroEstrangeiro extends AUTVABaseComponent {
             //AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.PassaPorte").setFocus();
             //AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.PassaPorte").typeKeys(parametros.get("AUT_NUMERO_DOCUMENTO").toString());
             
-            DomElement btCheckAceitonovidades = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.checkSim");
+            DomElement btCheckAceitonovidades = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesEstrangeiro.checkSim");
             btCheckAceitonovidades.setFocus();
             btCheckAceitonovidades.mouseMove();
             btCheckAceitonovidades.click();
@@ -65,9 +65,9 @@ public class AUTCadastroEstrangeiro extends AUTVABaseComponent {
             AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_ITEM").typeKeys(parametros.get("AUT_SEXO").toString());
             
             
-            AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.DataNascimento").setFocus();
-            AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.DataNascimento").click();
-            AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.DataNascimento").typeKeys(parametros.get("AUT_NASCIMENTO").toString());            
+            AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.DataNascimento").setFocus();
+            AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.DataNascimento").click();
+            AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.DataNascimento").typeKeys(parametros.get("AUT_NASCIMENTO").toString());            
            
             AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoTelefone").setFocus();
             AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoTelefone").click();
