@@ -179,9 +179,7 @@ public class AUTVACadastros extends AUTVALogin {
 		txtNumeroContato.click();
 		txtNumeroContato.setFocus();
 		txtNumeroContato.domClick();
-
-
-
+		
 		DomButton btPesquisarCEP = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.NaoSeiCEPPesquisa");
 		btPesquisarCEP.click();
 
@@ -219,14 +217,11 @@ public class AUTVACadastros extends AUTVALogin {
 		else {
 			DomElement itemSelectResultPesquisa = AUT_AGENT_SILK4J.<DomElement>find("VA.PesquisaCEP.ItemResultadoPesqSelecionado");
 
-			itemSelectResultPesquisa.click();		
-
-		}
-
-
+			itemSelectResultPesquisa.click();
+			}
 		String tipoEndereco = parametros.get("AUT_TIPO_ENDERECO").toString();  
 		String cep = parametros.get("AUT_CEP").toString(); 
-		String nomeRuaEndereco = parametros.get("AUT_RUA_ENDERECO").toString();  
+		String nomeruaEndereco = parametros.get("AUT_RUA_ENDERECO").toString();  
 		String numeroEndereco = parametros.get("AUT_NUMERO_ENDERECO").toString(); 
 		String bairroResidencia = parametros.get("AUT_BAIRRO_ENDERECO").toString();
 		String complementoResidencia = parametros.get("AUT_COMPLEMENTO_ENDERECO").toString(); 
@@ -706,7 +701,7 @@ public class AUTVACadastros extends AUTVALogin {
 
 		AUT_VA_TIPO_ENDERECO tipoEndereco = AUT_VA_TIPO_ENDERECO.valueOf(autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_ENDERECO").toString());
 		String cep = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_CEP").toString();
-		String nomeRuaEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_RUA_ENDERECO").toString();
+		String nomeruaEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_RUA_ENDERECO").toString();
 		String numeroEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_NUMERO_ENDERECO").toString();
 		String bairroResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_BAIRRO_ENDERECO").toString();
 		String complementoResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_COMPLEMENTO_ENDERECO").toString();
@@ -734,7 +729,7 @@ public class AUTVACadastros extends AUTVALogin {
 			AUT_AGENT_SILK4J.<DomButton>find("VA.PesquisaCEP.BotaoConfirmar").click();		
 		}
 
-		txtNomeRua.setText(nomeRuaEndereco);
+		txtNomeRua.setText(nomeruaEndereco);
 		txtNumeroLocal.setText(numeroEndereco);
 		txtBairro.setText(bairroResidencia);
 		txtCidade.setText(cidadeResidencia);
@@ -827,7 +822,7 @@ public class AUTVACadastros extends AUTVALogin {
 		autSearchCEP();
 
 		String cep = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_CEP").toString();
-		String nomeRuaEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_RUA_ENDERECO").toString();
+		String nomeruaEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_RUA_ENDERECO").toString();
 		String numeroEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_NUMERO_ENDERECO").toString();
 		String bairroResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_BAIRRO_ENDERECO").toString();
 		String complementoResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_COMPLEMENTO_ENDERECO").toString();
@@ -853,7 +848,7 @@ public class AUTVACadastros extends AUTVALogin {
 		txtCEPEnd.setText(cep);
 
 		txtRuaCasaEnd.click();
-		txtRuaCasaEnd.setText(nomeRuaEndereco);
+		txtRuaCasaEnd.setText(nomeruaEndereco);
 
 		AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.Rua").setText(endereco);
 
@@ -1053,7 +1048,7 @@ public class AUTVACadastros extends AUTVALogin {
 		autInsertScreenByScenario();
 		String tipoEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_TIPO_ENDERECO").toString();
 		String cep = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_CEP").toString();
-		String nomeRuaEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_RUA_ENDERECO").toString();
+		String nomeruaEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_RUA_ENDERECO").toString();
 		String numeroEndereco = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_NUMERO_ENDERECO").toString();
 		String bairroResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_BAIRRO_ENDERECO").toString();
 		String complementoResidencia = autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_COMPLEMENTO_ENDERECO").toString();
