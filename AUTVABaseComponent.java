@@ -846,4 +846,19 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autSelecaoLojaBoitata.autSelecaoDeRegiao(parametros);
 	}
 	
+	
+	
+	/**
+	 * 
+	 * CMP00083 - Captura número do carrinho na tela
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public <TOutput extends AUTRecuperacao> TOutput CMP00083() {
+		autRecuperacao.autCapturarNumeroCarrinho();
+		autInsertScreenByScenario();
+		return (TOutput) autRecuperacao;
+	}
+	
 }

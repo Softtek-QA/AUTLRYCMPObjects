@@ -35,7 +35,7 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.BuscarCarrinho").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPedidos.BotaoFiltroPedido").click();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPedidos.NumeroPedido").setFocus();
-			AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPedidos.NumeroPedido").typeKeys(parametros.get("AUT_NUMERO_PEDIDO").toString());
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPedidos.NumeroPedido").typeKeys(parametros.get("AUT_NUMERO_CARRINHO").toString());
 			AUT_AGENT_SILK4J.<DomButton>find("VA.TelaPedidos.OpcoesDeFiltro.Buscar").click();
 			
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPedidos.CopiarPedido").click();
@@ -303,5 +303,30 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 
 
 	}
+	
+	/**
+	 * Captura número do carrinho exibido na tela
+	 * @return - Verdadeiro para pedido de compra recuperado
+	 */
+	public String autCapturarNumeroCarrinho() {
+
+		String AUT_NUMERO_CARRINHO;
+		
+		AUT_NUMERO_CARRINHO = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaFinalPedidos.NumeroCarrinho").getText();
+		
+		
+		System.out.println("O número do carrinho é "+AUT_NUMERO_CARRINHO);
+		autInsertScreenByScenario();
+		java.util.regex.Pattern padrao = java.util.regex.Pattern.compile("\\d+");
+		java.util.regex.Matcher analise = padrao.matcher(AUT_NUMERO_CARRINHO);
+		if(analise.find()) {
+			AUT_NUMERO_CARRINHO = analise.group();
+		}
+		else {
+			AUT_NUMERO_CARRINHO= "00000000000";
+		}
+		
+		return AUT_NUMERO_CARRINHO;
+	}	
 		
 }
