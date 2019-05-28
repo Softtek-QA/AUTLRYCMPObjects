@@ -3,11 +3,16 @@
  */
 package br.lry.components;
 
-import java.io.IOException;
 import java.util.HashMap;
-import org.junit.Before;
-import org.junit.Test;
+
+import com.borland.silktest.jtf.Desktop;
+import com.borland.silktest.jtf.win32.AccessibleControl;
+import com.borland.silktest.jtf.xbrowser.BrowserApplication;
+import com.borland.silktest.jtf.xbrowser.BrowserWindow;
+import com.borland.silktest.jtf.xbrowser.DomButton;
+import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
+
 import br.lry.components.va.cat001.AUTConfirmacaoLogin;
 import br.lry.components.va.cat001.AUTLoginBoitata;
 import br.lry.components.va.cat001.AUTVALogin;
@@ -31,16 +36,8 @@ import br.lry.components.va.cat016.AUTFinalizarPedidoVA;
 import br.lry.components.va.cat017.AUTEcommerce;
 import br.lry.components.va.cat018.AUTSelecaoLojaBoitata;
 import br.lry.components.va.cat018.AUTSelecaoLojaVA;
-import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
-import br.lry.functions.AUTVAProjectFunctions;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
-import com.borland.silktest.jtf.Desktop;
-import com.borland.silktest.jtf.Utils;
-import com.borland.silktest.jtf.win32.AccessibleControl;
-import com.borland.silktest.jtf.xbrowser.BrowserApplication;
-import com.borland.silktest.jtf.xbrowser.BrowserWindow;
-import com.borland.silktest.jtf.xbrowser.DomButton;
-import com.borland.silktest.jtf.xbrowser.DomElement;
+import br.lry.functions.AUTVAProjectFunctions;
 import br.lry.qa.rsp.pjttrc.frt001.va.cat008.AUTServicoGarantia;
 
 
@@ -860,5 +857,6 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 		return (TOutput) autRecuperacao;
 	}
+	
 	
 }
