@@ -8,6 +8,7 @@ import com.borland.silktest.jtf.xbrowser.DomRadioButton;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 
 import br.lry.components.AUTVABaseComponent;
+import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 
 public class AUTCadastroCliente extends AUTVABaseComponent{
 	
@@ -141,8 +142,8 @@ public class AUTCadastroCliente extends AUTVABaseComponent{
 		try {
 
 			String numCPF = "";
-			DomElement btAddNovoClient = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesInicial.BotaoAdicionarNovo");
-			btAddNovoClient.click();
+			//DomElement btAddNovoClient = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesInicial.BotaoAdicionarNovo");
+			//btAddNovoClient.click();
 			DomTextField numeroDoc = null;
 			numCPF = parametros.get("AUT_CPF").toString();
 			System.out.println("AUT INFO: CADASTRO DE CLIENTE : PF - CPF");			
@@ -150,7 +151,9 @@ public class AUTCadastroCliente extends AUTVABaseComponent{
 			numeroDoc.click();
 			numCPF = parametros.get("AUT_CPF").toString();
 			AUT_NUMERO_DOC_CPF_OUTPUT = numCPF;
-			numeroDoc.typeKeys(numCPF);
+			//numeroDoc.typeKeys(numCPF);
+			autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS,"AUT_CPF", numCPF);
+			autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_VA_CADASTROS, "AUT_NOME","AUT NOME PF: ".concat(numCPF));
 
 			String clienteNome = parametros.get("AUT_NOME").toString();
 			String clienteEmail = parametros.get("AUT_EMAIL").toString();
