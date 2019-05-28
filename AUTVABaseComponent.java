@@ -588,23 +588,6 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 	}
 	
-
-	
-	
-	/**
-	 * 
-	 * CMP00002 - CartÃ£o de Credito
-	 * 
-	 * @param parametro - Parametros de entrada do sistema
-	 * @return
-	 */	
-	public void CMP00039(HashMap<String, Object> parametros) {
-		
-		autInsertScreenByScenario();
-
-	}
-		
-		
 	
 	/**
 	 * 
@@ -647,21 +630,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */	
 	public void CMP00023_2() {
 		autLogOffBoitata.autRealizarEcommerceLogOff();
-	}
-	
-	/**
-	 * 
-	 * CMP00003 - Busca de pedido para AprovaÃ§Ã£o Antifraude ou Desconto
-	 * 
-	 * @param parametro - Parametros de entrada do sistema
-	 * @return
-	 */	
-	public void CMP00027(HashMap<String, Object> parametros) {
-		autInsertScreenByScenario();
-
-
-	}
-	
+	}	
 	
 	/**
 	 * 
@@ -723,17 +692,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autBuscaCliente.autBuscarClienteCPF(parametros);
 	}
 	
-	
-	/**
-	 * 
-	 * CMP00003 - Flag Ignorar Antifraude
-	 * 
-	 * @param parametro - Parametros de entrada do sistema
-	 * @return
-	 */	
-	public void CMP00030(HashMap<String, Object> parametros) {
-		autInsertScreenByScenario();
-	}
+
 	
 	/**
 	 * 
