@@ -782,16 +782,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00081(HashMap<String, Object> parametros) {
-		autInsertScreenByScenario();
-		
-		String comentario = parametros.get("AUT_COMENTARIO").toString();
-		AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.AdicionarOcorrencia").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.DescricaoOcorrencia").typeKeys(comentario);
-		AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.AdicionarComentario").click();
-
-		autInsertScreenByScenario();
-		AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.FechaJanelaComentario").click();
-		
+		autItem.autAddComentario(parametros);	
 	}
 	
 	/**

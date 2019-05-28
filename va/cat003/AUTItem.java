@@ -56,5 +56,15 @@ public class AUTItem extends AUTVABaseComponent{
 		AUT_AGENT_SILK4J.<DomButton>find("VA.TelaPesquisaBoitata.BtPesquisaMaterial").mouseMove();
 		AUT_AGENT_SILK4J.<DomButton>find("VA.TelaPesquisaBoitata.BtPesquisaMaterial").click();
 	}
+	
+	public void autAddComentario(java.util.HashMap<String, Object> parametros) {
+		String comentario = parametros.get("AUT_COMENTARIO").toString();
+		AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.AdicionarOcorrencia").click();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.DescricaoOcorrencia").typeKeys(comentario);
+		AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.AdicionarComentario").click();
+
+		autInsertScreenByScenario();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.FechaJanelaComentario").click();
+	}
 
 }
