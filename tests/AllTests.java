@@ -9,7 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega001_RGR001;
 import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega001_RGR002;
 import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega001_RGR003;
-import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega002_RGR001;
+import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega002_RGR001_OLD;
 import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega002_RGR002;
 import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega002_RGR003;
 import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega003_RGR001;
@@ -41,7 +41,7 @@ import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega010_RGR003;
 @RunWith(com.borland.silktest.jtf.SilkTestSuite.class)
 @SuiteClasses({
 	AUTEntrega001_RGR001.class,
-	AUTEntrega002_RGR001.class,
+	AUTEntrega002_RGR001_OLD.class,
 	AUTEntrega003_RGR001.class,
 	AUTEntrega004_RGR001.class,
 	AUTEntrega005_RGR001.class,
