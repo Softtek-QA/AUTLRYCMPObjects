@@ -585,23 +585,6 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 	}
 	
-
-	
-	
-	/**
-	 * 
-	 * CMP00002 - CartÃ£o de Credito
-	 * 
-	 * @param parametro - Parametros de entrada do sistema
-	 * @return
-	 */	
-	public void CMP00039(HashMap<String, Object> parametros) {
-		
-		autInsertScreenByScenario();
-
-	}
-		
-		
 	
 	/**
 	 * 
@@ -644,21 +627,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */	
 	public void CMP00023_2() {
 		autLogOffBoitata.autRealizarEcommerceLogOff();
-	}
-	
-	/**
-	 * 
-	 * CMP00003 - Busca de pedido para AprovaÃ§Ã£o Antifraude ou Desconto
-	 * 
-	 * @param parametro - Parametros de entrada do sistema
-	 * @return
-	 */	
-	public void CMP00027(HashMap<String, Object> parametros) {
-		autInsertScreenByScenario();
-
-
-	}
-	
+	}	
 	
 	/**
 	 * 
@@ -720,17 +689,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autBuscaCliente.autBuscarClienteCPF(parametros);
 	}
 	
-	
-	/**
-	 * 
-	 * CMP00003 - Flag Ignorar Antifraude
-	 * 
-	 * @param parametro - Parametros de entrada do sistema
-	 * @return
-	 */	
-	public void CMP00030(HashMap<String, Object> parametros) {
-		autInsertScreenByScenario();
-	}
+
 	
 	/**
 	 * 
@@ -820,16 +779,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00081(HashMap<String, Object> parametros) {
-		autInsertScreenByScenario();
-		
-		String comentario = parametros.get("AUT_COMENTARIO").toString();
-		AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.AdicionarOcorrencia").click();
-		AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.DescricaoOcorrencia").typeKeys(comentario);
-		AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.AdicionarComentario").click();
-
-		autInsertScreenByScenario();
-		AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.FechaJanelaComentario").click();
-		
+		autItem.autAddComentario(parametros);	
 	}
 	
 	/**
