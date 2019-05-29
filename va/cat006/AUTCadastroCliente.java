@@ -3,6 +3,7 @@ package br.lry.components.va.cat006;
 import com.borland.silktest.jtf.xbrowser.BrowserWindow;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
+import com.borland.silktest.jtf.xbrowser.DomLink;
 import com.borland.silktest.jtf.xbrowser.DomListBox;
 import com.borland.silktest.jtf.xbrowser.DomRadioButton;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
@@ -23,6 +24,15 @@ public class AUTCadastroCliente extends AUTVABaseComponent{
 	 * @return - Verdadeiro para a busca de clientes realizada
 	 */
 
+	
+	public void autMenuCadastroCliente() {
+		AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.FechaJanelaComentario").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.Menu").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.SubMenuClientes").click();
+		AUT_AGENT_SILK4J.<DomLink>find("VA.CadastroClientesDados.AdicionarNovo").click();
+	}
+	
+	
 	public boolean autCadastrarClienteComCep(java.util.HashMap parametros) {
 		try {
 

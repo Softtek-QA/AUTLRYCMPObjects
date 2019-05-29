@@ -362,6 +362,9 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 	}
 	
+	public  void CMP00066() {
+		autCadastroCliente.autMenuCadastroCliente();
+	}
 	
 	/**
 	 * 
