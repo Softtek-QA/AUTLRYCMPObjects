@@ -29,7 +29,6 @@ public class AUTCadastroCliente extends AUTVABaseComponent{
 		AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.FechaJanelaComentario").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.Menu").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.SubMenuClientes").click();
-		AUT_AGENT_SILK4J.<DomLink>find("VA.CadastroClientesDados.AdicionarNovo").click();
 	}
 	
 	
