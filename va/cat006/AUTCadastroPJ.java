@@ -73,7 +73,7 @@ public class AUTCadastroPJ extends AUTVABaseComponent {
 			fantasia.click();
 			fantasia.domClick();
 			fantasia.setText(clientefantasia);
-			fantasia.setText("\t");
+			//fantasia.setText("\t");
 			
 			String InscriçãoEstadual = parametros.get("AUT_INCRICAO_ESTADUAL").toString();
 			DomTextField inscriçãoestadual = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesPJ.InscricaoEstadual");
@@ -214,7 +214,13 @@ public class AUTCadastroPJ extends AUTVABaseComponent {
 //			inscricaoEstadual.typeKeys(inscricao_Estadual);
 //			AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesPJ.InscricaoEstadual").typeKeys("\t");	
 		
-			AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Avançar").click();		
+			AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Avançar").click();	
+			
+			AUT_AGENT_SILK4J.<DomRadioButton>find("VA.CadastroClientesPJ.RadioNovidades").setFocus();
+			AUT_AGENT_SILK4J.<DomRadioButton>find("VA.CadastroClientesPJ.RadioNovidades").mouseMove();
+			AUT_AGENT_SILK4J.<DomRadioButton>find("VA.CadastroClientesPJ.RadioNovidades").click();
+			
+			AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Avançar").click();
 			
 			} catch (java.lang.Exception e) {
 				e.printStackTrace();
