@@ -56,19 +56,22 @@ public class AUTCadastroEstrangeiro extends AUTVABaseComponent {
             btCheckAceitonovidades.mouseMove();
             btCheckAceitonovidades.click();
 			
-            AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.RNE").setFocus();
-            AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.RNE").click();
-            AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.RNE").typeKeys("AUT_NUMERO_DOCUMENTO");
-            
-            AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_ITEM").setFocus();
-            AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_ITEM").click();
-            AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_ITEM").typeKeys(parametros.get("AUT_SEXO").toString());
-            
-            
-            AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.DataNascimento").setFocus();
-            AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.DataNascimento").click();
-            AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.DataNascimento").typeKeys(parametros.get("AUT_NASCIMENTO").toString());            
-           
+            //Verifica se existe os campos dos dados complementares
+            if (AUT_AGENT_SILK4J.<BrowserWindow>find("VA.AtualizacaoDados").exists("RNE", 2000)){
+                AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.RNE").setFocus();
+                AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.RNE").click();
+                AUT_AGENT_SILK4J.<DomTextField>find("VA.AtualizacaoDados.RNE").typeKeys("AUT_NUMERO_DOCUMENTO");
+                
+                AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_ITEM").setFocus();
+                AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_ITEM").click();
+                AUT_AGENT_SILK4J.<DomListBox>find("VA.Desconto.Motivo_ITEM").typeKeys(parametros.get("AUT_SEXO").toString());
+                
+                
+                AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.DataNascimento").setFocus();
+                AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.DataNascimento").click();
+                AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesEstrangeiro.DataNascimento").typeKeys(parametros.get("AUT_NASCIMENTO").toString());           
+            }
+          
             AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoTelefone").setFocus();
             AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoTelefone").click();
             AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesEstrangeiro.TipoTelefone").typeKeys(parametros.get("AUT_TIPO_TELEFONE").toString());
