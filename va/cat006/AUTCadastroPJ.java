@@ -2,6 +2,7 @@ package br.lry.components.va.cat006;
 
 import java.util.HashMap;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.borland.silktest.jtf.common.types.ItemIdentifier;
@@ -252,6 +253,29 @@ public class AUTCadastroPJ extends AUTVABaseComponent {
 			String clienteNome = parametros.get("AUT_CNPJ").toString();
 		
 	}
+	
+	
+	public void autCadastroClientePJExcecao(java.util.HashMap parametros) {
+		String numCNPJ = parametros.get("AUT_CNPJ").toString();
+		
+		autInsertScreenByScenario();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.MenuPrincipal").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PJExcecao.SubMenuPJExcecao").click();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.PJExcecao.CNPJ").setText(numCNPJ);
+		AUT_AGENT_SILK4J.<DomButton>find("VA.PJExcecao.Cadastrar").click();
+
+		boolean popUp = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.Validacao").exists("PJExecaoDuplicado", 5000);
+		if (popUp) {
+			String pop = AUT_AGENT_SILK4J.<DomElement>find("VA.Validacao.PJExecaoDuplicado").getText();
+			String mensagem = "Esse CNPJ já está cadastrado.";
+			autInsertScreenByScenario();
+			Assert.assertEquals(pop, mensagem);
+			autInsertScreenByScenario();
+		}
+
+	}
+	
+	
 
 	public String getAUT_NOME_PJ_OUTPUT() {
 		return AUT_NOME_PJ_OUTPUT;
