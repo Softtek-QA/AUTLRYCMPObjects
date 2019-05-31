@@ -51,7 +51,7 @@ import br.lry.qa.rsp.pjttrc.frt001.va.cat008.AUTServicoGarantia;
 public class AUTVABaseComponent extends AUTBaseComponent {
 	public String AUT_USUARIO_LOGIN_DEFAULT = "";
 	public String AUT_SENHA_LOGIN_DEFAULT = "";
-	public static AUTCadastroPJ cadastroPJ;
+	public static AUTCadastroPJ autCadastroPJ;
 
 	public static AUTVALogin autVALogin;
 	public static AUTBuscarCliente autBuscaCliente;
@@ -265,6 +265,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autDesconto = new AUTDesconto();
 		servicoGarantia = new AUTServicoGarantia();
 		autEcommerce = new AUTEcommerce();
+		autCadastroPJ = new AUTCadastroPJ();
 		
 		autInsertScreenByScenario();
 	}
@@ -362,6 +363,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 	}
 	
+	
+	
 	public  void CMP00066() {
 		autCadastroCliente.autMenuCadastroCliente();
 	}
@@ -373,12 +376,14 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */
-	public void CMP00067(HashMap<String, Object> parametros) {
+	
+	
+	public <TOutput extends AUTCadastroPJ> TOutput CMP00067(HashMap<String, Object> parametros) {
 		autInsertScreenByScenario();
-		cadastroPJ = new AUTCadastroPJ();
-		cadastroPJ.autCadastrarPJ(parametros);
-		autInsertScreenByScenario();
+		return (TOutput) autCadastroPJ;
 	}
+	
+	
 
 	public void CMP00068(HashMap<String, Object> parametros) {
 		autEcommerce.autEcommercePedido(parametros);

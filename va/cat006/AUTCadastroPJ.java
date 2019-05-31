@@ -231,6 +231,27 @@ public class AUTCadastroPJ extends AUTVABaseComponent {
 
 		
 	}
+	
+	
+	public void autCadastrarPJcadastrado(java.util.HashMap parametros) {
+
+			String numCNPJ = "";
+			DomTextField numeroDoc = null;
+			numCNPJ = parametros.get("AUT_CNPJ").toString();
+			
+			System.out.println("AUT INFO: CADASTRO DE CLIENTE : PJ - CNPJ");
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesInicial.NumeroDocumento").typeKeys(numCNPJ);
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesInicial.NumeroDocumento").typeKeys("\t");
+			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.BotaoPesquisaDesconto").setFocus();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.LiberacaoPendentes.BotaoPesquisaDesconto").click();
+			AUT_AGENT_SILK4J.<DomLink>find("VA.CadastroClientesDados.AdicionarNovo").setFocus();
+			AUT_AGENT_SILK4J.<DomLink>find("VA.CadastroClientesDados.AdicionarNovo").click();		
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroDocumento").typeKeys(numCNPJ);
+			setAUT_NOME_PJ_OUTPUT(parametros.get("AUT_CNPJ").toString());
+			
+			String clienteNome = parametros.get("AUT_CNPJ").toString();
+		
+	}
 
 	public String getAUT_NOME_PJ_OUTPUT() {
 		return AUT_NOME_PJ_OUTPUT;
