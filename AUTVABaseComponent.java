@@ -575,6 +575,19 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 	}
 	
+	
+	/**
+	 * 
+	 * CMP00013 - Cadastro de PF e suas variações
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public <TOutput extends AUTCadastroCliente> TOutput CMP00013(HashMap<String, Object> parametros) {
+		autInsertScreenByScenario();
+		return (TOutput) autCadastroCliente;
+	}
+	
 	/**
 	 * 
 	 * CMP00001 - Fluxo de Saida
