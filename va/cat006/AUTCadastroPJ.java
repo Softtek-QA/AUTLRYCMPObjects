@@ -17,6 +17,8 @@ import com.borland.silktest.jtf.xbrowser.DomTextField;
 import br.lry.components.AUTVABaseComponent;
 import br.lry.components.va.AUTVACadastros;
 import br.lry.components.va.AUTVACadastros.AUT_VA_CADASTROS;
+import br.lry.components.va.AUTVACadastros.AUT_VA_PROPRIEDADE_RESIDENCIA;
+import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_CONTATO;
 import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_ENDERECO;
 import br.lry.components.va.AUTVACadastros.AUT_VA_TIPO_RESIDENCIA;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
@@ -275,6 +277,53 @@ public class AUTCadastroPJ extends AUTVABaseComponent {
 
 	}
 	
+	public void autCadastroFilhoPJExcecao(java.util.HashMap parametros) {//PS.passsar o número do documento
+
+		String nomeFantasiaPJExcecao = parametros.get("AUT_NOME_PJ_FANTASIA2").toString();
+		String nomeCompleto = parametros.get("AUT_NOME_COMPLETO").toString();
+		String email = parametros.get("AUT_EMAIL").toString();
+		String numeroTelefone = parametros.get("AUT_NUMERO_TELEFONE_2").toString();
+
+		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.MenuPrincipal").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.SubMenuClientes").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesInicial.BotaoAdicionarNovo").click();		
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDocs.NumeroDocumento").click();	
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDocs.NumeroDocumento").setText(parametros.get("AUT_CNPJ").toString());
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDocs.NumeroDocumento").typeKeys("\n");
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PJExcecao.DadosBasicos").click();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.PJExcecao.NomeFantasia").setText(nomeFantasiaPJExcecao);
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PJExcecao.DadosBasicos").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PJExcecao.DadosParaContato").click();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.PJExcecao.NomeCompleto").setText(nomeCompleto);
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.PJExcecao.Email").setText(email);
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PJExcecao.DadosParaContato").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PJExcecao.DadosTelefonicos").click();
+
+		if (AUT_AGENT_SILK4J.<BrowserWindow>find("VA.CadastroClientesDados").exists("NumeroTelefone", 1000)) {
+			AUT_AGENT_SILK4J.<DomListBox>find("VA.PJExcecao.TipoTelefone").select(parametros.get("AUT_TIPO_TELFONE").toString());
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.PJExcecao.NumeroTelefone").setText(numeroTelefone);
+		}
+
+		AUT_AGENT_SILK4J.<DomRadioButton>find("VA.PJExcecao.NovidadesTelefone").click();
+		AUT_AGENT_SILK4J.<DomRadioButton>find("VA.PJExcecao.NovidadesTelefone").click();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PJExcecao.DadosTelefonicos").click();
+		AUT_AGENT_SILK4J.<DomRadioButton>find("VA.PJExcecao.NovidadesTelefone").select();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PJExcecao.Endereco").click();
+		AUT_AGENT_SILK4J.<DomRadioButton>find("VA.PJExcecao.NovidadesEndereco").select();
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PJExcecao.Endereco").click();
+
+		AUT_AGENT_SILK4J.<DomButton>find("VA.PJExcecao.Salvar").click();
+
+		AUT_AGENT_SILK4J.<DomElement>find("VA.PJExcecao.DadosTelefonicos").click();
+		AUT_AGENT_SILK4J.<DomListBox>find("VA.PJExcecao.TipoTelefone").select(parametros.get("AUT_TIPO_TELEFONE").toString());
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.PJExcecao.NumeroTelefone").clearText();
+		AUT_AGENT_SILK4J.<DomTextField>find("VA.PJExcecao.NumeroTelefone").setText(numeroTelefone);
+		AUT_AGENT_SILK4J.<DomButton>find("VA.PJExcecao.Salvar").click();
+
+		//AUT_AGENT_SILK4J.verifyAsset("CHECKPOINT-AUTVA-SPRINT02-CADASTRO");
+	}
+	
+
 	
 
 	public String getAUT_NOME_PJ_OUTPUT() {
