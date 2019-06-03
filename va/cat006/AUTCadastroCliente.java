@@ -350,7 +350,7 @@ public class AUTCadastroCliente extends AUTVABaseComponent{
 			btAddNovoClient.click();
 			DomTextField numeroDoc = null;
 			numCPF = parametros.get("AUT_CPF").toString();
-			System.out.println("AUT INFO: CADASTRO DE CLIENTE : PF - CPF");
+
 			numeroDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDocs.NumeroDocumento");
 			numeroDoc.click();
 			numCPF = parametros.get("AUT_CPF").toString();
@@ -375,17 +375,13 @@ public class AUTCadastroCliente extends AUTVABaseComponent{
 			String tipoTelefone2 = parametros.get("AUT_TIPO_TELEFONE2").toString();
 			String numeroTelefone2 = parametros.get("AUT_NUMERO_TELEFONE2").toString();			
 			
-						//---- Telefone 1 --------
+			//---- Telefone 1 --------
 			AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoTelefone").click();
 			AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoTelefone").select(tipoTelefone);
 
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroTelefone").click();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroTelefone").domClick();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroTelefone").setText(numeroTelefone);
-
-//			AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroTelefone").click();
-//			AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroTelefone").setFocus();
-//			AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroTelefone").domClick();
 			
 			// ------------------------
 			
@@ -399,7 +395,8 @@ public class AUTCadastroCliente extends AUTVABaseComponent{
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroTelefone2").click();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroTelefone2").domClick();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroTelefone2").setText(numeroTelefone2);
-
+			
+			autInsertScreenByScenario();
 			//-----------------------
 
 			String txtDataNascimento = parametros.get("AUT_NASCIMENTO").toString();
@@ -447,13 +444,12 @@ public class AUTCadastroCliente extends AUTVABaseComponent{
 
 				AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.AceitarPropagandasSim").mouseMove();
 				AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.AceitarPropagandasSim").click();
-				AUT_AGENT_SILK4J.<DomRadioButton>find("VA.AtualizacaoDados.client-fidelity-sim").select();
-				AUT_AGENT_SILK4J.<DomRadioButton>find("VA.AtualizacaoDados.mala-direta-sim-pf").select();
-				autInsertScreenByScenario();
+//				AUT_AGENT_SILK4J.<DomRadioButton>find("VA.AtualizacaoDados.client-fidelity-sim").select();
+//				AUT_AGENT_SILK4J.<DomRadioButton>find("VA.AtualizacaoDados.mala-direta-sim-pf").select();
 
 				AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Avançar").mouseMove();
 				AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Avançar").click();
-
+				autInsertScreenByScenario();
 			}
 	
 

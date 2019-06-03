@@ -590,7 +590,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public <TOutput extends AUTCadastroCliente> TOutput CMP00013(HashMap<String, Object> parametros) {
-		autInsertScreenByScenario();
+		//autInsertScreenByScenario();
 		return (TOutput) autCadastroCliente;
 	}
 	
