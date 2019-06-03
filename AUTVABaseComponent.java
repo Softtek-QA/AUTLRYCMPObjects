@@ -24,6 +24,7 @@ import br.lry.components.va.cat006.AUTBuscarCliente;
 import br.lry.components.va.cat006.AUTCadastroCliente;
 import br.lry.components.va.cat006.AUTCadastroEstrangeiro;
 import br.lry.components.va.cat006.AUTCadastroPJ;
+
 import br.lry.components.va.cat007.AUTFluxoSaida;
 import br.lry.components.va.cat007.AUTFluxoSaidaItens;
 import br.lry.components.va.cat009.AUTMeiosPagamento;
@@ -50,7 +51,7 @@ import br.lry.qa.rsp.pjttrc.frt001.va.cat008.AUTServicoGarantia;
  */
 public class AUTVABaseComponent extends AUTBaseComponent {
 	public String AUT_USUARIO_LOGIN_DEFAULT = "";
-	public String AUT_SENHA_LOGIN_DEFAULT = "";
+	public String AUT_SENHA_LOGIN_DEFAULT = "";	
 	public static AUTCadastroPJ autCadastroPJ;
 
 	public static AUTVALogin autVALogin;
@@ -76,7 +77,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public static AUTInsercaoItens autInsercaoItens;
 	public static AUTEdicao edicao;
 	public static AUTFluxoSaidaItens autfluxoSaidaItens;
-	public static AUTCadastroEstrangeiro cadastroEstrangeiro;
+	public static AUTCadastroEstrangeiro autCadastroEstrangeiro;
 
 	
 	public AUTVABaseComponent() {
@@ -432,8 +433,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */
 	public void CMP00072(HashMap<String, Object> parametros) {
 		autInsertScreenByScenario();
-		cadastroEstrangeiro = new AUTCadastroEstrangeiro();
-		cadastroEstrangeiro.autCadastrarEstrangeiro(parametros);
+		autCadastroEstrangeiro = new AUTCadastroEstrangeiro();
+		autCadastroEstrangeiro.autCadastrarEstrangeiro(parametros);
 		autInsertScreenByScenario();
 	}
 	
