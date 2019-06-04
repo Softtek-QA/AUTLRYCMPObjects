@@ -6,7 +6,7 @@ import org.junit.runners.MethodSorters;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega001_RGR001;
+import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega001_RGR001_OLD;
 import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega002_RGR001_OLD;
 import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega003_RGR001;
 import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega004_RGR001;

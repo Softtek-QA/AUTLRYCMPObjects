@@ -3,7 +3,7 @@ package br.lry.components.tests;
 import br.lry.qa.alm.AUTALMBaseServices;
 import br.lry.qa.alm.webservices.scm.AUTALMManage.AUT_ALM_PROJECTS;
 import br.lry.qa.alm.webservices.scm.AUTALMManage.AUT_ALM_TESTS_TYPES;
-import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega001_RGR001;
+import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega001_RGR001_OLD;
 import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega001_RGR002;
 import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega001_RGR003;
 import br.lry.qa.rsp.pjttrc.entregas.AUTEntrega002_RGR001_OLD;
