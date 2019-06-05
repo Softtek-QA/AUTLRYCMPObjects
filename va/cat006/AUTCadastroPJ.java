@@ -298,12 +298,14 @@ public class AUTCadastroPJ extends AUTVABaseComponent {
 		AUT_AGENT_SILK4J.<DomTextField>find("VA.PJExcecao.Email").setText(email);
 		AUT_AGENT_SILK4J.<DomElement>find("VA.PJExcecao.DadosParaContato").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA.PJExcecao.DadosTelefonicos").click();
+		AUT_AGENT_SILK4J.<DomRadioButton>find("VA.PJExcecao.TelefonePrincipal").click();
+		AUT_AGENT_SILK4J.<DomRadioButton>find("VA.PJExcecao.SMS_Novidades").click();
 
 		if (AUT_AGENT_SILK4J.<BrowserWindow>find("VA.CadastroClientesDados").exists("NumeroTelefone", 1000)) {
 			AUT_AGENT_SILK4J.<DomListBox>find("VA.PJExcecao.TipoTelefone").select(parametros.get("AUT_TIPO_TELFONE").toString());
-			AUT_AGENT_SILK4J.<DomTextField>find("VA.PJExcecao.NumeroTelefone").setText(numeroTelefone);
+			AUT_AGENT_SILK4J.<DomTextField>find("VA.PJExcecao.NumeroTelefone").setText("AUT_NUMERO_TELEFONE_2");
 		}
-
+		
 		AUT_AGENT_SILK4J.<DomRadioButton>find("VA.PJExcecao.NovidadesTelefone").click();
 		AUT_AGENT_SILK4J.<DomRadioButton>find("VA.PJExcecao.NovidadesTelefone").click();
 		AUT_AGENT_SILK4J.<DomElement>find("VA.PJExcecao.DadosTelefonicos").click();
