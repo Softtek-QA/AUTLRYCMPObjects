@@ -125,7 +125,7 @@ public class AUTCadastroCliente extends AUTVABaseComponent{
 
 				AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.AceitarPropagandasSim").mouseMove();
 				AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesDados.AceitarPropagandasSim").click();
-				AUT_AGENT_SILK4J.<DomRadioButton>find("VA.AtualizacaoDados.client-fidelity-sim").select();
+				//AUT_AGENT_SILK4J.<DomRadioButton>find("VA.AtualizacaoDados.client-fidelity-sim").select();
 				AUT_AGENT_SILK4J.<DomRadioButton>find("VA.AtualizacaoDados.mala-direta-sim-pf").select();
 				autInsertScreenByScenario();
 
