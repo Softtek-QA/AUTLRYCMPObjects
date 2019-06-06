@@ -54,6 +54,7 @@ public class AUTFinalizarPedidoVA extends AUTBaseComponent {
 				AUT_NUMERO_PEDIDO= "00000000000";
 			}
 			
+			System.out.println("Número do Pedido: " + AUT_NUMERO_PEDIDO);
 			//autGetCurrentParameter(AUT_NUMERO_PEDIDO);
 								
 			return true;

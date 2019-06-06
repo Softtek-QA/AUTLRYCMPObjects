@@ -328,5 +328,35 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 		
 		return AUT_NUMERO_CARRINHO;
 	}	
+	
+	
+	public boolean autVerificaStatus(java.util.HashMap parametros) {
 		
+		String numPedido = parametros.get("AUT_NUMERO_PEDIDO").toString();
+		String statusEsperado = parametros.get("AUT_STATUS_ESPERADO").toString();
+		
+		AUTVA03ConsultaStatusPedido consultaPedido = new AUTVA03ConsultaStatusPedido();
+
+		try {
+						
+			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.BotaoCarrinho").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.Buscar pedidos").click();
+
+			consultaPedido.AUTVA03ConsultaPedido(numPedido);
+
+			autInsertScreenByScenario();
+			DomElement status = AUT_AGENT_SILK4J.<DomElement>find("VA.Validacao.Status");
+
+			Assert.assertTrue(status.getText().contains(statusEsperado));
+			if(status.getText().contains(statusEsperado)) {
+				status.waitForProperty("Text",status.getText(), 20000);
+			}
+
+			return true;
+			
+		} catch (java.lang.Exception e) {
+			e.getMessage();
+			return false;
+		}
+	}
 }

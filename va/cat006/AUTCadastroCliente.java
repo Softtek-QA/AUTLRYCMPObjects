@@ -1,5 +1,7 @@
 package br.lry.components.va.cat006;
 
+import java.util.HashMap;
+
 import org.junit.Assert;
 
 import com.borland.silktest.jtf.xbrowser.BrowserWindow;
@@ -724,4 +726,80 @@ public class AUTCadastroCliente extends AUTVABaseComponent{
 //		}
 		
 	}
-}
+
+
+	public void autCadastroClienteNaoSeiCEP(HashMap<String, Object> parametros) {
+		// TODO Cadastro de Cliente sem CEP//
+		//public boolean autCadastroClienteMultiplosSemCEP(java.util.HashMap parametros) {
+
+			
+				String numCPF = "";
+				DomElement btAddNovoClient = AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesInicial.BotaoAdicionarNovo");
+				btAddNovoClient.click();
+				DomTextField numeroDoc = null;
+				numCPF = parametros.get("AUT_CPF").toString();
+				
+				numeroDoc = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDocs.NumeroDocumento");
+				numeroDoc.click();
+				numCPF = parametros.get("AUT_CPF").toString();
+				AUT_NUMERO_DOC_CPF_OUTPUT = numCPF;
+				numeroDoc.typeKeys(numCPF);
+				String clienteNome = parametros.get("AUT_NOME").toString();
+				String clienteEmail = parametros.get("AUT_EMAIL").toString();
+				DomTextField nome = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Nome");
+				DomTextField email = AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.Email");
+				nome.click();
+				nome.domClick();
+				nome.setText(clienteNome);
+				email.click();
+				email.domClick();
+				email.setText(clienteEmail);
+				String tipoTelefone = parametros.get("AUT_TIPO_TELEFONE").toString();
+				String numeroTelefone = parametros.get("AUT_NUMERO_TELEFONE").toString();		
+				AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoTelefone").click();
+				AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoTelefone").select(tipoTelefone);
+				AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroTelefone").click();
+				AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroTelefone").domClick();
+				AUT_AGENT_SILK4J.<DomTextField>find("VA.CadastroClientesDados.NumeroTelefone").setText(numeroTelefone);
+				String txtTipo_Endereco = parametros.get("AUT_TIPO_ENDERECO").toString();
+				String txt_Cidade = parametros.get("AUT_CIDADE_PESQUISA").toString();
+				String txt_Endereco = parametros.get("AUT_ENDERECO_PESQUISA").toString();
+				String txt_Bairro = parametros.get("AUT_BAIRRO_PESQUISA").toString();
+				AUT_AGENT_SILK4J.<DomElement>find("VA.PJExcecao.SMS_Novidades").click();
+				AUT_AGENT_SILK4J.<DomElement>find("VA.CadastroClientesPJ.AceitoPropagLeroy").click();
+				
+				
+				
+				DomListBox TipoEndereco = AUT_AGENT_SILK4J.<DomListBox>find("VA.CadastroClientesDados.TipoEndereco");
+				TipoEndereco.mouseMove();
+				TipoEndereco.select(txtTipo_Endereco);
+				//listaGeneros.select(1);
+				//txtDataNascimentoField.setText(txtDataNascimento);
+				
+				DomButton NaoSeiCEP = AUT_AGENT_SILK4J.<DomButton>find("VA.CadastroClientesDados.NaoSeiCEPPesquisa");
+				NaoSeiCEP.click();
+				DomTextField Cidade = AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaCEP.Cidade");
+				Cidade.typeKeys(txt_Cidade);
+				DomTextField Endereco = AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaCEP.Endereco");
+				Endereco.typeKeys(txt_Endereco);
+				DomTextField Bairro = AUT_AGENT_SILK4J.<DomTextField>find("VA.PesquisaCEP.Bairro");
+				Bairro.typeKeys(txt_Bairro);
+				DomButton Buscar = AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.PesquisaPedid");
+				Buscar.click();
+				{
+				}		
+			}		
+//}		
+	
+
+
+				
+	
+
+
+		private Object typeKeys(String string) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+			}
+		
