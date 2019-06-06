@@ -117,6 +117,23 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 			autPDVLogin().autStartLogin(operador, senha);
 		}
 		
+		public void autPDVLoginDefault(java.util.HashMap<String, Object> parametros) {
+			try {
+				AUTBaseComponent bs = new AUTBaseComponent() {};
+				//bs.autGetDataFlow().autInitDataFlow();
+				
+				autGetSharedBaseComponent().autInsertScreenByScenario();
+				String operador = parametros.get("AUT_OPERADOR").toString();//bs.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_OPERADOR").toString();
+				String pwd = parametros.get("AUT_PWD_OPERADOR").toString(); //bs.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_PWD_OPERADOR").toString();
+				autPDVStartLogin(operador, pwd);				
+			}
+			catch(java.lang.Exception e) {
+				System.out.println("AUT ERROR : LOGIN PDV DEFAULT");
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+			}
+		}
+		
 		public void autPDVLoginDefault() {
 			try {
 				AUTBaseComponent bs = new AUTBaseComponent() {};
@@ -399,6 +416,45 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 		parametrosConfig.put("AUT_PWD_OPERADOR", dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_PWD_OPERADOR"));
 		parametrosConfig.put("AUT_COORDENADOR", dt.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_COORDENADOR"));
 		parametrosConfig.put("AUT_FLUXO_SAIDA", fluxoSaida.name());
+		autPDVPagamentos().autStartProcess(parametrosConfig);	
+	}
+	
+	public void autStartPagamentoPedido(java.util.HashMap<String, Object> parametros) {
+		//AUTBaseComponent dt = new AUTBaseComponent() {};
+		autPDVPagamentos().AUT_SYNC_PROCESS_EXECUTION = new AUTPDVSyncProcess() {
+			
+			@Override
+			public void autStartProcess() {
+				// TODO Auto-generated method stub
+				autInsertScreenByScenario();
+			}
+			
+			@Override
+			public void autStartParallelProcess() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void autInitProcess() {
+				// TODO Auto-generated method stub
+				autInsertScreenByScenario();
+			}
+			
+			@Override
+			public void autEndProcess() {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		
+		java.util.HashMap<String,Object> parametrosConfig = new java.util.HashMap<String,Object>();
+		parametrosConfig.put("AUT_MATERIAL", parametros.get("AUT_CODIGO_ITEM"));
+		parametrosConfig.put("AUT_PEDIDO", Integer.parseInt(parametros.get("AUT_NUMERO_PEDIDO").toString()));		
+		parametrosConfig.put("AUT_OPERADOR", parametros.get("AUT_OPERADOR"));
+		parametrosConfig.put("AUT_PWD_OPERADOR", parametros.get("AUT_PWD_OPERADOR"));
+		parametrosConfig.put("AUT_COORDENADOR", parametros.get("AUT_COORDENADOR"));
+		parametrosConfig.put("AUT_FLUXO_SAIDA",  parametros.get("AUT_FLUXO_SAIDA")); //fluxoSaida.name();
 		autPDVPagamentos().autStartProcess(parametrosConfig);	
 	}
 	

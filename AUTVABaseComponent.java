@@ -831,4 +831,16 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	}
 	
 	
+	/**
+	 * 
+	 * CMP00074 - Verifica se status do pedido é o esperado
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */	
+	public void CMP00074(HashMap<String, Object> parametros) {
+
+		autRecuperacao.autVerificaStatus(parametros);
+
+	}
 }
