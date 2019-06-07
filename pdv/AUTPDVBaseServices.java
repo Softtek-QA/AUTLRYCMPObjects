@@ -119,7 +119,7 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 		
 		public void autPDVLoginDefault(java.util.HashMap<String, Object> parametros) {
 			try {
-				AUTBaseComponent bs = new AUTBaseComponent() {};
+				//AUTBaseComponent bs = new AUTBaseComponent() {};
 				//bs.autGetDataFlow().autInitDataFlow();
 				
 				autGetSharedBaseComponent().autInsertScreenByScenario();
