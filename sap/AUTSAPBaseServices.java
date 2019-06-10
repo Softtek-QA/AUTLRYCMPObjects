@@ -173,6 +173,57 @@ public class AUTSAPBaseServices extends AUTBaseComponent {
 	}
 
 
+	public <TSAPFaturamentos extends br.lry.process.AUTSAP01Faturamentos> TSAPFaturamentos autSAPFaturarPedido(java.util.HashMap<String, Object> parametros) {
+		
+		String pedido = parametros.get("NUM_PEDIDO").toString();
+		
+		Integer pedNum = Integer.parseInt(pedido.trim());
+		AUTSAP01Faturamentos sap = autSAPFaturamentos();
+		java.util.HashMap<String,Object> parametrosOut = autGetDataFlow().autGetParameters(AUT_TABLE_PARAMETERS_NAMES.AUT_SAP_FATURAMENTO_ZOSDGCP);
+		try {
+			if(parametrosOut.containsKey("AUT_PEDIDO")) {
+				parametrosOut.remove("AUT_PEDIDO");
+				parametrosOut.put("AUT_PEDIDO",pedNum);
+			}
+			else {
+				parametrosOut.put("AUT_PEDIDO",pedNum);
+			}
+
+			sap.autFaturarPedido(parametrosOut, new IAUTSAPProcessExecution() {
+
+				@Override
+				public void autProcessExecution() {
+					// TODO Auto-generated method stub
+					autInsertScreenByScenario();
+				}
+
+				@Override
+				public void autParallelProcess() {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void autInitProcess() {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void autEndProcess() {
+					// TODO Auto-generated method stub
+
+				}
+			});
+
+			return (TSAPFaturamentos) sap;
+		}
+		catch(java.lang.Exception e) {
+			autSAPFaturamentos().autSAPLogout();
+			return null;
+		}
+	}
+	
 	public <TSAPFaturamentos extends br.lry.process.AUTSAP01Faturamentos> TSAPFaturamentos autSAPFaturarPedido(String pedido) {
 		Integer pedNum = Integer.parseInt(pedido.trim());
 		AUTSAP01Faturamentos sap = autSAPFaturamentos();
