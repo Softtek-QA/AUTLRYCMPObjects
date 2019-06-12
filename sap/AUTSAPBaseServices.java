@@ -103,7 +103,7 @@ public class AUTSAPBaseServices extends AUTBaseComponent {
 				}
 			};
 
-			sapConfPed.autSetExecutionMonitor(processMonitor);
+			//sapConfPed.autSetExecutionMonitor(processMonitor);
 
 			return (TSAPConfPedidos)sapConfPed;
 		}
@@ -126,7 +126,7 @@ public class AUTSAPBaseServices extends AUTBaseComponent {
 		parameters.put("INIT_TRANSACTION", true);
 		
 		sap.autSAPConfigUsuarioRFLoja().autInitProcess(parameters);
-		sap.autConferenciasPedidos().autStartConf(parameters);			
+		//sap.autConferenciasPedidos().autStartConf(parameters);			
 	}
 
 	
@@ -163,7 +163,7 @@ public class AUTSAPBaseServices extends AUTBaseComponent {
 				}
 			};
 
-			sapFaturamentos.autSetExecutionMonitor(processMonitor);
+			//sapFaturamentos.autSetExecutionMonitor(processMonitor);
 
 			return (TSAPFaturamentos)sapFaturamentos;
 		}
