@@ -582,5 +582,9 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	public AUTBaseComponent(boolean syncronizeDataFlow) {
 		super();
 	}
+	
+	public <TObject extends Object> void autStartTransaction(TObject transacao) {
+		autStartTransaction(transacao.toString());
+	}
 
 }

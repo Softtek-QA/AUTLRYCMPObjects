@@ -51,4 +51,17 @@ public class AUTPDVBaseComponent extends AUTBaseComponent{
 		pdv.autStartPagamentoPedido(parametros);
 		autInsertScreenByScenario();
 	}
+	
+	/**
+	 * 
+	 * CAT0XX
+	 * CMP00092 - Realizar Devolucao no PDV
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */
+	public void CMP00092(java.util.HashMap<String, Object> parametros) {
+		autInitConfigurationPDV();	
+		pdv.autStartDevolucaoItem(parametros);
+		autInsertScreenByScenario();
+	}
 }

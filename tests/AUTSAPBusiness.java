@@ -26,7 +26,7 @@ public class AUTSAPBusiness{
 		parameters.put("INIT_TRANSACTION", true);
 		
 		sap.autSAPConfigUsuarioRFLoja().autInitProcess(parameters);
-		sap.autConferenciasPedidos().autStartConf(parameters);	
+		//sap.autConferenciasPedidos().autStartConf(parameters);	
 		
 	}
 
