@@ -102,7 +102,7 @@ public class AUTSafeConsultaValeTroca extends AUTSafeBaseComponent {
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.001SubMenu000ValeTroca").click();
 		autInsertScreenByScenario();
 
-		String numeroDocumento = autGetCurrentParameter("AUT_NUMERO_DOCUMENTO").toString();
+		String numeroDocumento = parametros.get("AUT_NUMERO_DOCUMENTO").toString();
 		
 		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.000TelaValeTroca.ListaTiposPessoa").select(AUT_SAFE_TYPE_PERSONS.FISICA.toString());
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.000TelaValeTroca.NumeroDocumento").setText(numeroDocumento);
