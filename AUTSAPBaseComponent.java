@@ -85,6 +85,8 @@ public class AUTSAPBaseComponent extends AUTBaseComponent{
 		BaseState baseState = new BaseState(SAP_PAPH, SAP_LOCATOR);
 		Window mainWindow = baseState.execute(AUT_AGENT_SILK4J);
 		
+		AUT_AGENT_SILK4J.<Window>find("SAPConnections").maximize();
+		
 		//AUT_AGENT_SILK4J.<Control>find("SAPConnections.ItensConfiguracao").textClick("Conexões");
 		//AUT_AGENT_SILK4J.<ListView>find("SAPConnections.ListaConexoes").textClick("ECC - EQ2");
 		//AUT_AGENT_SILK4J.<PushButton>find("SAPConnections.Logon").click();
