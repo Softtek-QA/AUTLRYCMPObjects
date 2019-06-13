@@ -5,6 +5,9 @@ package br.lry.components.safe;
 
 import com.borland.silktest.jtf.BrowserBaseState;
 import com.borland.silktest.jtf.Desktop;
+import com.borland.silktest.jtf.xbrowser.BrowserApplication;
+import com.borland.silktest.jtf.xbrowser.DomButton;
+import com.borland.silktest.jtf.xbrowser.DomTextField;
 
 import br.lry.components.AUTBaseComponent;
 import br.lry.components.safe.AUTSafeBaseComponent.AUT_SAFE_LOJAS_ENUM;
@@ -90,12 +93,35 @@ public class AUTSafeBaseServices extends AUTBaseComponent {
 		autSAFEVales().autIniConsultaValeTrocaParaCliente();
 		return autSAFEVales().AUT_VALE_TROCA_OUTPUT;
 	}
+	
+	public String autCarregarValeTroca(java.util.HashMap<String, Object> parametros) {
+
+		autSAFEVales().autConsultaValeTrocaClientePF(parametros);
+		return autSAFEVales().AUT_VALE_TROCA_OUTPUT;
+	}
 
 	public void autSAFEInitApplication() {
 		autSAFEVouchers(false).AUT_AGENT_SILK4J = new com.borland.silktest.jtf.Desktop();
 		autSAFEVouchers(false).AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState("safe.settings");
 		AUT_AGENT_SILK4J.executeBaseState(autSAFEVouchers(false).AUT_BASE_STATE_CONFIGURATION_BROWSER);
 	}
+	
+	/**
+	 * 
+	 * Executa procedimentos de login  no SAFE
+	 * 
+	 * @param usuario - Usuario SAFE
+	 * @param senha - Senha SAFE
+	 * 
+	 */
+	public void autLoginWithInit(java.util.HashMap<String, Object> parametros) {
+				
+		AUT_AGENT_SILK4J.<BrowserApplication>find("SAFE").maximize();
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.Login.Usuario").setText(parametros.get("USER_SAFE").toString());
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.Login.Senha").setText(parametros.get("PWS_SAFE").toString());
+		AUT_AGENT_SILK4J.<DomButton>find("SAFE.Login.BotaoEntrar").click();
+	}
+	
 	public void autSAFEGerarVoucher(AUT_SAFE_TYPE_PERSONS typePerson,AUT_SAFE_TIPO_CONVENIO convenio) {
 		String docClient = "";
 				
