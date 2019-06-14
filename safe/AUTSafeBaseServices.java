@@ -5,6 +5,8 @@ package br.lry.components.safe;
 
 import com.borland.silktest.jtf.BrowserBaseState;
 import com.borland.silktest.jtf.Desktop;
+import com.borland.silktest.jtf.Window;
+import com.borland.silktest.jtf.win32.AccessibleControl;
 import com.borland.silktest.jtf.xbrowser.BrowserApplication;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
@@ -14,6 +16,7 @@ import br.lry.components.safe.AUTSafeBaseComponent.AUT_SAFE_LOJAS_ENUM;
 import br.lry.components.safe.AUTSafeBaseComponent.AUT_SAFE_TIPO_CONVENIO;
 import br.lry.components.safe.AUTSafeBaseComponent.AUT_SAFE_TYPE_PERSONS;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
+import com.borland.silktest.jtf.xbrowser.DomElement;
 
 /**
  * 
@@ -262,6 +265,23 @@ public class AUTSafeBaseServices extends AUTBaseComponent {
 		
 	}
 
+	/**
+	 * 
+	 * Executa procedimentos de logout  no SAFE
+	 * 
+	 * @param 
+	 * 
+	 */
+	public void autLogout() {
+
+		AUT_AGENT_SILK4J.<BrowserApplication>find("SAFE").maximize();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.Logout.Icone").click();
+		AUT_AGENT_SILK4J.<DomButton>find("SAFE.Logout.Sair").click();
+
+		AUT_AGENT_SILK4J.<BrowserApplication>find("SAFE").typeKeys("<Enter>");
+
+		AUT_AGENT_SILK4J.<AccessibleControl>find("SAFE.Fechar").click();
+	}
 	
 	/**
 	 * 

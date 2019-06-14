@@ -52,5 +52,16 @@ public class AUTSafeBaseComponent extends AUTBaseComponent{
 		return (TOutput) autValeTroca;
 	}
 	
+	/**
+	 * 
+	 * CAT0XX
+	 * CMP00095 - Realizar Logout no SAFE
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */
+	public void CMP00095() {
+		autInitConfigurationSafe();	
+		safe.autLogout();
+	}
 
 }
