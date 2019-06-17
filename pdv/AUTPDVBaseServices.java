@@ -197,6 +197,15 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 			autPDVStartLogout(operador,pwd);
 		}
 		
+		public void autPDVLogoutDefault(java.util.HashMap<String, Object> parametros) {
+			AUTBaseComponent dt = new AUTBaseComponent() {
+			};
+			
+			String operador = parametros.get("AUT_COORDENADOR").toString();
+			String pwd = parametros.get("AUT_PWD_COORDENADOR").toString(); 
+			autPDVStartLogout(operador,pwd);
+		}
+		
 		/**
 		 * Retorna o componente de configuração compartilhado entre várias instâncias
 		 * 

@@ -64,4 +64,18 @@ public class AUTPDVBaseComponent extends AUTBaseComponent{
 		pdv.autStartDevolucaoItem(parametros);
 		autInsertScreenByScenario();
 	}
+	
+	
+	/**
+	 * 
+	 * CAT0XX
+	 * CMP00096 - Realizar logout no PDV
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */
+	public void CMP00096(java.util.HashMap<String, Object> parametros) {
+		
+		autInitConfigurationPDV();	
+		pdv.autPDVAcessos().autPDVLogoutDefault(parametros);
+	}
 }

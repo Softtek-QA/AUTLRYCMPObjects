@@ -839,7 +839,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 * @return
 	 */	
 	public void CMP00074(HashMap<String, Object> parametros) {
-
+		autRecuperacao = new AUTRecuperacao();
 		autRecuperacao.autVerificaStatus(parametros);
 
 	}
