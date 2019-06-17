@@ -26,14 +26,7 @@ public class AUTPDVBaseComponent extends AUTBaseComponent{
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */
-	public void CMP00090(java.util.HashMap<String, Object> parametros) {
-//		try {
-//			autLogoutApplication();
-//		}
-//		catch(java.lang.Exception e) {
-//			
-//		}
-		
+	public void CMP00090(java.util.HashMap<String, Object> parametros) {	
 		autInitConfigurationPDV();	
 		pdv.autPDVAcessos().autPDVLoginDefault(parametros);
 		autInsertScreenByScenario();

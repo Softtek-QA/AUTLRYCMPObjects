@@ -118,13 +118,9 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 		}
 		
 		public void autPDVLoginDefault(java.util.HashMap<String, Object> parametros) {
-			try {
-				//AUTBaseComponent bs = new AUTBaseComponent() {};
-				//bs.autGetDataFlow().autInitDataFlow();
-				
-				autGetSharedBaseComponent().autInsertScreenByScenario();
-				String operador = parametros.get("AUT_OPERADOR").toString();//bs.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_OPERADOR").toString();
-				String pwd = parametros.get("AUT_PWD_OPERADOR").toString(); //bs.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_PWD_OPERADOR").toString();
+			try {				
+				String operador = parametros.get("AUT_OPERADOR").toString();
+				String pwd = parametros.get("AUT_PWD_OPERADOR").toString(); 
 				autPDVStartLogin(operador, pwd);				
 			}
 			catch(java.lang.Exception e) {
@@ -152,12 +148,12 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 		}
 		
 		public void autPDVStartLogout(String coordenador,String senha) {
-			AUTBaseComponent bs = new AUTBaseComponent() {};
-			bs.autGetDataFlow().autInitDataFlow();			
-			autGetSharedBaseComponent().autInsertScreenByScenario();
-			java.util.HashMap<String,Object> parametrosConfig = new java.util.HashMap<String,Object>();
-			parametrosConfig.put("AUT_PWD_OPERADOR", bs.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_PWD_OPERADOR"));
-			parametrosConfig.put("AUT_COORDENADOR", bs.autGetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_PDV_LINX, "AUT_COORDENADOR"));			
+			//AUTBaseComponent bs = new AUTBaseComponent() {};
+			//bs.autGetDataFlow().autInitDataFlow();			
+			//autGetSharedBaseComponent().autInsertScreenByScenario();
+			//java.util.HashMap<String,Object> parametrosConfig = new java.util.HashMap<String,Object>();
+			//parametrosConfig.put("AUT_PWD_OPERADOR", senha);
+			//parametrosConfig.put("AUT_COORDENADOR", coordenador);			
 			autPDVLogouts().AUT_SYNC_PROCESS_EXECUTION=new AUTPDVSyncProcess() {
 				
 				@Override
@@ -185,7 +181,7 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 				}
 			};	
 			
-			autPDVLogouts().autPDVLogout(parametrosConfig.get("AUT_COORDENADOR").toString(), parametrosConfig.get("AUT_PWD_OPERADOR").toString());
+			autPDVLogouts().autPDVLogout(coordenador, senha);
 		}
 		
 		public void autPDVLogoutDefault() {
@@ -198,8 +194,8 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 		}
 		
 		public void autPDVLogoutDefault(java.util.HashMap<String, Object> parametros) {
-			AUTBaseComponent dt = new AUTBaseComponent() {
-			};
+//			AUTBaseComponent dt = new AUTBaseComponent() {
+//			};
 			
 			String operador = parametros.get("AUT_COORDENADOR").toString();
 			String pwd = parametros.get("AUT_PWD_COORDENADOR").toString(); 
@@ -633,7 +629,7 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 			pdvDevolucoes = new br.lry.process.AUTPDVDevolucaoItem();
 			pdvDevolucoes.AUT_AGENT_SILK4J = new com.borland.silktest.jtf.Desktop();
 			pdvDevolucoes.AUT_AGENT_SILK4J_CONFIGURATION = new BaseState("pdv.settings");
-			pdvDevolucoes.AUT_AGENT_SILK4J.executeBaseState(pdvPagamentos.AUT_AGENT_SILK4J_CONFIGURATION);
+			pdvDevolucoes.AUT_AGENT_SILK4J.executeBaseState(pdvDevolucoes.AUT_AGENT_SILK4J_CONFIGURATION);
 			
 			return (TPDVDevolucoes)pdvDevolucoes;
 		}
