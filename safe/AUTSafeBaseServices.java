@@ -274,7 +274,6 @@ public class AUTSafeBaseServices extends AUTBaseComponent {
 	 */
 	public void autLogout() {
 
-		AUT_AGENT_SILK4J.<BrowserApplication>find("SAFE").maximize();
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.Logout.Icone").click();
 		AUT_AGENT_SILK4J.<DomButton>find("SAFE.Logout.Sair").click();
 

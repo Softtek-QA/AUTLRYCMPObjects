@@ -48,7 +48,7 @@ public class AUTSafeBaseComponent extends AUTBaseComponent{
 	 */	
 	public <TOutput extends AUTSafeConsultaValeTroca> TOutput CMP00094(java.util.HashMap<String, Object> parametros) {
 		autInitConfigurationSafe();	
-		autValeTroca.autConsultaValeTrocaClientePF(parametros);
+		//autValeTroca.autConsultaValeTrocaClientePF(parametros);
 		return (TOutput) autValeTroca;
 	}
 	
