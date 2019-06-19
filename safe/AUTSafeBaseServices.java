@@ -275,16 +275,8 @@ public class AUTSafeBaseServices extends AUTBaseComponent {
 	 */
 	public void autLogout() {
 
-		AUT_AGENT_SILK4J.<DomElement>find("SAFE.Logout.IconeUsuario").click();
-		AUT_AGENT_SILK4J.<DomButton>find("SAFE.Logout.Sair").click();
+		AUT_AGENT_SILK4J.<AccessibleControl>find("SAFE.Fechar").click();
 
-		
-//		AUT_AGENT_SILK4J.<BrowserApplication>find("SAFE.PopUp.OK").typeKeys("<Enter>");
-		//AUT_AGENT_SILK4J.<BrowserApplication>find("SAFE.PopUP").close();
-		//AUT_AGENT_SILK4J.<BrowserApplication>find("SAFE.Logout.PopUp").typeKeys("<Enter>");
-		AUT_AGENT_SILK4J.<BrowserApplication>find("SAFE.Logout.PopUp").click();
-
-		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE").close();
 	}
 	
 	/**
