@@ -509,14 +509,12 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 	}
 	
 	public void autStartDevolucaoItem(java.util.HashMap<String, Object> parametros) {
-		//AUTBaseComponent dt = new AUTBaseComponent() {};
-		//autInsertScreenByScenario();
+
 		java.util.HashMap<String,Object> parametrosConfig = new java.util.HashMap<String,Object>();	
 
 		parametrosConfig.put("AUT_MATERIAL", parametros.get("AUT_CODIGO_ITEM"));
 		parametrosConfig.put("AUT_PEDIDO", Integer.parseInt(parametros.get("AUT_NUMERO_PEDIDO").toString()));				
 		parametrosConfig.put("AUT_LOJA_DEVOLUCAO",parametros.get("AUT_LOJA_DEVOLUCAO"));		
-		//Integer qtd = Integer.parseInt(parametros.get("AUT_QUANTIDADE_ITEM").toString());			
 		parametrosConfig.put("AUT_ITEM_QUANTIDADE",parametros.get("AUT_QUANTIDADE_ITEM").toString());
 		parametrosConfig.put("AUT_DDD",parametros.get("AUT_DDD"));
 		parametrosConfig.put("AUT_TELEFONE",parametros.get("AUT_TELEFONE"));		
@@ -524,6 +522,8 @@ public class AUTPDVBaseServices extends AUTBaseComponent {
 		parametrosConfig.put("AUT_PWD_OPERADOR", parametros.get("AUT_PWD_OPERADOR"));
 		parametrosConfig.put("AUT_COORDENADOR", parametros.get("AUT_COORDENADOR"));
 		parametrosConfig.put("AUT_FLUXO_SAIDA",  parametros.get("AUT_FLUXO_SAIDA")); //fluxoSaida.name();
+		parametrosConfig.put("AUT_TIPO_PESSOA",  parametros.get("AUT_TIPO_PESSOA")); 
+		parametrosConfig.put("AUT_NUMERO_DOCUMENTO",  parametros.get("AUT_NUMERO_DOCUMENTO")); 
 		
 		autPDVDevolucoes().AUT_SYNC_PROCESS_EXECUTION = new AUTPDVSyncProcess() {		
 			
