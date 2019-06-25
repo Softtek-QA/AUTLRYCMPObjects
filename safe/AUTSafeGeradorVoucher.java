@@ -1,5 +1,7 @@
 package br.lry.components.safe;
 
+import java.util.HashMap;
+
 import org.junit.Test;
 import org.w3c.dom.traversal.DocumentTraversal;
 
@@ -16,6 +18,7 @@ import br.lry.components.safe.AUTSafeBaseComponent.AUT_SAFE_TYPE_PERSONS;
 import br.lry.components.sap.AUTSAPBaseComponent;
 import br.lry.dataflow.AUTDataFlow;
 import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
+
 
 
 /**
@@ -48,6 +51,24 @@ public class AUTSafeGeradorVoucher extends AUTSafeBaseComponent {
 		AUTSafeCadastroConveniado cadastro = new AUTSafeCadastroConveniado(false);		
 		autInsertScreenByScenario();
 		cadastro.autIniCadastroClienteConveniado(parameters);	
+	}
+
+	public void autInitGerarVoucherPF(java.util.HashMap<String,Object> parameters) {
+		AUTSafeCadastroConveniado cadastro = new AUTSafeCadastroConveniado(false);		
+		autInsertScreenByScenario();
+		autIniCadastroClienteConveniadoPF(parameters);	
+	}
+
+	public void autInitGerarVoucherEst(java.util.HashMap<String,Object> parameters) {
+		AUTSafeCadastroConveniado cadastro = new AUTSafeCadastroConveniado(false);		
+		autInsertScreenByScenario();
+		autIniCadastroClienteConveniadoEst(parameters);	
+	}
+
+	public void autInitGerarVoucherPJ(java.util.HashMap<String,Object> parameters) {
+		AUTSafeCadastroConveniado cadastro = new AUTSafeCadastroConveniado(false);		
+		autInsertScreenByScenario();
+		autIniCadastroClienteConveniadoPJ(parameters);	
 	}
 
 
@@ -128,4 +149,305 @@ public class AUTSafeGeradorVoucher extends AUTSafeBaseComponent {
 		// TODO Auto-generated constructor stub
 		super(syncronizeDataFlow);
 	}
+
+
+	/**
+	 * 
+	 * Geração de Voucher PF
+	 * 
+	 */
+	
+	
+	public  <TOutput extends AUTSafeGeradorVoucher> TOutput autIniCadastroClienteConveniadoPF(HashMap<String, Object> parameters) {
+		// TODO Auto-generated method stub
+		
+		autLoginWithInit(parameters.get("AUT_USER").toString(),parameters.get("AUT_PWD").toString());
+
+		AUT_SAFE_TIPO_CONVENIO convenio = (AUT_SAFE_TIPO_CONVENIO) parameters.get("AUT_TIPO_CONVENIO");
+		AUT_SAFE_TYPE_PERSONS tipoPessoa = (AUT_SAFE_TYPE_PERSONS)parameters.get("AUT_TIPO_PESSOA");
+
+		String documento = "";
+		String rgCliente = "";			
+		String docOrgEmissor = "";
+		String dataNascimento = "";
+		String nomeCliente = "";
+
+		documento = parameters.get("AUT_DOCUMENTO").toString();
+		rgCliente = parameters.get("AUT_PF_RG").toString();			
+		docOrgEmissor = parameters.get("AUT_ORG_EMISSOR").toString();
+		dataNascimento = parameters.get("AUT_DATA_NASCIMENTO").toString();
+		nomeCliente = parameters.get("AUT_NOME").toString();
+
+		AUT_SAFE_PROFISSOES profissoes = (AUT_SAFE_PROFISSOES)parameters.get("AUT_PROFISSAO");
+		String email = parameters.get("AUT_EMAIL").toString();
+		String logradouro = parameters.get("AUT_LOGRADOURO").toString();
+		String numeroEndereco = parameters.get("AUT_NUMERO_ENDERECO").toString();
+		String complemento = parameters.get("AUT_COMPLEMENTO_ENDERECO").toString();
+		String bairro = parameters.get("AUT_BAIRRO").toString();
+		String cep = parameters.get("AUT_CEP").toString();
+		String cidade = parameters.get("AUT_CIDADE").toString();
+		String uf = parameters.get("AUT_UF").toString();
+		String dd1 = parameters.get("AUT_TEL_DD1").toString();
+		String telefone1 = parameters.get("AUT_TEL_FONE1").toString();
+		String ramal1 = parameters.get("AUT_TEL_RAMAL1").toString();
+
+		autInsertScreenByScenario();
+		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.TelaInicial").exists("002MenuConvenio", 30000);
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002MenuConvenio").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002MenuConvenio").click();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.001SubMenu002GestaoConveniado").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.001SubMenu002GestaoConveniado").click();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002SubMenu002CadastroConveniado").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002SubMenu002CadastroConveniado").click();
+		autInsertScreenByScenario();
+		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoConvenio").setFocus();
+		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoConvenio").select(convenio.toString());
+		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoPessoa").select( tipoPessoa.toString());
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.NumeroDocumento").setText(documento);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.NomeCliente").setText(nomeCliente);
+		autInsertScreenByScenario();
+
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.RG").setText(rgCliente);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.OrgaoEmissor").setText(docOrgEmissor);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DataNascimento").setFocus();
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DataNascimento").setText(dataNascimento);
+		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaProfissoes").select(profissoes.toString());
+		autInsertScreenByScenario();
+
+
+		AUT_AGENT_SILK4J.<DomCheckBox>find("SAFE.001TelaCadastroConveniado.CheckParceiro").check();
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Email").setText(email);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Logradouro").setText(logradouro);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.NumeroResidencia").setText(numeroEndereco);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Complemento").setText(complemento);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Bairro").setText(bairro);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Cep").setText(cep);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Cidade").setText(cidade);
+		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.UF").select(uf);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DD1").setFocus();
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DD1").setText(dd1);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Telefone1").setText(telefone1);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Ramal").setText(ramal1);
+		autInsertScreenByScenario();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.BotaoSalvar").click();		
+		autInsertScreenByScenario();
+		
+		try {
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.CheckPointCadastro").waitForProperty("Text", AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.CheckPointCadastro").getText());	
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.BotaoOKConfirmCad").click();		
+			AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.001TelaCadastroConveniado").close();
+		}
+		catch(java.lang.Exception e) {
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE").close();
+		}
+		
+		return (TOutput) null; //Vale troca
+
+		
+	}
+	
+	/**
+	 * 
+	 * Geração de Voucher Estrangeiro
+	 * 
+	 */
+	
+
+	public  <TOutput extends AUTSafeGeradorVoucher> TOutput autIniCadastroClienteConveniadoEst(java.util.HashMap<String,Object> parameters) {
+
+		autLoginWithInit(parameters.get("AUT_USER").toString(),parameters.get("AUT_PWD").toString());
+
+
+
+		AUT_SAFE_TIPO_CONVENIO convenio = (AUT_SAFE_TIPO_CONVENIO) parameters.get("AUT_TIPO_CONVENIO");
+		AUT_SAFE_TYPE_PERSONS tipoPessoa = (AUT_SAFE_TYPE_PERSONS)parameters.get("AUT_TIPO_PESSOA");
+
+		String documento = "";
+		String rgCliente = "";			
+		String docOrgEmissor = "";
+		String dataNascimento = "";
+		String nomeCliente = "";
+
+
+			documento = parameters.get("AUT_DOCUMENTO").toString();			
+			nomeCliente = parameters.get("AUT_NOME_ESTRANGEIRO").toString();
+
+		//case PASSAPORTE:{
+			documento = parameters.get("AUT_DOCUMENTO").toString();
+			nomeCliente = parameters.get("AUT_NOME_ESTRANGEIRO").toString();
+		//case RNE:{
+			documento = parameters.get("AUT_DOCUMENTO").toString();
+			nomeCliente = parameters.get("AUT_NOME_ESTRANGEIRO").toString();
+
+		AUT_SAFE_PROFISSOES profissoes = (AUT_SAFE_PROFISSOES)parameters.get("AUT_PROFISSAO");
+		String email = parameters.get("AUT_EMAIL").toString();
+		String logradouro = parameters.get("AUT_LOGRADOURO").toString();
+		String numeroEndereco = parameters.get("AUT_NUMERO_ENDERECO").toString();
+		String complemento = parameters.get("AUT_COMPLEMENTO_ENDERECO").toString();
+		String bairro = parameters.get("AUT_BAIRRO").toString();
+		String cep = parameters.get("AUT_CEP").toString();
+		String cidade = parameters.get("AUT_CIDADE").toString();
+		String uf = parameters.get("AUT_UF").toString();
+		String dd1 = parameters.get("AUT_TEL_DD1").toString();
+		String telefone1 = parameters.get("AUT_TEL_FONE1").toString();
+		String ramal1 = parameters.get("AUT_TEL_RAMAL1").toString();
+		autInsertScreenByScenario();
+		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.TelaInicial").exists("002MenuConvenio", 30000);
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002MenuConvenio").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002MenuConvenio").click();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.001SubMenu002GestaoConveniado").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.001SubMenu002GestaoConveniado").click();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002SubMenu002CadastroConveniado").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002SubMenu002CadastroConveniado").click();
+		autInsertScreenByScenario();
+		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoConvenio").setFocus();
+		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoConvenio").select(convenio.toString());
+		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoPessoa").select( tipoPessoa.toString());
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.NumeroDocumento").setText(documento);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.NomeCliente").setText(nomeCliente);
+		autInsertScreenByScenario();
+
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.RG").setText(rgCliente);
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.OrgaoEmissor").setText(docOrgEmissor);
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DataNascimento").setFocus();
+			AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DataNascimento").setText(dataNascimento);
+			AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaProfissoes").select(profissoes.toString());
+			autInsertScreenByScenario();
+
+		autInsertScreenByScenario();
+
+
+		AUT_AGENT_SILK4J.<DomCheckBox>find("SAFE.001TelaCadastroConveniado.CheckParceiro").check();
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Email").setText(email);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Logradouro").setText(logradouro);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.NumeroResidencia").setText(numeroEndereco);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Complemento").setText(complemento);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Bairro").setText(bairro);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Cep").setText(cep);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Cidade").setText(cidade);
+		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.UF").select(uf);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DD1").setFocus();
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DD1").setText(dd1);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Telefone1").setText(telefone1);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Ramal").setText(ramal1);
+		autInsertScreenByScenario();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.BotaoSalvar").click();		
+		autInsertScreenByScenario();
+		
+		try {
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.CheckPointCadastro").waitForProperty("Text", AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.CheckPointCadastro").getText());	
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.BotaoOKConfirmCad").click();		
+			AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.001TelaCadastroConveniado").close();
+		}
+		catch(java.lang.Exception e) {
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE").close();
+		}
+
+		return (TOutput) null; //Vale troca		
+	}
+
+
+	/**
+	 * 
+	 * Geração de Voucher PJ
+	 * 
+	 */
+	
+
+	
+	public  <TOutput extends AUTSafeGeradorVoucher> TOutput autIniCadastroClienteConveniadoPJ(java.util.HashMap<String,Object> parameters) {
+
+		autLoginWithInit(parameters.get("AUT_USER").toString(),parameters.get("AUT_PWD").toString());
+
+		AUT_SAFE_TIPO_CONVENIO convenio = (AUT_SAFE_TIPO_CONVENIO) parameters.get("AUT_TIPO_CONVENIO");
+		AUT_SAFE_TYPE_PERSONS tipoPessoa = (AUT_SAFE_TYPE_PERSONS)parameters.get("AUT_TIPO_PESSOA");
+
+		String documento = "";
+		String rgCliente = "";			
+		String docOrgEmissor = "";
+		String dataNascimento = "";
+		String nomeCliente = "";
+
+
+		documento = parameters.get("AUT_DOCUMENTO").toString();
+		nomeCliente = parameters.get("AUT_NOME_PJ").toString();
+
+		AUT_SAFE_PROFISSOES profissoes = (AUT_SAFE_PROFISSOES)parameters.get("AUT_PROFISSAO");
+		String email = parameters.get("AUT_EMAIL").toString();
+		String logradouro = parameters.get("AUT_LOGRADOURO").toString();
+		String numeroEndereco = parameters.get("AUT_NUMERO_ENDERECO").toString();
+		String complemento = parameters.get("AUT_COMPLEMENTO_ENDERECO").toString();
+		String bairro = parameters.get("AUT_BAIRRO").toString();
+		String cep = parameters.get("AUT_CEP").toString();
+		String cidade = parameters.get("AUT_CIDADE").toString();
+		String uf = parameters.get("AUT_UF").toString();
+		String dd1 = parameters.get("AUT_TEL_DD1").toString();
+		String telefone1 = parameters.get("AUT_TEL_FONE1").toString();
+		String ramal1 = parameters.get("AUT_TEL_RAMAL1").toString();
+		autInsertScreenByScenario();
+		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.TelaInicial").exists("002MenuConvenio", 30000);
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002MenuConvenio").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002MenuConvenio").click();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.001SubMenu002GestaoConveniado").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.001SubMenu002GestaoConveniado").click();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002SubMenu002CadastroConveniado").setFocus();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002SubMenu002CadastroConveniado").click();
+		autInsertScreenByScenario();
+		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoConvenio").setFocus();
+		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoConvenio").select(convenio.toString());
+		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoPessoa").select( tipoPessoa.toString());
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.NumeroDocumento").setText(documento);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.NomeCliente").setText(nomeCliente);
+		autInsertScreenByScenario();
+
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.RazaoSocial").setText(nomeCliente);		
+
+
+		autInsertScreenByScenario();
+
+
+		AUT_AGENT_SILK4J.<DomCheckBox>find("SAFE.001TelaCadastroConveniado.CheckParceiro").check();
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Email").setText(email);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Logradouro").setText(logradouro);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.NumeroResidencia").setText(numeroEndereco);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Complemento").setText(complemento);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Bairro").setText(bairro);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Cep").setText(cep);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Cidade").setText(cidade);
+		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.UF").select(uf);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DD1").setFocus();
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.DD1").setText(dd1);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Telefone1").setText(telefone1);
+		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Ramal").setText(ramal1);
+		autInsertScreenByScenario();
+		AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.BotaoSalvar").click();		
+		autInsertScreenByScenario();
+		
+		try {
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.CheckPointCadastro").waitForProperty("Text", AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.CheckPointCadastro").getText());	
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.BotaoOKConfirmCad").click();		
+			AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.001TelaCadastroConveniado").close();
+		}
+		catch(java.lang.Exception e) {
+			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE").close();
+		}
+		
+		return (TOutput) null; //Vale troca		
+	}
+
+
+	
+	
+	
+	
 }

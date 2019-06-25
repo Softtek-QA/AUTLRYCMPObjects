@@ -1,5 +1,7 @@
 package br.lry.components.safe;
 
+import java.util.HashMap;
+
 import org.junit.Test;
 import org.w3c.dom.traversal.DocumentTraversal;
 
@@ -231,6 +233,8 @@ public class AUTSafeCadastroConveniado extends AUTSafeBaseComponent {
 		
 	}
 
+
+	
 
 	/**
 	 * 

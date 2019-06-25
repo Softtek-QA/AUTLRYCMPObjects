@@ -3,6 +3,7 @@ package br.lry.components;
 import br.lry.components.AUTBaseComponent;
 import br.lry.components.safe.AUTSafeBaseServices;
 import br.lry.components.safe.AUTSafeConsultaValeTroca;
+import br.lry.components.safe.AUTSafeGeradorVoucher;
 import br.lry.components.safe.AUTSafeBaseComponent.AUT_SAFE_TYPE_PERSONS;
 import br.lry.components.va.cat002.AUTRecuperacao;
 
@@ -17,11 +18,12 @@ public class AUTSafeBaseComponent extends AUTBaseComponent{
 	protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
 	public static br.lry.components.safe.AUTSafeBaseServices safe;	
 	public static br.lry.components.safe.AUTSafeConsultaValeTroca autValeTroca;
-	
+	public static br.lry.components.safe.AUTSafeGeradorVoucher autVoucher;
 	
 	public void autInitConfigurationSafe() {
 		safe = new AUTSafeBaseServices();
 		autValeTroca = new AUTSafeConsultaValeTroca();
+		autVoucher   = new AUTSafeGeradorVoucher();
 	}
 
 	
@@ -63,5 +65,20 @@ public class AUTSafeBaseComponent extends AUTBaseComponent{
 		autInitConfigurationSafe();	
 		safe.autLogout();
 	}
+	
+	/**
+	 * 
+	 * CAT0XX
+	 * CMP00098 - Gera Vale Troca PF
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return vale troca
+	 */	
+	
+	//public <TOutput extends AUTSafeGeradorVoucher> TOutput CMP00098(java.util.HashMap<String, Object> parametros) {
+	public <TOutput extends AUTSafeGeradorVoucher> TOutput CMP00098(java.util.HashMap<String, Object> parametros) {
+		autInitConfigurationSafe();	
+		return (TOutput) autVoucher;
+	}
+	
 
 }
