@@ -137,6 +137,7 @@ public class AUTSafeConsultaValeTroca extends AUTSafeBaseComponent {
 		String numeroDocumento = parametros.get("AUT_NUMERO_DOCUMENTO").toString();
 		
 		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.000TelaValeTroca.ListaTiposPessoa").select(AUT_SAFE_TYPE_PERSONS.ESTRANGEIRO.toString());
+		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.000TelaValeTroca.ListaTiposDocsEstrangeiro").select(AUT_SAFE_TYPE_PERSONS.PASSAPORTE.toString());		
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.000TelaValeTroca.NumeroDocumento").setText(numeroDocumento);
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.000TelaValeTroca.BotaoPesquisar").click();
 
