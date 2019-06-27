@@ -150,7 +150,7 @@ public class AUTSafeConsultaValeTroca extends AUTSafeBaseComponent {
 
 		//AUT_VALE_TROCA_OUTPUT = vlTroca.toString();
 		autInsertScreenByScenario();
-		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.DetalhesValeTroca001").close();
+		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE2.DetalhesValeTroca001").close();
 //		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.000TelaValeTroca").close();
 		
 		return vlTroca.toString();
