@@ -32,6 +32,7 @@ public class AUTSafeBaseComponent extends AUTBaseComponent {
 		LJ0015,
 		LJ0017,
 		LJ0018,
+		LJ0019,
 		LJ0021,
 		LJ0022,
 		LJ0023,
@@ -99,6 +100,9 @@ public class AUTSafeBaseComponent extends AUTBaseComponent {
 			}
 			case LJ0018:{
 				return "0018 - LOJA_0018 GOIAN";
+			}
+			case LJ0019:{
+				return "0019 - LOJA_0019_POA";
 			}
 			case LJ0021:{
 				return "0021 - LOJA-0021 NITER";
@@ -244,6 +248,27 @@ public class AUTSafeBaseComponent extends AUTBaseComponent {
 		}
 	}
 	
+	public static enum AUT_SAFE_COUNTRY {
+		FRANCA,
+		BRASIL;
+	
+		
+		@Override
+		public String toString() {
+			// TODO Auto-generated method stub
+			switch(this) {
+			case FRANCA:{
+				return "FRANCA";
+			}
+			case BRASIL:{
+				return "BRASIL";
+			}
+			default:{
+				return this.name();
+			}
+			}
+		}
+	}
 
 	
 	public static enum AUT_SAFE_TIPO_CONVENIO{

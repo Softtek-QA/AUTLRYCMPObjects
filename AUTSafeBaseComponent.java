@@ -7,6 +7,7 @@ import br.lry.components.safe.AUTSafeGeradorVoucher;
 import br.lry.components.safe.AUTSafeBaseComponent.AUT_SAFE_TYPE_PERSONS;
 import br.lry.components.va.cat002.AUTRecuperacao;
 
+
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 import com.borland.silktest.jtf.xbrowser.BrowserApplication;
 import com.borland.silktest.jtf.xbrowser.BrowserWindow;
@@ -69,16 +70,30 @@ public class AUTSafeBaseComponent extends AUTBaseComponent{
 	/**
 	 * 
 	 * CAT0XX
-	 * CMP00098 - Gera Vale Troca PF
+	 * CMP00098 - Cadastra Cliente
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return vale troca
 	 */	
 	
-	//public <TOutput extends AUTSafeGeradorVoucher> TOutput CMP00098(java.util.HashMap<String, Object> parametros) {
-	public <TOutput extends AUTSafeGeradorVoucher> TOutput CMP00098(java.util.HashMap<String, Object> parametros) {
-		autInitConfigurationSafe();	
+    public <TOutput extends AUTSafeGeradorVoucher> TOutput CMP00098(java.util.HashMap<String, Object> parametros) {
+	//public void CMP00098(java.util.HashMap<String, Object> parametros) {
+		//autInitConfigurationSafe();	
 		return (TOutput) autVoucher;
 	}
+	
+	
+	/**
+	 * 
+	 * CAT0XX
+	 * CMP00099 - Gera Vale Troca
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return vale troca
+	 */	
+	
+	public <TOutput extends AUTSafeGeradorVoucher> TOutput CMP00099(java.util.HashMap<String, Object> parametros) {
+		return (TOutput) autVoucher;
+	}
+	
 	
 
 }

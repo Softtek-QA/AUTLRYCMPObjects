@@ -126,13 +126,12 @@ public class AUTSafeBaseServices extends AUTBaseComponent {
 		AUT_AGENT_SILK4J.<DomButton>find("SAFE.Login.BotaoEntrar").click();
 	}
 	
-	public void autSAFEGerarVoucher(AUT_SAFE_TYPE_PERSONS typePerson,AUT_SAFE_TIPO_CONVENIO convenio) {
+	public void autSAFEGeraVoucher(AUT_SAFE_TYPE_PERSONS typePerson,AUT_SAFE_TIPO_CONVENIO convenio) {
 		String docClient = "";
 				
 		java.util.HashMap<String,Object> parameters = autGetDataFlow().autGetMergeParameters(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_SAFE_CADASTROS_CLIENTE_CONVENIADO_LINX,AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_SAFE_GERADOR_VOUCHER_LINX);		
 		java.util.HashMap<String,Object> parametersCads = autGetDataFlow().autGetMergeParameters(parameters, AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_CADASTROS);
-		java.util.HashMap<String,Object> parameterOut = autGetDataFlow().autGetMergeParameters(parametersCads, parameters);
-		
+		java.util.HashMap<String,Object> parameterOut = autGetDataFlow().autGetMergeParameters(parametersCads, parameters);		
 		
 		switch(typePerson) {
 		case ESTRANGEIRO:{
@@ -192,9 +191,10 @@ public class AUTSafeBaseServices extends AUTBaseComponent {
 		autInsertScreenByScenario();
 		autSAFEVouchers().autInitGerarVoucher(parameterOut);
 		autSAFEInitApplication();
-		autSAFEVouchers().autIniAssocClienteConveniado(parameterOut);
+		autSAFEVouchers().autIniAssocClienteConveniadoPJ(parameterOut);
 		
 	}
+
 
 	public void autSAFEGerarVoucher(AUT_SAFE_TYPE_PERSONS typePerson,AUT_SAFE_TIPO_CONVENIO convenio,String documento,String nomeCliente) {
 		String docClient = "";
@@ -266,6 +266,8 @@ public class AUTSafeBaseServices extends AUTBaseComponent {
 		
 	}
 
+	
+	
 	/**
 	 * 
 	 * Executa procedimentos de logout  no SAFE
