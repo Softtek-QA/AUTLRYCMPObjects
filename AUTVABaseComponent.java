@@ -72,7 +72,7 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	public static AUTMenuLiberacaoPendente autMenuLiberacao;
 	public static AUTDesconto autDesconto;
 	public static AUTServicoGarantia servicoGarantia;
-	protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();		
+	//protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();		
 	public static AUTEcommerce autEcommerce;
 	public static AUTInsercaoItens autInsercaoItens;
 	public static AUTEdicao edicao;
@@ -149,8 +149,8 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	
 	public void autLogin() {
 		
-		AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
-		AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
+		//AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
+		//AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
 		
 		AUTVAProjectFunctions.autLogin(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
 	}
@@ -206,10 +206,10 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autSetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN, "AUT_PASSWORD", senha);
 		
 		
-		AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
-		AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
+		//AUT_USUARIO_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_USER").toString();
+		//AUT_SENHA_LOGIN_DEFAULT = AUT_PARAMETROS_CONFIGURACAO.get("AUT_PASSWORD").toString();
 		autInsertScreenByScenario();
-		AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, AUT_USUARIO_LOGIN_DEFAULT, AUT_SENHA_LOGIN_DEFAULT);
+		AUTVAProjectFunctions.autLoginVA(this.AUT_AGENT_SILK4J, usuario, senha);
 		autInsertScreenByScenario();
 	}
 	

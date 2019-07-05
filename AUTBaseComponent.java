@@ -47,7 +47,7 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 
 	public String AUT_USUARIO_LOGIN_DEFAULT = "";
 	public String AUT_SENHA_LOGIN_DEFAULT = "";
-	protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
+	//protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
 
 	public static enum AUT_TEST_STATUS_EXECUCAO{
 		WAIT,
