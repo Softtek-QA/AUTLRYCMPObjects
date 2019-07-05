@@ -10,7 +10,6 @@ public class AUTPDVBaseComponent extends AUTBaseComponent{
 	
 	protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
 	public static br.lry.components.pdv.AUTPDVBaseServices pdv;
-	
 
 	
 	public void autInitConfigurationPDV() {
@@ -22,14 +21,32 @@ public class AUTPDVBaseComponent extends AUTBaseComponent{
 	/**
 	 * 
 	 * CAT0XX
-	 * CMP00002 - Realizar login no PDV
+	 * CMP00090 - Realizar login no PDV se necessário
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */
 	public void CMP00090(java.util.HashMap<String, Object> parametros) {	
+		boolean telaInicial = false;
 		autInitConfigurationPDV();	
-		pdv.autPDVAcessos().autPDVLoginDefault(parametros);
-		autInsertScreenByScenario();
+		
+		telaInicial = pdv.autPDVVerificaTelaInicial("PDV-STATUS-0001");
+
+		//Se Tela inicial "Cx Fechado Parcial", realiza login no PDV	
+		if(telaInicial) {
+			pdv.autPDVAcessos().autPDVLoginDefault(parametros);
+		} else {
+			//Se tela inicial "Caixa Disponivel", segue execução
+			telaInicial = pdv.autPDVVerificaTelaInicial("PDV-STATUS-0005");
+		
+			//Tela inesperada está sendo exibida
+			if(!telaInicial) {
+				System.out.println("PDV : ERROR : NÃO FOI POSSIVEL INICIAR PROCESSO NO PDV ");
+				AUT_AGENT_SILK4J.verifyAsset("PDV-STATUS-0005");
+			}
+		
+		}
+		
+		System.out.println("PDV : TELA CAIXA DISPONIVEL OK PARA INICIO DO PDV");		
 	}
 	
 	/**

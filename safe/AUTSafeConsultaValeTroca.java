@@ -78,6 +78,7 @@ public class AUTSafeConsultaValeTroca extends AUTSafeBaseComponent {
 		}
 		}
 		autInsertScreenByScenario();
+		com.borland.silktest.jtf.Utils.sleep(5000);
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.000TelaValeTroca.ValeTrocaEmitido").click();
 		autInsertScreenByScenario();
 		String valeTroca = AUT_AGENT_SILK4J.<DomElement>find("SAFE.DetalhesValeTroca001.NumeroVale").getText();
@@ -109,15 +110,16 @@ public class AUTSafeConsultaValeTroca extends AUTSafeBaseComponent {
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.000TelaValeTroca.BotaoPesquisar").click();
 
 		autInsertScreenByScenario();
+		com.borland.silktest.jtf.Utils.sleep(5000);
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.000TelaValeTroca.ValeTrocaEmitido").click();
 		autInsertScreenByScenario();
-		String valeTroca = AUT_AGENT_SILK4J.<DomElement>find("SAFE.DetalhesValeTroca001.NumeroVale").getText();
+		String valeTroca = AUT_AGENT_SILK4J.<DomElement>find("SAFE2.DetalhesValeTroca001.NumeroVale").getText();
 		Integer vlTroca = Integer.parseInt(valeTroca);
 		System.out.println(String.format("AUT INFO : SAFE : VALE TROCA GERADO COM SUCESSO : %s",vlTroca));
 
 		//AUT_VALE_TROCA_OUTPUT = vlTroca.toString();
 		autInsertScreenByScenario();
-		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.DetalhesValeTroca001").close();
+		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE2.DetalhesValeTroca001").close();
 		//AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.000TelaValeTroca").close();
 		
 		return vlTroca.toString();
@@ -142,9 +144,10 @@ public class AUTSafeConsultaValeTroca extends AUTSafeBaseComponent {
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.000TelaValeTroca.BotaoPesquisar").click();
 
 		autInsertScreenByScenario();
+		com.borland.silktest.jtf.Utils.sleep(5000);
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.000TelaValeTroca.ValeTrocaEmitido").click();
 		autInsertScreenByScenario();
-		String valeTroca = AUT_AGENT_SILK4J.<DomElement>find("SAFE.DetalhesValeTroca001.NumeroVale").getText();
+		String valeTroca = AUT_AGENT_SILK4J.<DomElement>find("SAFE2.DetalhesValeTroca001.NumeroVale").getText();
 		Integer vlTroca = Integer.parseInt(valeTroca);
 		System.out.println(String.format("AUT INFO : SAFE : VALE TROCA GERADO COM SUCESSO : %s",vlTroca));
 
@@ -174,15 +177,16 @@ public class AUTSafeConsultaValeTroca extends AUTSafeBaseComponent {
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.000TelaValeTroca.BotaoPesquisar").click();
 
 		autInsertScreenByScenario();
+		com.borland.silktest.jtf.Utils.sleep(5000);
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.000TelaValeTroca.ValeTrocaEmitido").click();
 		autInsertScreenByScenario();
-		String valeTroca = AUT_AGENT_SILK4J.<DomElement>find("SAFE.DetalhesValeTroca001.NumeroVale").getText();
+		String valeTroca = AUT_AGENT_SILK4J.<DomElement>find("SAFE2.DetalhesValeTroca001.NumeroVale").getText();
 		Integer vlTroca = Integer.parseInt(valeTroca);
 		System.out.println(String.format("AUT INFO : SAFE : VALE TROCA GERADO COM SUCESSO : %s",vlTroca));
 
 		//AUT_VALE_TROCA_OUTPUT = vlTroca.toString();
 		autInsertScreenByScenario();
-		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.DetalhesValeTroca001").close();
+		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE2.DetalhesValeTroca001").close();
 //		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.000TelaValeTroca").close();
 		
 		return vlTroca.toString();
