@@ -204,11 +204,11 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	public AUTDataFlow autGetDataFlow() {
 		try {
 
-			autGetLogManager().logMensagem("AUT INFO: INICIALIZANDO CONFIGURAÇAO DO FLUXO DE DADOS");
+			//autGetLogManager().logMensagem("AUT INFO: INICIALIZANDO CONFIGURAÇAO DO FLUXO DE DADOS");
 
 			AUT_CURRENT_DATA_FLOW = (AUT_CURRENT_DATA_FLOW != null ? AUT_CURRENT_DATA_FLOW :  new AUTDataFlow());
 
-			autGetLogManager().logMensagem("AUT INFO: CONFIGURAÇAO DO FLUXO DE DADOS : FINALIZADA");
+			//autGetLogManager().logMensagem("AUT INFO: CONFIGURAÇAO DO FLUXO DE DADOS : FINALIZADA");
 
 			return AUT_CURRENT_DATA_FLOW;
 		}
@@ -482,6 +482,14 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);		
 		System.out.println("AUT INFO: INICIALIZANDO APLICAÇÃO WEB");
 
+		try {
+			AUT_AGENT_SILK4J.<BrowserApplication>find("VA").maximize();
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void autInitWebApplicationHMC() {		
@@ -523,12 +531,17 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 
 	public void autInitWebApplicationVA() {
 
-		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();		
-		AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.GoogleChrome);
+		AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState("va.settings");
 		AUT_BASE_STATE_CONFIGURATION_BROWSER.setCommandLineArguments("--incognito");
+		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);		
+	
+		
+		//AUT_BASE_STATE_CONFIGURATION_BROWSER = new BrowserBaseState();		
+		//AUT_BASE_STATE_CONFIGURATION_BROWSER.setBrowserType(BrowserType.GoogleChrome);
+		//AUT_BASE_STATE_CONFIGURATION_BROWSER.setCommandLineArguments("--incognito");
 
-		AUT_BASE_STATE_CONFIGURATION_BROWSER.setUrl(autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN, "AUT_URL_VA").toString());
-		AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
+		//AUT_BASE_STATE_CONFIGURATION_BROWSER.setUrl(autGetCurrentParameter(AUT_CURRENT_PARAMETERS_TABLE_NAME.AUT_VA_LOGIN, "AUT_URL_VA").toString());
+		//AUT_AGENT_SILK4J.executeBaseState(AUT_BASE_STATE_CONFIGURATION_BROWSER);
 		try {
 			AUT_AGENT_SILK4J.<BrowserApplication>find("VA").maximize();
 			//AUT_AGENT_SILK4J.<AccessibleControl>find("VA.Maximizar").click();
@@ -586,5 +599,32 @@ public abstract class AUTBaseComponent extends AUTFWKTestObjectBase{
 	public <TObject extends Object> void autStartTransaction(TObject transacao) {
 		autStartTransaction(transacao.toString());
 	}
+	
+	/**
+	 * Verifica se o PDV se encontra em status : Fechado parcial e disponível para entrada de novo usuário
+	 * 
+	 * @return boolean - True o PDV esteja fechado parcialmente e disponível, false caso contrário
+	 * 
+	 */
+	public boolean autPDVVerificaTelaInicial(String imgTela) {
+
+		boolean status = false;
+		int cont = 1;
+		com.borland.silktest.jtf.Utils.sleep(2000);
+		status = AUT_AGENT_SILK4J.tryVerifyAsset(imgTela);
+		
+		while (!status && cont<2) {
+			com.borland.silktest.jtf.Utils.sleep(2000);
+			cont ++;
+			status = AUT_AGENT_SILK4J.tryVerifyAsset(imgTela);		
+		} 
+		
+		if(status) {
+			return true;
+		
+		} else {
+			return false;
+		}
+	}	
 
 }

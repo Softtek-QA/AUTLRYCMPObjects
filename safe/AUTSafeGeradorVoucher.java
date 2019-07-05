@@ -371,9 +371,6 @@ public class AUTSafeGeradorVoucher extends AUTSafeBaseComponent {
 		String telefone1 = parameters.get("AUT_TEL_FONE1").toString();
 		String ramal1 = parameters.get("AUT_TEL_RAMAL1").toString();
 
-//		autInsertScreenByScenario();
-
-		//autLoginWithInit(parameters.get("USER_SAFE").toString(),parameters.get("PWS_SAFE").toString());
 		AUT_AGENT_SILK4J.<BrowserWindow>find("SAFE.TelaInicial").exists("002MenuConvenio", 30000);
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002MenuConvenio").setFocus();
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002MenuConvenio").click();
@@ -389,12 +386,12 @@ public class AUTSafeGeradorVoucher extends AUTSafeBaseComponent {
 		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoPessoa").setFocus();
 		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoPessoa").select( tipoPessoa.toString());
 		
-		autInsertScreenByScenario();
+		//autInsertScreenByScenario();
 		
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.NumeroDocumento").setText(documento);
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.NomeCliente").setText(nomeCliente);
 
-		autInsertScreenByScenario();
+		//autInsertScreenByScenario();
 
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.RG").setText(rgCliente);
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.OrgaoEmissor").setText(docOrgEmissor);
@@ -577,20 +574,16 @@ public class AUTSafeGeradorVoucher extends AUTSafeBaseComponent {
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.001SubMenu002GestaoConveniado").click();
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002SubMenu002CadastroConveniado").setFocus();
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.TelaInicial.002SubMenu002CadastroConveniado").click();
+		
 		autInsertScreenByScenario();
 		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoConvenio").setFocus();
 		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoConvenio").select(convenio.toString());
 		AUT_AGENT_SILK4J.<DomListBox>find("SAFE.001TelaCadastroConveniado.ListaTipoPessoa").select( tipoPessoa.toString());
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.NumeroDocumento").setText(documento);
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.NomeCliente").setText(nomeCliente);
-		autInsertScreenByScenario();
-
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.RazaoSocial").setText(nomeCliente);		
-
-
+		
 		autInsertScreenByScenario();
-
-
 		AUT_AGENT_SILK4J.<DomCheckBox>find("SAFE.001TelaCadastroConveniado.CheckParceiro").check();
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Email").setText(email);
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Logradouro").setText(logradouro);
@@ -605,6 +598,7 @@ public class AUTSafeGeradorVoucher extends AUTSafeBaseComponent {
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Telefone1").setText(telefone1);
 		AUT_AGENT_SILK4J.<DomTextField>find("SAFE.001TelaCadastroConveniado.Ramal").setText(ramal1);
 		autInsertScreenByScenario();
+		
 		AUT_AGENT_SILK4J.<DomElement>find("SAFE.001TelaCadastroConveniado.BotaoSalvar").click();		
 		autInsertScreenByScenario();
 		

@@ -43,7 +43,6 @@ public class AUTFinalizarPedidoVA extends AUTBaseComponent {
 				AUT_NUMERO_PEDIDO = AUT_AGENT_SILK4J.<DomElement>find("VA.TelaFinalPedidos.NumeroPedido").getText();
 			}
 			
-			System.out.println("O número do pedido é "+AUT_NUMERO_PEDIDO);
 			autInsertScreenByScenario();
 			java.util.regex.Pattern padrao = java.util.regex.Pattern.compile("\\d+");
 			java.util.regex.Matcher analise = padrao.matcher(AUT_NUMERO_PEDIDO);
@@ -54,7 +53,7 @@ public class AUTFinalizarPedidoVA extends AUTBaseComponent {
 				AUT_NUMERO_PEDIDO= "00000000000";
 			}
 			
-			System.out.println("Número do Pedido: " + AUT_NUMERO_PEDIDO);
+			System.out.println("O número do Pedido é: " + AUT_NUMERO_PEDIDO);
 			//autGetCurrentParameter(AUT_NUMERO_PEDIDO);
 								
 			return true;
