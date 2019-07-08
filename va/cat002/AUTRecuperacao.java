@@ -117,12 +117,12 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPedidos.CopiarPedido").click();
 
-			boolean status = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TelaPedidos").exists("PrecosVigentes", 10000);
-			if (status) {
-
-				AUT_AGENT_SILK4J.<DomButton>find("VA.TelaPedidos.PrecosVigentes").click();
-
-			}
+//			boolean status = AUT_AGENT_SILK4J.<BrowserWindow>find("VA.TelaPedidos").exists("PrecosVigentes", 10000);
+//			if (status) {
+//
+//				AUT_AGENT_SILK4J.<DomButton>find("VA.TelaPedidos.PrecosVigentes").click();
+//
+//			}
 
 			return true;
 		} catch (java.lang.Exception e) {
