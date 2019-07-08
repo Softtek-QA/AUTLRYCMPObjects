@@ -8,7 +8,7 @@ import br.lry.dataflow.AUTDataFlow.AUT_TABLE_PARAMETERS_NAMES;
 
 public class AUTPDVBaseComponent extends AUTBaseComponent{
 	
-	protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
+	//protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
 	public static br.lry.components.pdv.AUTPDVBaseServices pdv;
 
 	

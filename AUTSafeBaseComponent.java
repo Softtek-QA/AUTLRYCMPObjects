@@ -16,7 +16,7 @@ import com.borland.silktest.jtf.xbrowser.DomElement;
 
 public class AUTSafeBaseComponent extends AUTBaseComponent{
 	
-	protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
+	//protected java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
 	public static br.lry.components.safe.AUTSafeBaseServices safe;	
 	public static br.lry.components.safe.AUTSafeConsultaValeTroca autValeTroca;
 	public static br.lry.components.safe.AUTSafeGeradorVoucher autVoucher;

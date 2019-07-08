@@ -15,7 +15,7 @@ import br.lry.functions.AUTVAProjectFunctions;
 
 public class AUTHMCLogin extends AUTBaseComponent{
 	
-	java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
+	//java.util.HashMap<String,Object> AUT_PARAMETROS_CONFIGURACAO = this.autGetDataFlow().autGetParameter();	
 	
 
 	/**
