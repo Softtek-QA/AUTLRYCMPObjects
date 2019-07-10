@@ -3961,6 +3961,15 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 	 */
 	public void CMP11028(java.util.HashMap<String,Object> parameters) {
 		try {			
+			
+			if(parameters.containsKey("AUT_FATURAR_ITENS_COM_LOTE")) {
+				parameters.remove("AUT_FATURAR_ITENS_COM_LOTE");
+			}
+			
+			if((parameters.containsKey("AUT_FATURAR_ITENS_SEM_LOTE"))) {
+				parameters.remove("AUT_FATURAR_ITENS_SEM_LOTE");
+			}
+			
 			CMP11016(parameters).autSAPFaturamentos().autConsultaItensOrdemVenda(parameters);			
 		}
 		catch(java.lang.Exception e) {

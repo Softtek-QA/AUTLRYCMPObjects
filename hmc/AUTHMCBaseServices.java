@@ -24,7 +24,6 @@ public class AUTHMCBaseServices extends AUTBaseComponent {
 			return (THMCCadastros)hmcCads;
 		}
 	}
-	
 	/**
 	 * 
 	 */

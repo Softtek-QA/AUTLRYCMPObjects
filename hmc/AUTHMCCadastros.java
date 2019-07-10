@@ -90,10 +90,10 @@ public class AUTHMCCadastros extends AUTHMCLogin {
 	public void autCadastrarUsuarioHMCV2(String lojaCadastro) {
 
 		String formatLoja = String.format("%s_LMStore",lojaCadastro);
+		
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_USER_ID", usuario);
+		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_PASSWORD", senha);
 		autStartLoginDefault(usuario, senha);
-		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_USER_ID", userID);
-		autSetCurrentParameter(AUT_TABLE_PARAMETERS_NAMES.AUT_HMC_LOGIN,"AUT_NOVA_SENHA", novaSenha);
-
 		
 		AUT_AGENT_SILK4J.<DomListBox>find("HMC.TelaInicial.ListaIdiomas").click();
 		AUT_AGENT_SILK4J.<DomListBox>find("HMC.TelaInicial.ListaIdiomas").select("Português do Brasil");

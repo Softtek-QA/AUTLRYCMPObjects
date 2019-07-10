@@ -35,10 +35,10 @@ public class AUTALMInsertTests extends AUTBaseComponent {
 		AUTJUnitManager manageTests = new AUTJUnitManager();
 		
 		java.util.HashMap<String, Object> parametersConfig = new java.util.HashMap<String,Object>();
-		parametersConfig.put("AUT_SERVER_ALM", "192.168.0.2:19120");
+		parametersConfig.put("AUT_SERVER_ALM", "192.168.0.3:19120");
 		parametersConfig.put("AUT_USER_ALM", "admin");
 		parametersConfig.put("AUT_PWD_ALM", "admin");
-		parametersConfig.put("AUT_URL_ALM_PROXY_SERVICE","http://192.168.0.2:19120/Services1.0/jaxws/tests");
+		parametersConfig.put("AUT_URL_ALM_PROXY_SERVICE","http://192.168.0.3:19120/Services1.0/jaxws/tests");
 		parametersConfig.put("AUT_URL_WEBSERVICE_ALM", String.format("http://%s/Services1.0/jaxws/tests?wsdl",parametersConfig.get("AUT_SERVER_ALM").toString()));
 		parametersConfig.put("AUT_PROJECT_ALM", AUT_ALM_PROJECTS.VA_VENDAS_ASSISTIDAS);
 		parametersConfig.put("AUT_PROJECT_CONTAINER", AUT_ALM_PROJECTS.VA_CONTAINER_VENDAS_ASSISTIDAS);		
