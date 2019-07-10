@@ -63,7 +63,7 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 			System.out.println("Parametros na Recuperacao"+parametros);
 
 			
-			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.BotaoCarrinho").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.MenuCarrinho.Carrinho").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.Buscar pedidos").click();
 
 			consultaPedido.AUTVA03ConsultaPedido(parametros.get("AUT_NUMERO_PEDIDO").toString());
