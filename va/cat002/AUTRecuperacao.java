@@ -32,7 +32,7 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 		try {
 			System.out.println("Parametros na Tela de Recuperaçaõ"+parametros);
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.BotaoCarrinho").click();
-			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.BuscarCarrinho").click();
+			//AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.BuscarCarrinho").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaPedidos.BotaoFiltroPedido").click();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPedidos.NumeroPedido").setFocus();
 			AUT_AGENT_SILK4J.<DomTextField>find("VA.TelaPedidos.NumeroPedido").typeKeys(parametros.get("AUT_NUMERO_CARRINHO").toString());
