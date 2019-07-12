@@ -69,7 +69,7 @@ public class AUTPDVBaseComponent extends AUTBaseComponent{
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */
-	public void CMP00092(java.util.HashMap<String, Object> parametros) {
+	public void CMP00097(java.util.HashMap<String, Object> parametros) {
 		autInitConfigurationPDV();	
 		pdv.autStartDevolucaoItem(parametros);
 		autInsertScreenByScenario();

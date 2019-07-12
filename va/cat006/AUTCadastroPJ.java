@@ -273,6 +273,8 @@ public class AUTCadastroPJ extends AUTVABaseComponent {
 			autInsertScreenByScenario();
 			Assert.assertEquals(pop, mensagem);
 			autInsertScreenByScenario();
+			AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Confirmar").click();
+			
 		}
 
 	}

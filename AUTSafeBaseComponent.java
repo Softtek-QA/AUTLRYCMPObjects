@@ -35,7 +35,7 @@ public class AUTSafeBaseComponent extends AUTBaseComponent{
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */
-	public void CMP00093(java.util.HashMap<String, Object> parametros) {
+	public void CMP00084(java.util.HashMap<String, Object> parametros) {
 		autInitConfigurationSafe();	
 		safe.autSAFEInitApplication();
 		safe.autLoginWithInit(parametros);
@@ -49,7 +49,7 @@ public class AUTSafeBaseComponent extends AUTBaseComponent{
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return vale troca
 	 */	
-	public <TOutput extends AUTSafeConsultaValeTroca> TOutput CMP00094(java.util.HashMap<String, Object> parametros) {
+	public <TOutput extends AUTSafeConsultaValeTroca> TOutput CMP00085(java.util.HashMap<String, Object> parametros) {
 		autInitConfigurationSafe();	
 		//autValeTroca.autConsultaValeTrocaClientePF(parametros);
 		return (TOutput) autValeTroca;
@@ -62,7 +62,7 @@ public class AUTSafeBaseComponent extends AUTBaseComponent{
 	 * @param parametro - Parametros de entrada do sistema
 	 * @return
 	 */
-	public void CMP00095() {
+	public void CMP00086() {
 		autInitConfigurationSafe();	
 		safe.autLogout();
 	}
