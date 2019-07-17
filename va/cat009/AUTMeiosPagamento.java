@@ -351,6 +351,11 @@ try {
 			
 			else if (parametros.get("AUT_MEIO_PAGAMENTO_2") == AUT_VA_MEIOS_PAGAMENTO.VALE_TROCA) {
 				
+				//Popup com msg de valor mínimo não atingido	
+				if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.AtualizacaoDados").exists("Confirmar",3000)) {
+					AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Confirmar").click();
+				}
+				
 				AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.MeioPagamento2").click();
 				AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.MeioPagamento2").doubleClick();
 				AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.MeioPagamento2").select(parametros.get("AUT_MEIO_PAGAMENTO_2").toString());
@@ -365,6 +370,12 @@ try {
 			
 			}
 			else if (parametros.get("AUT_MEIO_PAGAMENTO") == AUT_VA_MEIOS_PAGAMENTO.CARTAO_CREDITO || parametros.get("AUT_MEIO_PAGAMENTO") == AUT_VA_MEIOS_PAGAMENTO.VISA || parametros.get("AUT_MEIO_PAGAMENTO") == AUT_VA_MEIOS_PAGAMENTO.MASTERCARD || parametros.get("AUT_MEIO_PAGAMENTO") == AUT_VA_MEIOS_PAGAMENTO.CARTAO_DEBITO) {
+
+				//Popup com msg de valor mínimo não atingido	
+				if(AUT_AGENT_SILK4J.<BrowserWindow>find("VA.AtualizacaoDados").exists("Confirmar",3000)) {
+					AUT_AGENT_SILK4J.<DomButton>find("VA.AtualizacaoDados.Confirmar").click();
+				}
+				
 				AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.MeioPagamento").click();
 				AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.MeioPagamento").select(parametros.get("AUT_MEIO_PAGAMENTO").toString());
 				AUT_AGENT_SILK4J.<DomListBox>find("VA.TelaMeioPagamento.PlanoPagamento").click();
