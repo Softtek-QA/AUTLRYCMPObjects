@@ -339,7 +339,8 @@ public class AUTRecuperacao extends AUTVABaseComponent {
 
 		try {
 						
-			AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.BotaoCarrinho").click();
+			//AUT_AGENT_SILK4J.<DomElement>find("VA.TelaInicialLoja.BotaoCarrinho").click();
+			AUT_AGENT_SILK4J.<DomElement>find("VA.MenuCarrinho.Carrinho").click();
 			AUT_AGENT_SILK4J.<DomElement>find("VA.AtualizacaoDados.Buscar pedidos").click();
 
 			consultaPedido.AUTVA03ConsultaPedido(numPedido);
