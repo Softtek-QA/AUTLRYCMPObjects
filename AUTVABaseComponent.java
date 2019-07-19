@@ -746,6 +746,29 @@ public class AUTVABaseComponent extends AUTBaseComponent {
 		autInsertScreenByScenario();
 	}
 	
+	
+	/**
+	 * 
+	 * CMP00047 - Carrinho Ecommerce 
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */
+	public void CMP00047(boolean maisItens, HashMap<String, Object> parametros) {
+		autEcommerce.autEcommerceCarrinho(maisItens,parametros);
+	}
+	
+	/**
+	 * 
+	 * CMP00046 - Adiciona no Carrinho Ecommerce 
+	 * 
+	 * @param parametro - Parametros de entrada do sistema
+	 * @return
+	 */
+	public void CMP00046() {
+		autEcommerce.autAddCarrinhoEcommerce();
+	}
+	
 
 	
 	/**
